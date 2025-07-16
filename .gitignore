@@ -1,0 +1,19 @@
+# Compiled pdf file
+statnotes.pdf
+
+# LaTeX temporary files
+*.aux
+*.log
+*.blg
+*.idx
+*.toc
+*.mtc*
+*.bbl
+*.maf
+*.out
+
+# pdf
+
+# emacs temporary files
+macro/*.pyc
+*/__pycache__
