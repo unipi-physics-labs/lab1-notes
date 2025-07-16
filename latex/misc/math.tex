@@ -1,0 +1,79 @@
+
+% Logarithm with arbitrary base.
+% -> log_10
+\newcommand{\llog}[1][10]{\log_{#1}}
+
+% Absolute value.
+% -> |x|
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+% Powers.
+% -> x^a
+\newcommand{\power}[2][2]{\left( #2 \right)^{#1}}
+
+% Square.
+% -> x^2
+\newcommand{\sq}[1]{\power[2]{#1}}
+
+% Expansion of the binomial coefficient.
+% -> n1!/(n2!(n1 - n2)!)
+\newcommand{\binomexpr}[2]{\frac{#1!}{#2!(#1 - #2)!}}
+
+% Expression evaluation at a given point with square brackets.
+% -> [x]_{a}
+\newcommand{\at}[2]{\left[ #1\right]_{\makebox[-1pt][l]{${\scriptstyle#2}$}}}
+
+% Expression evaluation in an interval.
+% -> [x] _{a}^{b}
+\newcommand{\eval}[3]{\left.#1%
+  \right|_{\makebox[-1pt][l]{${\scriptstyle#2}$}}^{\makebox[-1pt][l]{${\scriptstyle#3}$}}}
+
+% Upright d in math mode (for differentials).
+% -> d
+\newcommand{\ud}{\mathrm{d}}
+
+% Differential.
+% -> dx
+\newcommand{\diff}[1][x]{\,\ud{#1}}
+
+% Base command for defining derivatives.
+% -> df/dx or d^kf/dx^k
+\newcommand{\basederivative}[4][]{%
+  \displaystyle%
+  \ifx\\#1\\\frac{#4#2}{#4#3}%
+  \else%
+  \frac{#4^#1#2}{#4#3^#1}%
+  \fi%
+}
+
+% Total derivative.
+% -> df/dx(x) or d^kf/dx^k(x)
+\newcommand{\td}[4][]{%
+  \basederivative[#1]{#2}{#3}{\ud}%
+  \ifx\\#4\\%
+  \else%
+  \mkern-4mu\left(#4\right)%
+  \fi%
+}
+
+% Partial derivative.
+% -> df/dx(x) or d^kf/dx^k(x)
+\newcommand{\pd}[4][]{%
+  \basederivative[#1]{#2}{#3}{\partial}%
+  \ifx\\#4\\%
+  \else%
+  \mkern-4mu\left(#4\right)%
+  \fi%
+}
+
+\newcommand{\intinf}{\int_{-\infty}^{\infty}\!\!\!}
+
+\newcommand{\cinterval}[2]{\left[\, #1,~#2 \,\right]}
+
+\newcommand{\linterval}[2]{\left[\, #1,~#2 \,\right)}
+
+\newcommand{\rinterval}[2]{\left(\, #1,~#2 \,\right]}
+
+\newcommand{\ointerval}[2]{\left(\, #1,~#2 \,\right)}
+
+

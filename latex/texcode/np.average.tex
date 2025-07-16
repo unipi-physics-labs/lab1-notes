@@ -1,0 +1,11 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/np.average.py}{https://bitbucket.org/.../np.average.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{4.0}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mf}{6.0}\PY{p}{]}
+\PY{n}{w} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mf}{0.2}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{,} \PY{l+m+mf}{0.4}\PY{p}{,} \PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{0.6}\PY{p}{]}
+\PY{n}{m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{weights}\PY{o}{=}\PY{n}{w}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{m}\PY{p}{)}
+
+[Output]
+4.333333333333333
+\end{Verbatim}

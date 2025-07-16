@@ -1,0 +1,28 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/odr.py}{https://bitbucket.org/.../odr.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k+kn}{import} \PY{n}{odr}
+
+\PY{k}{def} \PY{n+nf}{fit\PYZus{}model}\PY{p}{(}\PY{n}{pars}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Note the independent variable is the last argument.}
+    \PY{k}{return} \PY{n}{pars}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{n}{x} \PY{o}{+} \PY{n}{pars}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Read the data from file.}
+\PY{n}{x}\PY{p}{,} \PY{n}{dx}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{dy} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{loadtxt}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/lens.dat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{unpack}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Run the actual ODR.}
+\PY{n}{model} \PY{o}{=} \PY{n}{odr}\PY{o}{.}\PY{n}{Model}\PY{p}{(}\PY{n}{fit\PYZus{}model}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{odr}\PY{o}{.}\PY{n}{RealData}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sx}\PY{o}{=}\PY{n}{dx}\PY{p}{,} \PY{n}{sy}\PY{o}{=}\PY{n}{dy}\PY{p}{)}
+\PY{n}{alg} \PY{o}{=} \PY{n}{odr}\PY{o}{.}\PY{n}{ODR}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{beta0}\PY{o}{=}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+\PY{n}{out} \PY{o}{=} \PY{n}{alg}\PY{o}{.}\PY{n}{run}\PY{p}{(}\PY{p}{)}
+\PY{n}{m\PYZus{}hat}\PY{p}{,} \PY{n}{q\PYZus{}hat} \PY{o}{=} \PY{n}{out}\PY{o}{.}\PY{n}{beta}
+\PY{n}{sigma\PYZus{}m}\PY{p}{,} \PY{n}{sigma\PYZus{}q} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{out}\PY{o}{.}\PY{n}{cov\PYZus{}beta}\PY{o}{.}\PY{n}{diagonal}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{chisq} \PY{o}{=} \PY{n}{out}\PY{o}{.}\PY{n}{sum\PYZus{}square}
+\PY{c+c1}{\PYZsh{} Print the fit output.}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{m = }\PY{l+s+si}{\PYZob{}}\PY{n}{m\PYZus{}hat}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}m}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{q = }\PY{l+s+si}{\PYZob{}}\PY{n}{q\PYZus{}hat}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}q}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chisquare = }\PY{l+s+si}{\PYZob{}}\PY{n}{chisq}\PY{l+s+si}{:}\PY{l+s+s1}{.1f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+[Output]
+m = -0.979 +/- 0.051
+q = 9.886 +/- 0.226
+Chisquare = 6.5
+\end{Verbatim}

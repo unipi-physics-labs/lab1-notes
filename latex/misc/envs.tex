@@ -1,0 +1,108 @@
+\renewenvironment{enumerate}
+{\begin{list}{\theenumi\rule{0.5pt}{0pt}.}{%
+\usecounter{enumi}
+\setlength{\itemindent}{12pt}%
+\setlength{\labelwidth}{25pt}%
+\setlength{\leftmargin}{\rightmargin}%
+}}%
+{\end{list}}
+
+% 
+\renewenvironment{itemize}
+{\begin{list}{$\blacktriangleright$}{%
+\setlength{\itemindent}{12pt}%
+\setlength{\labelwidth}{25pt}%
+\setlength{\leftmargin}{\rightmargin}%
+}}
+{\end{list}}
+
+% Exercises.
+% \exercise{text}
+\newtheoremstyle{_exercise_}
+{9pt}
+{9pt}
+{\rmfamily}
+{}
+{\scshape}
+{.}
+{ }
+{$\blacktriangleright$ \thmname{#1} \thmnumber{#2}\thmnote{#3}}
+\theoremstyle{_exercise_}
+\newtheorem{_exercise_}{Esercizio}[chapter]
+
+\newcommand{\exercise}[1]
+{\begin{_exercise_} {\rmfamily #1} \end{_exercise_}}
+
+\newenvironment{exercises}
+{\clearpage
+\section{Esercizi}}
+{}
+
+\newcommand{\hint}[1]
+{\noindent \emph{Suggerimento: #1}}
+
+\newcommand{\answer}[1]
+{\hfill \emph{Risposta:} $\left[\, #1 \,\right]$}
+
+% Examples.
+% This used to be a \newcommand with the \begin{} and \end{} blocks of the
+% newtheorem embedded, but that had the drawback that no \verbatim blocks can be
+% used into command arguments. 
+%
+% First we define a \newtheorem...
+%
+\newtheoremstyle{example}
+{\baselineskip}       % Space above
+{\baselineskip}       % Space below
+{\normalsize}         % The body font (use \slshape for slanted body)
+{}                    % Indent amount (empty = no indent)
+{\scshape}            % Thm head font
+{.}                   % Punctuation after thm head
+{ }                   % Thm head spec (can be left empty, meaning `normal')
+{$\blacktriangleright$ \thmname{#1} \thmnumber{#2}%
+                       \ifx\\#3\\%
+                       \else~(\thmnote{#3})\fi}
+\theoremstyle{example}
+\newtheorem{example}{Esempio}[chapter]
+%               
+% ...then a new md environment...
+%
+\newmdenv[linecolor=lightgray,
+          skipabove=0pt,
+          skipbelow=0pt,
+          innertopmargin=0.5\baselineskip,
+          innerbottommargin=0.4\baselineskip,
+          innerleftmargin=0.5\baselineskip,
+          innerrightmargin=0.5\baselineskip,     
+          roundcorner=4pt,
+          nobreak=false]{exampleframe}
+%
+% Then a new environment to make the frames float...
+%
+\DeclareFloatingEnvironment[name=FloatExample]{floatexamplebox}
+
+%
+% ...finally we embed everything into a \newenvironment, which is the one we
+% actually use.
+%
+\newenvironment{examplebox}[1][!htb]
+{\begin{floatexamplebox}[#1]\begin{exampleframe}}
+{\end{exampleframe}\end{floatexamplebox}}
+%
+% Done with the examples.
+
+
+% Theorems
+\newtheoremstyle{_theorem_}
+{9pt}
+{9pt}
+{\rmfamily}
+{}
+{\scshape}
+{.}
+{ }
+{\thmname{#1}\thmnumber{ #2}\ifx\\#3\\\else~(\thmnote{#3})\fi}
+\theoremstyle{_theorem_}
+\newtheorem{theorem}{Teorema}[chapter]
+
+\newtheorem{corollary}{Corollario}[chapter]

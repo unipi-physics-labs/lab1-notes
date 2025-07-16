@@ -1,0 +1,21 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/sample\_stat\_naive.py}{https://bitbucket.org/.../sample\_stat\_naive.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{k}{def} \PY{n+nf}{sample\PYZus{}stats}\PY{p}{(}\PY{n}{sample}\PY{p}{)}\PY{p}{:}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{sample}\PY{p}{)}
+    \PY{n}{mean} \PY{o}{=} \PY{l+m+mf}{0.0}
+    \PY{n}{stdev} \PY{o}{=} \PY{l+m+mf}{0.0}
+    \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{sample}\PY{p}{:}
+        \PY{n}{mean} \PY{o}{=} \PY{n}{mean} \PY{o}{+} \PY{n}{x}
+    \PY{n}{mean} \PY{o}{/}\PY{o}{=} \PY{n}{n}
+    \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{sample}\PY{p}{:}
+        \PY{n}{stdev} \PY{o}{=} \PY{n}{stdev} \PY{o}{+} \PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{mean}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.}
+    \PY{n}{stdev} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{stdev} \PY{o}{/} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{mean}\PY{p}{,} \PY{n}{stdev}
+
+\PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{2.53}\PY{p}{,} \PY{l+m+mf}{2.58}\PY{p}{,} \PY{l+m+mf}{2.28}\PY{p}{,} \PY{l+m+mf}{2.41}\PY{p}{,} \PY{l+m+mf}{2.61}\PY{p}{,} \PY{l+m+mf}{2.87}\PY{p}{,} \PY{l+m+mf}{2.40}\PY{p}{,} \PY{l+m+mf}{2.38}\PY{p}{,} \PY{l+m+mf}{2.34}\PY{p}{]}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{sample\PYZus{}stats}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}
+
+[Output]
+(2.4888888888888885, 0.18086213288334052)
+\end{Verbatim}

@@ -1,0 +1,507 @@
+
+\chapter{Esercizi}
+
+\exercise{
+La figura~\ref{fig:riaa} rappresenta il numero totale di dischi venduti negli Stati Uniti,
+secondo quanto certificato dalla \foreign{Recording Industry Asoociation of America}
+(RIAA) per gli artisti di maggior successo sul mercato americano, ordinati per
+numero (decrescente) di vendite---dai \foreign{Beatles} (con 183~milioni di copie)
+agli \foreign{R.E.M} (con 20~milioni di copie).
+Si stimi la normalizzazione e l'indice della legge di potenza che meglio si adatta
+ai dati, indicata in figura dalla linea tratteggiata. Sulla base di questo modello
+si stimi la frazione di \foreign{album} venduti dai primi 10~artisti rispetto alle
+vendite totali.
+
+\pgffigone{riaa}{
+  Grafico del numero totale di dischi venduti sul mercato
+  americano per gli artisti di maggior successo, ordinati secondo la rispettiva
+  posizione in classifica---si tratta di 130 artisti che hanno venduto più di
+  20~milioni di copie durante la loro carriera.
+  (Dati disponibili a \url{https://www.riaa.com/gold-platinum}.)}
+}
+
+Qualitativamente possiamo dire che, quando sull'asse delle $x$ ci spostiamo da
+$1$ a $100$ (ovvero di 2~dex), sull'asse delle $y$ la linea tratteggiata passa
+da poco più di $200$ a poco più di $20$ (che corrisponde ad una variazione
+di $\sim 1$~dex). L'indice della legge di potenza è perciò $\Gamma \approx -0.5$.
+La normalizzazione si legge sul grafico come intercetta con l'asse $x = 1$,
+ed è $N \approx 200$. Per completezza, il fit con il modello indicato dalla
+linea tratteggiata, fornisce
+\begin{align*}
+  N = 218 \pm 3~\text{milioni di copie} \quad \text{e} \quad \Gamma = -0.476 \pm 0.004.
+\end{align*}
+
+In mancanza di una tabella con i valori, il numero totale di copie vendute dai
+primi 10~artisti in classifica (e da tutti i 130 artisti) si può calcolare
+utilizzando il nostro modello
+\begin{align*}
+  N_{10} = \sum_{k=1}^{10} N k^\Gamma \quad \text{e} \quad N_{tot} = \sum_{k=1}^{130} N k^\Gamma
+\end{align*}
+che, a sua volta, si possono approssimare con gli integrali
+\begin{align*}
+  N_{10} \approx \int_{0.5}^{10.5} N x^\Gamma dx =
+  \frac{N}{\Gamma + 1} \eval{x^{\Gamma + 1}}{0.5}{10.5} \;\; \approx 1137
+  \quad \text{e} \quad
+  N_{tot} \approx \int_{0.5}^{130.5} N x^\Gamma dx =
+  \frac{N}{\Gamma + 1} \eval{x^{\Gamma + 1}}{0.5}{130.5} \;\; \approx 5058
+\end{align*}
+La frazione di vendite dei primi 10 artisti sul totale si può dunque stimare
+come $f_{10} \approx \nicefrac{1137}{5058} \approx 22.48\%$
+(Per completezza, il calcolo diretto sulla tabella originale dei dati fornisce
+$f_{10} = 21.96\%$.)
+
+
+\exercise{
+Le occorrenze delle parole pi\'u frequenti nel romanzo \foreign{Moby Dick} di
+Herman Melville, ordinate in modo decrescente, sono ben descritte da una legge di
+potenza, come illustrato in figura~\ref{fig:moby_dick}. Si stimino la normalizzazione
+e l'indice della legge di potenza. \`E possibile fornire una stima del numero
+totale di parole da cui è composto il romanzo?
+
+\pgffigone{moby_dick}{
+Grafico delle occorrenze delle parole nel romanzo \foreign{Moby Dick} di
+Herman Melville, ordinate dalla più frequente (\foreign{the}) alla meno
+frequente. Il testo comprende 33449~parole distinte, per un totale di
+190313~occorrenze.
+Il testo integrale del romanzo, in inglese, è disponibile
+a \url{http://bioinf.gen.tcd.ie/pol/moby.dick.txt}.}
+}
+
+Ragionando esattamente come nell'esempio precedente possiamo dire che
+quando ci spostiamo di $3$ decadi sulla $x$, ci spostiamo di $-3$ decadi sulla
+$y$, per cui $\Gamma \approx -1$. La normalizzazione non è banale da leggere
+con precisione sull'asse delle $y$, ma vale sicuramente la disuguaglianza
+(piuttosto generosa) $10000 < N < 20000$. Il fit con il modello indicato dalla
+linea tratteggiata, fornisce
+\begin{align*}
+  N = (1.506 \pm 0.007) \times 10^4 \quad \text{e} \quad \Gamma = -0.977 \pm 0.001.
+\end{align*}
+
+Il numero totale di parole da cui è composto il romanzo si può stimare
+integrando la legge di potenza su tutto il dominio. Come estremo superiore
+dell'integrale possiamo prendere il valore della variabile indipendente per cui
+la legge di potenza vale $1$
+\begin{align*}
+  N k_{\text{max}}^\Gamma = 1 \quad \text{da cui} \quad k_{\text{max}} =
+  \left(\frac{1}{N}\right)^{\frac{1}{\Gamma}} \approx 19000,
+\end{align*}
+(non esistono occorrenze frazionarie, per cui possiamo non ha senso estendere
+oltre il dominio di integrazione). Incidentalmente, questa sarebbe la nostra
+migliore stima per il numero totale di parole~\emph{distinte}, ma possiamo
+immaginare facilmente di sbagliare per difetto, perché per piccoli valori delle
+occorrenze ci saranno molte parole distinte con la stessa molteplicità (e.g.,
+molte parole che compaiono solo 1 o 2 volte). In effetti la risposta corretta
+è 33449---quasi il doppio.
+Esattamente come prima possiamo passare al continuo per facilitare il calcolo,
+col che si ha
+\begin{align*}
+  N_{tot} \approx \int_{0.5}^{19000} N x^\Gamma dx \approx 177300.
+\end{align*}
+La risposta corretta, come possiamo leggere dalla didascalia della
+figura~\ref{fig:moby_dick}, è 190313, e l'errore relativo che abbiamo commesso
+è di circa il 7\%---non male.
+
+Cosa sarebbe successo se, anziché integrare fino a $k_{\text{max}}$, avessimo
+deciso di integrare fino a $\infty$? La risposta a questa domanda è
+indipendente dal particolare valore dell'indice $\Gamma$ della legge di
+potenza in questione? (Suggerimento: nel nostro caso avremmo ottenuto un
+risultato infinito, ma la risposta dipende da quanto è \emph{ripida} la legge
+di potenza---se tende a zero abbastanza velocemente, talvolta è lecito
+integrare fino ad $\infty$.)
+
+Notiamo che il fenomeno illustrato in figura~\ref{fig:moby_dick} va comunemente
+sotto il nome di \emph{legge di Zipf}. Potete dare un'occhiata a
+\url{https://arxiv.org/pdf/cond-mat/0412004.pdf} per altri esempi di leggi di
+potenza negli ambiti più disparati.
+
+
+\exercise{
+Lo spettro dei protoni dei raggi cosmici al di sopra dei 10~GeV
+è ragionevolmente ben descritto da una legge di potenza, come illustrato in
+figura~\ref{fig:protoni_ams}. Si stimino la normalizzazione e l'indice della legge di potenza.
+Sapendo che $1~\text{eV} = 1.602176634 \times 10^{-19}~\text{J}$, si trovi un
+riferimento macroscopico per i valori sull'asse delle $x$.
+
+\pgffigone{protoni_ams}{
+Spettro del flusso differenziale dei protoni nei raggi cosmici misurato
+dall'esperimento AMS-02 sulla \foreign{International Space Station} (ISS).
+I dati sono disponibili a~\url{https://tools.ssdc.asi.it/CosmicRays/}.}
+}
+
+Ormai siamo esperti: prendendo come riferimento le $2$ decadi tra $10$ e $1000$
+sull'asse delle $x$ possiamo stimare che sulla $y$ ci muoviamo di circa $-5.5$~dex,
+per cui la nostra stima qualitativa dell'indice della legge di potenza è
+$\Gamma \approx -\nicefrac{5.5}{2} = -2.75$.
+
+La stima delle normalizzazione, in questo caso, non è esattamente triviale,
+perché non si può leggere direttamente l'intercetta con l'asse $x=1$---l'intervallo
+dinamico della variabile indipendente parte da $8$. Possiamo però leggere
+il valore del flusso in corrispondenza di un'energia diversa, e.g., $10$~GeV,
+e riscalare opportunamente
+\begin{align*}
+  F(10) = N \times 10^\Gamma \approx 20 \quad \text{da cui} \quad
+  N \approx \frac{20}{10^\Gamma} \approx
+  11250~\text{m}^{-2}~\text{s}^{-1}~\text{sr}^{-1}~\text{GeV}^{-1}.
+\end{align*}
+(Notate che nella stima della normalizzazione abbiamo dovuto utilizzare la stima
+dell'indice ottenuta precedentemente.) Per completezza, il fit con il modello
+indicato dalla linea tratteggiata, fornisce
+\begin{align*}
+  N = (1.25 \pm 0.03) \times 10^4~\text{m}^{-2}~\text{s}^{-1}~\text{sr}^{-1}~\text{GeV}^{-1}
+  \quad \text{e} \quad \Gamma = -2.728 \pm 0.006.
+\end{align*}
+
+Per mettere nel contesto la nostra misura di energia, una zanzara che pesa
+$m = 5$~mg e che si muova con velocità $v = 1$~km/h (ovverosia $\approx 0.28$~m/s)
+possiede un'energia cinetica pari a
+\begin{align*}
+  T = \frac{1}{2}mv^2 \approx 1.9 \times 10^{-7}~\text{J} \approx 1.2~\text{TeV},
+\end{align*}
+ovverosia si troverebbe collocata tra gli ultimi due punti sulla destra in
+figura~\ref{fig:protoni_ams}. (Ma ricordiamo che la massa del protone è solo
+$1.67 \times 10^{-27}$~kg, cioè più di $20$ ordini di grandezza più piccola
+di quella della zanzara, per cui la velocità di un protone di $1$~TeV deve
+essere molto più grande di quella della zanzara\ldots)
+
+Le curiose (?) unità sull'asse delle $y$ meritano due parole. L'unico pezzo che
+probabilmente non conoscete è lo \emph{steradiante} (sr), che misura
+l'\emph{angolo solido}, ed è una sorta di generalizzazione in dimensione~3
+del radiante in geometria piana---essenzialmente rappresenta il rapporto
+dell'area della calotta sferica sottesa da un cono generico ed il raggio al
+quadrato della sfera
+\begin{align*}
+  \Omega = \frac{A}{r^2}.
+\end{align*}
+(L'intera sfera sottende un angolo solido di $4\pi$~sr.) Dal nostro grafico leggiamo
+allora che se avessimo un rivelatore perfetto di protoni di $1$~m$^2$ di superficie capace
+di vedere tutto il cielo, il numero di particelle che rivelerebbe tra $1$ e $2$~TeV
+(ovvero tra $1000$ e $2000$~GeV) sarebbe
+$\sim 10^{-4} \times 4\pi \times (2000 - 1000) \approx 1$ protone al secondo.
+
+
+
+\exercise{
+Si stimi il tempo medio di duplicazione del numero di \foreign{transistor} nei
+processori digitali sulla base del grafico in figura~\ref{fig:transistor} e si
+ricavi un limite superiore all'intervallo di tempo per il quale il processo può
+verosimilmente continuare a svilupparsi in modo esponenziale.
+
+\pgffigone{transistor}{
+Numero massimo di transistor nei processori digitali commerciali in funzione
+della data di immissione sul mercato. I dati sono descritti su
+\url{https://www.karlrupp.net/2018/02/42-years-of-microprocessor-trend-data/} e
+liberamente disponibili in forma tabulare
+a~\url{https://github.com/karlrupp/microprocessor-trend-data}.}
+}
+
+Questo è il nostro primo esempio di legge esponenziale. Notando che il numero
+di transistor cresce di circa $7.5$~dex in 50~anni, possiamo stimare il tempo
+caratteristico $\tau$ del nostro esponenziale come
+\begin{align*}
+  \tau \approx \frac{50 \log(e)}{7.5} \approx 2.90~\text{anni},
+\end{align*}
+da cui il tempo di duplicazione è $\tau \ln(2) \approx 2.01$~anni. (Per completezza,
+il fit esponenziale mostrato in figura restituisce un valore di $\tau = 2.93$~anni,
+che differisce dalla nostra stima per circa l'1\%.)
+
+A scopo di controllo possiamo calcolare l'aumento relativo del numero di
+transistor in 50~anni, dato un tempo di duplicazione di $\approx 2$~anni
+\begin{align*}
+  2^{\frac{50}{2}} = 2^{25} \approx 3.35 \times 10^7,
+\end{align*}
+che non è molto lontano dalle $7.5$~decadi che abbiamo stimato all'inizio
+guardando il grafico. Alternativamente possiamo notare che il numero di
+transistor aumenta di un fattore $1000$ ogni $20$~anni circa, e siccome
+$2^{10} = 1024 \approx 1000$, il tempo di duplicazione cercato è
+$\approx \nicefrac{20}{10} = 2$.
+
+Proviamo adesso ad attaccare la nostra seconda domanda, e cominciamo schematizzando
+il nostro microprocessore come una struttura planare di $1 \times 1$~cm$^2$.
+Allocare $\sim 10^{11}$ transistor in questa struttura significa che
+ciascun transistor occupa una celletta elementare di $10^{-11}$~cm$^2$, ovverosia
+un quadrato di lato $\ell \approx 3 \times 10^{-6}$~cm, o $30$~nm. (Non vi è
+dubbio che la nostra schematizzazione è grezza, ma l'ordine di grandezza delle
+dimensioni lineari di un transistor in una CPU di ultima generazione è corretto.
+Per mettere le cose in prospettiva, un capello umano è circa $10000$~volte
+più spesso.)
+
+Ora, se riuscissimo ad abbattere di un altro fattore $10$ le dimensioni lineari
+dei transistor, questo ci permetterebbe di aumentare di un fattore $10^2 = 100$
+il numero di transistor nella nostra CPU. Con un tempo di duplicazione di $2$
+anni, questo apre la prospettiva di una prosecuzione del nostro trend esponenziale
+per altri $2 \log_2(100) \approx 13$~anni.
+
+Inquadrando le cose da una prospettiva diversa, il nostro \foreign{chip} di
+$1 \times 1$~cm$^2$, assumendo uno spessore di $500~\mu$m, avrebbe un volume di
+$0.05$~cm$^3$, ed una massa $m \approx 100$~mg (la densità del silicio è $2.33$~g~cm$^{-3}$).
+Con un peso atomico di $m_a \approx 28$~amu, questo corrisponde ad un numero totale
+di atomi di silicio pari a
+\begin{align*}
+  n = N_A \frac{m}{m_a} = 6.02 \times 10^{23} \times \frac{0.1}{28} \approx 2.15 \times 10^{21}.
+\end{align*}
+Allora, anche immaginando l'ipotesi irrealistica di poter usare ogni singolo atomo
+come transistor, questo ci darebbe spazio per \emph{solo} altri $10$~ordini di
+grandezza, che esauriremmo in $2 \log_2(10^{10}) \approx 70$~anni. (In realtà
+ci sono buone ragioni di pensare che la crescita esponenziale del fenomeno saturi
+molto prima, e la nostra stima precedente di $10$--$15$ è probabilmente più
+ragionevole.)
+
+
+\exercise{
+Si osservi il profilo della densità atmosferica in funzione dell'altezza sul
+livello del mare illustrato in figura~\ref{fig:atmosfera_densita}. Si stimi
+la lunghezza di scala dell'esponenziale che meglio fitta i dati nei primi 100~km,
+rappresentato dalla linea tratteggiata. Si sviluppi un semplice modellino Fisico
+che spieghi quantitativamente perché la densità dovrebbe diminuire
+esponenzialmente con l'altezza, e si confronti il modello con i dati. A cosa
+potrebbe essere dovuta la brusca deviazione dal modello esponenziale al di sopra
+dei 120~km di altezza?
+
+\pgffigone{atmosfera_densita}{
+Profilo della densità atmosferica in funzione dell'altezza calcolata secondo il
+modello NRLMSISE-00
+(\url{https://ccmc.gsfc.nasa.gov/modelweb/models/nrlmsise00.php}) alle coordinate
+geografiche di Pisa, il 1 gennaio 2021. L'inserto in alto a destra mostra
+semplicemente uno \foreign{zoom} dei primi 45~km.}
+}
+
+Osservando la linea tratteggiata notiamo che essa corrisponde ad una diminuzione
+della densità pari a $13$~ordini di grandezza in $200$~km, ovverosia ad una
+lunghezza scala dell'esponenziale pari a
+\begin{align*}
+  z_0 \approx \frac{200 \log(e)}{13} \approx 6.7~\text{km}.
+\end{align*}
+Il fit corrispondente alla linea tratteggiata fornisce una stima di $z_0 =6.90 \pm 0.02$~km
+(qui e nella formula precedente abbiamo omesso il segno $-$, ma rimane inteso che
+l'esponenziale è decrescente).
+
+Passiamo alla seconda domanda, e consideriamo uno strato sottile di atmosfera di
+area $A$ e spessore $dz$ situato ad un'altezza $z$ dal suolo. Dette $p$ la
+pressione e $\rho$ la densità dell'atmosfera, l'equilibrio idrostatico si impone
+richiedendo che la forza dovuta alla differenza di pressione tra le due facce dello
+strato sia bilanciata esattamente dalla forza di gravità:
+\begin{align*}
+  \left(p(z) - p(z + dz)\right) A = A dz \rho(z) g \quad \text{da cui} \quad
+  \frac{p(z + dz) - p(z)}{dz} = -\rho(z) g
+\end{align*}
+e, facendo il limite per $dz \rightarrow 0$ il rapporto incrementale diviene la
+derivata e si ottiene
+\begin{align}\label{eq:equilibrio_idrostatico}
+  \td{p}{z}{z} = -\rho(z) g.
+\end{align}
+Ottimo---abbiamo ottenuto un'equazione differenziale relativamente semplice
+(per completezza, la~\eqref{eq:equilibrio_idrostatico} si dice tipicamente
+equazione dell'equilibrio idrostatico).
+Ora, la pressione e la densità dell'atmosfera non sono grandezze indipendenti e,
+per un gas perfetto, detta $\mu$ la massa molare, sono legate dalla relazione
+\begin{align*}
+  pV = n R T \quad \text{ovvero} \quad p = \frac{n R T}{V}
+\end{align*}
+Il numero di moli $n$ in una determinata quantità di sostanza si può esprimere
+come il rapporto tra la sua massa $m$ e la massa molare $\mu$ (il cui valore numerico
+in g, lo ricordiamo, è uguale al peso molecolare in unità di massa atomica)
+\begin{align*}
+  n = \frac{m}{\mu}
+\end{align*}
+per cui la pressione di un gas perfetto si può esprimere in termini della
+densità come
+\begin{align*}
+  p = \frac{m R T}{\mu V} = \frac{\rho RT}{\mu}.
+\end{align*}
+Mettendo finalmente tutto insieme otteniamo un'equazione differenziale per la
+densità (o, equivalenmtemente, per la pressione---visto che nel nostro semplice
+modello le due cose sono proporzionali) del tipo
+\begin{align}
+  \td{\rho}{z}{z} = -\frac{\mu g}{R T} \rho(z).
+\end{align}
+Se $T$ è costante (ovvero non dipende da $z$, nel qual caso si dice che
+l'atmosfera è isoterma) l'equazione si risolve banalmente
+\begin{align}
+  \rho(z) = \rho_0 e^{-\frac{z}{z_0}} \quad \text{con} \quad z_0 = \frac{R T}{\mu g}.
+\end{align}
+La cosa sembra promettente, perché il profilo di densità (e quindi di pressione)
+per un'atmosfera isoterma è effettivamente esponenziale. Se mettiamo dentro
+i numeri%
+\footnote{L'atmosfera terrestre è composta per circa il 78\% di azoto biatomico
+(N$_2$, massa molare $28$~g) e per il 21\% di ossigeno biatomico (O$_2$, massa
+molare $32$~g), ed il peso molare medio è circa $29$~g---per in nostri scopi
+non è necessaria una stima molto accurata, e comunque la composizione varia con
+l'altezza. Quando sostituite i valori numerici nella formula dovete aver cura di
+convertire la massa molare in $kg$, perché
+$1~\text{J} = 1~\text{kg}~\text{m}^2~\text{s}^{-2}$.}
+\begin{align*}
+  R = 8.314~\text{J}~\text{mol}^{-1}~^\circ\text{K}^{-1} \quad
+  \mu \approx 29~\text{g} = 29 \times 10^{-3}~\text{kg} \quad
+  T \approx 290^\circ\text{K}
+\end{align*}
+si ottiene
+\begin{align*}
+  z_0 = \frac{R T}{\mu g} \approx 8.4~\text{km}.
+\end{align*}
+Non siamo lontanissimi dai $6.9$~km che abbiamo ottenuto dal fit dei dati per
+i primi $100$~km di atmosfera, e, data la crudezza del nostro semplice modellino,
+non ci aspettavamo niente di più accurato.
+
+\pgffigone{atmosfera_temperatura}{
+Profilo della temperatura atmosferica in funzione dell'altezza calcolata secondo
+il modello NRLMSISE-00
+(\url{https://ccmc.gsfc.nasa.gov/modelweb/models/nrlmsise00.php}) alle coordinate
+geografiche di Pisa, il 1 gennaio 2021---ovvero nella stessa situazione
+della figura~\ref{fig:atmosfera_densita}.
+}
+
+Ci rimane solo (per così dire) da capire che cosa succede oltre i $100$~km di altezza.
+Lo strato di atmosfera compreso tra $\sim 80$ e $\sim 600$~km prende il nome di
+\emph{termosfera}, ed in questa regione la temperatura aumenta significativamente
+con l'altezza a causa dell'assorbimento della radiazione elettromagnetica
+proveniente dal Sole. L'andamento della temperatura atmosferica in funzione
+dell'altezza è illustrato in figura~\ref{fig:atmosfera_temperatura} e spiega,
+almeno qualitativamente, il cambiamento di pendenza nel profilo di densità che
+si vede chiaramente in figura~\ref{fig:atmosfera_densita}.
+
+
+\exercise{
+La figura~\ref{fig:consumo_energia} rappresenta l'andamento del consumo annuo
+globale di energia dal 1800 al 2010. Si convertano le unità di misura sull'asse
+delle $y$ in una scala di più immediata intuizione---oppure si disegnino alcune
+linee orizzontali rilevanti che aiutino a comprendere in modo immediato gli
+ordini di grandezza. Si stimino i tempi tipici di duplicazione per i due rami della
+curva (prima e dopo il 1900) sulla base dei due modelli di \bestfit\ indicati dalle
+linee tratteggiate in figura. Qual è il consumo globale annuo atteso nel 2070,
+assumendo che l'andamento degli ultimi 100 anni prosegua? Come avremmo risposto
+alla stessa domanda prima del 1900?
+
+\pgffigone{consumo_energia}{
+Consumo annuo globale di energia (in Wh) dal 1800 al 2010. I dati sono disponibili a
+\url{https://ourworldindata.org/energy-production-consumption}.}
+}
+
+A questo punto siamo esperti nella stima dei tempi caratteristici degli esponenziali.
+Il primo ramo passa da $\sim 5.5 \times 10^{16}$ nel 1800 a $\sim 2.2 \times 10^{17}$
+nel 2000---un aumento di un fattore circa 4 in 200~anni, che corrisponde ad un tempo
+di duplicazione di circa un secolo. Il secondo ramo aumenta di circa un ordine di
+grandezza (ovvero una decade) nei 100~anni tra il 1900 ed il 2000, per un tempo caratteristico di
+\begin{align*}
+  \tau_2 \approx \frac{100 \log(e)}{1} \approx 43~\text{anni},
+\end{align*}
+ed un tempo di duplicazione di circa~$30$~anni. I valori forniti dai due fit sono
+$95.7$ e $28.8$~anni, rispettivamente.
+
+A questo punto non è difficile estrapolare i due rami al loro valore nel
+2070: otteniamo $3.8 \times 10^{16}$~Wh nel primo caso e $6.7 \times 10^{17}$~Wh nel
+secondo: la differenza non è da poco---circa un fattore 20. (Evidentemente attorno
+all'inizio del secolo scorso è avvenuto un cambio importante nelle nostre abitudini
+di consumo.)
+
+Cerchiamo adesso di dare senso alle unità sull'asse delle $y$. Cominciamo con il
+ricordare che in Fisica una potenza è una variazione di energia per unità di
+tempo, che si misura in W (o J~s$^{-1}$). Una lampadina da $10$~W consuma $10$~J
+di energia ogni secondo. Il Wh è una unità di misura (curiosa, ma molto usata
+nella vita di ogni giorno) per l'energia---se controllare la vostra ultima bolletta
+vi accorgerete che il consumo di energia elettrica è misurato in kWh---e corrisponde
+banalmente alla potenza di $1$~W moltiplicata per $1$~ora (i.e., $3600$~s), ovvero
+$1~\text{Wh} = 3600~\text{J}$.
+
+Le più grosse centrali nucleari attualmente disponibili sono capaci di erogare
+una potenza di circa $1$~Gw, che, se moltiplicata per $1$~anno immaginando che
+la centrale sia attiva senza interruzione, fornisce una produzione totale di
+$10^9~\text{W} \times (24 \times 365)~\text{h} \approx \times 10^{13}$~Wh---meno
+di un centesimo del consumo annuo globale nel 1800. Lo scoppio della testata
+nucleare Russa AN~602, la più potente mai testata, ha rilasciato, più o meno
+istantaneamente, $\sim 6 \times 10^{13}$~Wh.
+
+D'altra parte la Terra riceve dal Sole la (niente meno che spettacolare) potenza di
+$1.74 \times 10^{17}$~W ($174$~pW), che, moltiplicata per $1$~anno, si traduce
+in un'energia pari a $\sim 1.5 \times 10^{21}$~Wh. (Va da sé che, per diversi
+motivi, questa energia non è interamente utilizzabile, nemmeno in linea di
+principio---il 30\%, e.g., viene riflessa dall'alta atmosfera.) Se fossimo in grado
+di sfruttare efficacemente $\nicefrac{1}{1000}$ dell'energia solare, questo ci
+permetterebbe di soddisfare il \foreign{trend} attuale di crescita del consumo
+energetico fino circa al 2100. (Pensate bene a questi ultimi due numeri, perché
+non dovrebbero lasciarvi tranquilli\ldots)
+
+
+\exercise{
+La figura~\ref{fig:produzione_plastica} rappresenta l'andamento della produzione annua
+globale di plastica dal 1950 al 2015. Si convertano le unità di misura sull'asse
+delle $y$ in una scala di più immediata intuizione---oppure si disegnino alcune
+linee orizzontali rilevanti che aiutino a comprendere in modo immediato gli
+ordini di grandezza. Si stimino i tempi tipici di duplicazione per i due rami della
+curva (prima e dopo il 1970) sulla base dei due modelli di \bestfit\ indicati dalle
+linee tratteggiate in figura. Qual è la produzione globale annua atteso nel 2070,
+assumendo che l'andamento degli ultimi 40 anni prosegua? Come avremmo risposto
+alla stessa domanda prima del 1970?
+
+\pgffigone{produzione_plastica}{
+Andamento della produzione annua globale di plastica dal 1950 al 2015.
+I dati sono disponibili a \url{ https://ourworldindata.org/plastic-pollution}.}
+}
+
+Le pendenze dei due esponenziali si possono stimare notando che per il primo
+ramo si ha una crescita di circa 2~ordini di grandezza nei 30~anni tra il 1950
+ed il 1980, mentre per il secondo si ha una crescita di circa un ordine di grandezza
+nei 40 anni tra il 1950 ed il 1990, i.e.,
+\begin{align*}
+  \tau_1 \approx \frac{30 \log(e)}{2} \approx 6.5~\text{anni} \quad \text{e} \quad
+  \tau_2 \approx \frac{40 \log(e)}{1} \approx 17~\text{anni}.
+\end{align*}
+I valori restituiti dai due fit sono $\tau_1 = 6.6 \pm 0.1$~anni e
+$\tau_2 = 19.2 \pm 0.3$~anni, rispettivamente. Al solito, le nostre stime non
+erano irragionevoli. Per completezza, le proiezioni al 2070 delle curve sono
+$1.4 \times 10^{17}$~kg e $7.5 \times 10^{12}$~kg, rispettivamente.
+
+Per mettere nel contesto le unità sull'asse delle $y$, possiamo notare che
+il peso totale della popolazione umana sulla Terra, assumendo 8~miliardi di
+persone con un peso medio di $60$~kg, è dell'ordine di $5 \times 10^{11}$~kg:
+la produzione annua di plastica oggi equivale a circa l'80\% del peso della
+popolazione mondiale, e sarà più di 10~volte più grande nel 2070---assumendo
+che la pendenza attuale continui nel tempo.
+
+
+\exercise{Si misurano le due grandezze $x = \hat{x} \pm \sigma_x$ e
+$y = \hat{y} \pm \sigma_y$. Si propaghi l'errore sulla quantità
+\begin{align*}
+  A = \frac{x - y}{x + y}.
+\end{align*}
+e si forniscano esplicitamente i risultati numerici per $x = 100 \pm 4$ e
+$y = 50 \pm 3$ (per cui $\hat{A} = \nicefrac{1}{3}$).
+}
+
+Il modo pi\`u semplice (\emph{e, purtroppo, incorretto!}) di ragionare \`e di
+definire numeratore e denominatore come due nuove quantit\`a
+\begin{align*}
+  N = (x - y) \quad \text{e} \quad D = (x + y),
+\end{align*}
+propagare separatamente le incertezze assolute sulla somma e sulla differenza,
+sfruttando le formulette note
+\begin{align*}
+  \sigma^2_N = \sigma^2_D = \sigma^2_x + \sigma^2_y = \sigma^2 = 5,
+\end{align*}
+e propagare infine l'errore relativo sul rapporto, sfruttando di nuovo la formula
+nota dalla propagazione delle incertezze
+\begin{align*}
+  \left(\frac{\sigma_A}{\hat{A}}\right)^2 =
+  \left(\frac{\sigma_N}{\hat{N}}\right)^2 + \left(\frac{\sigma_D}{\hat{D}}\right)^2 =
+  \sigma^2 \left( \frac{1}{\hat{N}^2} + \frac{1}{\hat{D}^2} \right) =
+  \sigma^2 \left( \frac{\hat{D}^2 + \hat{N}^2}{\hat{D}^2\hat{N}^2} \right)
+  \quad \text{ovvero} \quad \frac{\sigma_A}{A} \approx 7.2\%
+\end{align*}
+da cui
+\begin{align*}
+  \sigma^2_A = \sigma^2 \hat{A}^2 \left( \frac{\hat{D}^2 + \hat{N}^2}{\hat{D}^2\hat{N}^2} \right) =
+  \frac{2\left(\hat{x}^2 + \hat{y}^2\right) \left(\sigma^2_x + \sigma^2_y\right)}{(\hat{x} + \hat{y})^4}
+  \quad \text{e} \quad \sigma_A = 0.024 \quad \text{(errato)}.
+\end{align*}
+Quest'ultimo passaggio \`e sbagliato perché $N$ e $D$ non sono indipendenti---sono
+due combinazioni lineari delle stesse quantit\`a $x$ e $y$.
+
+Il modo corretto di propagare le incertezze \`e, invece, la formula generale
+(linearizzata al prim'ordine), ovverosia
+\begin{align*}
+  \sigma^2_A = \left( \pd{A}{x}{\hat{x}, \hat{y}} \right)^2 \sigma^2_x +
+  \left( \pd{A}{y}{\hat{x}, \hat{y}} \right)^2 \sigma^2_y =
+  4 \frac{\hat{y}^2\sigma^2_x + \hat{x}^2\sigma^2_y}{(\hat{x} + \hat{y})^4}
+  \quad \text{e} \quad \sigma_A = 0.032 \quad \text{(corretto)}.
+\end{align*}
+Notiamo esplicitamente che vi \`e una differenza del 50\% tra la risposta corretta
+e quella sbagliata.

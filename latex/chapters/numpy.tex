@@ -1,0 +1,104 @@
+\chapter{Glossario di \numpy}
+\label{sec:numpy}
+
+Questa appendice costituisce un breve glossario delle funzioni di \numpy\ che
+sono usate più largamente in laboratorio.
+
+Dato che il \software\ evolve sempre più velocemente della carta stampata,
+non riportiamo per intero la segnatura delle funzioni (che è invece disponibile
+nella documentazione online, \foreign{linkata} per convenienza), ma ci limitiamo,
+ove utile, a menzionare gli argomenti più importanti. Notiamo che, ove le
+funzioni operino su \foreign{array}, \numpy~è equipaggiato per convertire
+opportunamente liste o tuple di numeri e, più in generale, qualsiasi oggetto
+iterabile di \python~che possa essere trasformato in un \foreign{array}.
+
+
+\section{Variabili campione}
+
+
+\npcmd{average}{%
+restituisce la media pesata dei valori di un \foreign{array}
+\begin{align*}
+  m = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}.
+\end{align*}
+L'argomento \code{weights} contiene i valori dei pesi nella forma
+di un \foreign{array} delle stesse dimensioni di quello dei valori.
+}
+
+\npcmd{mean}{%
+restituisce la media aritmetica dei valori di un \foreign{array}
+\begin{align*}
+  m = \frac{1}{n}\sum_{i=1}^{n} x_i.
+\end{align*}
+}
+
+\npcmd{std}{%
+restituisce la deviazione standard campione dei valori di un \foreign{array},
+ovvero la radice quadrata della varianza campione
+\begin{align*}
+  s = \sqrt{\frac{1}{(n - \Delta_\text{dof})} \sum_{i=1}^{n} (x_i - m)^2}.
+\end{align*}
+L'argomento \code{ddof} contiene la differenza tra il numero di valori
+ed il numero di gradi di libertà.
+}
+
+\npcmd{var}{%
+restituisce la varianza campione dei valori di un \foreign{array}
+\begin{align*}
+  s^2 = \frac{1}{(n - \Delta_\text{dof})} \sum_{i=1}^{n} (x_i - m)^2.
+\end{align*}
+L'argomento \code{ddof} contiene la differenza tra il numero di valori
+ed il numero di gradi di libertà. Per \code{ddof = 0} si ha la stima
+non imparziale~\eqref{eq:varianza_campione}, mentre per \code{ddof = 1}
+si ha la stima imparziale~\eqref{eq:varianza_campione_imparziale}.
+}
+
+
+\section{Generazione di numeri pseudo-casuali}
+
+\npcmd{random.binomial}{%
+restituisce un \foreign{array} di numeri della lunghezza richiesta (in questo caso~$15$),
+estratti da una distribuzione binomiale con $n$ e $p$ fissati---vedi
+sezione~\ref{sec:distribuzione_binomiale}}.
+
+\npcmd{random.chisquare}{%
+restituisce un \foreign{array} di numeri della lunghezza richiesta (in questo caso~$3$),
+estratti da una distribuzione del $\chisq$ con un dato numero di gradi di
+libertà---vedi sezione~\ref{sec:pdf_chi2}.}
+
+\npcmd{random.exponential}{%
+restituisce un \foreign{array} di numeri della lunghezza richiesta (in questo caso~$3$),
+estratti da una distribuzione esponenziale con media fissata---vedi
+sezione~\ref{sec:distribuzione_esponenziale}.}
+
+\npcmd{random.normal}{%
+restituisce un \foreign{array} di numeri della lunghezza richiesta (in questo caso~$3$),
+estratti da una distribuzione di Gauss con media e deviazione standard
+fissate---vedi sezione~\ref{sec:distribuzione_gauss}.}
+
+\npcmd{random.poisson}{%
+restituisce un \foreign{array} di numeri della lunghezza richiesta (in questo caso~$15$),
+estratti da una distribuzione di Poisson con media fissata---vedi
+sezione~\ref{sec:poisson_pdf}.}
+
+\npcmd{random.uniform}{%
+restituisce un \foreign{array} di numeri della lunghezza richiesta (in questo caso~$3$),
+estratti da una distribuzione uniforme nell'intervallo
+$[x_\text{min}, x_\text{max}]$---vedi sezione~\ref{sec:distribuzione_uniforme}.}
+
+
+\section{Miscellanea}
+
+\npcmd{full}{%
+restituisce un \foreign{array} di lunghezza fissata i cui valori sono tutti
+identici al numero passato come secondo argomento.
+}
+
+\npcmd{geomspace}{%
+restituisce una griglia di numeri spaziati logaritmicamente tra un minimo ed
+un massimo.
+}
+
+\npcmd{linspace}{%
+restituisce una griglia equispaziata di numeri tra un minimo ed un massimo.
+}

@@ -1,0 +1,28 @@
+\begin{tikzpicture}[rounded corners,
+  main node/.style={rectangle,draw,minimum size=7mm}]%
+  %\node at (0, 0) {};
+  \pgfmathsetmacro{\dx}{42}
+  \pgfmathsetmacro{\dy}{25}
+  \node[main node] (gauss) {Gaussiana};
+  \node[main node] (t) [right=\dx mm of gauss] {$t$~di Student};
+  \node[main node] (multinomiale) [left=\dx mm of gauss] {Multinomiale};
+  \node[main node] (binomiale) [above left=\dy mm and 0.5*\dx mm of gauss] {Binomiale};
+  \node[main node] (poisson) [above right=\dy mm and 0.5*\dx mm of gauss] {Poissoniana};
+  \node[main node] (chi2) [below left=\dy mm and 0.5*\dx mm of gauss] {$\chisq$};
+
+  \draw [out=0,in=180,-{>[scale=1.8]}] (binomiale.east) to (poisson.west);
+  \draw [out=-90,in=90,-{>[scale=1.8]}] (binomiale.south) to (gauss.north);
+  \draw [out=-90,in=90,-{>[scale=1.8]}] (poisson.south) to (gauss.north);
+  \draw [out=180,in=0,-{>[scale=1.8]}] (t.west) to (gauss.east);
+  \draw [out=0,in=180,-{>[scale=1.8]}] (multinomiale.east) to (gauss.west);
+  \draw [out=90,in=180,-{>[scale=1.8]}] (multinomiale.north) to (binomiale.west);
+  \draw [out=90,in=-90,-{>[scale=1.8]}] (chi2.north) to (gauss.south);
+
+  \node[yshift=\dy mm] at (gauss.north) {$p \rightarrow 0$, $np = \mu$};
+  \node[xshift=-0.5*\dx mm, yshift=0.5*\dy mm] at (gauss) {$n \rightarrow \infty$};
+  \node[xshift=0.5*\dx mm, yshift=0.5*\dy mm] at (gauss) {$\mu \rightarrow \infty$};
+  \node[xshift=0.5*\dx mm, yshift=0] at (gauss.south east) {$n \rightarrow \infty$};
+  \node[xshift=-0.5*\dx mm, yshift=0] at (gauss.south west) {$n \rightarrow \infty$};
+  \node[xshift=-0.5*\dx mm, yshift=0] at (gauss.south west) {$n \rightarrow \infty$};
+  \node[xshift=-0*\dx mm, yshift=-0.5*\dy mm] at (gauss.south) {$\nu \rightarrow \infty$};
+\end{tikzpicture}

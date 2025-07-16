@@ -1,0 +1,27 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/fit\_sin.py}{https://bitbucket.org/.../fit\_sin.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{curve\PYZus{}fit}
+
+\PY{k}{def} \PY{n+nf}{fit\PYZus{}model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{omega}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{omega} \PY{o}{*} \PY{n}{x}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Definition of the input data set.}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{20}
+\PY{n}{sigma\PYZus{}y} \PY{o}{=} \PY{l+m+mf}{0.05}
+\PY{n}{omega} \PY{o}{=} \PY{l+m+mf}{1.2}
+\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{19.0}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{n}{fit\PYZus{}model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{omega}\PY{p}{)} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma\PYZus{}y}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Need to turn sigma\PYZus{}y into an array to be used in the fit.}
+\PY{n}{sigma\PYZus{}y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{n}{sigma\PYZus{}y}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Perform the fit and calculate the chisquare.}
+\PY{n}{popt}\PY{p}{,} \PY{n}{pcov} \PY{o}{=} \PY{n}{curve\PYZus{}fit}\PY{p}{(}\PY{n}{fit\PYZus{}model}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{sigma\PYZus{}y}\PY{p}{)}
+\PY{n}{chisq} \PY{o}{=} \PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{fit\PYZus{}model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{o}{*}\PY{n}{popt}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{sigma\PYZus{}y}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Print the fit output.}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{omega = }\PY{l+s+si}{\PYZob{}}\PY{n}{popt}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s1}{.4f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{pcov}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{l+s+si}{:}\PY{l+s+s1}{.4f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Chisquare = }\PY{l+s+si}{\PYZob{}}\PY{n}{chisq}\PY{l+s+si}{:}\PY{l+s+s1}{.1f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+[Output]
+omega = 1.2005 +/- 0.0011
+Chisquare = 11.6
+\end{Verbatim}

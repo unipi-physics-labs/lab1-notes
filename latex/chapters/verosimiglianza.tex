@@ -1,0 +1,595 @@
+\chapter{Cenni al principio di massima verosimiglianza}
+
+Torniamo per un attimo al secondo dei problemi che abbiamo introdotto a
+pagina~\pageref{item:due problemi}: abbiamo un'urna contenente 5
+palline---alcune rosse ed alcune blu (ma non conosciamo la proporzione tra i
+colori). Estraiamo una pallina, che risulta essere blu, e la mettiamo da parte.
+Estraiamo una seconda pallina, che stavolta è rossa. Qual è il numero di
+palline rosse nell'urna?
+Abbiamo già avuto modo di vedere come questa domanda non abbia una risposta
+univoca---e sicuramente non senza precisare meglio le condizioni al contorno
+del problema. Ma è giunto il momento di riesaminare il problema criticamente
+alla luce di ciò che abbiamo imparato lungo il percorso.
+
+Supponiamo dunque per un attimo che l'urna contenga $2$~palline rosse e $3$~blu.
+In questo caso la probabilità che l'esito della nostra estrazione sia quello
+descritto nel problema---una pallina blu seguita da una rossa, è
+esattamente $P = \nicefrac{3}{5} \times \nicefrac{2}{4} = \nicefrac{3}{10}$.
+(L'uguaglianza è da leggere come: alla prima estrazione abbiamo $3$~palline
+blu su~$5$, per cui la probabilità di estrarre una pallina blu è
+\nicefrac{3}{5}; alla seconda estrazione abbiamo $2$~palline rosse su $4$
+rimanenti, per cui la probabilità di estrarre una pallina rossa è
+\nicefrac{2}{4}; poiché gli eventi sono indipendenti le probabilità si
+moltiplicano.) Ovviamente questo non risponde alla domanda di partenza,
+perché nessuno ci dice che nell'urna ci fossero effettivamente $2$~palline
+rosse e $3$~blu. Ci fornisce però una possibile chiave di lettura
+per affrontare il problema---per ogni configurazione iniziale dell'urna
+possiamo calcolare la probabilità di ottenere l'esito delle estrazioni di
+nostro interesse, vale a dire una pallina blu seguita da una rossa, come
+mostrato nella tabella~\ref{tab:ml_urna}.
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{llll}
+      \hline
+      $n_B$ & $n_R$ & $P$\\
+      \hline
+      \hline
+      $0$ & $5$ & $\nicefrac{0}{5} \times \nicefrac{4}{4} = 0$\\
+      $1$ & $4$ & $\nicefrac{1}{5} \times \nicefrac{4}{4} = \nicefrac{4}{20}$\\
+      $2$ & $3$ & $\nicefrac{2}{5} \times \nicefrac{3}{4} = \nicefrac{6}{20}$\\
+      $3$ & $2$ & $\nicefrac{3}{5} \times \nicefrac{2}{4} = \nicefrac{6}{20}$\\
+      $4$ & $1$ & $\nicefrac{4}{5} \times \nicefrac{1}{4} = \nicefrac{4}{20}$\\
+      $5$ & $0$ & $\nicefrac{5}{5} \times \nicefrac{0}{4} = 0$\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Tabella dei valori della probabilità di estrarre una pallina
+      blu seguita da una rossa per una qualsiasi configurazione iniziale di
+      un'urna contente $n_B + n_R = 5$~palline.
+    }
+    \label{tab:ml_urna}
+  }
+\end{table}
+
+A questo punto possiamo tentare di chiudere il cerchio dicendo che, se dovessimo
+scommettere sul numero di palline blu (o rosse) nell'urna, sarebbe sensato
+scegliere una delle due configurazioni ($n_B = 2$ e $n_R = 3$ oppure $n_B = 3$ e
+$n_R = 2$) che massimizzano la probabilità di ottenere la sequenza di
+estrazioni cercata. Come vedremo tra un attimo abbiamo appena enunciato il
+\emph{principio di massima verosimiglianza} (o \foreign{maximum likelihood}).
+
+
+\section{Di nuovo sul concetto di verosimiglianza}
+
+Abbiamo incontrato il concetto di verosimiglianza per la prima volta nella
+sezione~\ref{sec:bayes_nomenclatura}, e lo abbiamo utilizzato, anche se in modo
+implicito, per risolvere il problema generale della misura di efficienza nella
+sezione~\ref{sec:misure_efficienza}. Adesso è il momento di affrontare il
+problema in modo più organico.
+
+Dato un modello probabilistico arbitrario, funzione di $m$ parametri
+$\theta_1 \ldots \theta_m$, la funzione di verosimiglianza non è altro che la
+probabilità di osservare un determinato esito $d$ (che tecnicamente, lo
+ricordiamo, è una probabilità condizionata per la variabile casuale $d$)
+\emph{vista come funzione dei valori dei parametri del modello}
+\begin{align}
+  \likelihood{\theta_1, \ldots, \theta_m \cond d} =
+  \prob{d \cond \theta_1, \ldots, \theta_m}.
+\end{align}
+Sembra poco più di un gioco di parole, ma come vedremo si tratta di un
+passaggio che ha implicazioni profonde. Lo illustriamo con un esempio.
+
+
+\subsection{Un esempio concreto: il campionamento singolo di una variabile
+  Poissoniana}
+
+Supponiamo di osservare un processo Poissoniano con media $\mu$---per fissare
+le idee il numero $k$ di decadimenti di un determinato campione radioattivo
+in $10$ secondi. Se conosciamo \emph{esattamente} la media $\mu$ (per esempio
+$\mu = 3$) possiamo scrivere, con ovvio significato dei termini,
+\begin{align}\label{eq:mle_pdf_poisson}
+  \poissonpdf[\mu = 3]{k} = \frac{3^k}{k!}e^{-3}.
+\end{align}
+Questa espressione ci dice la probabilità che, fissata la media $\mu$,
+si misuri un generico valore di $k$; si tratta, appunto, di una tipica
+proposizione di calcolo delle probabilità. Ma il Fisico sperimentale si pone
+il problema inverso: da un valore \emph{misurato} $k$ (per esempio $k = 3$)
+si vuole inferire il valore \emph{incognito} di $\mu$. Allora possiamo
+riscrivere la \eqref{eq:mle_pdf_poisson} considerando $k$ come costante e $\mu$
+come variabile indipendente:
+\begin{align}\label{eq:mle_likelihood_poisson}
+  \likelihood[k = 3]{\mu} = \frac{\mu^3}{3!}e^{-\mu}.
+\end{align}
+
+\pgffigtwo{esempio_likelihood_poisson1}{esempio_likelihood_poisson2}{
+  Distribuzione di Poisson $\poissonpdf[\mu = 3]{k}$ e
+  corrispondente funzione di verosimiglianza $\likelihood[k = 3]{\mu}$.
+}
+
+La distribuzione di Poisson $\poissonpdf[\mu = 3]{k}$ e la corrispondente
+funzione di verosimiglianza $\likelihood[k = 3]{\mu}$ sono mostrate in
+figura~\ref{fig:esempio_likelihood_poisson1_esempio_likelihood_poisson2}---a
+costo di essere pedanti ricordiamo che la prima è una funzione di
+distribuzione della variabile discreta $k$, la seconda è una funzione della
+variabile continua $\mu$. Il fatto che le due funzioni siano per certi aspetti
+simili nella \emph{forma} non deve ingannare; è interessante notare, ad
+esempio, che la funzione di distribuzione è diversa da zero per $k = 0$
+mentre la funzione di verosimiglianza si annulla per $\mu = 0$---il che è
+semplicemente dovuto al fatto che, mentre da una Poissoniana con media $\mu = 3$
+si possono ottenere $0$ conteggi, da una Poissoniana con media $\mu = 0$
+\emph{non} si possono ottenere  $3$ conteggi.
+In sostanza non si tratta di una mera questione di notazione: come vedremo tra
+breve la distinzione tra la \eqref{eq:mle_pdf_poisson} e la
+\eqref{eq:mle_likelihood_poisson} è profonda e gravida di conseguenze.
+
+La funzione di verosimiglianza non è in generale una funzione di
+distribuzione, poiché non vi è nessuna ragione per cui debba essere
+correttamente normalizzata se integrata su tutti i valori possibili del
+parametro (o dei parametri) del modello. Il nostro esempio, incidentalmente,
+è una sorta di eccezione, nel senso che si può dimostrare per integrazione
+diretta che
+\begin{align*}
+  \int_0^\infty \likelihood[k = 3]{\mu} \diff[\mu] =
+  \int_0^\infty \frac{\mu^3}{3!}e^{-\mu} \diff[\mu] = 1.
+\end{align*}
+La cosa non è in fondo così importante perché in questo contesto, come
+abbiamo visto, la cosa che ci interessa di più è il valore $\hat{\mu}$
+di $\mu$ per cui la funzione di verosimiglianza assume il valore massimo.
+La derivata di $\like$ è
+\begin{align*}
+  \td{\like}{\mu}{\mu; k = 3} = \frac{\mu^2e^{-\mu}(3 - \mu)}{3!},
+\end{align*}
+da cui $\hat{\mu} = 3$. In altre parole se misuriamo $3$~conteggi, il principio
+di massima verosimiglianza ci dice che la nostra miglior stima della media
+del processo Poissoniano sottostante è $3$. Ragionevole, no?
+
+
+\section{Stime di massima verosimiglianza}
+
+Cerchiamo di formalizzare il problema in termini più generali. Sia dato un
+insieme di $n$ misure sperimentali $x_1,\ldots,x_n$ ed un modello dipendente da
+$m$ parametri $\theta_1,\ldots,\theta_m$. Fissato un generico vettore di valori
+dei parametri, il modello definisce univocamente la probabilità (o la
+densità di probabilità, nel caso i dati siano variabili continue) di
+ottenere proprio le nostre misure. Adesso noi scriviamo la funzione di
+verosimiglianza come
+\begin{align}
+  \likelihood[x_1,\ldots,x_n]{\theta_1,\ldots,\theta_m} =
+  p(x_1,\ldots,x_n \cond \theta_1,\ldots,\theta_m).
+\end{align}
+
+Il \emph{principio di massima verosimiglianza} si può enunciare dicendo che la
+miglior stima $\hat\theta$ del vettore dei parametri $\theta$ è quella che
+massimizza la funzione di verosimiglianza:
+\begin{align}
+  \begin{cases}
+    \pd{\like}{\theta_1}{\hat\theta_1,\ldots,\hat\theta_m;x_1,\ldots,x_n} = 0\\
+    \hspace*{30pt}\vdots \\
+    \pd{\like}{\theta_m}{\hat\theta_1,\ldots,\hat\theta_m;x_1,\ldots,x_n} = 0.
+   \end{cases}
+\end{align}
+
+
+\subsection{Stime di massima verosimiglianza nel caso Poissoniano}
+\label{sec:stima_max_ver_poisson}
+
+Supponiamo di aver campionato $n$ volte una variabile Poissoniana $k$ con
+media (incognita) $\mu$ e di aver ottenuto i valori $k_1,\ldots,k_n$. Come
+possiamo applicare il principio di massima verosimiglianza per stimare $\mu$?
+
+Per prima cosa scriviamo la probabilità $P_i$ di ottenere il (singolo) valore
+$k_i$ per un generico valore di $\mu$:
+\begin{align*}
+  P_i = \poissonpdf[\mu]{k_i} = \frac{\mu^{k_i}}{k_i!}\,e^{-\mu}.
+\end{align*}
+Ora, se i campionamenti sono indipendenti, la probabilità $P$ di ottenere
+esattamente la nostra sequenza $k_1,\ldots,k_n$ non è altro che il prodotto
+delle probabilità singole
+\begin{align*}
+  P = \prod_{i = 1}^n P_i = \prod_{i = 1}^n \frac{\mu^{k_i}}{k_i!}\,e^{-\mu},
+\end{align*}
+e questa è anche la nostra verosimiglianza
+\begin{align}\label{eq:verosimiglianza_campionamento_poisson}
+  \likelihood[x_1,\ldots,x_n]{\mu} =
+  \prod_{i = 1}^n \frac{\mu^{k_i}}{k_i!}\,e^{-\mu}.
+\end{align}
+
+L'espressione~\ref{eq:verosimiglianza_campionamento_poisson} non è
+particolarmente comoda da derivare per trovare il massimo---essenzialmente
+perché la derivata del prodotto non è uguale al prodotto delle derivate.
+La funzione logaritmo ci viene però in aiuto per due motivi:
+\begin{enumerate}
+\item il logaritmo trasforma prodotti in somme (e la derivata della somma è
+  uguale alle somma delle derivate);
+\item il logaritmo è una funzione strettamente crescente, per cui il massimo
+  di $\ln \like$ corrisponde al massimo di $\like$.
+\end{enumerate}
+Scriviamo allora
+\begin{align}
+  \ln\likelihood[k_1,\ldots,k_n]{\mu} =
+  \sum_{i = 1}^n \ln \left( \frac{\mu^{k_i}}{k_i!}\,e^{-\mu} \right) =
+  \sum_{i = 1}^n \left( k_i \ln \mu - \ln\left( k_i! \right) - \mu \right),
+\end{align}
+la cui derivata rispetto a $\mu$ non è altro che
+\begin{align*}
+  \td{\ln\like}{\mu}{\mu;k_1,\ldots,k_n} =
+  \sum_{i = 1}^n \left(\frac{k_i}{\mu} - 1 \right) =
+  \frac{1}{\mu} \sum_{i = 1}^n k_i - n,
+\end{align*}
+che si annulla per
+\begin{align}
+  \hat{\mu} = \frac{1}{n} \sum_{i = 1}^n k_i.
+\end{align}
+Non sorprendentemente, il principio di massima verosimiglianza ci dice che
+la miglior stima della media del processo Poissoniano non è altro che la
+media aritmetica dei nostri campionamenti.
+
+
+\subsection{Stime di massima verosimiglianza nel caso esponenziale}
+
+Supponiamo di aver campionato $n$ volte una variabile casuale continua
+con funzione di distribuzione esponenziale con parametro $\lambda$ ignoto.
+Detti $x_1,\ldots,x_n$ gli $n$ campionamenti della nostra variabile la funzione
+di verosimiglianza è
+\begin{align*}
+  \likelihood[x_1,\ldots,x_n]{\lambda} =
+  \prod_{i = 1}^n \lambda e^{-\lambda x_i}
+\end{align*}
+ed il suo logaritmo
+\begin{align*}
+  \ln\likelihood[x_1,\ldots,x_n]{\lambda} =
+  \sum_{i = 1}^n \ln \left( \lambda e^{-\lambda x_i} \right) =
+  \sum_{i = 1}^n \left( \ln\lambda - \lambda x_i \right) =
+  n\ln\lambda - \sum_{i = 1}^n \lambda x_i.
+\end{align*}
+Il principio di massima verosimiglianza
+\begin{align*}
+  \td{\ln\like}{\lambda}{\hat\lambda;x_1,\ldots,x_n} =
+  \frac{n}{\hat\lambda} - \sum_{i = 1}^n x_i = 0
+\end{align*}
+fornisce la stima per la media della distribuzione
+\begin{align}
+  \hat\mu = \frac{1}{\hat\lambda} = \frac{1}{n} \sum_{i = 1}^n x_i.
+\end{align}
+
+
+
+\subsection{Stime di massima verosimiglianza nel caso Gaussiano}
+
+Ripetiamo adesso l'esercizio della sezione precedente nel caso di un
+campionamento ripetuto di una variabile Gaussiana con media $\mu$ e deviazione
+standard $\sigma$---entrambe ignote. Detti $x_1,\ldots,x_n$ gli $n$
+campionamenti della nostra variabile la funzione di verosimiglianza si scrive
+come
+\begin{align*}
+  \likelihood[x_1,\ldots,x_n]{\mu, \sigma} =
+  \prod_{i = 1}^n \frac{1}{\sigma\sqrt{2\pi}}
+  e^{-\frac{1}{2}\left(\frac{x_i - \mu}{\sigma}\right)^2}
+\end{align*}
+ed il suo logaritmo è banalmente
+\begin{align*}
+  \ln\likelihood[x_1,\ldots,x_n]{\mu, \sigma} =
+  \sum_{i = 1}^n \ln \left( \frac{1}{\sigma\sqrt{2\pi}}
+  e^{-\frac{1}{2}\left(\frac{x_i - \mu}{\sigma}\right)^2}\right) =
+  \sum_{i = 1}^n \left[ -\ln\sigma -\frac{1}{2}\ln (2\pi)
+  - \frac{1}{2}\left(\frac{x_i - \mu}{\sigma}\right)^2 \right]
+\end{align*}
+Il principio di massima verosimiglianza si scrive in questo caso come
+\begin{align*}
+  \begin{cases}
+    \pd{\ln\like}{\mu}{\hat\mu,\hat\sigma;x_1,\ldots,x_n} =
+    \sum_{i = 1}^n \frac{(x_i - \hat\mu)}{\hat\sigma^2} =
+    %\frac{1}{\hat\sigma^2} \left[ \sum_{i = 1}^n x_i - n\hat\mu \right] =
+    0\\[15pt]
+    \pd{\ln\like}{\sigma}{\hat\mu,\hat\sigma;x_1,\ldots,x_n} =
+    \sum_{i = 1}^n \left[ -\frac{1}{\hat\sigma} +
+      \frac{(x_i - \hat\mu)^2}{\hat\sigma^3} \right] =
+    %\frac{1}{\hat\sigma^3} \left[ \sum_{i = 1}^n (x_i - \hat\mu)^2 -
+    %  n\hat\sigma^2 \right] =
+    0.
+   \end{cases}
+\end{align*}
+Ora, la prima delle due equazioni fornisce banalmente il risultato
+\begin{align}
+  \hat{\mu} = \frac{1}{n} \sum_{i = 1}^n x_i,
+\end{align}
+cioè, di nuovo, la miglior stima della media coincide con la media aritmetica
+dei nostri campionamenti. La seconda equazione si può riscrivere come
+\begin{align}
+  \hat\sigma^2 = \frac{1}{n}\sum_{i = 1}^n (x_i - \hat\mu)^2,
+\end{align}
+che corrisponde con la stima della varianza $s^2_n$ definita
+nella~\eqref{eq:varianza_campione}. (I più acuti avranno notato che in
+questo caso la stima di massima verosimiglianza della varianza non è, per
+definizione, imparziale.)
+
+
+\subsection{Stime di massima verosimiglianza nel caso uniforme}
+
+A questo punto il lettore potrebbe essere indotto a pensare che il fatto che
+la stima di massima verosimiglianza della media di una distribuzione sia data
+dalla media aritmetica dei campionamenti sia un fatto generale---in fondo
+vale sia per il caso Poissoniano che per quello Gaussiano.
+%Niente di più
+%lontano dal vero, ed in effetti vedremo nella prossima sezione che nel caso
+%di variabili continue la distribuzione di Gauss è l'\emph{unica} a godere
+%di questa (apparentemente banale) proprietà.
+
+In questa sezione esaminiamo invece brevemente il caso interessante di un
+numero $n$ campionamenti $x_1,\ldots,x_n$ di una variabile casuale $x$ continua
+che sappiamo essere distribuita uniformemente---lo scopo è di stimare,
+utilizzando il principio di massima verosimiglianza, gli estremi $a$ e $b$
+dell'intervallo di variabilità di $x$.
+
+Procedendo come prima scriviamo la funzione di verosimiglianza
+\begin{align}\label{eq:ml_uniforme}
+  \likelihood[x_1,\ldots,x_n]{a, b} = \prod_{i = 1}^n \frac{1}{b - a}=
+  \left( \frac{1}{b - a} \right)^n.
+\end{align}
+Notate niente di strano? Per prima cosa la funzione di verosimiglianza
+\emph{non dipende dai campionamenti $x_i$}. Ma la cosa più
+grave è che il massimo di $\like$ non si può trovare per derivazione
+per il semplice fatto che la~\eqref{eq:ml_uniforme} non ha massimo---e diverge
+per $a = b$. Ora, a meno che i nostri campionamenti non siano tutti identici
+noi sappiamo che questa condizione non può essere verificata, ed in effetti
+abbiamo i vincoli
+\begin{align*}
+  a \leq \min_i \{ x_i \}  \quad \text{e} \quad
+  b \geq \max_i \{ x_i \}.
+\end{align*}
+Allora banalmente, essendo il valore della verosimiglianza tanto più grande
+quanto più $a$ e $b$ sono vicini tra loro, siamo costretti ad ammettere
+che la soluzione del problema sia proprio
+\begin{align}
+  a = \min_i \{ x_i \}  \quad \text{e} \quad
+  b = \max_i \{ x_i \}.
+\end{align}
+Questo significa che la stima di massima verosimiglianza della media della
+distribuzione
+\begin{align}
+  \hat\mu = \frac{1}{2} \left( \min_i \{ x_i \} + \max_i \{ x_i \} \right)
+\end{align}
+coincide con la media aritmetica dei due campionamenti estremi e non dipende
+dagli altri $n - 2$. Interessante, vero?
+
+
+%\section{Digressione: la distribuzione di Gauss e gli errori di misura}
+%
+%\`E interessante illustrare brevemente come, storicamente, Gauss sia arrivato a
+%derivare la forma analitica della distribuzione che porta il suo nome.
+%
+%Supponiamo di eseguire $n$ campionamenti indipendenti $x_i$ di una certa
+%variabile aleatoria continua $x$, che assumiamo avere media $\mu$ e funzione
+%di distribuzione $p(x; \mu)$. Allora, come di consueto, possiamo scrivere
+%la funzione di verosimiglianza come
+%\begin{align*}
+%  \likelihood[x_1,\ldots,x_n]{\mu} = \prod_{i = 1}^n  p(x_i; \mu)
+%  \quad \text{da cui} \quad
+%  \ln \likelihood[x_1,\ldots,x_n]{\mu} = \sum _{i = 1}^n  \ln p(x_i; \mu),
+%\end{align*}
+%e la stima di massima verosimiglianza di $\mu$ è data dalla soluzione
+%dell'equazione
+%\begin{align}
+%  \td{\ln\like}{\mu}{\hat\mu;x_1,\ldots,x_n} =
+%  \sum_{i = 1}^n \td{\ln p}{\mu}{x_i; \hat\mu} = 0.
+%\end{align}
+%
+%La domanda, apparentemente innocua, di Gauss è la seguente: esiste una
+%forma funzionale di $p(x; \mu)$ per cui la stima di massima verosimiglianza di
+%$\mu$ coincide con la media aritmetica dei campionamenti
+%\begin{align*}
+%  \sum_{i = 1}^n \td{\ln p}{\mu}{x_i; \hat\mu} =
+%  \frac{1}{n} \sum_{i = 1}^n x_i ?
+%\end{align*}
+%\`E facile convincersi che l'eguaglianza che abbiamo appena scritto non è
+%in generale vera. Se proviamo però a porre
+%\begin{align*}
+%  \td{\ln p}{\mu}{x; \mu} \propto (x - \mu)
+%\end{align*}
+%essa è verificata in quanto si ha banalmente
+%\begin{align*}
+%  \sum_{i = 1}^n \td{\ln p}{\mu}{x_i; \hat\mu} \propto
+%  \sum_{i = 1}^n (x_i - \hat\mu) = 0.
+%\end{align*}
+%Tralasciando di dimostrare che questa condizione non è solo sufficiente, ma
+%anche necessaria, ne segue che
+%\begin{align*}
+%  \ln p(x; \mu) = c_1 (x - \mu)^2 + c_2
+%\end{align*}
+%e infine
+%\begin{align}
+%  p(x; \mu) \propto e^{c_1 (x - \mu)^2},
+%\end{align}
+%in cui, a parte la forma della normalizzazione, si riconosce l'espressione
+%della distribuzione di Gauss~\eqref{eq:gauss_pdf} (notiamo esplicitamente che,
+%perché $p$ sia normalizzabile è necessario che $c_1 < 0$).
+%In questo senso la distribuzione normale si caratterizza come l'unica per cui
+%il principio di verosimiglianza fornisce come miglior stima di una grandezza,
+%sulla base di un numero finito di misure indipendenti, la media aritmetica
+%delle misure stesse.
+
+\section{Incertezze nelle stime di massima verosimiglianza}
+
+Ricapitoliamo brevemente. Abbiamo un principio generale, quello di massima
+verosimiglianza, che ci fornisce una prescrizione applicabile in generale per
+la stima di parametri---e ne abbiamo visto alcuni esempi di applicazione
+significativi. Fino ad ora, però, abbiamo evitato accuratamente la questione
+delle incertezze sui parametri, ed è giunto il momento di colmare la lacuna.
+
+
+\subsection{Incertezze nel caso unidimensionale}
+
+La chiave per la stima delle incertezze sui parametri è una proprietà della
+funzione di verosimiglianza che enunciamo senza dimostrazione---e cioè il
+fatto che per grandi campioni (cioè, nel nostro linguaggio, per $n$ grande)
+la funzione di verosimiglianza è asintoticamente normale. Nel caso
+unidimensionale si ha cioè
+\begin{align}
+  \likelihood{\theta} = \frac{1}{\sigma_{\hat\theta}\sqrt{2\pi}}
+  e^{-\frac{1}{2}\left( \frac{\theta - \hat\theta}{\sigma_{\hat\theta}}\right)^2},
+\end{align}
+dove $\sigma_{\hat\theta}$ è proprio l'incertezza sulla stima $\hat\theta$ di
+$\theta$ cui siamo interessati. Ora, se proviamo a calcolare la derivata
+seconda
+\begin{align*}
+  \td[2]{\ln\like}{\theta}{\hat\theta} =
+  \td[2]{}{\theta}{} \left[ -\ln\sigma_{\hat\theta} - \frac{1}{2}\ln(2\pi) -
+    \frac{1}{2}\left( \frac{\theta - \hat\theta}{\sigma_{\hat\theta}}\right)^2
+    \right]_{\hat\theta} = -\frac{1}{\sigma_{\hat\theta}^2},
+\end{align*}
+ovverosia
+\begin{align}\label{eq:ml_errore_uni}
+  \sigma_{\hat\theta}^2 = -\frac{1}{\td[2]{\ln\like}{\theta}{\hat\theta}}.
+\end{align}
+
+Notiamo, per inciso, che se proviamo a sviluppare il logaritmo della funzione
+di verosimiglianza attorno a $\hat\theta$, sfruttando il fatto che la derivata
+prima si annulla in virtù del fatto che $\hat\theta$ è un punto di massimo
+\begin{align*}
+  \ln\likelihood{\theta} \approx \ln\likelihood{\hat\theta} +
+  \frac{1}{2}\td[2]{\ln\like}{\theta}{\hat\theta}
+  (\theta - \hat\theta)^2 = \ln\likelihood{\hat\theta} -
+  \frac{1}{2}\frac{(\theta - \hat\theta)^2}{\sigma_{\hat\theta}^2}
+\end{align*}
+si ha l'interessante caratterizzazione dell'incertezza sulla stima del
+parametro $\theta$ come il semi-intervallo determinato dai punti per cui la
+funzione di verosimiglianza si riduce di $\nicefrac{1}{2}$ rispetto al suo
+valore massimo
+\begin{align}
+  \ln\likelihood{\hat\theta \pm \sigma_{\hat\theta}} \approx
+  \ln\likelihood{\hat\theta} - \frac{1}{2} = \ln\like_{\mathrm max} - \frac{1}{2}.
+\end{align}
+
+\begin{examplebox}
+  \begin{example}
+    Torniamo alla stima di massima verosimiglianza della media di una variabile
+    Poissoniana che abbiamo descritto nella
+    sezione~\ref{sec:stima_max_ver_poisson}
+    \begin{align*}
+      \ln\likelihood[k_1,\ldots,k_n]{\mu} =
+      \sum_{i = 1}^n \left( k_i \ln \mu - \ln\left( k_i! \right) - \mu \right).
+    \end{align*}
+    La derivata seconda del logaritmo della funzione di verosimiglianza si
+    legge in questo caso come
+    \begin{align*}
+      \td[2]{\ln\like}{\mu}{\hat\mu;k_1,\ldots,k_n} =
+      -\frac{1}{\hat\mu^2}\sum_{i = 1}^n k_i = -\frac{n}{\hat\mu}
+      \quad \text{da cui} \quad \sigma_{\hat\mu}^2 = \frac{\mu}{n},
+    \end{align*}
+    in cui riconosciamo la varianza della media che abbiamo incontrato
+    più volte lungo la strada.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Incertezze nel caso generale}
+
+Nel caso generale, quando cioè si stima simultaneamente più di un parametro,
+la~\eqref{eq:ml_errore_uni} si generalizza in un'espressione per l'inverso
+della matrice di covarianza
+\begin{align}
+  \Sigma^{-1}_{ij} =
+  - \frac{\partial^2\ln\likelihood{\hat\theta_1,\ldots,\hat\theta_m}}
+  {\partial\theta_i \partial\theta_j},
+\end{align}
+che contiene sia l'informazione sull'incertezza sui parametri che quella
+sulla loro correlazione.
+
+Nel limite di grandi campioni la funzione di verosimiglianza è ancora
+asintoticamente normale (multi-variata) e di conseguenza $\ln\like$ ha una forma
+iper-parabolica. Il contorno nello spazio dei parametri definito dall'equazione
+\begin{align}
+  \ln\likelihood{\hat\theta \pm \sigma_{\hat\theta}} \approx
+  \ln\likelihood{\hat\theta} - \frac{1}{2} = \ln\like_{\mathrm max} - \frac{1}{2}.
+\end{align}
+ha piani tangenti situati a $\pm 1$ deviazioni standard
+$\sigma_{\hat\theta_1},\ldots,\sigma_{\hat\theta_m}$ dalle stime dei parametri
+$\hat\theta_1,\ldots,\hat\theta_m$.
+
+
+\section{Il $\chisq$ come applicazione del principio di massima verosimiglianza}
+
+Torniamo adesso alle tre assunzioni alla base del fit dei minimi quadrati che
+abbiamo elencato all'inizio della sezione~\ref{sec:fit_minimi_quadrati}, e che
+ripetiamo qui per completezza:
+\begin{enumerate}
+\item le $n$ misure sono tra loro indipendenti;
+\item i valori $y_i$ sono misurati in corrispondenza di $x_i$ noti, ovverosia
+  le incertezze di misura sugli $x_i$ sono trascurabili;
+\item gli errori di misura sulla variabile dipendente sono Gaussiani---cioè
+  gli $y_i$ tendono a fluttuare attorno al misurando con una distribuzione
+  Gaussiana con deviazione standard $\sigma_{y_i}$ nota a priori.
+\end{enumerate}
+Sotto queste ipotesi la funzione di verosimiglianza si scrive come
+\begin{align*}
+  \likelihood{\theta_1,\ldots,\theta_m} =
+  \prod_{1 = 1}^n\frac{1}{\sigma_{y_i}\sqrt{2\pi}} \exp \left\{-\frac{1}{2}
+  \left(\frac{y_i - f(x_i; \theta_1,\ldots,\theta_m)}{\sigma_{y_i}}\right)^2
+  \right\}
+\end{align*}
+ed il suo logaritmo
+\begin{align*}
+  \ln\likelihood{\theta_1,\ldots,\theta_m} & =
+  \sum_{i = 1}^{n} \left[
+    -\ln\sigma_{y_i} - \frac{1}{2}\ln{2\pi} -\frac{1}{2}
+    \left(\frac{y_i - f(x_i; \theta_1,\ldots,\theta_m)}{\sigma_{y_i}}\right)^2
+    \right] =\\
+  & = -\sum_{i = 1}^{n} \ln\sigma_{y_i} -\frac{n}{2} \ln{2\pi} -
+  \frac{1}{2} \chisquare{\theta_1,\ldots,\theta_m}.
+\end{align*}
+Ora, i primi due termini non dipendono dai parametri per cui sono
+irrilevanti ai fini della loro stima, ed il problema della massimizzazione della
+verosimiglianza è formalmente equivalente a quello, che abbiamo già
+affrontato, della minimizzazione del $\chisq$. Detto in altri termini, dal
+punto di vista della stima dei parametri il $\chisq$
+\begin{align}
+  \chisquare{\theta_1,\ldots,\theta_m} =
+  -2 \ln\likelihood{\theta_1,\ldots,\theta_m} + \text{costante}
+\end{align}
+contiene tutte le informazioni contenute nella funzione di verosimiglianza.
+
+Notiamo, per completezza, che in questo contesto la matrice di covarianza
+dei parametri si scrive come
+\begin{align}
+  \Sigma^{-1}_{ij} = \frac{1}{2}
+  \frac{\partial^2\chisquare{\hat\theta_1,\ldots,\hat\theta_m}}
+       {\partial\theta_i \partial\theta_j}.
+\end{align}
+
+
+\subsection{Ancora sul fit lineare dei minimi quadrati}
+
+Come applicazione del formalismo appena sviluppato calcoliamo gli elementi
+della matrice di covarianza tra i parametri di un fit dei minimi quadrati
+con un modello lineare
+\begin{align*}
+  \chisquare{q, m} =
+  \sum_{i = 1}^{n}\left(\frac{y_i - mx_i - q}{\sigma_{y_i}}\right)^2.
+\end{align*}
+che abbiamo ricavato nella sezione~\ref{sec:min_chisq_lineare}.
+
+La matrice di covarianza (o la sua inversa) ha tre elementi indipendenti, di
+cui calcoliamo esplicitamente il primo
+\begin{align*}
+  \Sigma^{-1}_{11} =
+  \frac{1}{2} \frac{\partial^2\chisquare{\hat m, \hat q}}{\partial m^2} =
+  \sum_{i = 1}^{n} \frac{x_i^2}{\sigma_{y_i}^2} = S^2_x
+\end{align*}
+e lasciamo gli altri per esercizio. Nel linguaggio della
+sezione~\ref{sec:min_chisq_lineare} si ha
+\begin{align*}
+  \Sigma^{-1}_{ij} =
+  \begin{bmatrix}
+    S_x^0 & S_x^1\\
+    S_x^1 & S_x^2
+  \end{bmatrix} \quad \text{ovvero} \quad
+  \Sigma = \frac{1}{D}
+  \begin{bmatrix}
+    S_x^2 & -S_x^1\\
+    -S_x^1 & S_x^0
+  \end{bmatrix}.
+\end{align*}
+
+
+\summary

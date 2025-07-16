@@ -1,0 +1,24 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/numpy\_arrays.py}{https://bitbucket.org/.../numpy\_arrays.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{a1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\PY{n}{a2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{)}
+\PY{n}{a3} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}
+\PY{n}{a4} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{2.3}\PY{p}{,} \PY{l+m+mf}{4.76}\PY{p}{,} \PY{l+m+mf}{13.1}\PY{p}{]}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a1 = }\PY{l+s+si}{\PYZob{}}\PY{n}{a1}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a2 = }\PY{l+s+si}{\PYZob{}}\PY{n}{a2}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a3 = }\PY{l+s+si}{\PYZob{}}\PY{n}{a3}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a4 = }\PY{l+s+si}{\PYZob{}}\PY{n}{a4}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a2 + a3 = }\PY{l+s+si}{\PYZob{}}\PY{n}{a2} \PY{o}{+} \PY{n}{a3}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a2 * a3 = }\PY{l+s+si}{\PYZob{}}\PY{n}{a2} \PY{o}{*} \PY{n}{a3}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sqrt(a5) = }\PY{l+s+si}{\PYZob{}}\PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{a4}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+[Output]
+a1 = [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+a2 = [2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5]
+a3 = [ 1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]
+a4 = [ 2.3   4.76 13.1 ]
+a2 + a3 = [ 3.5  4.5  5.5  6.5  7.5  8.5  9.5 10.5 11.5 12.5]
+a2 * a3 = [ 2.5  5.   7.5 10.  12.5 15.  17.5 20.  22.5 25. ]
+sqrt(a5) = [1.51657509 2.18174242 3.61939221]
+\end{Verbatim}

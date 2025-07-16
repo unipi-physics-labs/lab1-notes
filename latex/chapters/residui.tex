@@ -1,0 +1,90 @@
+\chapter{Il grafico dei residui perfetto}
+
+Come abbiamo visto nella sezione~\ref{sec:grafico_residui}, il grafico dei residui
+è uno strumento grafico fondamentale per verificare la bontà di un \fit.
+Dato che la creazione di un buon grafico dei residui richiede la padronanza
+di un certo numero di comandi di \matplotlib, in questa appendice forniamo un
+esempio completo, auto-contenuto ed ampiamente commentato.
+
+Benché, strettamente parlando, un grafico di dispersione ed il corrispondente
+grafico dei residui possano \emph{vivere} indipendentemente, ciascuno nella propria
+figura, il massimo dell'effetto estetico ed informativo si ottiene combinando i
+due, sovrapposti verticalmente, come mostrato ad esempio
+in figura~\ref{fig:grafico_dei_residui}.
+Gran parte della complessità nella realizzazione di questo tipo di figura deriva
+dalla necessità di allineare propriamente i grafici, le divisioni e le etichette
+degli assi, ed eventualmente le griglie.
+
+\pgffigone{grafico_dei_residui}{
+  Esempio di grafico dei residui (adattato dalla figura~\ref{fig:chi2_test_residui}).
+  Questa figura illustra la maggior parte degli elementi stilistici propri di
+  un buon grafico dei residui, ed il frammento di codice in
+  figura~\ref{fig:grafico_residui} mostra i comandi essenziali
+  di \matplotlib\ per produrlo.
+}
+
+\begin{figure}[htbp!]
+  \input{texcode/residual_plot}
+  \caption{Frammento di codice per la generazione di una figura che combina un
+  grafico di dispersione con il relativo grafico dei residui, allineati verticalmente.
+  Se avete necessità di copiare ed incollare il codice sul vostro \foreign{editor}
+  di testo preferito, evitate di farlo dal pdf (correte il rischio che alcuni
+  caratteri speciali non siano copiati correttamente in un ambiente ASCII), ed usate il
+  \href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/residual_plot.py}{link}
+  nella parte superiore della cornicetta.}
+  \label{fig:grafico_residui}
+\end{figure}
+
+Ma andiamo con ordine, ed esaminiamo con attenzione il frammento di codice in
+figura~\ref{fig:grafico_residui}. Nella parte iniziale definiamo i punti sperimentali
+ed il modello di fit, eseguiamo il \fit\ vero e proprio e calcoliamo i residui
+rispetto al modello ottimale---le linee 5--16 servono essenzialmente a rendere
+il frammento auto-contenuto e, a questo punto, non dovrebbero avere bisogno di
+spiegazione.
+Le novità cominciano dopo la chiamata alla funzione \pyfunc{plt.figure}, ed in
+particolare con il comando:
+\begin{align*}
+  \text{\foreign{ax1, ax2 = fig.subplots(2, 1, sharex=True,
+    gridspec\_kw=dict(height\_ratios=[2, 1], hspace=0.05))},}
+\end{align*}
+in cui creiamo nella nostra figura una griglia $2 \times 1$ (due righe ed una colonna)
+per ospitare il grafico di dispersione ed il grafico dei residui.
+La disposizione geometrica della griglia è dettata dal valore dell'argomento
+\code{gridspec_kw} ed in particolare:
+\begin{itemize}
+  \item il valore di \code{height_ratios} controlla il rapporto tra le altezze
+    degli spazi riservati ai due grafici---in questo caso stiamo dicendo che
+    il grafico di dispersione sarà alto il doppio rispetto a quello dei
+    residui;
+  \item il valore di \code {hspace} controlla lo spazio tra i due grafici---in
+    questo caso il 5\% dell'altezza totale della figura.
+\end{itemize}
+L'argomento \code{sharex=True}, nel nostro caso, è fondamentale, perché fa sì che
+i due grafici \emph{condividano lo stesso asse delle ascisse}: come vedete la scala
+graduata e l'etichetta di testo che indica la quantità rappresentata appare solo
+nell'asse $x$ del grafico dei residui, e non in quello del grafico di dispersione.
+Inoltre, da questo punto in poi, è garantito che qualsiasi cambiamento dell'intervallo
+dinamico di uno dei due assi delle $x$ si propagherà correttamente anche sull'altro.
+In altre parole: le griglie ed i punti saranno per definizione sempre allineati
+verticalmente. Notiamo, per completezza, che la chiamata alla funzione \pyfunc{subplot}
+restituisce le due istanze di tipo \href{https://matplotlib.org/stable/api/axes_api.html}{Axes},
+che noi abbiamo chiamato \code{ax1} ed \code{ax2}, e che utilizzeremo nel seguito
+per riempire di contenuto le porzioni della figura riservate rispettivamente al
+grafico di dispersione ed al grafico dei residui.
+
+Il resto del frammento dovrebbe essere più o meno auto-esplicativo, ma vale la
+pena fare alcuni commenti specifici:
+\begin{itemize}
+  \item abbiamo fatto in modo che le griglie sul grafico, che tipicamente aumentano
+    la leggibilità, non fossero troppo prominenti, scegliendo un colore grigio
+    chiaro ed uno stile tratteggiato per le linee;
+  \item abbiamo aggiunto una legenda al pannello superiore per rendere
+    immediatamente ovvio il significato dei punti e della linea (notate che
+    abbiamo deciso deliberatemente di non fare lo stesso per il plot dei residui,
+    confindando che la corrispondenza degli elementi grafici sia sufficiente);
+  \item il comando \code{fig.align_ylabels((ax1, ax2))} fa in modo che
+    le etichette di testo sui due assi delle $y$ siano allineate orizzontalmente,
+    evitando asimmetrie che sono in genere visualmente spiacevoli.
+\end{itemize}
+
+\noindent Che altro dire? Sperimentate e buon divertimento!

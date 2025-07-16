@@ -1,0 +1,21 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/p\_value.py}{https://bitbucket.org/.../p\_value.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}
+
+\PY{k}{def} \PY{n+nf}{p\PYZus{}value}\PY{p}{(}\PY{n}{chisq}\PY{p}{,} \PY{n}{ndof}\PY{p}{)}\PY{p}{:}
+    \PY{n}{p} \PY{o}{=} \PY{n}{scipy}\PY{o}{.}\PY{n}{stats}\PY{o}{.}\PY{n}{chi2}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{chisq}\PY{p}{,} \PY{n}{ndof}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} If the probability is \PYZgt{} 50\PYZpc{} , take the complement.}
+    \PY{k}{if} \PY{n}{p} \PY{o}{\PYZgt{}} \PY{l+m+mf}{0.5}\PY{p}{:}
+        \PY{n}{p} \PY{o}{=} \PY{l+m+mf}{1.0} \PY{o}{\PYZhy{}} \PY{n}{p}
+    \PY{k}{return} \PY{n}{p}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p\PYZus{}value}\PY{p}{(}\PY{l+m+mf}{10.0}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p\PYZus{}value}\PY{p}{(}\PY{l+m+mf}{9.34181776559197}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p\PYZus{}value}\PY{p}{(}\PY{l+m+mf}{3.9402991361190605}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p\PYZus{}value}\PY{p}{(}\PY{l+m+mf}{18.307038053275146}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}
+
+[Output]
+0.4404932850652121
+0.49999999999999967
+0.05000000000000001
+0.050000000000000044
+\end{Verbatim}

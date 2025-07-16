@@ -1,0 +1,19 @@
+\begin{tikzpicture}[scale=0.1]
+  \pgfmathsetmacro{\r}{1}
+  \pgfmathsetmacro{\dr}{1}
+  \pgfmathsetmacro{\R}{20}
+  \pgfmathsetmacro{\dR}{1}
+  \pgfmathsetmacro{\a}{30}
+  \pgfmathsetmacro{\b}{60}
+  \pgfmathsetmacro{\d}{6}
+  \draw (\d,0) circle [radius=\r];
+  \draw (0,0) circle [radius=\R];
+  \draw (0,0)--({\R*sin(\a)},{\R*cos(\a)});
+  \draw (\d,0)--({\d + \r*sin(\b)},{\r*cos(\b)});
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({\R*sin(\a)},{\R*cos(\a)}) {$R$};
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({\d + \r*sin(\b)},{\r*cos(\b)}) {$r$};
+  \draw[dotted] (0,0)--(\d,0);
+  \node[anchor=north, outer sep=-2pt] at (0.5*\d,0) {$d$};
+\end{tikzpicture}

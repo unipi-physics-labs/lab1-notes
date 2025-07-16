@@ -1,0 +1,2634 @@
+\chapter{Elementi di teoria delle probabilità}
+\label{sec:probabilita}
+
+Cominciamo questo capitolo con una domanda e due problemi. La domanda è la
+seguente: qual è la differenza (o le differenze) tra la
+\emph{teoria delle probabilità} e la \emph{statistica}? Ed i due problemi,
+connessi con la nostra domanda, sono:
+\begin{itemize}\label{item:due problemi}
+\item \emph{Problema~1}: abbiamo un'urna contenente $5$ palline, di cui $3$
+  rosse e $2$ blu. Se estraiamo (bendati) una pallina qual è la probabilità
+  che essa sia blu?
+\item \emph{Problema~2}: abbiamo un'urna contenente $5$ palline---alcune rosse
+  ed alcune blu (ma non conosciamo la proporzione tra i colori). Estraiamo una
+  pallina, che risulta essere blu, e la mettiamo da parte. Estraiamo una
+  seconda pallina, che stavolta è rossa. Qual è il numero di palline rosse
+  nell'urna?
+\end{itemize}
+
+La prima domanda è facile, e la risposta è univocamente determinata dalle
+condizioni del problema (e, per completezza, è $\nicefrac{2}{5}$). La seconda,
+invece, sembra apparentemente senza speranza. Ma, a pensarci meglio, abbiamo
+sicuramente informazione per dire \emph{qualcosa}; possiamo dire, ad esempio,
+che le palline non sono tutte blu e non sono tutte rosse. E il fatto di aver
+estratto una pallina rossa ed una pallina blu potrebbe farci pensare che
+l'eventualità che il numero di palline blu sia $1$ o $4$ sia relativamente
+poco probabile, anche se non impossibile.
+
+Proviamo a riformulare il tutto. Il primo è un tipico problema di probabilità,
+in cui abbiamo un sistema descritto da un modello ben preciso e possiamo trarre
+conclusioni in modo deduttivo. Il secondo, che è più vicino al mestiere
+del Fisico, è invece un problema di statistica, in cui a partire da un numero
+finito di osservazioni, cerchiamo (induttivamente) di trarre conclusioni sul
+modello che regola il nostro sistema. \`E chiaro che i due problemi sono legati
+tra loro e, in un certo senso, il secondo è l'inverso del primo---in effetti
+potremmo chiamarlo un problema di \emph{probabilità inversa}.
+
+Benché non universalmente accettata (si veda~\cite{janes} come esempio di
+uno schema logico alternativo in cui le due cose sono unificate), questa
+distinzione di fondo tra teoria delle probabilità, come branca della
+matematica pura, e statistica, come mezzo di indagine dei fenomeni fisici,
+ci pare utile per inquadrare, almeno in una fase iniziale, i problemi che
+incontreremo.
+
+
+\section{Definizione assiomatica della probabilità}%
+\label{sec:definizione_assiomtica_prob}
+
+Si deve a Kolmogorov~\cite{kolmogorov} la prima costruzione rigorosa della
+teoria della probabilità, in una struttura che sostanzialmente sopravvive
+nei manuali moderni. Quella che segue non è una esposizione rigorosa della
+teoria assiomatica della probabilità, ma solo un accenno superficiale ad
+alcune idee di base ad essa connesse, in cui daremo per noti i concetti di
+insieme ed operazioni tra insiemi.
+
+La struttura di base su cui si fonda la teoria assiomatica della probabilità
+\emph{a la} Kolmogorov è data dal cosiddetto \emph{spazio campionario}
+$\Omega$, cioè l'insieme (che per semplicità assumeremo numerabile) di
+tutte le possibili realizzazioni elementari di un dato fenomeno. Sulla base di
+questo si definisce poi lo spazio degli eventi $\mathcal F$ come
+\emph{l'insieme di tutti i sottoinsiemi} di $\Omega$, che si dice anche
+l'insieme di potenza di $\Omega$. L'idea di base è che la probabilità è
+definita proprio sullo spazio degli eventi---cioè si può assegnare una
+probabilità non solo ad un qualsiasi elemento dello spazio campionario, ma
+anche ad uno qualsiasi dei suoi sottoinsiemi. Siccome l'unione e l'intersezione
+di sottoinsiemi dello spazio campionario fanno ancora parte dello spazio degli
+eventi, avrà senso parlare anche della probabilità dell'unione e
+dell'intersezione di eventi.
+Anziché addentrarci troppo nei dettagli tecnici cercheremo di chiarire il
+concetto con i due esempi~\ref{exp:spazio_eventi_moneta}
+e~\ref{exp:spazio_eventi_dado}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:spazio_eventi_moneta}
+    Nel lancio di una moneta lo spazio campionario $\Omega$ è dato
+    semplicemente dalle due possibili uscite $\{T,~C\}$ (testa o croce).
+    L'insieme di potenza di $\Omega$ contiene, oltre all'insieme nullo
+    $\emptyset$ ed allo spazio campionario stesso, i due sottoinsiemi propri di
+    $\Omega$ $\{T\}$ e $\{C\}$. Le quattro domande che possiamo farci a
+    proposito del lancio di una moneta sono dunque a proposito degli eventi
+    \begin{align*}
+      \{T\}:~& \text{qual è la probabilità che esca testa?}\\
+      \{C\}:~& \text{qual è la probabilità che esca croce?}\\
+      \{T,~C\}:~& \text{qual è la probabilità che esca testa oppure
+        croce?}\\
+      \{\}:~& \text{qual è la probabilità che non esca né testa né
+        croce?}
+    \end{align*}
+  \end{example}
+
+  \begin{example}\label{exp:spazio_eventi_dado}
+    Nel lancio di un dado a sei facce lo spazio campionario $\Omega$ è dato
+    dai sei valori possibili delle uscite $\{1,~2,~3,~4,~5,~6\}$.
+    L'insieme di potenza di $\Omega$ contiene tutti gli eventi di cui sia
+    lecito chiedersi quale sia la probabilità---ad esempio:
+    \begin{align*}
+      \{3\}:~& \text{qual è la probabilità che esca il numero 3?}\\
+      \{2,~4,~6\}:~&  \text{qual è la probabilità che l'uscita sia pari?}\\
+      \{1,~2,~3\}:~& \text{qual è la probabilità che l'uscita sia~$< 4$?}\\
+      \{1,~2,~3,~4,~5,~6\}:~& \text{qual è la probabilità che esca una
+        faccia qualsiasi?}\\
+      \{\}:~& \text{qual è la probabilità che non esca nessuna faccia?}
+    \end{align*}
+    In entrambi gli esempi gli ultimi due casi corrispondono all'intero spazio
+    campionario $\Omega$ ed all'insieme vuoto $\emptyset$, e le risposte alle
+    domande corrispondenti sembrano semplici.
+  \end{example}
+\end{examplebox}
+
+Si definisce probabilità una misura $P$ su $\mathcal F$ che associ
+univocamente ad ogni elemento $E$ di $\mathcal F$ un numero reale $\prob{E}$
+che soddisfa le seguenti tre proprietà (o assiomi di Kolmogorov):
+\begin{enumerate}
+\item $0 \leq \prob{E} \leq 1~\forall~E \in \mathcal F$;
+\item $\prob{\Omega} = 1$;
+\item $\prob{E_1 \cup E_2} = \prob{E_1} + \prob{E_2}~\text{se}~E_1 \cap E_2 =
+  \emptyset$.
+\end{enumerate}
+Notiamo che il terzo assioma si estende all'unione numerabile di
+eventi disgiunti. Per completezza, due eventi che abbiano intersezione nulla
+si dicono disgiunti o \emph{incompatibili}---nel senso che la probabilità che
+essi accadano contemporaneamente è nulla. Gli assiomi di Kolmogorov
+costituiscono una sorta di \emph{grammatica} di base su cui sviluppare il
+linguaggio delle probabilità.
+
+\begin{examplebox}
+  \begin{example}
+    Nel caso del lancio di una moneta possiamo associare una probabilità allo
+    spazio campionario definendo, ad esempio,
+    $\prob{T} = \prob{C} = \nicefrac{1}{2}$ (con questa prescrizione la moneta
+    è per definizione equa). Per gli assiomi di Kolmogorov la
+    probabilità che non esca né testa né croce è $\prob{\emptyset} = 0$
+    e la probabilità che esca testa oppure croce è $\prob{\Omega} = 1$.
+  \end{example}
+
+  \begin{example}\label{example:prob_die}
+    Nel lancio di un dado a sei facce la misura che associa $\nicefrac{1}{6}$
+    alle~$6$ possibili realizzazioni elementari $\{1\}$\ldots$\{6\}$ è una
+    probabilità, come si può verificare banalmente. Si noti in particolare
+    che
+    $$
+    \Omega = \{1\} \cup \{2\} \cup \{3\} \cup \{4\} \cup \{5\} \cup \{6\}
+    $$
+    e $\prob{\Omega} = 1$ per l'assioma 3. Va da sé che, con questa
+    prescrizione, il dado è equo.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Leggi elementari della probabilità}
+
+Gli assiomi di Kolmogorov possono essere utilizzati per dimostrare un certo
+numero di risultati elementari.
+
+\begin{theorem}[della probabilità complementare]
+  Dato un evento $E$, e detto $\overline{E}$ il suo complementare in $\Omega$,
+  si ha
+  \begin{align}\label{eq:probabilita_complementare}
+    \prob{\overline{E}} = 1 - \prob{E}.
+  \end{align}
+\end{theorem}
+\begin{proof}
+  Segue banalmente dal fatto che $\overline{E} \cup E = \Omega$ e
+  $\overline{E} \cap E = \emptyset$ per cui, utilizzando gli assiomi 2. e
+  3. si ha
+  \begin{align*}
+    1 = \prob{\Omega} = \prob{E \cup \overline{E}} =
+    \prob{E} + \prob{\overline{E}},
+  \end{align*}
+  da cui la tesi.
+\end{proof}
+
+\begin{examplebox}
+  \begin{example}
+    Nel lancio di un dado equo a sei facce la probabilità che l'uscita non
+    sia un $3$, cioè dell'evento $\{1,~2,~4,~5,~6\}$, è data dalla somma
+    $\prob{1} + \prob{2} + \prob{4} + \prob{5} + \prob{6} = \nicefrac{5}{6}$,
+    che si può scrivere più facilmente come
+    $$
+    \prob{\overline{3}} = 1 - \prob{3} = \nicefrac{5}{6}.
+    $$
+    Per completezza, la sezione~\ref{sec:paradosso_compleanni} illustra
+    un'applicazione più interessante del teorema della probabilità
+    complementare.
+  \end{example}
+\end{examplebox}
+
+
+\begin{corollary}
+  $\prob{\emptyset} = 0$.
+\end{corollary}
+
+\begin{corollary}
+  Se $E_1 \subset E_2$, allora $\prob{E_1} \leq \prob{E_2}$.
+\end{corollary}
+
+\begin{figure}[!htbp]
+  \autohstack{\input{figures/probabilita_venn}}{
+    \caption{Diagramma di Venn per il teorema di addizione delle
+      probabilità~\ref{theorem:prob_addition}.
+      Il diagramma rende intuitivo il contenuto dell'ultimo termine della
+      formula: sommando semplicemente $\prob{E_1}$ e $\prob{E_2}$ conteremmo
+      due volte l'intersezione. Il diagramma illustra anche i due fatti
+      elementari utilizzati nella dimostrazione:
+      $E_2 = (E_2 \cap E_1) \cup (E_2 \cap \overline{E_1})$ e
+      $E_1 \cup E_2 = E_1 \cup (\overline{E_1} \cap E_2)$.}
+    \label{fig:probabilita_venn}
+  }
+\end{figure}
+
+\begin{theorem}[di addizione delle probabilità]\label{theorem:prob_addition}
+  Dati due eventi $E_1$ ed $E_2$, si ha
+   \begin{align}\label{eq:prob_addition}
+     \prob{E_1 \cup E_2} = \prob{E_1} + \prob{E_2} - \prob{E_1 \cap E_2}.
+  \end{align}
+\end{theorem}
+\begin{proof}
+  Possiamo scrivere $E_2$ come la somma di due insiemi disgiunti
+  notando semplicemente che, come illustrato nel diagramma in
+  figura~\ref{fig:probabilita_venn}
+  \begin{align*}
+    E_2 = E_2 \cap \Omega = E_2 \cap (E_1 \cup \overline{E_1}) =
+    (E_2 \cap E_1) \cup (E_2 \cap \overline{E_1}),
+  \end{align*}
+  che, nel nostro linguaggio, equivale a dire
+  \begin{align*}
+    \prob{E_2} = \prob{(E_2 \cap E_1) \cup (E_2 \cap \overline{E_1})} =
+    \prob{E_2 \cap E_1} + \prob{E_2 \cap \overline{E_1}}.
+  \end{align*}
+  D'altra parte si ha anche
+  \begin{align*}
+    E_1 \cup E_2 & = (E_1 \cup E_2) \cap \Omega =
+    (E_1 \cup E_2) \cap (E_1 \cup \overline{E_1}) =
+    (E_1 \cap E_1) \cup (E_1 \cap \overline{E_1}) \cup
+    (E_2 \cap E_1) \cup (E_2 \cap \overline{E_1}) =\\
+    & = E_1 \cup \emptyset \cup (E_2 \cap E_1) \cup (E_2 \cap \overline{E_1}) =
+    E_1 \cup (E_2 \cap \overline{E_1}),
+  \end{align*}
+  ovverosia
+  \begin{align*}
+    \prob{E_1 \cup E_2} = \prob{E_1} + \prob{E_2 \cap \overline{E_1}}.
+  \end{align*}
+  Mettendo insieme le due equazioni sopra si ottiene la tesi.
+\end{proof}
+
+
+
+Il diagramma di Venn in figura~\ref{fig:probabilita_venn} illustra in modo
+intuitivo il contenuto della dimostrazione. Se gli eventi $E_1$ e $E_2$ sono
+disgiunti (cioè $E_1 \cap E_2 = \emptyset$) allora la formula generale di
+addizione delle probabilità~\eqref{eq:prob_addition} si riduce banalmente al
+terzo assioma di Kolmogorov.
+
+\begin{examplebox}
+  \begin{example}
+    Nel lancio di un dado equo a 6 facce la probabilità che esca il $2$
+    oppure il $3$ è data da
+    $\prob{2~\text{o}~3} = \prob{2} + \prob{3} =
+    \nicefrac{1}{6} + \nicefrac{1}{6} = \nicefrac{1}{3}$.
+  \end{example}
+
+  \begin{example}
+    La probabilità di estrarre un re oppure una carta di cuori da un mazzo
+    di $52$ carte è data da
+    $\prob{\text{K} \cup \heartsuit} =
+    \prob{\text{K}} + \prob{\heartsuit} - \prob{\text{K} \cap \heartsuit} =
+    \nicefrac{4}{52} + \nicefrac{13}{52} - \nicefrac{1}{52} = \nicefrac{16}{52}$
+    (dove l'ultimo termine della somma serve a non contare due volte il
+    re di cuori).
+  \end{example}
+\end{examplebox}
+
+
+\section{Definizioni operative di probabilità}
+
+Come vedremo nel seguito, la definizione assiomatica di probabilità che
+abbiamo appena enunciato permette di derivare in modo rigoroso un certo
+numero di proprietà praticamente rilevanti di cui la probabilità stessa
+gode. Essa non dice niente, però, su come si possa \emph{calcolare} la
+probabilità di un dato evento in casi concreti. (Non a caso,
+nell'esempio~\ref{example:prob_die} abbiamo detto che la nostra misura era
+\emph{una} probabilità.) In questa sezione esaminiamo brevemente alcune
+definizioni \emph{operative} di probabilità che ci saranno utili nel seguito.
+
+
+\subsection{Definizione combinatoriale}
+
+Nella sua definizione \emph{combinatoriale} la probabilità di un evento $E$
+coincide con il rapporto tra il numero di casi favorevoli $n$ ed il numero di
+casi possibili $N$, a condizione che questi ultimi siano tutti ugualmente
+probabili:
+\begin{align}\label{eq:prob_comb}
+  \prob{E} = \frac{n}{N}.
+\end{align}
+
+Notiamo che questa definizione soddisfa gli assiomi di Kolmogorov: il primo
+assioma discende dalla ovvia condizione $0 \leq n \leq N$ ed il secondo dal
+fatto che se $n = N$, allora $\prob{E} = 1$. Si ha inoltre che, se $E_1$ ed
+$E_2$ sono due eventi disgiunti con un numero di casi favorevoli pari a
+$n_1$ ed $n_2$, rispettivamente, si ha
+\begin{align*}
+  \prob{E_1 \cup E_2} = \frac{n_1 + n_2}{N} = \frac{n_1}{N} + \frac{n_2}{N} =
+  \prob{E_1} + \prob{E_2}.
+\end{align*}
+
+Il lettore più attento si sarà accorto che si tratta di una definizione
+circolare, nel senso che richiediamo l'equiprobabilità dei casi nella
+definizione stessa di probabilità. \`E altresì chiaro che il campo
+di applicabilità della~\eqref{eq:prob_comb} è limitato ai problemi più
+elementari---ad una domanda come "qual è la probabilità che un certo
+dispositivo elettronico subisca un guasto nel primo anno di funzionamento?"
+è estremamente difficile rispondere nel quadro di questo schema logico
+poiché non è affatto ovvio come si potrebbero definire i casi favorevoli
+ed i casi possibili. E, purtuttavia, si tratta di una nozione utile che
+utilizzeremo occasionalmente in seguito---negli
+esempi~\ref{example:prob_comb_one_die}--\ref{example:prob_comb_two_dice} e,
+soprattutto, nella derivazione della distribuzione binomiale
+(sezione~\ref{sec:distribuzione_binomiale}).
+
+\begin{examplebox}
+  \begin{example}\label{example:prob_comb_one_die}
+    Il lancio di un dado equo a sei facce ha sei possibili esiti
+    (equiprobabili). La probabilità che esca un numero fissato, ad esempio
+    il $3$, è dunque $\prob{3} = \nicefrac{1}{6}$.
+  \end{example}
+
+  \begin{example}
+    Supponiamo di avere un mazzo di 52 carte. La probabilità di estrarre
+    un re è $\prob{\text{K}} = \nicefrac{4}{52} = \nicefrac{1}{13}$;
+    la probabilità di estrarre una carta di cuori è
+    $\prob{\heartsuit} = \nicefrac{13}{52} = \nicefrac{1}{4}$.
+  \end{example}
+
+  \begin{example}\label{example:prob_comb_two_dice}
+    Supponiamo di lanciare due dadi equi a sei facce ed essere interessati alla
+    somma delle uscite. Gli esiti possibili sono in questo caso $11$ (i numeri
+    interi da $2$ a $12$) ma essi non sono equiprobabili, per cui
+    $\prob{3} \neq \nicefrac{1}{11}$.
+    Il modo corretto di affrontare il problema dalla prospettiva della
+    definizione combinatoriale di probabilità è il seguente: vi sono
+    esattamente $6 \times 6 = 36$ configurazioni (equiprobabili) distinte in
+    cui i dadi possono atterrare e, tra queste, esattamente due danno come
+    somma $3$---per cui $\prob{3} = \nicefrac{2}{36} = \nicefrac{1}{18}$.
+    Torneremo sulla questione nell'esempio~\ref{exp:pdf_somma_due_dadi}.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Definizione frequentista}
+\label{sec:prop_definizione_freq}
+
+Quando è possibile ripetere un esperimento in condizioni controllate,
+possiamo definire la probabilità di un evento $E$ come il limite
+della frequenza relativa dell'evento stesso quando il numero di ripetizioni
+dell'esperimento è molto grande. In altre parole possiamo pensare di
+eseguire l'esperimento un numero (arbitrariamente grande) di volte $N$, contare
+il numero di volte $n$ in cui $E$ si verifica, e definire $\prob{E}$ come
+il limite del rapporto $\nicefrac{n}{N}$ per $N\rightarrow \infty$:
+\begin{align}\label{eq:prob_freq}
+  \prob{E} = \lim_{N \rightarrow \infty}\frac{n}{N}.
+\end{align}
+(Vale la pena sottolineare come, benché formalmente simili, la
+\eqref{eq:prob_comb} e \eqref{eq:prob_freq} siano completamente diverse dal
+punto di vista concettuale.)
+
+La \eqref{eq:prob_freq} si dice generalmente definizione \emph{frequentista} di
+probabilità e, seppure non particolarmente adatta ad una costruzione
+matematica rigorosa della teoria della probabilità, può essere
+operativamente utile---specialmente in Fisica, ove la ripetizione di un
+esperimento controllato è tipica. In particolare lo schema frequentista è
+alla base del metodo Monte Carlo che discuteremo (molto brevemente) in seguito.
+
+Ovviamente non si ha nessuna garanzia che un numero fissato di ripetizioni sia
+in generale sufficiente perché la frequenza relativa sia una stima
+\emph{sufficientemente buona} della probabilità cercata. Il limite non è
+cioè da intendersi nel senso usuale dell'analisi matematica
+\begin{align*}
+  \forall \epsilon > 0 \ \exists \ \tilde{N} > 0 : N \geq \tilde{N} \rightarrow
+  \abs{\frac{n}{N} - \prob{E}} \leq \epsilon
+\end{align*}
+ma piuttosto in quello (più debole) della convergenza statistica, che possiamo
+definire formalmente come
+\begin{align*}
+  \forall \epsilon, \delta > 0 \ \exists \ \tilde{N} > 0 :
+  N > \tilde{N} \rightarrow
+  \prob{\abs{\frac{n}{N} - \prob{E}} \geq \delta } \leq \epsilon.
+\end{align*}
+In pratica il punto (sottile) è che non esiste un numero $N$ di ripetizioni
+del nostro esperimento che mi permetta di affermare con certezza che la
+differenza tra la frequenza registrata $\nicefrac{n}{N}$ e la probabilità
+$\prob{E}$ cui essa tende sia al di sotto di un valore prefissato $\epsilon$.
+In generale, se eseguo due serie di $N$ ripetizioni dello stesso esperimento
+otterrò frequenze relative $\nicefrac{n}{N}$ diverse anche se $\prob{E}$ è
+la stessa, come illustrato in figura~\ref{fig:frequenza_dado}. Quello che posso
+dire è che se $N$ è abbastanza grande, allora posso rendere piccola a
+piacere la probabilità che $\nicefrac{n}{N}$ si discosti da $\prob{E}$ di
+più di un valore prefissato $\delta$.
+
+\begin{examplebox}
+  \begin{example}\label{example:prob_freq_one_die}
+    Se lanciamo $N$ volte un dado equo a sei facce e registriamo (al crescere
+    di $N$) il numero $n$ di volte in cui esce, ad esempio, il numero $3$, per
+    $N$ molto grande il rapporto $n/N$ tenderà a $\prob{3} = \nicefrac{1}{6}$
+    (nel senso della convergenza statistica), come mostrato in
+    figura~\ref{fig:frequenza_dado}.
+  \end{example}
+\end{examplebox}
+
+\pgffigone{frequenza_dado}{
+  $10$ diverse realizzazioni di $10\,000$ lanci di un dado equo a sei
+  facce, in cui si registra, al variare del numero parziale $N$ di lanci,
+  la frazione $\nicefrac{n}{N}$ delle volte in cui esce il numero $3$.
+  La linea orizzontale tratteggiata indica la probabilità
+  $p = \nicefrac{1}{6}$ dell'evento e, come si vede, la frequenza tende
+  a questa probabilità per $N$ grande---nel senso che le fluttuazioni attorno
+  a questo valore si riducono al crescere di $N$.
+}
+
+
+\subsection{Definizione soggettiva}
+
+Nella sua definizione \emph{soggettiva} la probabilità di un evento $E$ si
+identifica con la
+\emph{misura del grado di fiducia che un individuo attribuisce al verificarsi
+  di $E$, sulla base dell'informazione a sua disposizione}. (La seconda parte
+della definizione è importante, perché persone diverse, con informazioni
+diverse, in generale assoceranno una probabilità diversa allo stesso
+evento---da cui il termine "soggettivo" nel titolo di questa sezione.)
+
+Una volta superato lo sbigottimento iniziale---causato dall'attaccamento dei
+Fisici al concetto di oggettività---questa definizione è tutto sommato
+naturale e vicina al modo in cui operiamo nella vita di tutti i giorni. Ogni
+volta che facciamo una scelta tra due o più possibilità diverse, di fatto
+associamo implicitamente delle probabilità agli eventi che ne conseguono---e
+persone diverse, in base alle informazioni a loro disposizione, fanno scelte
+diverse. \`E altresì chiaro che la definizione soggettiva di probabilità ha
+un campo di applicabilità estremamente più vasto di quelle combinatoriale o
+frequentista: all'interno di questo schema concettuale possiamo parlare della
+probabilità di qualsiasi evento o proposizione.
+
+All'interno della scuola soggettivista vi sono diversi approcci distinti per
+derivare le regole fondamentali della probabilità in un modo logicamente
+consistente, il più popolare dei quali è probabilmente l'idea del principio
+della scommessa coerente: \emph{una volta assegnata la probabilità ad un
+  evento dovremmo essere disposti ad accettare scommesse sul verificarsi
+  dell'evento stesso con un rapporto tra puntata e vincita determinato
+  dalla probabilità stessa}. In altre parole, se diciamo che due eventi sono
+equiprobabili, allora dobbiamo essere pronti ad accettare scommesse 1:1; in
+caso contrario la nostra assegnazione di probabilità non è coerente.
+(Riflettete: si tratta di una formulazione meno banale di quanto non possa
+sembrare a prima vista.) La cosa interessante è che, una volta derivate,
+le regole della probabilità soggettiva sono le stesse di quella combinatoriale
+e frequentista---essenzialmente gli assiomi di Kolmogorov che abbiamo visto
+nella sezione~\ref{sec:definizione_assiomtica_prob} (con la differenza che,
+in questo, schema, esse non sono assiomi ma, appunto, regole che si derivano
+formalmente da un principio più fondamentale).
+
+La definizione soggettiva di probabilità ed il teorema di Bayes, che vedremo
+nella sezione~\ref{sec:teorema_bayes}, sono alla base della cosiddetta scuola
+Bayesiana, che tradizionalmente si contrappone (e spesso in modo veemente) alla
+scuola classica o frequentista. Il livello della nostra esposizione sarà
+abbastanza rudimentale da poter evitare quasi completamente questa
+contrapposizione, ma vale la pena sottolineare come l'impostazione Bayesiana
+permetta di derivare entro un quadro logico e coerente, e sotto condizioni ben
+definite, tutte le applicazioni elementari della probabilità e della
+statistica che deriveremo nel seguito. Per una introduzione pedagogica
+all'argomento si rimanda a~\cite{dagostini_review}.
+
+
+\subsection{Uno spunto di riflessione: esistono monete e dadi equi?}
+
+Fino a questo momento abbiamo parlato disinvoltamente di monete eque e dadi
+equi come se la probabilità di uscita di una data faccia (ad esempio, testa
+per una moneta o il numero $3$ per un dado) fosse una proprietà intrinseca
+dell'oggetto. A pensarci meglio si tratta di una assunzione non banale che
+merita una riflessione più approfondita.
+
+Trattandosi di sistemi fisici macroscopici, il lancio di una moneta o di un dado
+sono fenomeni regolati da leggi deterministiche: se conoscessimo esattamente
+le condizioni iniziali del lancio (posizione, velocità iniziale del centro
+di massa, asse istantaneo di rotazione e momento angolare) e tutti i fattori che
+determinano l'evoluzione temporale (forza di gravità, attrito dell'aria,
+vincoli fisici) potremmo in linea di principio predire con esattezza l'esito di
+ciascun lancio. Nella realtà quando lanciamo una moneta o un dado non
+misuriamo nessuna di queste quantità---e anche se volessimo, sarebbe
+estremamente complicato farlo con l'accuratezza necessaria. \`E proprio questo
+il motivo per cui trattiamo con le leggi della probabilità un fenomeno che
+è intrinsecamente deterministico.
+
+Detto questo: che cosa vuol dire che una moneta è equa? Per definizione
+vuol dire che $\prob{T} = \prob{C} = \nicefrac{1}{2}$. Ma su quale base
+assumiamo che questa sia una proprietà della moneta e non dipenda, ad esempio,
+da \emph{come} la lanciamo? Siamo sicuri che la stessa moneta, assumendo che
+sia equa se lanciata da una certa persona, continui ad essere equa anche
+quando lanciata da una persona diversa? Siamo sicuri che la stessa moneta,
+assumendo che sia equa quando lasciata cadere da $1$~m di altezza, continui
+ad essere equa se lasciata cadere (dalla stessa persona) da $10$~cm di altezza?
+
+Se ci pensiamo per un secondo, la risposta più logica a tutte queste domande
+è: no. \`E noto che esistono bari ai tavoli da gioco, per cui è chiaro che,
+con un po' di pratica, si può imparare a lanciare un dado in modo che le
+probabilità di uscita delle singole facce siano significativamente differenti
+da~$\nicefrac{1}{6}$. Nel seguito, dunque, quando parleremo di monete e dadi
+equi, avremo bene in mente che si tratta di astrazioni (sia pure non
+irragionevoli) che facciamo a scopo illustrativo, ma che una definizione
+operativa rigorosa di questi concetti richiederebbe un'analisi estremamente
+più approfondita di quella che possiamo fare in questo contesto.
+
+
+\section{Digressione: elementi di calcolo combinatorio}
+
+Il calcolo combinatorio è quella branca della matematica che si occupa del
+\emph{contare}. Si tratta di un argomento ovviamente connesso con la
+definizione combinatoriale di probabilità e in questa sezione introdurremo
+brevemente alcuni dei concetti fondamentali.
+
+
+\subsection{Permutazioni e funzione fattoriale}
+
+Dato un numero intero non negativo $n$ definiamo il suo fattoriale (che
+scriveremo come $n!$) come il prodotto di tutti gli interi positivi minori o
+uguali ad $n$
+\begin{align}
+  n! = \prod_{k=1}^{n} k = n (n - 1)\ldots 1,
+\end{align}
+con l'ulteriore convenzione che $0! = 1$. Equivalentemente, la funzione
+fattoriale può essere definita per ricorrenza come
+\begin{align}
+  \begin{cases}
+    0! = 1\\
+    n! = n (n - 1)!.
+  \end{cases}
+\end{align}
+
+Il fattoriale $n!$ rappresenta il numero di permutazioni di un insieme di
+$n$ elementi, cioè il numero di modi in cui si possono disporre $n$
+elementi. La convenzione $0! = 1$ è consistente con il fatto che vi è
+un solo modo di permutare zero oggetti.
+
+\begin{examplebox}
+  \begin{example}
+    In quanti modi diversi possiamo disporre $6$ cd in un caricatore a $6$ posti
+    di un autoradio? Possiamo ragionare come segue: siamo liberi di mettere un
+    cd qualsiasi tra i $6$ da caricare nella posizione $1$, dopodiché ci
+    rimangono $5$ cd tra cui scegliere per la posizione $2$, $4$ per la
+    posizione $3$ e così via. Giunti all'ultimo cd, non abbiamo più scelta
+    perché l'unica posizione libera è la sesta.
+    La risposta è dunque $6! = 720$.
+  \end{example}
+\end{examplebox}
+
+\pgffigone{fattoriale}{
+  Grafico della funzione $n!$ per $n = 0 \ldots 50$. Per confronto, la linea
+  grigia tratteggiata rappresenta la funzione $y = e^n$, che in scala
+  semilogaritmica è una retta. Come è ovvio, la funzione fattoriale cresce
+  più che esponenzialmente al crescere di $n$.
+}
+
+La funzione fattoriale cresce molto velocemente al crescere di $n$---molto
+più velocemente, e.g., di un esponenziale, come illustrato in
+figura~\ref{fig:fattoriale}.
+Tanto per fare un esempio, $50! \approx 3 \times 10^{64}$.
+Per $n$ grande, il fattoriale può essere approssimato con la formula di
+Stirling
+\begin{align}\label{eq:formula_di_stirling}
+  n! \approx \sqrt{2\pi n}\left( \frac{n}{e} \right)^n,
+\end{align}
+o, equivalentemente
+\begin{align}\label{eq:formula_di_stirling_log}
+  \ln n! \approx \frac{1}{2}\ln(2\pi n) + n\ln n - n.
+\end{align}
+Per fissare le idee, l'approssimazione~\eqref{eq:formula_di_stirling} è
+accurata a meglio dell'$1\%$ per $n \geq 10$, e l'errore relativo diminuisce
+al crescere di $n$.
+Dato che il logaritmo è una funzione che per grandi valori del suo argomento
+varia piuttosto lentamente, lo sviluppo del $\ln n!$ può, a seconda della
+situazione, essere utilizzato trascurando il primo termine, visto che
+$\ln n \ll n$---cioè
+\begin{align}\label{eq:formula_di_stirling_log_troncata}
+  \ln n! \approx n\ln n - n.
+\end{align}
+(Più precisamente: nello sviluppo di
+$\ln n!$~\eqref{eq:formula_di_stirling_log} il primo termine è una
+costante additiva che diventa irrilevante nel limite $n \rightarrow \infty$,
+mentre nello sviluppo di $n!$~\eqref{eq:formula_di_stirling} esso corrisponde
+alla costante moltiplicativa $\sqrt{2\pi n}$ che, ovviamente, non può
+essere omessa.)
+
+Il fattoriale è, come è noto, utilizzato nello sviluppo in serie di Taylor.
+In particolare, sviluppando in serie la funzione $e^x$ si ottiene la
+relazione interessante
+\begin{align}
+  e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!}
+\end{align}
+da cui anche
+\begin{align}
+  e = \sum_{n=0}^{\infty} \frac{1}{n!} = 2 + \frac{1}{2} + \frac{1}{6} +
+  \frac{1}{24} \ldots
+\end{align}
+
+
+\subsection{Coefficienti binomiali}
+
+Il numero di modi possibili per scegliere $k$ elementi non ordinati da un
+insieme di $n$ elementi è dato dal \emph{coefficiente binomiale $n$ su $k$}
+\begin{align}
+  \binom{n}{k} = \frac{n!}{k!(n - k)!} =
+  \frac{n(n - 1)(n - 2)\ldots (n - k + 1)}{k(k - 1)(k - 2)\ldots 1}.
+\end{align}
+In breve, il ragionamento procede nel modo seguente: per la scelta del primo
+dei $k$ elementi abbiamo $n$ possibilità, per il secondo $n - 1$, per il
+terzo $n - 2$ e così via fino a $n - (k - 1)$; il $k!$ al denominatore
+serve per non contare più di una volta scelte che differiscono solo per
+l'ordine.
+
+\begin{examplebox}
+  \begin{example}
+    Dato un insieme di tre elementi $\{A,~B,~C\}$, vi sono esattamente tre
+    sottoinsiemi non ordinati di $2$ elementi: $\{A,~B\}$, $\{A,~C\}$ e
+    $\{B,~C\}$ ($\{A,~B\}$ e $\{B,~A\}$ sono lo stesso insieme).
+    La risposta si può scrivere anche come
+    \begin{align*}
+      \binom{3}{2} = \frac{3!}{2!1!} = \frac{6}{2} = 3.
+    \end{align*}
+  \end{example}
+
+  \begin{example}
+    Quanti \foreign{cin-cin} ci sono in un brindisi fra $10$ amici? Possiamo
+    ragionare come segue: date $n$ persone, ognuna brinda con le altre
+    $n - 1$, ma dobbiamo poi dividere per $2$ per non contare doppio ogni
+    singolo \foreign{cin-cin}. La risposta è dunque $n(n - 1)/2$ o, nel nostro
+    caso, $45$. In termini dei coefficienti binomiali, la risposta è
+    semplicemente
+    \begin{align*}
+      \binom{10}{2} = \frac{10!}{2!8!} = \frac{10 \times 9}{2} = 45.
+    \end{align*}
+  \end{example}
+\end{examplebox}
+
+Il coefficiente binomiale è strettamente connesso al triangolo di Pascal e
+può anche essere caratterizzato attraverso la formula della potenza di
+binomio (o teorema binomiale), che utilizzeremo nel seguito:
+\begin{align}\label{eq:potenza_binomio}
+  (x_1 + x_2)^n = \sum_{k=0}^{n}\binom{n}{k} x_1^k x_2^{n-k}.
+\end{align}
+Nel caso in cui $x_1 = x_2 = 1$, la~\eqref{eq:potenza_binomio} si riduce alla
+formula notevole
+\begin{align}
+  \sum_{k=0}^{n}\binom{n}{k} = 2^n
+\end{align}
+in cui, nel membro a sinistra, si riconosce il numero di elementi dell'insieme
+di potenza di un generico insieme di $n$ elementi---scritto come la somma del
+numero di sottoinsiemi di $0, 1\ldots n$ elementi. Così, come abbiamo visto
+negli esempi~\ref{exp:spazio_eventi_moneta} e~\ref{exp:spazio_eventi_dado},
+lo spazio degli eventi corrispondenti al lancio di una moneta ha $2^2 = 4$
+elementi e quello corrispondente al lancio di un dado ha $2^6 = 64$ elementi.
+
+
+\subsection{Una applicazione elementare: il gioco del lotto}
+\label{sec:lotto_probabilita}
+
+Come applicazione elementare dei coefficienti binomiali ci chiediamo quale
+sia la probabilità di vincere giocando un ambo secco al lotto su una singola
+ruota---ad esempio quella di Napoli.
+Il calcolo è leggermente più complicato di quelli che abbiamo visto sino
+ad ora, ma gli ingredienti sono essenzialmente due: il numero di ambi
+(cioè di coppie non ordinate) possibili con $90$ numeri
+\begin{align*}
+  \binom{90}{2} = \frac{90 \times 89}{2} = 4005
+\end{align*}
+(che sono \emph{tutti} gli ambi possibili) ed il numero di ambi generato
+dai $5$ numeri estratti
+\begin{align*}
+  \binom{5}{2} = \frac{5 \times 4}{2} = 10.
+\end{align*}
+La probabilità che il nostro ambo sia estratto è dunque data da
+\begin{align*}
+  \binom{5}{2}/\binom{90}{2} = \frac{10}{4005} \approx 0.25\%,
+\end{align*}
+a fronte della quale il lotto paga un ambo secco $250:1$, cioè poco più
+della metà del valore $400.5:1$ che renderebbe il gioco equo.
+Il calcolo si può generalizzare facilmente a terne, quaterne e
+cinquine, come mostrato nella tabella che segue.
+
+\begin{table}[htbp]
+  \tablehstack{
+    \begin{tabular}{lll}
+      \hline
+      Giocata & Probabilità di vincita & Premio \\
+      \hline
+      \hline
+      Ambo & $1:401$ & $250:1$\\
+      Terno & $1:11\,748$ & $4\,500:1$\\
+      Quaterna & $1:511\,038$ & $120\,000:1$\\
+      Cinquina & $1:43\,949\,268$& $6\,000\,000:1$\\
+      \hline
+  \end{tabular}}{
+    \caption{Probabilità di vincita e premio corrisposto per alcune possibili
+      giocate al lotto (da intendersi su una singola ruota). Come è ovvio,
+      il rapporto tra questi due numeri è sempre sfavorevole per il
+      giocatore.}
+    \label{tab:lotto_probabilita}
+  }
+\end{table}
+
+Il gioco è sempre sfavorevole per il giocatore, con un rapporto che va
+da meno di $2$ per l'ambo a più di $7$ per la cinquina.
+
+
+\subsection{Coefficienti multinomiali}
+\label{sec:coefficienti_multinomiali}
+
+\danger%
+Il concetto di coefficiente binomiale si può generalizzare in modo naturale
+all'idea della suddivisione di un insieme di $n$ elementi in $m$ sottoinsiemi
+disgiunti, ciascuno con un numero $k_i$ di elementi, la cui unione
+costituisca l'insieme di partenza. \`E ovvio che, sotto queste condizioni
+i $k_i$ soddisfano la relazione
+\begin{align*}
+  \sum_{i = 1}^m k_i = n.
+\end{align*}
+Il numero di modi in cui si può effettuare tale suddivisione prende il nome
+di \emph{coefficiente multinomiale} $n$ su $k_1, \ldots, k_m$ e non è
+difficile da calcolare---essenzialmente si hanno $n$ su $k_1$ (binomiale) modi
+per scegliere il primo sottoinsieme, dopo di che si hanno $n-k_1$ su $k_2$
+(binomiale) modi di scegliere il secondo e così via fino all'ultimo
+\begin{align}
+  \binom{n}{k_1,\ldots,k_m} & =
+  \binom{n}{k_1} \binom{n-k_1}{k_2} \ldots \binom{n-k_1-\ldots-k_{m-1}}{k_m} =
+  \nonumber\\
+  & = \frac{n!}{k_1!(n-k_1!)} \, \frac{(n-k_1)!}{k_2!(n-k_1-k_2)!} \cdots
+  \frac{(n-k_1-\ldots-k_{m-1})!}{k_m!0!} = \frac{n!}{k_1!k_2! \cdots k_m!}.
+\end{align}
+
+\begin{examplebox}
+  \begin{example}
+    In quanti modi si possono disporre $20$ invitati ad un banchetto di
+    matrimonio su tre tavoli, rispettivamente da $4$, $6$ e $10$ persone?
+    La risposta è
+    \begin{align*}
+      \binom{20}{4,6,10} = \frac{20!}{4!6!10!} = 38798760
+    \end{align*}
+    ossia più di $38$ milioni di modi distinti.
+  \end{example}
+\end{examplebox}
+
+Per inciso, notiamo che i coefficienti multinomiali permettono di scrivere in
+modo compatto la formula per la potenza della somma di un numero arbitrario
+di monomi attraverso il cosiddetto teorema multinomiale, che è la
+generalizzazione del teorema binomiale~\eqref{eq:potenza_binomio}
+\begin{align}
+  (x_1 + x_2 + \cdots x_m)^n =
+  \sum \binom{n}{k_1,\ldots,k_m} x_1^{k_1} x_2^{k_2} \cdots x_m^{k_m},
+\end{align}
+in cui la somma è estesa a tutte le sequenze $(k_1, k_1,\ldots,k_m)$ di interi
+non negativi la cui somma sia $n$.
+
+
+\section{Probabilità condizionata}
+
+Dati due eventi $E_1$ ed $E_2$, con $\prob{E_2} \neq 0$, definiamo la
+probabilità \emph{condizionata} $\prob{E_1 \cond E_2}$ di $E_1$ dato $E_2$
+(cioè la probabilità che si verifichi l'evento $E_1$ nel caso in cui sappiamo
+già che si è verificato l'evento $E_2$) come
+\begin{align}\label{eq:cond_prob_definition}
+  \prob{E_1 \cond E_2} = \frac{\prob{E_1 \cap E_2}}{\prob{E_2}}.
+\end{align}
+Intuitivamente, come si vede in figura~\ref{fig:probabilita_venn}, la
+probabilità condizionata $\prob{E_1 \cond E_2}$ rappresenta la misura
+dell'intersezione $E_1 \cap E_2$ \emph{relativamente} ad $E_2$. Si può
+dimostrare banalmente che la probabilità condizionata soddisfa gli assiomi
+della probabilità---e di fatto ogni probabilità $\prob{E}$ può essere
+vista come una probabilità condizionata $\prob{E \cond \Omega}$.
+
+\begin{examplebox}
+  \begin{example}
+    Qual è la probabilità che in un lancio di un dado equo a sei facce esca
+    il numero $2$, condizionata al fatto che l'uscita sia pari? Intuitivamente
+    risponderemmo $\nicefrac{1}{3}$, poiché ci sono tre numeri pari tra
+    $1$ e $6$---ossia $\{2,~4,~6\}$. Formalmente dobbiamo applicare
+    la~\eqref{eq:cond_prob_definition}; $\{2\} \cap \{2,~4,~6\} = \{2\}$ per
+    cui il numeratore è $\nicefrac{1}{6}$, mentre il denominatore è
+    $\prob{\text{pari}} = \nicefrac{1}{2}$, da cui segue che la nostra
+    probabilità condizionata è effettivamente $\nicefrac{1}{3}$.
+  \end{example}
+
+  \begin{example}
+    In un mazzo da $52$ carte la probabilità di estrarre un re condizionata
+    ad aver estratto una carta di cuori è
+    $\prob{\text{K} \cond \heartsuit} = \nicefrac{1}{13}$. Di
+    converso la probabilità di estrarre una carta di cuori condizionata
+    all'aver estratto un re è
+    $\prob{\heartsuit \cond \text{K}} = \nicefrac{1}{4}$.
+  \end{example}
+\end{examplebox}
+
+Il concetto di probabilità condizionata è utile, operativamente, per
+calcolare la probabilità che due eventi si verifichino contemporaneamente
+(cioè per calcolare la misura della loro intersezione):
+la~\eqref{eq:cond_prob_definition} si riscrive banalmente come
+\begin{align}\label{eq:prob_intersection}
+  \prob{E_1 \cap E_2} = \prob{E_1 \cond E_2}\prob{E_2} =
+  \prob{E_2 \cond E_1}\prob{E_1}
+\end{align}
+(dove la doppia uguaglianza deriva banalmente dal fatto che
+$E_1 \cap E_2 = E_2 \cap E_1$.)
+
+
+\subsection{Eventi indipendenti: un esempio elementare}
+
+Si dice che due eventi $E_1$ ed $E_2$ sono \emph{indipendenti} se il fatto
+che si sia verificato $E_2$ non influenza la probabilità che si verifichi
+$E_1$ (e viceversa), cioè se
+\begin{align}\label{eq:indipendenza_eventi}
+  \prob{E_1 \cond E_2} = \prob{E_1} \quad \text{e} \quad
+  \prob{E_2 \cond E_1} = \prob{E_2}.
+\end{align}
+Per la definizione di probabilità condizionata~\eqref{eq:prob_intersection}
+la condizione di indipendenza tra eventi si può riscrivere nella forma
+più espressiva
+\begin{align}\label{eq:prob_mult_ind}
+  \prob{E_1 \cap E_2} = \prob{E_1}\prob{E_2}.
+\end{align}
+(Notiamo, per inciso, che il lettore non deve confondere la nozione di eventi
+indipendenti con quella di eventi disgiunti---eventi, cioè, che hanno
+intersezione nulla in $\Omega$. In quel caso gli eventi si dicono, come abbiamo
+già avuto modo di dire, incompatibili.)
+
+Il concetto di indipendenza di eventi è più sottile di quanto non possa
+sembrare in apparenza---cosa che illustriamo con un semplice esempio.
+Consideriamo il nostro solito mazzo di 52 carte. Come sappiamo la probabilità
+di estrarre un re è $\prob{\text{K}} = \nicefrac{1}{13}$ e la probabilità
+di estrarre una carta di cuori è $\prob{\heartsuit} = \nicefrac{1}{4}$.
+Qual è la probabilità di estrarre il re di cuori? Sappiamo già la
+risposta, perché esiste un solo re di cuori nel mazzo per cui la probabilità
+di estrarlo è $\prob{\text{K} \cap \heartsuit} = \nicefrac{1}{52}$. Il fatto
+che
+\begin{align*}
+  \prob{\text{K}} \prob{\heartsuit} =
+  \frac{1}{13}\times\frac{1}{4} =
+  \frac{1}{52} = \prob{\text{K} \cap \heartsuit}
+\end{align*}
+dimostra che i due eventi ("la carta estratta è un re" e "la carta
+estratta è di cuori") sono indipendenti.
+
+Proviamo adesso a complicare appena il nostro problema ed aggiungiamo un jolly
+al nostro mazzo (che diventa così di 53 carte). La probabilità di estrarre
+un re diviene $\prob{\text{K}} = \nicefrac{4}{53}$ mentre quella di estrarre
+una carta di cuori è adesso $\prob{\heartsuit} = \nicefrac{13}{53}$. La
+probabilità di estrarre il re di cuori è banalmente
+$\prob{\text{K} \cap \heartsuit} = \nicefrac{1}{53}$ per cui
+\begin{align*}
+  \prob{\text{K}} \prob{\heartsuit} =
+  \frac{4}{53}\times\frac{13}{53} =
+  \frac{52}{2809} \neq \prob{\text{K} \cap \heartsuit},
+\end{align*}
+cioè i nostri due eventi non sono più indipendenti!
+
+\begin{figure}
+  \input{figures/probabilita_cond_carte_venn}
+  \caption{Diagrammi di Venn relativi agli esempi che illustrano l'indipendenza
+    tra eventi. I numeri tra parentesi indicano il numero di elementi che
+    compongono gli insiemi corrispondenti e consentono di calcolare in modo
+    immediato le probabilità condizionate necessarie.
+    I diagrammi illustrano come la vera differenza causata dall'aggiunta del
+    jolly sia l'aumentare il numero di elementi dello spazio campionario da
+    $52$ a $53$.}
+  \label{fig:probabilita_cond_carte_venn}
+\end{figure}
+
+Che cosa è successo? Se analizziamo i due eventi più da vicino notiamo
+che nel primo caso: se estraiamo una carta di cuori la probabilità che
+essa sia un re è~$\nicefrac{1}{13}$; se la carta estratta \emph{non} è
+di cuori, allora la probabilità che essa sia un re è~$\nicefrac{3}{39}$
+(ci sono $13 \times 3 = 39$ carte non di cuori e tra queste $3$ sono re),
+cioè di nuovo~$\nicefrac{1}{13}$---i due eventi sono indipendenti.
+Nel secondo caso: se estraiamo una carta di cuori la probabilità che
+essa sia un re è, come prima, $\nicefrac{1}{13}$; se però la carta
+estratta \emph{non} è di cuori, allora la probabilità che essa sia un re
+è~$\nicefrac{3}{40} \neq \nicefrac{1}{13}$. In altre parole, se sappiamo che
+la carta estratta è di fiori, allora sappiamo che non può essere un jolly,
+e questo cambia la probabilità che essa sia un re---i due eventi non sono
+indipendenti. Ma se riesaminiamo brevemente l'esempio del mazzo di $53$ carte
+alla luce di quanto sappiamo sulla probabilità condizionata, tutto diventa
+perfettamente consistente:
+\begin{align*}
+  \prob{\text{K} \cap \heartsuit} = \left \{ \begin{array}{ll}
+    \prob{\text{K} \cond \heartsuit} \prob{\heartsuit} =
+    \frac{1}{13}\times\frac{13}{53} = \frac{1}{53}\\[7pt]
+    \prob{\heartsuit \cond \text{K}} \prob{\text{K}} =
+    \frac{1}{4}\times\frac{4}{53} = \frac{1}{53}\end{array}\right.
+\end{align*}
+
+
+\section{Il teorema di Bayes}
+\label{sec:teorema_bayes}
+
+La~\eqref{eq:prob_intersection} ha come conseguenza immediata e banale il
+cosiddetto teorema di Bayes, che lega tra loro le probabilità condizionate
+$\prob{E_1 \cond E_2}$ e $\prob{E_2 \cond E_1}$
+\begin{align}\label{eq:teorema_bayes}
+  \prob{E_1 \cond E_2} = \frac{\prob{E_2 \cond E_1}\prob{E_1}}{\prob{E_2}}.
+\end{align}
+Sfruttando il fatto che $E_1 \cup \overline{E_1} = \Omega$,
+la~\eqref{eq:teorema_bayes} si può scrivere anche nella forma esplicita
+(ma leggermente meno compatta)
+\begin{align}
+  \prob{E_1 \cond E_2} =
+  \frac{\prob{E_2 \cond E_1}\prob{E_1}}{\prob{E_2 \cond E_1}\prob{E_1} +
+  \prob{E_2 \cond \overline{E_1}}\prob{\overline{E_1}}}.
+\end{align}
+Più in generale, se si dispone di una partizione dello spazio campionario
+in un insieme $\{E_i\}$ di insiemi disgiunti ($E_i \cap E_j = \emptyset$) la cui
+unione coincida con lo spazio stesso ($\cup_i E_i = \Omega$), allora il teorema
+di Bayes si può anche esprimere nella forma
+\begin{align}
+  \prob{E_1 \cond E_2} =
+  \frac{\prob{E_2 \cond E_1}\prob{E_1}}{\sum_i \prob{E_2 \cond E_i}\prob{E_i}}.
+\end{align}
+
+La~\eqref{eq:teorema_bayes} è di fondamentale importanza perché collega un
+problema di probabilità diretta al problema corrispondente di probabilità
+inversa. Torniamo per un attimo alla nostra moneta ideale. Se sappiamo
+esattamente la probabilità $p$ che esca testa (ad esempio $p = 0.5$) in un
+singolo lancio è facile calcolare la probabilità di ottenere esattamente
+$n$ teste in $N$ lanci---si tratta della distribuzione binomiale che vedremo
+nella sezione~\ref{sec:distribuzione_binomiale}. Ma non è questo che fa il
+Fisico, nella sua professione. Tutto il contrario: il Fisico lancia la
+moneta $N$ volte e, a partire dal numero di volte $n$ in cui esce testa,
+cerca di inferire la probabilità (incognita) $p$. \`E chiaro che i due
+problemi sono legati tra di loro, ed in questa sezione cominceremo a sviscerare
+questo collegamento.
+
+
+\subsection{Un semplice problema di probabilità inversa}
+\label{sec:rilevatore_banconote}
+
+A questo punto in un qualsiasi articolo o libro di statistica trovereste
+il famoso problema del test per l'HIV~\cite{dagostini_review}. Noi preferiamo
+invece una variante meno cruenta---quella del rilevatore automatico di
+banconote false. Le specifiche fornite dalla casa produttrice dicono che
+l'oggetto ha un'efficienza del $100\%$ nel segnalare banconote contraffatte
+ma, allo stesso tempo, ha un tasso di falsi positivi del $5\%$---cioè nel
+$5\%$ dei casi segnala come contraffatta una banconota che invece è
+autentica. (In fondo non esistono dispositivi perfetti.) Prendiamo dunque una
+banconota e la passiamo dal rilevatore, che la segnala come contraffatta.
+Qual è la probabilità che la banconota sia effettivamente falsa?
+
+Prima di rispondere $95\%$ (come uno potrebbe ingenuamente essere tentato di
+fare), fermiamoci per un attimo a pensare e convinciamoci che la domanda,
+così come è scritta, è mal posta. Manca un ingrediente fondamentale,
+ossia la probabilità \emph{a priori} che, presa una banconota a caso, essa
+sia contraffatta. Dopo tutto in un mondo ideale in cui la contraffazione non
+esistesse (e quindi non esistessero banconote false) se il nostro dispositivo
+scattasse non potremmo far altro che imputare il fatto al $5\%$ dei falsi
+positivi, non vi pare? (E in quel caso la probabilità che cerchiamo sarebbe
+identicamente nulla.)
+
+Torniamo dunque un attimo indietro e cerchiamo di formalizzare meglio il
+problema. Per snellire la notazione definiamo i seguenti eventi:
+\begin{align*}
+A & {\text{: la banconota è autentica}}\\
+C & {\text{: la banconota è contraffatta}}\\
+\cmark & {\text{: il rilevatore segnala la banconota come autentica}}\\
+\xmark & {\text{: il rilevatore segnala la banconota come contraffatta}}
+\end{align*}
+Notiamo che questi eventi sono a due a due disgiunti e partizionano in due modi
+diversi il nostro spazio degli eventi $\mathcal{F}$, che possiamo vedere come il
+prodotto cartesiano dei due insiemi $\{A,~C\}$ e
+$\{\cmark,~\xmark\}$
+\begin{align*}
+  \mathcal{F} = \{(A,~\cmark),~(A,~\xmark),~(C,~\cmark),~(C,~\xmark)\}.
+\end{align*}
+Le specifiche del costruttore si possono allora riscrivere (e precisare) come
+\begin{align*}
+  \prob{\xmark \cond C} &= 1\\
+  \prob{\xmark \cond A} &= 0.05
+\end{align*}
+Assumeremo inoltre che la probabilità a priori che una banconota sia
+contraffatta sia $\prob{C} = 10^{-3}$ (cioè che una banconota su mille
+in circolazione sia, in media, falsa).
+
+Torniamo dunque al nostro problema iniziale, cioè la stima della
+probabilità che una banconota segnalata come contraffatta dal nostro
+rilevatore sia effettivamente contraffatta. Per la~\eqref{eq:teorema_bayes}
+possiamo scrivere
+\begin{align*}
+  \prob{C \cond \xmark} =
+  \frac{\prob{\xmark \cond C}\prob{C}}{\prob{\xmark}}.
+\end{align*}
+L'unica cosa che ci manca per calcolare la probabilità cercata è
+$\prob{\xmark}$, che non abbiamo direttamente, ma che possiamo calcolare
+sfruttando il fatto che $A \cup C = \mathcal{F}$
+\begin{align*}
+  \prob{\xmark} =
+  \prob{\xmark \cap A} + \prob{\xmark \cap C} =
+  \prob{\xmark \cond A}\prob{A} +
+  \prob{\xmark \cond C}\prob{C}.
+\end{align*}
+Questo ci permette di scrivere la risposta cercata nella forma meno compatta
+ma esplicita (che è anche la forma in cui si trova spesso espresso in
+letteratura il teorema di Bayes)
+\begin{align*}
+  \prob{C \cond \xmark} =
+  \frac{\prob{\xmark \cond C}\prob{C}}%
+       {\prob{\xmark \cond A}\prob{A} +
+  \prob{\xmark \cond C}\prob{C}} =
+  \frac{1 \times 0.001}{0.05 \times 0.999 + 1 \times 0.001} \approx 2\%
+\end{align*}
+Sorprendentemente (?) la probabilità cercata è dell'ordine del $2\%$,
+nonostante l'efficienza del nostro rilevatore sia il $100\%$ ed il tasso di
+falsi positivi sia solo del $5\%$. Il commento sopra a proposito del mondo
+ideale (senza contraffazione) può essere qui precisato notando che se
+$\prob{C} = 0$, allora $\prob{C \cond \xmark} = 0$
+come anticipato (vedi figura~\ref{fig:rilevatore_banconote}).
+
+\pgffigone{rilevatore_banconote}{
+  Probabilità condizionata $\prob{C \cond \xmark}$ che la
+  banconota segnalata dal nostro rilevatore sia effettivamente contraffatta
+  in funzione della probabilità a priori che una banconota scelta a caso tra
+  quelle in circolazione sia contraffatta $\prob{C}$, dati
+  $\prob{\xmark \cond C} = 1$ e
+  $\prob{\xmark \cond A} = 0.05$. Per $\prob{C} = 10^{-3}$
+  si ha il $\approx 2\%$ calcolato sopra.
+}
+
+(Pensate un attimo alla vostra esperienza di tutti i giorni: perché il
+cassiere del supermercato non chiama immediatamente la sicurezza ogni volta
+che una banconota viene segnalata come contraffatta dal rilevatore? Quante
+volte vi è capitato di vedere la stessa banconota segnalata come autentica
+al secondo o terzo passaggio?)
+
+
+\subsection{Ancora sul teorema di Bayes: un po' di nomenclatura}
+\label{sec:bayes_nomenclatura}
+
+Torniamo per un attimo sul teorema di Bayes in un contesto più vicino al
+mestiere del Fisico. Supponiamo di aver raccolto un campione di dati $d$
+e di avere un modello del nostro sistema fisico dipendente da un parametro
+$\theta$, che vogliamo stimare a partire dai dati stessi. Possiamo riscrivere
+la~\eqref{eq:teorema_bayes} come
+\begin{align}\label{eq:teorema_bayes_alt}
+  \prob{\theta \cond d} = \frac{\prob{d \cond \theta} \prob{\theta}}{\prob{d}}.
+\end{align}
+Il primo termine dell'equazione $\prob{\theta \cond d}$ è detto
+\emph{probabilità a posteriori}, o \foreign{posterior}, ed è esattamente ciò
+a cui siamo interessati da Fisici: la probabilità (inversa) che il parametro
+del nostro modello assuma un certo valore, date le nostre misure.
+$\prob{d \cond \theta}$, che si dice \emph{verosimiglianza} o \foreign{likelihood},
+è invece la probabilità (diretta) di misurare $d$, dato un generico valore
+di $\theta$, ed in pratica è specificata completamente dal nostro modello.
+$\prob{\theta}$ prende il nome di \emph{probabilità a priori}, o \foreign{prior},
+ed è il termine del teorema di Bayes su cui le diverse scuole statistiche
+discutono più veementemente.
+
+E $\prob{d}$? A prima vista potrebbe sembrare assurdo parlare della
+probabilità che le nostre misure $d$ assumano una serie di valori dati---in
+fondo una volta che le abbiamo fatte le misure sono fissate, no?
+(Ma ricordatevi: nello schema soggettivista possiamo assegnare una probabilità
+a qualsiasi evento o proposizione, per cui questa non è una difficoltà
+insuperabile.) Ma se guardiamo meglio la~\eqref{eq:teorema_bayes_alt} la cosa
+fondamentale è che stiamo facendo una affermazione (probabilistica) su
+$\theta$, mentre il denominatore del membro di destra dell'equazione dipende
+solo da $d$ per cui, dal nostro punto di vista, esso è solo una costante
+di normalizzazione. Allora la~\eqref{eq:teorema_bayes_alt} può essere
+riscritta in modo espressivo nella forma
+\begin{align}
+  \text{probabilità a posteriori} \propto
+  \text{verosimiglianza} \times \text{probabilità a priori},
+\end{align}
+che si trova frequentemente in letteratura e che utilizzeremo, sia pure solo
+occasionalmente, nel seguito.
+
+
+\section{Variabili casuali e funzioni di distribuzione}
+
+Si dice \emph{variabile casuale} o \emph{variabile aleatoria} una variabile
+che rappresenta la realizzazione numerica di un processo casuale, per cui
+il suo valore è soggetto a fluttuazioni casuali e non è noto a priori.
+Esistono casi di variabili casuali discrete, cioè variabili che possono
+assumere un numero finito o numerabile di valori, e casi di variabili
+continue, ed entrambe possono essere definite su intervalli finiti o infiniti.
+
+\begin{examplebox}
+  \begin{example}
+    L'uscita del lancio di un dado a sei facce (ossia la faccia del dado
+    rivolta verso l'alto) è una variabile casuale discreta che può assumere
+    esattamente sei valori: $1 \ldots 6$.
+  \end{example}
+
+  \begin{example}
+    Il tempo necessario per arrivare da casa al luogo di lavoro è un esempio
+    di variabile casuale continua.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Variabili casuali discrete}
+
+Consideriamo una variabile discreta $x$ che può assumere $n$ valori distinti
+possibili $x_1 \ldots x_n$. Indicando con $\prob{x_k}$ la probabilità che
+$x$ assuma il valore $x_k$, definiamo \emph{funzione di distribuzione}%
+\footnote{Il termine "funzione di distribuzione" è talvolta usato in
+  letteratura per indicare la funzione cumulativa di una distribuzione, di cui
+  ci occuperemo nella sezione~\ref{sec:funzione_cumulativa}. Un altro termine
+  molto usato per indicare quello che noi chiamiamo funzione di distribuzione
+  nel caso continuo è l'inglese \foreign{probability density function},
+  che si trova anche abbreviato come \foreign{pdf}.}
+di $x$ (o semplicemente \emph{distribuzione} di $x$) la funzione che associa ad
+ogni valore $x_k$ della variabile $x$ la sua probabilità $\prob{x_k}$.
+La funzione di distribuzione per una variabile discreta può essere
+rappresentata in forma tabellare o, più efficacemente, con un grafico a barre,
+come mostrato in figura~\ref{fig:pdf_un_dado_pdf_somma_due_dadi}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:pdf_un_dado}
+    Sia $x$ l'uscita del lancio di un dado a sei facce. Se il dado è equo,
+    ciascuno dei valori $x_k = 1\ldots6$ ha probabilità $1/6$ di uscire.
+    La funzione di distribuzione corrispondente è mostrata in
+    figura~\ref{fig:pdf_un_dado_pdf_somma_due_dadi} (a sinistra).
+  \end{example}
+
+  \begin{example}\label{exp:pdf_somma_due_dadi}
+    Consideriamo il lancio di due dadi e sia $x$ la somma delle due uscite.
+    $x$ può assumere tutti i valori interi tra $2$ e $12$, ma stavolta gli
+    $x_k$ non sono equiprobabili anche se i dadi sono equi. I casi possibili
+    sono in totale $6 \times 6 = 36$ ed ognuno può essere univocamente
+    identificato con la coppia $(u_1, u_2)$, in cui $u_1$ è l'uscita del primo
+    dado e $u_2$ quella del secondo. Mentre il $2$ ha solamente un modo per
+    realizzarsi, $(1, 1)$, il $4$, ad esempio, può realizzarsi in tre modi
+    diversi: $(1, 3)$, $(2, 2)$ o $(3, 1)$, come illustrato nella
+    tabella~\ref{tab:pdf_due_dadi}. La probabilità di uscita può allora
+    essere calcolata come rapporto tra il numero di casi favorevoli ed il
+    numero totale di casi possibili, ed ha la forma triangolare mostrata in
+    figura~\ref{fig:pdf_un_dado_pdf_somma_due_dadi} (a destra).
+  \end{example}
+\end{examplebox}
+
+
+\begin{table}[!hbt]
+  \tablehstack{
+    \begin{tabular}{lll}
+      \hline
+      $x$ & Combinazioni possibili & $\prob{x}$\\
+      \hline
+      \hline
+      $2$ & $(1,~1)$ & $\nicefrac{1}{36}$\\
+      $3$ & $(1,~2),~(2,~1)$ & $\nicefrac{2}{36}$\\
+      $4$ & $(1,~3),~(3,~1),~(2,~2)$ & $\nicefrac{3}{36}$\\
+      $5$ & $(1,~4),~(4,~1),~(2,~3),~(3,~2)$ & $\nicefrac{4}{36}$\\
+      $6$ & $(1,~5),~(5,~1),~(2,~4),~(4,~2),~(3,~3)$ & $\nicefrac{5}{36}$\\
+      $7$ & $(1,~6),~(6,~1),~(2,~5),~(5,~2),~(4,~3),~(3,~4)$ &
+      $\nicefrac{6}{36}$\\
+      $8$ & $(2,~6),~(6,~2),~(3,~5),~(5,~3),~(4,~4)$ & $\nicefrac{5}{36}$\\
+      $9$ & $(3,~6),~(6,~3),~(4,~5),~(5,~4)$ & $\nicefrac{4}{36}$\\
+      $10$ & $(4,~6),~(6,~4),~(5,~5)$ & $\nicefrac{3}{36}$\\
+      $11$ & $(5,~6),~(6,~5)$ & $\nicefrac{2}{36}$\\
+      $12$ & $(6,~6)$ & $\nicefrac{1}{36}$\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Funzione di distribuzione per la somme delle uscite di due dadi
+      equi. Per completezza tutte le combinazioni di uscite che danno luogo
+      ad un dato valore della somma sono elencate esplicitamente.}
+    \label{tab:pdf_due_dadi}
+  }
+\end{table}
+
+
+\pgffigtwo{pdf_un_dado}{pdf_somma_due_dadi}{
+  Funzione di distribuzione per l'uscita di un dado equo a sei facce (a
+  sinistra) e per la somma delle uscite di due dadi equi a sei facce
+  (a destra)---vedi gli esempi~\ref{exp:pdf_un_dado} e
+  \ref{exp:pdf_somma_due_dadi}.
+}
+
+In questo contesto il secondo assioma di Kolmogorov si scrive nella forma di
+una \emph{condizione di normalizzazione}, che tutte le funzioni di
+distribuzione debbono soddisfare
+\begin{align}
+  \sum_k \prob{x_k} = 1
+\end{align}
+(la sommatoria è estesa a tutti i valori $x_k$ che la variabile $x$ può
+assumere). \`E banale verificare direttamente che le funzioni di distribuzione
+illustrate negli esempi~\ref{exp:pdf_un_dado} e \ref{exp:pdf_somma_due_dadi}
+ed in figura~\ref{fig:pdf_un_dado_pdf_somma_due_dadi} sono normalizzate.
+
+
+\subsection{Variabili casuali continue}
+
+Nel caso di una variabile continua la definizione di funzione di distribuzione
+data per una variabile discreta non è più applicabile poiché la
+probabilità che la variabile $x$ assuma un valore \emph{esattamente} definito
+è identicamente zero (vedremo tra un attimo che si tratta essenzialmente
+di un integrale su un dominio di misura nulla).
+\`E invece sensato chiedersi quale sia la probabilità che la $x$ assuma
+un valore compreso in un generico intervallo compreso tra $x_0$ ed $x_0 + dx$
+\begin{align*}
+  \prob{x_0, dx} = \prob{x_0 \leq x < x_0 + dx}.
+\end{align*}
+A questo punto, se dividiamo per la larghezza dell'intervallo e prendiamo il
+limite per $dx \rightarrow 0$, otteniamo una sorta di probabilità
+specifica o probabilità per unità di intervallo che chiamiamo
+\emph{densità di probabilità}
+\begin{align}\label{eq:definizione_densita_prob}
+  p(x_0) = \lim_{dx \rightarrow 0} \frac{\prob{x_0, dx}}{dx}
+\end{align}
+La~\eqref{eq:definizione_densita_prob} è una sorta di rapporto incrementale,
+per cui la densità di probabilità è, in un certo senso, la derivata
+della funzione probabilità. La probabilità (infinitesima) che la variabile
+casuale assuma un valore compreso nell'intervallo $dx$ centrato attorno al
+valore $x_0$ si scrive come
+\begin{align*}
+  \prob{x_0, dx} = p(x_0) dx
+\end{align*}
+e, corrispondentemente, la probabilità che essa assuma un valore compreso
+nell'intervallo \emph{finito} $[x_1,~x_2]$ è data da:
+\begin{align}
+  \prob{x_1 \leq x \leq x_2} = \int_{x_1}^{x_2} p(x)dx.
+\end{align}
+(Ne segue, per inciso, che la densità di probabilità di una variabile
+casuale continua $x$ ha le dimensioni fisiche dell'inverso di $x$.)
+La condizione di normalizzazione per una funzione di distribuzione di
+variabile continua si scrive allora come
+\begin{align}\label{eq:normalizzazione_pdf}
+  \int_{-\infty}^{\infty} p(x)dx = 1.
+\end{align}
+(Formalmente l'integrale andrebbe calcolato sul supporto della funzione di
+distribuzione ma, se assumiamo che la funzione di distribuzione sia
+identicamente nulla al di fuori del supporto stesso, possiamo integrare su
+tutta la retta reale senza perdere di generalità.)
+
+\begin{examplebox}
+  \begin{example}
+    Il più semplice esempio di funzione di distribuzione di variabile
+    continua è quello in cui la densità di probabilità è costante
+    su un dato intervallo $[a,~b]$ (vedi figura~\ref{fig:pdf_esempio_uniforme} e
+    sezione~\ref{sec:distribuzione_uniforme}). La normalizzazione è fissata
+    dalla~\eqref{eq:normalizzazione_pdf} e vale $1/(b - a)$.
+  \end{example}
+\end{examplebox}
+
+\pgffigone{pdf_esempio_uniforme}{
+  Esempio di funzione di distribuzione di variabile continua, in cui la densità
+  di probabilità è costante tra $0$ e $1$. (Per ovvi motivi questa
+  distribuzione prende il nome di distribuzione uniforme.) La distribuzione
+  è correttamente normalizzata e la regione ombreggiata illustra il concetto
+  di probabilità come integrale della densità di probabilità su un
+  intervallo finito.
+}
+
+
+\section{Valore di aspettazione}
+
+Sia data una funzione $f(x)$ di una variabile casuale $x$ (continua o discreta).
+Definiamo il \emph{valore di aspettazione}, o \emph{speranza matematica},
+o semplicemente \emph{speranza} di $f(x)$ come
+\begin{align}
+  \dccases[.]{\expect{f(x)}}%
+          {\sum_k f(x_k)\prob{x_k}}%
+          {\intinf f(x)p(x)\diff}
+\end{align}
+Notiamo esplicitamente che il valore di aspettazione trasforma una funzione
+di $x$ in un \emph{numero}. Si tratta di una sorta di procedura di media in
+cui i valori di $f(x)$ sono pesati con il valore della funzione di distribuzione
+di $x$. \`E uno strumento fondamentale che, come vedremo in seguito, permette
+di definire molte delle proprietà di base comuni alle distribuzioni.
+
+\begin{examplebox}
+  \begin{example}
+    Torniamo per un attimo alla sezione~\ref{sec:lotto_probabilita} e supponiamo
+    di giocare 1~euro su un ambo secco sulla ruota di Napoli. Consideriamo
+    la nostra vincita come una variabile casuale e calcoliamo il suo valore di
+    aspettazione. La probabilità di vincere è $10/4005$, ed in tal caso
+    il guadagno netto è $250 - 1 = 249$~euro. In caso contrario semplicemente
+    perdiamo 1~euro (che possiamo considerare una vincita negativa di
+    $-1$~euro). Il valore di aspettazione cercato è dunque
+    \begin{align*}
+      249 \times \frac{10}{4005} - 1 \times \frac{3995}{4005} \approx
+      -0.38~\text{euro},
+    \end{align*}
+    che è come dire che in media perdiamo circa 38~centesimi per ogni
+    euro giocato. (Come è ovvio dalla tabella nella
+    sezione~\ref{sec:lotto_probabilita} la situazione è anche peggio
+    per il terno, la quaterna e la cinquina.)
+  \end{example}
+\end{examplebox}
+
+Per la linearità di integrale e sommatoria, il valore di aspettazione è un
+\emph{operatore lineare}, nel senso che
+\begin{align}
+  \expect{c_1 f(x) + c_2 g(x)} = c_1 \expect{f(x)} + c_2 \expect{g(x)},
+\end{align}
+come si verifica facilmente per sostituzione. Notiamo anche che, per la
+condizione di normalizzazione, il valore di aspettazione di una \emph{costante}
+(cioè di una espressione che non dipende dalla variabile casuale $x$)
+è uguale alla costante stessa
+\begin{align}
+  \expect{c} = c.
+\end{align}
+
+
+\section{Tendenza centrale e dispersione intorno alla media}
+
+Nelle applicazioni pratiche è comune condensare l'informazione
+contenuta nella funzione di distribuzione di una variabile casuale in pochi
+parametri significativi. Tipicamente siamo interessati a sapere quale valore
+ci aspettiamo che la variabile assuma \emph{in media} e quanto la variabile
+stessa si discosti \emph{in media} da questo valore.
+
+
+\subsection{Media, mediana e moda}
+
+Definiamo il \emph{valor medio} (o semplicemente la \emph{media}) di una
+variabile casuale $x$ (continua o discreta) come il valore di aspettazione
+di $x$
+\begin{align}\label{eq:mean}
+  \dccases[.]{\mu = \expect{x}}%
+          {\sum_k x_k\prob{x_k}}%
+          {\intinf xp(x)\diff}
+\end{align}
+Nel seguito indicheremo il valor medio di $x$ con $\mu$, $\mu_x$ o
+$\expect{x}$ a seconda del contesto, cercando di conciliare sintesi e
+chiarezza. Notiamo esplicitamente che se $c$ è una costante
+\begin{align}
+  \expect{cx} = c\expect{x}.
+\end{align}
+
+\begin{examplebox}
+  \begin{example}\label{exp:media_dado}
+    Sia la variabile casuale $x$ l'uscita di un dado equo a sei facce. La media
+    vale
+    \begin{align*}
+      \mu = \sum_{k=1}^{6} x_k \prob{x_k} =
+      \frac{1}{6} \sum_{k = 1}^{6} k =
+      \frac{1}{6} (1 + 2 + 3 + 4 + 5 + 6) = \frac{7}{2}.
+    \end{align*}
+    Notiamo esplicitamente che in questo caso il valor medio non coincide con
+    nessuno dei valori che $x$ può assumere.
+  \end{example}
+
+  \begin{example}\label{exp:media_due_dadi}
+    Ripetiamo l'esercizio precedente nel caso in cui $x$ sia la somma delle
+    uscite nel lancio di due dadi.
+    \begin{eqnarray*}
+      \mu &=& \displaystyle \sum_{k=2}^{12} x_k \prob{x_k} =
+      2 \times \frac{1}{36} + 3 \times \frac{2}{36} +
+      4 \times \frac{3}{36} + 5 \times \frac{4}{36} + 6 \times \frac{5}{36} +\\
+      &+& \displaystyle 7 \times \frac{6}{36} + 8 \times \frac{5}{36} +
+      9 \times \frac{4}{36} + 10 \times \frac{3}{36} + 11 \times \frac{2}{36} +
+      12 \times \frac{1}{36} = \frac{252}{36} = 7
+    \end{eqnarray*}
+    che è esattamente il doppio di quanto calcolato poco fa per un
+    singolo dado. (Vedremo nel seguito che non si tratta di un caso.)
+  \end{example}
+
+  \begin{example}\label{exp:media_dist_uniforme}
+  Sia $x$ una variabile casuale continua distribuita uniformemente tra $0$ ed
+  $1$ (cioè $p(x) = 1$ in $[0,~1]$ e $p(x) = 0$ fuori). La media vale:
+  \begin{align*}
+    \mu = \intinf x p(x)\diff = \int_{0}^{1} x \diff =
+    \eval{\frac{x^2}{2}}{0}{1} = \frac{1}{2} - 0 = \frac{1}{2},
+  \end{align*}
+  che coincide con il punto medio dell'intervallo $[0,~1]$.
+  \end{example}
+\end{examplebox}
+
+Nel caso particolare di una variabile casuale e discreta per cui si abbiano
+$n$ uscite possibili $x_k$ equiprobabili (cioè
+$\prob{x_1} = \cdots = \prob{x_n} = 1/n$) si ha
+\begin{align*}
+  \mu = \sum_{k=1}^n x_k\prob{x_k} = \frac{1}{n}\sum_{k=1}^n x_k,
+\end{align*}
+cioè la nostra definizione \eqref{eq:mean} di media coincide con la
+media aritmetica delle uscite possibili, come è ragionevole aspettarsi.
+Nel caso generale in cui i  valori $x_k$ non siano equiprobabili,
+essi vengono correttamente \emph{pesati} a seconda della probabilità
+corrispondente in modo che la media si sposti verso i valori più probabili.
+
+Il valor medio non è l'unica stima possibile di tendenza centrale. Definiamo
+{\itshape mediana} di una distribuzione quel valore $\median$ della variabile
+casuale tale che
+\begin{align}\label{eq:median}
+  \prob{x \le \median} = \prob{x \ge \median}.
+\end{align}
+Per una variabile casuale continua la mediana è dunque definita dalla
+condizione
+\begin{align*}
+  \int_{-\infty}^{\median} p(x) \diff =
+  \int_{\median}^{\infty} p(x) \diff = \frac{1}{2}.
+\end{align*}
+Per una variabile discreta non è detto che questo valore esista e sia
+univocamente determinato (motivo per il quale la mediana è rilevante
+soprattutto per distribuzioni continue). Se una funzione di distribuzione è
+simmetrica rispetto al valor medio, media e mediana coincidono.
+
+%\begin{examplebox}
+%  \begin{example}\label{example:die_median}
+%    Nel caso del dado a sei facce qualsiasi numero nell'intervallo
+%    aperto $]3,4[$ soddisfa la~\eqref{eq:median}, per cui è necessario
+%    fissare una convenzione per definire la mediana (possiamo ad esempio
+%    prendere il valore centrale $\nicefrac{7}{2}$ di tale intervallo).
+%  \end{example}
+%\end{examplebox}
+
+La \emph{moda} (o \emph{valore più probabile}) è semplicemente il valore
+della variabile casuale (se esiste ed è unico) in corrispondenza del quale la
+funzione di distribuzione ha un massimo.
+
+
+\subsection{Varianza e deviazione standard}
+
+Caratterizzare la \emph{dispersione} attorno alla media di una variabile
+casuale significa definire una funzione il cui valore di aspettazione sia una
+misura di quanto la variabile $x$ tenda a discostarsi dal proprio valor medio.
+Potremmo essere tentati di utilizzare la funzione $f(x) = x - \mu$, ma è
+facile verificare che
+\begin{align*}
+  \expect{x - \mu} = \expect{x} - \mu = \mu - \mu = 0.
+\end{align*}
+Questo valore di aspettazione non fornisce alcuna informazione utile in quanto
+fluttuazioni per eccesso e fluttuazione per difetto tendono, statisticamente,
+a compensarsi. Per ovviare a questo inconveniente si usa $f(x) = \sq{x - \mu}$
+e si definisce la \emph{varianza} come%
+\footnote{La quantità $f(x) = \abs{x - \mu}$ potrebbe servire altrettanto
+  bene allo scopo, ma come vedremo tra breve, $\sq{x - \mu}$ ha alcune
+  proprietà che la rendono più comoda da utilizzare nella pratica.}
+\begin{align}\label{eq:variance}
+  \dccases{\sigma^2 = \expect{\sq{x - \mu}}}%
+          {\sum_k \sq{x_k - \mu}\prob{x_k}}%
+          {\intinf \sq{x - \mu}p(x)\diff}
+\end{align}
+(nel seguito indicheremo la varianza di $x$ con $\sigma^2$, $\sigma^2_x$ o
+$\var{x}$ a seconda del contesto). Definiamo inoltre la
+\emph{deviazione standard} come radice quadrata della varianza
+\begin{align}\label{eq:sigma}
+  \sigma = \sqrt{\sigma^2}.
+\end{align}
+\`E proprio la deviazione standard (che, al contrario della varianza, ha le
+stesse dimensioni fisiche della variabile casuale di partenza) a rappresentare
+la misura della dispersione attorno alla media cercata. Esamineremo
+dettagliatamente in seguito la connessione con l'errore statistico.
+Notiamo, per inciso, che se $c$ è una costante
+\begin{align}\label{eq:varianza_cost_molt}
+  \var{cx} & = \expect{\left(cx - \expect{cx}\right)^2} =
+  \expect{(cx - c\mu)^2} =
+  \expect{c^2(x - \mu)^2} = c^2\expect{(x - \mu)^2} = c^2\var{x}.
+\end{align}
+Questa è una relazione molto importante: una costante passa fuori
+dall'operatore varianza \emph{al quadrato}---da cui, se facciamo la radice
+quadrata di entrambi i membri, si vede che la deviazione standard di $cx$
+è, come uno si aspetterebbe, $c$~volte la deviazione standard di $x$.
+
+\begin{examplebox}
+  \begin{example}\label{exp:varianza_dado}
+    Torniamo al nostro dado a sei facce. Utilizzando il valor medio calcolato
+    nell'esempio~\ref{exp:media_dado} la varianza si scrive come
+    \begin{align*}
+      \sigma^2 & = \sum_{k = 1}^6(x_k - \mu)^2 \prob{x_k} =
+      \frac{1}{6}\sum_{k = 1}^6\left( k - \frac{7}{2} \right)^2 =
+      \frac{1}{6} \left(\frac{25}{4} + \frac{9}{4} + \frac{1}{4} +
+      \frac{1}{4} + \frac{9}{4} + \frac{25}{4} \right) = \frac{35}{12},
+    \end{align*}
+    e la deviazione standard è banalmente $\sigma = \sqrt{\nicefrac{35}{12}}$.
+  \end{example}
+
+  \begin{example}\label{exp:varianza_due_dadi}
+    Calcoliamo adesso la varianza per la somma delle uscite di due dadi
+    equi
+    \begin{eqnarray*}
+      \sigma^2 &=& \sum_{k = 2}^{12}(x_k - \mu)^2 \prob{x_k}  =
+      \sum_{k = 2}^{12} (x_k - 7)^2 \prob{x_k} =
+      25 \times \frac{1}{36} + 16 \times \frac{2}{36} +
+      9 \times \frac{3}{36} + 4 \times \frac{4}{36} + 1 \times \frac{5}{36} +\\
+      &+& 0 \times \frac{6}{36} + 1 \times \frac{5}{36} +
+      4 \times \frac{4}{36} + 9 \times \frac{3}{36} + 16 \times \frac{2}{36} +
+      25 \times \frac{1}{36} = \frac{210}{36} = \frac{35}{6}.
+    \end{eqnarray*}
+    (Che è esattamente il doppio della varianza per l'uscita di un dado a sei
+    facce calcolata nell'esercizio precedente.)
+  \end{example}
+
+  \begin{example}\label{exp:varianza_dist_uniforme}
+    Consideriamo la variabile casuale $x$ distribuita uniformemente tra $0$ ed
+    $1$ introdotta nell'esempio~\ref{exp:media_dist_uniforme}. La varianza
+    si calcola come
+    \begin{align*}
+      \sigma^2 & = \intinf (x - \mu)^2p(x)\diff =
+      \int_{0}^{1} \left(x - \frac{1}{2}\right)^2 \diff =
+      \int_{0}^{1} \left(x^2 - x + \frac{1}{4}\right) \diff =
+      \eval{\left(\frac{x^3}{3} - \frac{x^2}{2} + \frac{x}{4}\right)}{0}{1} =\\
+      &= \frac{1}{3} - \frac{1}{2} + \frac{1}{4} = \frac{1}{12},
+    \end{align*}
+    e la deviazione standard è $\sigma = \sqrt{\nicefrac{1}{12}}$.
+    Vedremo nel seguito che questo esempio non è solo di interesse accademico.
+  \end{example}
+\end{examplebox}
+
+Partendo dalla definizione di varianza~\eqref{eq:variance}, attraverso una
+semplice manipolazione algebrica
+\begin{align*}
+  \sigma^2 & = \expect{(x - \mu)^2} = \expect{(x^2 - 2x\mu + \mu^2)} =
+  \expect{x^2} - \expect{2x\mu} + \expect{\mu^2} =\\
+  & =\expect{x^2} - 2\mu \expect{x} + \mu^2 =
+  \expect{x^2} - 2\mu^2 + \mu^2
+\end{align*}
+si arriva alla relazione utile che utilizzeremo spesso nel seguito
+\begin{align}\label{eq:variance_alt}
+  \sigma^2 =  \expect{x^2} - \mu^2.
+\end{align}
+
+
+\subsection{La larghezza a metà altezza}
+
+Un concetto utile che si applica alle funzioni di distribuzione di variabile
+continua è quello di \emph{semilarghezza a metà altezza}, illustrato in
+figura~\ref{fig:hwhm}. Se assumiamo che la distribuzione sia unimodale---cioè
+che abbia un solo massimo---la retta orizzontale che interseca l'asse delle
+ordinate in corrispondenza della metà del valore del punto di massimo della
+distribuzione intersecherà la distribuzione stessa esattamente in due punti
+$x_a$ ed $x_b$. Definiamo allora la larghezza a metà altezza $\fwhm$
+(\foreign{full width at half maximum} in inglese) come
+\begin{align}
+  \fwhm = \abs{x_b - x_a},
+\end{align}
+e la semilarghezza a metà altezza $\hwhm$ (\foreign{half width at half maximum}
+in inglese) come
+\begin{align}
+  \hwhm = \frac{\abs{x_b - x_a}}{2}.
+\end{align}
+
+\pgffigone{hwhm}{
+  Significato geometrico della larghezza a metà altezza. Notiamo
+  esplicitamente che, come in questo caso, non è necessario che la
+  distribuzione sia simmetrica rispetto al valor medio.
+}
+
+Nella maggior parte delle distribuzioni continue di interesse pratico la
+semilarghezza a metà altezza è una stima ragionevole della deviazione
+standard, nel senso che
+\begin{align}
+  \hwhm = c\sigma
+\end{align}
+con $c$ dell'ordine dell'unità---e ne vedremo molti esempi concreti nel
+seguito. Questo offre un'ulteriore interpretazione geometrica del concetto di
+deviazione standard come \emph{larghezza} di una distribuzione
+(vedi figura~\ref{fig:hwhm}).
+
+
+\subsection{La disuguaglianza di Chebyshev ed il significato della deviazione
+  standard}
+
+Il significato profondo della deviazione standard è sostanzialmente che,
+se misuriamo le deviazioni dal valor medio in unità di $\sigma$, è
+\emph{poco probabile} che esse siano molto grandi. Si tratta di una
+affermazione piuttosto generica che si può precisare in un certo numero
+di modi alternativi, uno dei quali è il teorema di Chebyshev.
+
+\begin{theorem}[di Chebyshev]
+  Sia $x$ una variabile casuale tale che esistano finiti la media $\mu$
+  e la varianza $\sigma^2$; preso un numero reale positivo $c > 0$ si ha:
+  \begin{align}\label{eq:teorema_chebyshev}
+    \prob{\abs{x - \mu} \ge c\sigma} \le \frac{1}{c^2}
+  \end{align}
+\end{theorem}
+\begin{proof}
+  Per comodità illustriamo la dimostrazione nel caso di una variabile
+  continua (il caso discreto è del tutto analogo):
+  \begin{align*}
+    \sigma^2 & = \intinf(x - \mu)^2p(x)\diff \ge
+    \int_{\abs{x - \mu} \ge c\sigma} \!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!
+    (x - \mu)^2p(x) \diff \ge
+    \int_{\abs{x - \mu} \ge c\sigma} \!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!
+    c^2\sigma^2 p(x) \diff =
+    c^2\sigma^2 \int_{\abs{x - \mu} \ge c\sigma}
+    \!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\!\! p(x) \diff =
+    c^2\sigma^2 \prob{\abs{x - \mu} \ge c\sigma},
+  \end{align*}
+  da cui segue banalmente la tesi.
+\end{proof}
+
+Il teorema di Chebyshev vale sotto ipotesi molto generali (il che è la
+ragione principale della sua importanza), per cui il limite
+superiore fornito è tipicamente piuttosto blando. In tutti i casi di
+interesse pratico, se conosciamo la forma della distribuzione, o anche solo
+alcune delle sue proprietà, la probabilità in~\eqref{eq:teorema_chebyshev}
+si può calcolare esplicitamente oppure limitare in modo significativamente
+più stringente.
+
+\begin{examplebox}
+  \begin{example}
+    Nel caso di una variabile casuale $x$ distribuita uniformemente tra $0$ ed
+    $1$ i punti a $\mu - 2\sigma$ e $\mu + 2\sigma$ cadono al di fuori
+    dell'intervallo di variabilità di $x$ per cui
+    $\prob{\abs{x-\mu} \ge 2\sigma} = 0$. Il teorema di Chebyshev fornisce il
+    limite $\prob{\abs{x-\mu} \ge 2\sigma} \le \nicefrac{1}{4}$.
+  \end{example}
+\end{examplebox}
+
+Se poniamo $c = 1$ nella~\eqref{eq:teorema_chebyshev}, il teorema di Chebyshev
+che abbiamo appena dimostrato si traduce nella condizione banale
+\begin{align*}
+  \prob{\abs{x - \mu} \ge \sigma} \le 1 \quad \text{ovvero} \quad
+  \prob{\abs{x - \mu} \le \sigma} \ge 0.
+\end{align*}
+Cioè la probabilità che la variabile casuale assuma un valore
+nell'intervallo $[\mu-\sigma,~\mu+\sigma]$ è maggiore di zero. Il che è
+come non dire niente. Se però ci fermiamo un attimo a guardare i pochi
+esempi di distribuzione che abbiamo incontrato sino a questo momento ci
+rendiamo conto che in realtà la probabilità
+$\prob{\abs{x - \mu} \le \sigma}$ è sostanziale---tipicamente più grande
+del $60\%$, come mostrato in tabella~\ref{tab:prob_media_stdev} e come
+vedremo più in dettaglio nel seguito.
+
+\begin{table}[htbp]
+  \tablehstack{
+    \centering\begin{tabular}{lll}
+      \hline
+      Distribuzione & Esempi & $\prob{\abs{x - \mu} \le \sigma}$\\
+      \hline
+      \hline
+      Un dado & \ref{exp:varianza_dado} &
+      $\nicefrac{4}{6} \approx 67\%$\\
+      Somma di due dadi & \ref{exp:varianza_due_dadi} &
+      $\nicefrac{24}{36} \approx 67\%$ \\
+      Distribuzione uniforme & \ref{exp:varianza_dist_uniforme} &
+      $\nicefrac{2}{\sqrt{12}} \approx 58\%$\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Valore della probabilità $\prob{\abs{x - \mu} \le \sigma}$
+      che una variabile casuale disti di meno di una deviazione standard
+      dalla media per tre distribuzioni particolari.}
+    \label{tab:prob_media_stdev}
+  }
+\end{table}
+
+In un certo senso potremmo dire che, nella maggior parte dei casi di interesse
+pratico, e a meno di non scegliere distribuzioni multi-modali a scopo di
+controesempio, l'intervallo $[\mu-\sigma,~\mu+\sigma]$ \emph{racchiude} la
+maggior parte della distribuzione, nel senso che
+$\prob{\abs{x - \mu} \le \sigma}$ è dell'ordine del $60$--$70\%$.
+
+
+\section{Momenti di una distribuzione}
+
+Definiamo il \emph{momento di ordine $n$} di una variabile casuale $x$ attorno
+ad un punto $x_0$ come:
+\begin{align}
+  \dccases[.]{\mom[x_0]{n} = \expect{\power[n]{x - x_0}}}%
+          {\sum_k \power[n]{x_k - x_0}\prob{x_k}}%
+          {\intinf \power[n]{x - x_0}p(x)\diff}
+\end{align}
+Hanno particolare rilevanza i \emph{momenti algebrici} $\momalg{n}$, ossia i
+momenti di ordine generico attorno al punto $x_0 = 0$
+\begin{align}
+  \momalg{n} = \mom[0]{n}
+\end{align}
+ed i \emph{momenti centrali} $\momcen{n}$, ossia i momenti di ordine generico
+attorno al valor medio $\mu$ di $x$:
+\begin{align}
+  \momcen{n} = \mom[\mu]{n}
+\end{align}
+In particolare la media è il momento algebrico di ordine $1$ e la varianza
+è il momento centrale di ordine $2$ (e, cosa meno interessante, tutti i
+momenti di ordine $0$ valgono $1$ per la condizione di normalizzazione).
+
+Quello di ordine tre è il primo momento centrale di ordine dispari che
+non si annulla ed è importante perché, pesando con il segno le code a destra
+e sinistra della media, misura l'eventuale asimmetria della funzione di
+distribuzione. Sfruttando la linearità del valore di aspettazione, il
+momento centrale di ordine tre si può scrivere come
+\begin{align*}
+  \momcen{3} & = \expect{(x - \mu)^3} =
+  \expect{x^3 - 3\mu x^2 + 3\mu^2 x - \mu^3} =
+  \expect{x^3} - 3\mu\expect{x^2} + 3\mu^2\expect{x} -
+  \expect{\mu^3} =\\\nonumber
+  & = \expect{x^3} - 3\mu(\sigma^2 + \mu^2) + 3\mu^3 - \mu^3.
+\end{align*}
+(Nell'ultimo passaggio abbiamo sfruttato il fatto che
+$\sigma^2 = \expect{x^2} - \mu^2$.) Si ha dunque la relazione notevole
+\begin{align}\label{eq:momcen3}
+  \momcen{3} = \expect{x^3} - 3\mu\sigma^2 - \mu^3,
+\end{align}
+che è in un qualche senso l'equivalente della~\eqref{eq:variance_alt}.
+A partire dal momento centrale di ordine tre si può definire il
+\emph{coefficiente di asimmetria} o \foreign{skewness} $\skewness$
+\begin{align}
+  \skewness = \frac{\momcen{3}}{\sigma^3}.
+\end{align}
+La \foreign{skewness} è una quantità adimensionale che vale zero per le
+distribuzioni simmetriche rispetto al valor medio (non è in generale vero
+il viceversa) e che è diversa da zero se la funzione di distribuzione
+presenta una coda più \emph{lunga} dell'altra---nel qual caso una
+\foreign{skewness} positiva (negativa) indica che la coda a destra (sinistra)
+è più lunga.
+
+
+\section{La funzione cumulativa}
+\label{sec:funzione_cumulativa}
+
+Data una variabile casuale $x$ la \emph{funzione cumulativa} o
+\foreign{cumulative density function} (cdf) è definita come
+\begin{align}
+  F(x') = \prob{x \leq x'}.
+\end{align}
+Dato che la funzione cumulativa ha lo stesso dominio della funzione di
+distribuzione, il suo argomento si indica generalmente con lo stesso nome
+della variabile casuale. Operativamente:
+\begin{align}
+  \dccases{F(x)}{\sum_{x_k \leq x}\prob{x_k}}{\int_{-\infty}^x p(t) dt}
+\end{align}
+
+Poiché la probabilità (o la densità di probabilità) è non negativa,
+la funzione cumulativa è monotona crescente, e, per la condizione di
+normalizzazione, assume valori nell'intervallo $[0, 1]$:
+\begin{align}
+  \lim_{x \rightarrow -\infty}F(x) = 0 \quad \text{e} \quad
+  \lim_{x \rightarrow +\infty}F(x) = 1
+\end{align}
+(nel caso la densità di probabilità abbia supporto finito, la condizione
+implica che la funzione cumulativa assume i valori $0$ e $1$ negli estremi del
+supporto stesso). Si ha inoltre l'uguaglianza ovvia
+\begin{align}
+  \prob{x_1 < x \leq x_2} = F(x_2) - F(x_1).
+\end{align}
+
+Se la funzione cumulativa è strettamente crescente e continua, allora
+per ogni numero reale $0 \leq q \leq 1$ esiste uno ed un solo valore di
+$x$ per cui $F(x) = q$. L'inverso della funzione cumulativa nel senso della
+composizione delle funzioni
+\begin{align}
+  F^{-1}(q)
+\end{align}
+si dice \emph{funzione di distribuzione inversa} o
+\foreign{percent point function}.
+
+\begin{examplebox}
+  \begin{example}
+    Nel caso della variabile casuale $x$ distribuita uniformemente tra $0$ ed
+    $1$ introdotta nell'esempio~\ref{exp:media_dist_uniforme} la distribuzione
+    cumulativa è semplicemente
+    \begin{align*}
+      F(x) = \int_0^x p(t) dt = \eval{t\rule{0pt}{10pt}}{0}{x} = (x - 0) = x.
+    \end{align*}
+    Notiamo che $F(0) = 0$ e $F(1) = 1$, come deve essere. La funzione di
+    distribuzione inversa e` invece
+    \begin{align*}
+      F^{-1}(q) = q.
+    \end{align*}
+  \end{example}
+\end{examplebox}
+
+
+\section{Breve riepilogo: un semplice problema di calcolo delle probabilità}
+
+Fermiamoci per un attimo e passiamo in rassegna alcune delle cose che abbiamo
+visto in questa sezione nel contesto di un (semplice) problema concreto.
+Supponiamo di avere due variabili casuali continue indipendenti $x_1$ ed $x_2$,
+entrambe distribuite uniformemente tra $0$ ed $1$. Vogliamo calcolare la
+funzione di distribuzione della variabile
+\begin{align*}
+  x = \max(x_1, x_2)
+\end{align*}
+e stimare i parametri fondamentali (e.g., media e deviazione standard)
+caratteristici della distribuzione stessa.
+(Prima di proseguire intendiamoci sulle regole del gioco: la realizzazione
+elementare del nostro ipotetico esperimento consiste nel campionare due volte
+una distribuzione uniforme e prendere il massimo tra i due campionamenti.
+Un possibile equivalente discreto sarebbe lanciare due dadi e considerare
+l'uscita più alta come variabile causale.)
+
+
+\subsection{Calcolo della funzione di distribuzione}
+
+Cominciamo dal calcolo della funzione di distribuzione di $x$. La prima cosa che
+possiamo dire senza alcun dubbio è che, se $x_1$ ed $x_2$ sono comprese tra
+$0$ e $1$, allora anche $x = \max(x_1, x_2)$ sarà compresa tra $0$ ed $1$.
+Intuitivamente ci aspettiamo anche che, se prendiamo il massimo tra due
+campionamenti di una variabile distribuita uniformemente tra $0$ ed $1$, valori
+relativamente più grandi (cioè vicino ad $1$) saranno più probabili
+di valori relativamente più piccoli (cioè vicino a $0$).
+
+La figura~\ref{fig:max_pdf_uniforme_pdf_max_pdf_uniforme} mostra una possibile
+costruzione geometrica utile per il calcolo della funzione di distribuzione che
+stiamo cercando. Se $x_1$ ed $x_2$ sono indipendenti, allora la realizzazione
+elementare del nostro esperimento consiste essenzialmente nello scegliere un
+punto distribuito uniformemente nel piano $x_1$-$x_2$. Prendere il massimo tra
+$x_1$ ed $x_2$ è come dire che scegliamo $x_1$ se il punto scelto è sotto la
+diagonale, mentre scegliamo $x_2$ se il punto è sopra la diagonale.
+\`E chiaro allora che il luogo geometrico dei punti, nel piano $x_1$-$x_2$,
+che corrisponde ad un valore fissato di $x = \max(x_1, x_2)$ è una linea
+costituita da due segmenti di uguale lunghezza, paralleli agli assi cartesiani,
+che si incontrano sulla diagonale, come mostrato in
+figura~\ref{fig:max_pdf_uniforme_pdf_max_pdf_uniforme}.
+
+\pgffigtwo{max_pdf_uniforme}{pdf_max_pdf_uniforme}{
+  Costruzione geometrica per il calcolo della funzione di distribuzione del
+  massimo $x = \max(x_1, x_2)$ di due variabili casuali continue distribuite
+  uniformemente tra $0$ e $1$ (a sinistra). Il luogo geometrico dei punti che
+  corrisponde ad un valore fissato di $x = \max(x_1, x_2)$ è dato da due
+  segmenti di uguale lunghezza, paralleli agli assi cartesiani, che si
+  incontrano sulla diagonale. Corrispondentemente, il valore della densità di
+  probabilità $p(x)$ è proporzionale alla lunghezza di tali segmenti, e
+  cresce linearmente da $0$ ad $1$, come mostrato a destra.
+}
+
+Tornando alla funzione di distribuzione, possiamo dire che la densità di
+probabilità $p(x)$ in un generico punto $0 \leq x \leq 1$ sarà proporzionale
+alla lunghezza del segmento corrispondente nella nostra costruzione
+geometrica. Essa sarà nulla in $x = 0$ (dove i due segmenti degenerano in un
+punto) e aumenterà linearmente con $x$ fino a raggiungere il massimo in
+$x = 1$. La forma analitica sarà cioè $p(x) = cx$---con la
+costante moltiplicativa $c$ fissata a $2$ dalla condizione di normalizzazione
+\begin{align}\label{eq:pdf_triangolare_max}
+  p(x) = 2x,
+\end{align}
+come si può verificare facilmente per calcolo diretto. Adesso che abbiamo
+la forma analitica delle funzione di distribuzione possiamo calcolare
+facilmente tutte le proprietà derivate.
+
+
+\subsection{Media, mediana e moda}
+
+Cominciamo dunque dalle stime di tendenza centrale. La media si calcola al
+solito secondo la definizione
+\begin{align*}
+  \mu = \expect{x} = \int_{-\infty}^{\infty} xp(x)dx = \int_{0}^{1}2x^2dx =
+  \eval{\frac{2x^3}{3}}{0}{1} = \frac{2}{3}.
+\end{align*}
+Non dovrebbe sorprendere che $\mu > \nicefrac{1}{2}$, poiché la densità di
+probabilità è più alta nella parte destra dell'intervallo di definizione
+della variabile rispetto alla parte sinistra. La mediana è definita
+dall'uguaglianza
+\begin{align*}
+  \frac{1}{2} = \int_{0}^{\median}p(x)dx = \int_{0}^{\median}2xdx =
+  \eval{x^2}{0}{\median} \;\;\;\; = \median^2,
+\end{align*}
+da cui $\median = \nicefrac{1}{\sqrt{2}} \approx 0.707$. La moda, infine,
+coincide con il massimo della funzione di distribuzione $x = 1$. Il fatto che
+media, mediana e moda non coincidano, come illustrato in
+figura~\ref{fig:pdf_max_pdf_uniforme_media}, non dovrebbe sorprendere poiché
+la funzione di distribuzione non è simmetrica.
+
+\pgffigone{pdf_max_pdf_uniforme_media}{
+  Illustrazione delle posizioni della media ($\mu = \nicefrac{2}{3}$),
+  della mediana ($\median = \nicefrac{1}{\sqrt{2}}$) e della moda ($1$) per la
+  funzione di distribuzione triangolare~\eqref{eq:pdf_triangolare_max}.
+  Non essendo la distribuzione simmetrica, non sorprende il fatto che
+  media, mediana e moda non coincidano. (Incidentalmente, questo è anche
+  un esempio di distribuzione per la quale, a causa della peculiarità della
+  forma, il valore più probabile non è molto interessante come stima di
+  tendenza centrale.)
+}
+
+
+\subsection{Varianza, deviazione standard e larghezza a metà altezza}
+
+Procediamo con il calcolo delle metriche di dispersione attorno alla media per
+la nostra distribuzione. La varianza vale
+\begin{align*}
+  \sigma^2 = \expect{(x - \mu)^2} = \expect{x^2} - \mu^2 =
+  \int_{-\infty}^{\infty}x^2p(x)dx - \mu^2 =
+  \int_{0}^{1} 2x^3dx - \frac{4}{9} = \eval{\frac{x^4}{2}}{0}{1} - \frac{4}{9} =
+  \frac{1}{2} - \frac{4}{9} = \frac{1}{18},
+\end{align*}
+da cui $\sigma = \nicefrac{1}{\sqrt{18}} \approx 0.236$. La retta $p(x) = 1$
+interseca il grafico della funzione di distribuzione nei punti
+$x = \nicefrac{1}{2}$ e $x = 1$, come mostrato in
+figura~\ref{fig:pdf_max_pdf_uniforme_stdev}. La larghezza intera a metà
+altezza è dunque $\fwhm = \nicefrac{1}{2}$ e la semilarghezza a metà
+altezza $\hwhm = \nicefrac{1}{4}$. Il rapporto tra semilarghezza a metà
+altezza e deviazione standard vale dunque
+\begin{align*}
+  \frac{\hwhm}{\sigma} = \frac{\sqrt{18}}{4} \approx 1.061
+\end{align*}
+che, come ci aspettiamo, è dell'ordine dell'unità. La frazione della
+funzione di distribuzione contenuta entro una deviazione standard della media
+è infine
+\begin{align*}
+  \prob{\abs{x - \mu} \leq \sigma} = \int_{\mu - \sigma}^{\mu + \sigma} p(x)dx =
+  \int_{\mu - \sigma}^{\mu + \sigma} 2x dx = \eval{x^2}{\mu - \sigma}{\mu + \sigma}
+  \;\;\;\; = (\mu + \sigma)^2 - (\mu - \sigma)^2 = 4\mu\sigma =
+  \frac{8}{9\sqrt{2}} \approx 0.629,
+\end{align*}
+in linea con i valori riportati nella tabella~\ref{tab:prob_media_stdev}.
+
+\pgffigone{pdf_max_pdf_uniforme_stdev}{
+  Illustrazione della deviazione standard $\sigma = \nicefrac{1}{\sqrt{18}}$ e
+  della larghezza a metà altezza $\fwhm = \nicefrac{1}{2}$ per la funzione di
+  distribuzione triangolare~\eqref{eq:pdf_triangolare_max}. Come abbiamo avuto
+  occasione di dire la deviazione standard e la semilarghezza a metà altezza
+  sono vicine tra loro (nel senso che il loro rapporto è dell'ordine di $1$.
+  Inoltre l'intervallo $[\mu - \sigma,~\mu + \sigma]$ racchiude una frazione
+  sostanziale (circa il $63\%$) della funzione di distribuzione.)
+}
+
+
+\subsection{Coefficiente di asimmetria}
+
+La funzione di distribuzione~\eqref{eq:pdf_triangolare_max} non è simmetrica
+rispetto al valor medio, per cui ci aspettiamo che il momento centrale di
+ordine tre $\momcen{3}$ e, di conseguenza, il coefficiente di asimmetria
+$\skewness$ siano non nulli. Per la precisione, dato che la coda più
+pronunciata è quella a sinistra della media, ci aspettiamo che la
+\foreign{skewness} sia negativa. Procediamo allora per gradi e calcoliamo il
+momento terzo utilizzando la~\eqref{eq:momcen3}
+\begin{align*}
+  \momcen{3} = \expect{x^3} - 3\mu\sigma^2 - \mu^3 =
+  \int_{-\infty}^{\infty}x^3 p(x) dx - \frac{1}{9} - \frac{8}{27} =
+  \int_{0}^{1}2x^4dx - \frac{11}{27} =
+  \eval{\frac{2x^5}{5}}{0}{1} - \frac{11}{27} = \frac{2}{5} - \frac{11}{27} =
+  -\frac{1}{135},
+\end{align*}
+da cui, come ci aspettavamo qualitativamente
+\begin{align*}
+  \skewness = -\frac{\sqrt{18^3}}{135} = -\frac{2\sqrt{2}}{5} \approx -0.566.
+\end{align*}
+
+
+\subsection{Distribuzione cumulativa e distribuzione inversa}
+
+Completiamo la nostra panoramica con il calcolo esplicito della distribuzione
+cumulativa
+\begin{align*}
+  F(x) = \int_{-\infty}^x p(t)dt = \int_0^x 2t dt = \eval{t^2}{0}{x} \;\; = x^2,
+\end{align*}
+da cui, tra le altre cose, possiamo derivare in modo leggermente più semplice
+il risultato trovato prima
+\begin{align*}
+  \prob{\abs{x - \mu} \leq \sigma} = F(\mu + \sigma) - F(\mu - \sigma) =
+  (\mu + \sigma)^2 - (\mu - \sigma)^2.
+\end{align*}
+La funzione di distribuzione inversa si scrive infine come
+\begin{align*}
+  F^{-1}(q) = \sqrt{q}.
+\end{align*}
+
+
+\section{Digressione: alcuni paradossi probabilistici}
+
+Per \emph{paradosso} si intende letteralmente una proposizione logicamente
+corretta ma in apparente contraddizione con l'esperienza comune. Se inserite
+in un motore di ricerca le due parole chiave "paradosso" e "probabilità"
+(in qualsiasi lingua) non rimarrete delusi dalla quantità di informazione
+sull'argomento disponibile su web. Non c'è che l'imbarazzo della scelta.
+
+I paradossi probabilistici si possono rozzamente suddividere in due
+macro-categorie: (i) conseguenze dirette (e logicamente corrette) delle leggi
+della probabilità che, applicate ad una specifica situazione, sono
+sorprendenti perché anti-intuitive e (ii) problemi in cui il paradosso in
+effetti ha origine da una formulazione incompleta o volutamente ambigua del
+problema. Questi ultimi hanno spesso più a che vedere con la semantica che
+con la probabilità, per cui non sono molto interessanti in questo contesto
+(ma se siete interessati potete dare un'occhiata, tra le altre cose,
+a~\cite{dagostini_bertrand} e~\cite{dagostini_boy_girl}). I veri
+paradossi, invece, possono essere utili ad illustrare i fondamenti del
+ragionamento probabilistico, per cui ne esamineremo alcuni tra i più famosi.
+
+
+\subsection{Quanti compleanni lo stesso giorno?}
+\label{sec:paradosso_compleanni}
+
+Dato un insieme di $n$ persone scelte casualmente, qual è la probabilità che
+almeno due di esse abbiano lo stesso compleanno? (Per semplicità trascureremo
+gli anni bisestili ed assumeremo che le nascite siano uniformemente
+distribuite sui 365 giorni dell'anno---escluso il 29~febbraio. Assumeremo anche
+che nel gruppo di persone non vi siano gemelli.)
+
+Una breve nota a margine: ogni volta che la parola \emph{almeno} compare in un
+problema di probabilità dovete riflettere attentamente su come essa si traduca
+effettivamente in termini quantitativi. In questo caso il nostro evento
+si può realizzare con una singola coppia di persone con lo stesso compleanno,
+oppure due coppie, oppure con 3 o 4 persone nate lo stesso giorno e così
+via---addirittura con la (improbabile) situazione in cui tutte le $n$ persone
+sono nate lo stesso giorno. Al crescere di $n$ il numero di possibilità
+(che si dice anche genericamente il \emph{combinatoriale} del problema) cresce
+rapidamente e spesso è più semplice calcolare la probabilità dell'evento
+complementare all'evento di partenza ed usare il teorema della probabilità
+complementare~\eqref{eq:probabilita_complementare}.
+
+Attacchiamo allora il nostro paradosso chiedendoci quale sia la probabilità
+che i compleanni delle $n$ persone che abbiamo scelto siano tutti diversi.
+La prima persona avrà il compleanno in un determinato giorno dell'anno (tra i
+$365$). Per la seconda persona rimangono $364/365$ disponibili diversi dal
+compleanno della prima, per cui la probabilità che il compleanno non cada lo
+stesso giorno è proprio $364/365$. Per la terza persona la probabilità che
+il compleanno cada in un giorno diverso dalle prime due è $363/365$ e così
+via---fino all'ultima, per cui questa probabilità è $(365 - n + 1)/365$.
+Visto che le date di nascita sono tutte indipendenti tra loro, la probabilità
+che esse siano \emph{tutte} diverse sarà
+\begin{align}
+  \prob{\text{compleanni tutti diversi}} =
+  1 \times \frac{364}{365} \times \frac{363}{365} \times \cdots \times
+  \frac{365 - (n - 1)}{365} = \frac{365!}{365^n(365 - n)!}
+\end{align}
+e la probabilità che almeno due persone abbiano il compleanno lo stesso giorno
+è, per il teorema~\eqref{eq:probabilita_complementare}
+\begin{align}\label{eq:paradosso_compleanni}
+  \prob{\text{almeno due compleanni nello stesso giorno}} =
+  1 - \frac{365!}{365^n(365 - n)!}.
+\end{align}
+
+\pgffigone{paradosso_compleanni}{
+  Andamento della~\eqref{eq:paradosso_compleanni} per $n \leq 100$.
+  La probabilità che in un gruppo di $n$ persone almeno due festeggino il
+  compleanno lo stesso giorno supera il $50\%$ per $n = 23$.
+}
+
+La~\eqref{eq:paradosso_compleanni} non è molto espressiva, ma la
+figura~\ref{fig:paradosso_compleanni} illustra l'andamento
+della~\eqref{eq:paradosso_compleanni} per $n \leq 100$. \`E interessante notare
+come la funzione superi il $50\%$ per $n = 23$ ed il $99\%$ per $n = 60$.
+In un gruppo di $23$ persone, dunque, la probabilità che ve ne siano
+almeno due che festeggino il compleanno lo stesso giorno è maggiore del
+$50\%$---che è proprio il contenuto del nostro paradosso.
+(Cosa suggeriva il vostro senso comune prima di fare il conto?)
+
+
+\subsection{Breve digressione: somma della serie geometrica}
+
+Dato un generico numero reale $r$, con $\abs{r} < 1$ si dice serie geometrica
+la somma (infinita)
+\begin{align}\label{eq:serie_geometrica}
+  \sum_{k = 0}^{\infty} r^k
+\end{align}
+(è ovvio che per $\abs{r} \geq 1$ i termini della serie crescono o al più
+rimangono costanti al crescere di $k$ per cui la serie diverge---il caso
+$r = -1$ è interessante, e di nuovo la~\eqref{eq:serie_geometrica} non ha
+somma definita).
+
+Si tratta di uno dei casi in cui la somma parziale dei primi $n$ termini
+si può scrivere esplicitamente in forma chiusa
+\begin{align*}
+  & \sum_{k = 0}^n r^k = 1 + r + r^2 + \cdots + r^n =
+  (1 + r + r^2 + \cdots + r^n) \times \frac{1 - r}{1 - r} =\\
+  & = \frac{1 + r + r^2 + \cdots + r^n - r + -r^2 - r^3 - \cdots - r^{n+1}}{1 - r}
+  = \frac{1 - r^{n+1}}{1-r}
+\end{align*}
+a partire dalla quale la somma della serie si calcola banalmente come
+limite per $n\rightarrow\infty$
+\begin{align}\label{eq:somma_serie_geometrica}
+  \sum_{k = 0}^{\infty} r^k = \lim_{n\rightarrow\infty} \frac{1 - r^{n+1}}{1 - r} =
+  \frac{1}{1 - r}.
+\end{align}
+
+Con lo stesso metodo si può calcolare anche la somma parziale
+(che è diversa, ma correlata alla precedente)
+\begin{align*}
+  & \sum_{k = 0}^{n} kr^k = 0 + r + 2r^2 + \cdots + nr^n =
+  (r + 2r^2 + \cdots + nr^n) \times \frac{1 - r}{1 - r} =\\
+  & = \frac{r + 2r^2 + \cdots + nr^n - r^2 - 2r^3 - (n -1)r^n - nr^{n+1}}{1 - r} =
+  \frac{r + r^2 + \cdots r^n - nr^{n+1}}{1 - r} =\\
+  & = \frac{\sum_{k = 1}^n r^k - nr^{n+1}}{1 - r} =
+  \frac{\sum_{k = 0}^n r^k - 1 - nr^{n+1}}{1 - r} =
+  \frac{(1 - r^{n+1})/(1 - r) - 1 - nr^{n+1}}{1 - r} =\\
+  & = \frac{1 - r^{n+1} - 1 - nr^{n+1} + r + nr^{n+2}}{(1 - r)^2} =
+  \frac{r - (n + 1)r^{n+1} + nr^{n+2}}{(1 - r)^2},
+\end{align*}
+da cui, prendendo come prima il limite per $n\rightarrow\infty$ si ottiene
+\begin{align}
+  \sum_{k = 0}^{\infty} kr^k =
+  \lim_{n\rightarrow\infty} \frac{r - (n + 1)r^{n+1} + nr^{n+2}}{(1 - r)^2} =
+  \frac{r}{(1 - r)^2}.
+\end{align}
+Cogliamo l'occasione per notare che lo stesso risultato si poteva ottenere,
+più semplicemente, derivando la~\eqref{eq:somma_serie_geometrica} rispetto ad
+$r$
+\begin{align*}
+  \sum_{k = 0}^{\infty} kr^k = r\td{}{r}{} \left[ \sum_{k = 0}^{\infty} r^k \right] =
+  \frac{r}{(1 - r)^2},
+\end{align*}
+che illustra come spesso, con un minimo di creatività, lo stesso calcolo può
+diventare da laborioso a banale.
+
+
+\subsection{Maschio o femmina?}
+
+Riprendiamo il filo della nostra discussione sui paradossi della probabilità.
+Una coppia di genitori decide di avere figli fino alla nascita della prima
+femmina---avvenuta la quale semplicemente smetterà di procreare. Quanti
+maschi (e quanti figli in totale) avrà \emph{in media} la coppia?
+
+Assumeremo per semplicità che la probabilità che un figlio sia maschio
+(o femmina) sia esattamente il $50\%$---il che è notoriamente non vero, ma
+è di fatto irrilevante per la nostra discussione. Si tratta banalmente di un
+processo binomiale in cui, detti $F$ ed $M$ la nascita di un maschio e di una
+femmina, rispettivamente, siamo interessati alle sequenze $F$, $MF$, $MMF$,
+$MMMF$ e così via. La probabilità di avere $k$ figli, cioè $n_M = (k - 1)$
+maschi seguite da $n_F = 1$ femmina, è ovviamente $\nicefrac{1}{2^k}$, come
+illustrato nella tabella~\ref{tab:paradosso_maschi_femmine}.
+
+\begin{table}[htbp]
+  \tablehstack{
+    \centering\begin{tabular}{lllll}
+      \hline
+      Sequenza & $n$ & $n_F$ & $n_M$ & Probabilità\\
+      \hline
+      \hline
+      $F$ & $1$ & $1$ & $0$ & $\nicefrac{1}{2}$\\
+      $MF$ & $2$ & $1$ & $1$ & $\nicefrac{1}{4}$\\
+      $MMF$ & $3$ & $1$ & $2$ & $\nicefrac{1}{8}$\\
+      $MMMF$ & $4$ & $1$ & $3$ & $\nicefrac{1}{16}$\\
+      \multicolumn{5}{c}{\ldots}\\
+      $(k - 1)MF$ & $k$ & $1$ & $k - 1$ & $\nicefrac{1}{2^k}$\\
+      $kMF$ & $k + 1$ & $1$ & $k$ & $\nicefrac{1}{2^{k+1}}$\\
+      \multicolumn{5}{c}{\ldots}\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Illustrazioni delle sequenze possibili e delle probabilità
+      corrispondenti per il paradosso delle nascite (maschio o femmina?).}
+    \label{tab:paradosso_maschi_femmine}
+  }
+\end{table}
+
+Nelle nostre ipotesi il numero di femmine è fisso a $1$---anche se, in
+effetti, può essere considerato come una variabile casuale che può assumere
+un solo valore ($1$, appunto) la cui probabilità di uscita è correttamente
+normalizzata
+\begin{align*}
+  \prob{n_F = 1} = \sum_{k = 0}^{\infty} \frac{1}{2^{k+1}} =
+  \frac{1}{2}\sum_{k = 0}^{\infty} \frac{1}{2^k} = \frac{1}{2} \times 2 = 1,
+\end{align*}
+ed il cui valore di aspettazione è, ovviamente, $1$. Il valore di
+aspettazione per il numero di maschi $n_M$ si scrive invece come
+\begin{align}
+  \expect{n_M} = \sum_{k = 0}^{\infty} \frac{k}{2^{k+1}} =
+  \frac{1}{2} \sum_{k = 0}^{\infty} \frac{k}{2^k} = \frac{1}{2} \times 2 = 1
+\end{align}
+ed è anch'esso pari ad $1$, nonostante $n_M$ possa essere arbitrariamente
+grande. In altre parole il numero medio (totale) atteso di figli è
+esattamente due---un maschio ed una femmina.
+
+\`E interessante chiedersi come cambi il tutto se introduciamo un limite
+$n_\text{max}$ al numero totale di figli---cioè se diciamo che, nell'ipotesi
+che una femmina non sia nata nei primi $n_\text{max}$ tentativi, la coppia decida
+di darsi pace e non riprovare.
+In questo nuovo schema la tabella~\ref{tab:paradosso_maschi_femmine} cessa di
+essere di lunghezza infinita e termina con la sequenza $n_\text{max}M$, per la
+quale $n = n_\text{max}$, $n_F = 0$ e $n_M = n_\text{max}$, con probabilità
+$1/2^{n_\text{max}}$. (Notate che le ultime due righe di questa tabella
+\emph{finita} sono equiprobabili, perché corrispondono a due sequenze di
+lunghezza identica in cui l'unica differenza è l'ultimo elemento---$M$ o $F$.)
+
+\begin{table}[htbp]
+  \tablehstack{
+    \centering\begin{tabular}{lllll}
+      \hline
+      Sequenza & $n$ & $n_F$ & $n_M$ & Probabilità\\
+      \hline
+      \hline
+      $F$ & $1$ & $1$ & $0$ & $\nicefrac{1}{2}$\\
+      $MF$ & $2$ & $1$ & $1$ & $\nicefrac{1}{4}$\\
+      $MMF$ & $3$ & $1$ & $2$ & $\nicefrac{1}{8}$\\
+      $MMMF$ & $4$ & $1$ & $3$ & $\nicefrac{1}{16}$\\
+      $MMMM$ & $4$ & $0$ & $4$ & $\nicefrac{1}{16}$\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Illustrazioni delle sequenze possibili e delle probabilità
+      corrispondenti per il paradosso delle nascite modificato, nel caso
+      particolare $n_\text{max} = 4$.}
+    \label{tab:paradosso_maschi_femmine_finita}
+  }
+\end{table}
+
+La prima conseguenza è che il numero di femmine $n_F$ è adesso a tutti gli
+effetti una variabile casuale (che può assumere più di un valore), il cui
+valore di aspettazione è
+\begin{align*}
+  \expect{n_F} = 1 \times \left(1 - \frac{1}{2^{n_\text{max}}} \right) +
+  0 \times \frac{1}{2^{n_\text{max}}} = 1 - \frac{1}{2^{n_\text{max}}},
+\end{align*}
+mentre il valore di aspettazione del numero di maschi è questa volta
+\begin{align}
+  \expect{n_M} = \sum_{k = 0}^{n_\text{max} - 1} \frac{k}{2^{k+1}} +
+  \frac{n_\text{max}}{2^{n_\text{max}}} =
+  \frac{1}{2} \sum_{k = 0}^{n_\text{max} - 1} \frac{k}{2^k} +
+  \frac{n_\text{max}}{2^{n_\text{max}}} =
+  \frac{1}{2} \times \frac{\frac{1}{2} -
+    \frac{n_\text{max}}{2^{n_\text{max}}} +
+    \frac{(n_\text{max} - 1)}{2^{n_\text{max} + 1}}}{\frac{1}{4}} +
+  \frac{n_\text{max}}{2^{n_\text{max}}} = 1 - \frac{1}{2^{n_\text{max}}}.
+\end{align}
+Quindi, indipendentemente dal numero massimo di figli $n_\text{max}$, i valori
+di aspettazione per il numero di femmine e di maschi sono esattamente uguali
+(e $\leq 1$). Per completezza, nel caso $n_\text{max} = 4$ illustrato in
+tabella~\ref{tab:paradosso_maschi_femmine_finita} questi valori di aspettazione
+sono $\nicefrac{15}{16}$.
+
+
+\subsection{Una strategia di gioco interessante}
+
+Un casinò offre un tavolo di gioco di testa ($T$) o croce ($C$) con una moneta
+equa, in cui banalmente si riceve il doppio della puntata in caso di vittoria
+(e, ovviamente, si perde la posta in caso contrario).
+Un giocatore decide di adottare la seguente strategia di gioco. Inizialmente
+scommette una certa somma $s$ su $T$; se vince si ritira con il corrispettivo
+$2s$ (ed una vincita netta pari ad $s$), mentre se perde continua raddoppiando
+la puntata ogni volta fino alla prima uscita di $T$---momento nel quale
+interrompe il gioco.
+
+La prima cosa che ci chiediamo è la somma netta vinta (o perduta) al termine
+del gioco. Se $T$ esce per la prima volta al secondo lancio la somma totale
+giocata è $\mathcal{S}_2 = s + 2s = 3s$ ed il corrispettivo pagato dal
+casinò è $4s$, per una vincita netta di $s$. Se $T$ esce per la prima volta
+al terzo lancio la somma giocata è $\mathcal{S}_3 = s + 2s + 4s = 7s$ ed il
+corrispettivo è $8s$, per una vincita netta che è di nuovo $s$. \`E allora
+facile convincersi che se $T$ esce per la prima volta dopo $n$ lanci la somma
+totale giocata è
+\begin{align*}
+  \mathcal{S}_n = \sum_{k = 0}^{n - 1} s 2^k = s(2^n - 1).
+\end{align*}
+e, come detto, la vincita netta è sempre la puntata iniziale $s$---sembrerebbe
+una strategia perfetta, in cui si vince sempre.
+
+La seconda domanda interessante a cui rispondere è: quale somma di denaro
+ci aspettiamo di dover giocare, in media, prima di poter abbandonare il tavolo
+con la nostra vincita netta $s$? O, in altre parole, quanto è il valore di
+aspettazione $\expect{\mathcal{S}}$? Per rispondere dobbiamo calcolare la
+probabilità che $T$ esca per la prima volta dopo esattamente $n$ lanci,
+il che è banale, perché si tratta di $n$ eventi indipendenti con
+probabilità di successo (e fallimento) pari ad $\nicefrac{1}{2}$
+\begin{align*}
+  \prob{\overbrace{CC\ldots CC}^{n - 1~{\mathrm volte}} T} = \frac{1}{2^n}.
+\end{align*}
+A questo punto abbiamo tutti gli ingredienti per rispondere alla nostra domanda,
+e banalmente
+\begin{align}
+  \expect{\mathcal{S}} = \sum_{n = 1}^\infty \frac{s(2^n - 1)}{2^n} =
+  \sum_{n = 1}^\infty \left( s - \frac{s}{2^n} \right),
+\end{align}
+che chiaramente diverge perché il primo termine della serie è costante.
+Fisicamente questo significa che, benché la strategia, in astratto,
+garantisca una vincita netta, la somma media necessaria per lasciare il tavolo
+ed incassare la vincita diverge---la strategia funziona solo se si ha a
+disposizione una quantità infinita di denaro.
+
+Il punto della questione sta ovviamente nel fatto che la nostra strategia di
+incremento della puntata è esponenziale---e se non siete convinti ripensate a
+cosa abbiamo detto a proposito nella sezione~\ref{sec:esponenziali_logaritmi}.
+Per fissare le idee, la probabilità che occorrano $30$ lanci per vincere
+è estremamente piccola: $1/2^{30} \approx 9.3 \times 10^{-10}$---se giocassimo
+senza interruzione al ritmo di un lancio al secondo vedremmo in media
+una occorrenza di questo evento ogni $34$ anni circa. Ma nel momento in cui
+ciò accadesse, assumendo una puntata iniziale di $s = 1$~euro, dovremmo avere
+$2^{31} - 1 \approx 2.15$~miliardi (!) di euro per poter proseguire al lancio
+successivo.
+
+
+\section{Cenni alle variabili multi-variate: indipendenza, covarianza e correlazione}
+\label{sec:covarianza}
+
+La nostra discussione, fino a questo momento, è stata largamente incentrata
+su variabili casuali \emph{singole}. Abbiamo definito l'indipendenza tra eventi,
+ma non abbiamo dedicato molta attenzione alle relazioni tra variabili casuali
+diverse, ed in particolare al concetto di indipendenza tra variabili casuali,
+per cui completiamo il capitolo colmando questa lacuna.
+
+Quando si ha a che vedere con un insieme di variabili casuali $x_1 \ldots x_n$,
+il problema è completamente specificato dalla loro funzione di distribuzione
+congiunta, vale a dire dalla probabilità (o densità di probabilità) che
+ciascuna delle variabili assuma un valore specifico
+\begin{align*}
+  \dccases[.]{}{\prob{x_1, \ldots, x_n}}{p(x_1,\ldots, x_n)}
+\end{align*}
+
+
+\subsection{Densità di probabilità bi-variate: concetti di base}
+
+Consideriamo per semplicità il caso di due variabili casuali continue
+$x_1$ ed $x_2$, descritte dalla densità di probabilità congiunta $p(x_1, x_2)$.
+Analogamente a quanto abbiamo fatto nel caso di una variabile, richiederemo che
+la densità di probabilità sia positiva e propriamente
+\begin{align*}
+  p(x_1, x_2) \geq 0 \quad \text{e} \quad
+  \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}  p(x_1, x_2) \diff[x_1]\diff[x_2] = 1.
+\end{align*}
+Possiamo calcolare la probabilità che la coppia ordinata $(x_1, x_2)$
+sia contenuta in una generica regione $A$ del piano come
+\begin{align*}
+  \prob{(x_1, x_2) \in A} = \int \int_A  p(x_1, x_2) \diff[x_1]\diff[x_2],
+\end{align*}
+e definire il valore di aspettazione di una generica funzione $f(x_1, x_2)$
+come
+\begin{align*}
+  \expect{f(x_1, x_2)} = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+  f(x_1, x_2) p(x_1, x_2) \diff[x_1]\diff[x_2].
+\end{align*}
+
+
+\begin{examplebox}
+  \begin{example}\label{exp:variabili_indipendenti_pdf}
+    La funzione $p(x_1, x_2) = 4x_1x_2$, nel quadrato unitario
+    $0 \leq x_1 \leq 1$ e $0 \leq x_2 \leq 1$, è una funzione di distribuzione,
+    in quanto è semi-definita positiva ed è correttamente normalizzata
+    \begin{align*}
+      \int_0^1 \int_0^1 4x_1x_2 \diff[x_1]\diff[x_2] =
+      4 \int_0^1 x_1\diff[x_1] \int_0^1 x_2\diff[x_2] =
+      4 \eval{\frac{x_1^2}{2}}{0}{1} \times
+      \eval{\frac{x_2^2}{2}}{0}{1} = 1.
+    \end{align*}
+  \end{example}
+
+  \begin{example}\label{exp:variabili_dipendenti_pdf}
+      La funzione $p(x_1, x_2) = \frac{3}{2}(x_1^2 + x_2^2)$, nel quadrato
+      unitario $0 \leq x_1 \leq 1$ e $0 \leq x_2 \leq 1$, è pure una funzione
+      di distribuzione"
+      \begin{align*}
+        \int_0^1 \int_0^1 \frac{3}{2}(x_1^2 + x_2^2) \diff[x_1]\diff[x_2] =
+        \frac{3}{2} \int_0^1 \diff[x_1] \int_0^1 (x_1^2 + x_2^2) \diff[x_2] =
+        \frac{3}{2} \int_0^1 \left( \frac{1}{3} + x_1^2 \right)\diff[x_1] =
+        \frac{3}{2} \left( \frac{1}{3} + \frac{1}{3} \right)= 1.
+      \end{align*}
+  \end{example}
+\end{examplebox}
+
+\pgffigtwo{pdf_2d_indipendenti}{pdf_2d_dipendenti}{
+  Rappresentazione grafica delle funzioni di distribuzione di due variabili
+  degli esempi~\ref{exp:variabili_indipendenti_pdf} e~\ref{exp:variabili_dipendenti_pdf}:
+  $p(x_1, x_2) = 4x_1x_2$ (sinistra) e $p(x_1, x_2) = \frac{3}{2}(x_1^2 + x_2^2)$
+  (destra). Entrambe rappresentano densità di probabilità correttamente
+  normalizzate nel quadrato unitario $0 \leq x_1 \leq 1$ e $0 \leq x_2 \leq 1$
+  (i.e., il volume sotto la superficie rappresentata dalla griglia nera è pari
+  a $1$).
+}
+
+
+\subsection{Probabilità condizionata ed indipendenza statistica}
+
+Con due o più variabili in gioco la situazione diventa immediatamente
+interessante---e questo ci permette di rivisitare in una chiave più concreta
+alcune delle cose che abbiamo visto nella parte iniziale del capitolo.
+La cosa più ovvia che possiamo chiederci è: come faccio a capire se $x_1$
+ed $x_2$ sono \emph{indipendenti}? La risposta si deve poter desumere dalla
+densità di probabilità congiunta, ma come?
+
+Sappiamo che $x_1$ ed $x_2$ sono indipendenti se la probabilità che $x_1$
+assuma un valore compreso in un intervallo fissato non dipende dal valore assunto
+da $x_2$ (e viceversa). Ovverosia, vogliamo che la densità di probabilità di
+$x_1$, condizionata al fatto che $x_2$ assuma un valore specifico, non dipenda
+da $x_2$ (e viceversa):
+\begin{align*}
+  p(x_1 \cond x_2~\text{fissato}) = p_1(x_1) \quad \text{e} \quad
+  p(x_2 \cond x_1~\text{fissato}) = p_2(x_2).
+\end{align*}
+Il punto sottile della questione è capire come scriviamo questa probabilità
+condizionata.
+
+Ad un primo sguardo potremmo essere tentati di dire che la densità di probabilità
+di $x_1$ condizionata ad $x_2$ si ottenga semplicemente fissando il valore
+di $x_2$ nella densità di probabilità congiunta
+\begin{align*}
+  p(x_1 \cond x_2) = p(x_1, x_2).
+\end{align*}
+(\`E più difficile a dirsi che a farsi, ma questo è essenzialmente come dire
+che, se $p(x_1, x_2) = 4x_1x_2$, la densità di probabilità di $x_1$ quando
+$x_2 = 1$ è semplicemente $p_1(x_1) = 4x_1$.) Non serve molto, però, per capire
+che questa prescrizione, in generale, non garantisce che la densità di
+probabilità unidimensionale così ottenuta sia propriamente normalizzata.
+Ovverosia, come illustrato in figura~\ref{fig:pdf_2d_indipendenti_1d_pdf_2d_dipendenti_1d},
+\emph{la densità di probabilità di $x_1$ condizionata ad $x_2$ non
+è semplicemente la fetta della densità di probabilità congiunta
+calcolata al valore appropriato di $x_2$.}
+
+\pgffigtwo{pdf_2d_indipendenti_1d}{pdf_2d_dipendenti_1d}{
+  Proiezioni delle densità di probabilità di due variabili
+  degli esempi~\ref{exp:variabili_indipendenti_pdf} e~\ref{exp:variabili_dipendenti_pdf}
+  lungo alcune rette orizzontali di esempio, nel piano $x_1$--$x_2$, a
+  $x_2$ fissato. Come è ovvio, queste funzioni non sono in generale
+  propriamente normalizzate nell'intervallo $[0, 1]$, per cui non possono
+  rappresentare densità di probabilità.
+}
+
+Siamo però sulla strada giusta---la nostra prima risposta era sostanzialmente
+corretta a meno di una costante di normalizzazione:
+\begin{align}\label{eq:prob_cond_variabili}
+  p(x_1 \cond x_2) =
+  \frac{p(x_1, x_2)}{\int_{-\infty}^{\infty} p(x_1, x_2) \diff[x_1]}.
+\end{align}
+(Non dovrebbe essere difficile dimostrare che, questa volta, la risposta
+è correttamente normalizzata, ma fermatevi un attimo per assicurarvi di aver
+capito.) Il denominatore, dopo l'integrazione su $x_1$, è solamente
+funzione di $x_2$ (lo stesso avviene a variabili scambiate), e prende
+generalmente il nome di densità di probabilità marginale
+\begin{align}
+  p_1(x_1) = \int_{-\infty}^{\infty} p(x_1, x_2) \diff[x_2] \quad \text{e} \quad
+  p_2(x_2) = \int_{-\infty}^{\infty} p(x_1, x_2) \diff[x_1].
+\end{align}
+Siamo pronti per chiudere il cerchio: due variabili casuali si dicono indipendenti se
+la densità di probabilità congiunta può essere fattorizzata nel prodotto
+delle due densità di probabilità marginali, ovverosia
+\begin{align}\label{eq:indipendenza_variabili}
+  p(x_1, x_2) = p_1(x_1) p_2(x_2).
+\end{align}
+La definizione non è sorprendente, poiché in questo caso la probabilità
+condizionata da cui siamo partiti diviene
+\begin{align*}
+  p(x_1 \cond x_2) = \frac{p_1(x_1) p_2(x_2)}{p_2(x_2)} = p_1(x_1)
+  \quad \text{e} \quad
+  p(x_2 \cond x_1) = \frac{p_1(x_1) p_2(x_2)}{p_1(x_1)} = p_2(x_2),
+\end{align*}
+cioè la funzione di distribuzione unidimensionale di ciascuna delle due
+variabili non dipende dal particolare valore assunto dall'altra---esattamente
+ciò che intendiamo per indipendenza. Le due relazioni appena viste sono
+la riscrittura in questo contesto delle~\eqref{eq:indipendenza_eventi}.
+Geometricamente questo equivale a dire che due variabili $x_1$ ed $x_2$ sono
+indipendenti se le proiezioni della densità di probabilità congiunta
+$p(x_1, x_2)$ ad $x_2$ fissato sono uguali tra loro, a meno di una costante
+moltiplicativa di normalizzazione, per tutti i valori di $x_2$ (e viceversa).
+
+\begin{examplebox}
+  \begin{example}\label{exp:variabili_indipendenti_marg}
+    Consideriamo di nuovo la funzione di distribuzione congiunta
+    dell'esempio~\ref{exp:variabili_indipendenti_pdf}. Le due densità di
+    probabilità marginali sono
+    \begin{align*}
+      p_1(x_1) = \int_0^1 p(x_1, x_2)\diff[x_2] =
+      \int_0^1 4x_1x_2\diff[x_2] = 2 x_1 \quad \text{e analogamente} \quad
+      p_2(x_2) = 2 x_2.
+    \end{align*}
+    Le due variabili sono dunque indipendenti in quanto vale
+    la~\eqref{eq:indipendenza_variabili}. Corrispondentemente, le proiezioni di
+    $p(x_1, x_2)$ ad $x_2$ fissato sono tutte uguali tra loro a meno di una
+    costante moltiplicativa di normalizzazione, come illustrato nel pannello a
+    sinistra della figura~\ref{fig:pdf_2d_indipendenti_1d_pdf_2d_dipendenti_1d}.
+  \end{example}
+
+  \begin{example}
+    Nel caso dell'esempio~\ref{exp:variabili_dipendenti_pdf} la cosa è più
+    diversa---la densità di probabilità congiunta non si può fattorizzare
+    come prima nel prodotto delle due densità di probabilità marginali
+    \begin{align*}
+      p_1(x_1) = \int_0^1 p(x_1, x_2)\diff[x_2] =
+      \frac{3}{2}\int_0^1 (x_1^2 + x_2^2)\diff[x_2] =
+      \frac{3}{2}\left( x_1^2 + \frac{1}{3} \right) =
+      \frac{1}{2} + \frac{3}{2}x_1^2
+      \quad \text{e} \quad
+      p_2(x_2) = \frac{1}{2} + \frac{3}{2}x_2^2,
+    \end{align*}
+    per cui le variabili non sono indipendenti. Corrispondentemente, le proiezioni di
+    $p(x_1, x_2)$ ad $x_2$ fissato nel pannello a destra della
+    figura~\ref{fig:pdf_2d_indipendenti_1d_pdf_2d_dipendenti_1d} hanno forme
+    diverse per valori diversi di $x_2$.
+  \end{example}
+\end{examplebox}
+
+Se $x_1$ ed $x_2$ sono indipendenti, allora si dimostra banalmente che il valore
+di aspettazione del loro prodotto è uguale al prodotto dei valori di
+aspettazione
+\begin{align}\label{eq:aspettazione_indipendenza}
+  \expect{x_1x_2} =
+  \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} x_1x_2p(x_1, x_2)\diff[x_1]\diff[x_2] =
+  \int_{-\infty}^{\infty} x_1 p_1(x_1)\diff[x_1]
+  \int_{-\infty}^{\infty} x_2 p_2(x_2)\diff[x_2] =
+  \expect{x_1}\expect{x_2}.
+\end{align}
+Notiamo, per completezza, che tutto ciò che abbiamo detto in questa
+sezione vale anche, modulo la sostituzione degli integrali con sommatorie,
+per variabili casuali discrete, e si estende banalmente ad un numero arbitrario
+di variabili.
+
+
+\subsection{Covarianza e correlazione}
+
+Date due variabili casuali $x_1$ ed $x_2$, e dette $\mu_1 = \expect{x_1}$ e
+$\mu_2 = \expect{x_2}$ le rispettive medie, definiamo la loro covarianza, che
+chiameremo $\cov{x_1}{x_2}$ o $\sigma_{x_1x_2}$, come
+il valore di aspettazione delle rispettive fluttuazioni attorno al valor medio
+\begin{align}\label{eq:covarianza}
+  \cov{x_1}{x_2} = \sigma_{x_1x_2} = \expect{(x_1 - \mu_1)(x_2 - \mu_2)}.
+\end{align}
+Si dimostra banalmente che
+\begin{align*}
+  \cov{x_1}{x_2} =
+  \expect{x_1x_2} - \mu_2\expect{x_1} - \mu_1\expect{x_2} + \mu_1\mu_2 =
+  \expect{x_1x_2} - \mu_1\mu_2 = \expect{x_1x_2} - \expect{x_1}\expect{x_2},
+\end{align*}
+che ci permette di riscrivere la~\eqref{eq:aspettazione_indipendenza} nella
+forma equivalente
+\begin{align*}
+  \expect{x_1x_2} = \expect{x_1}\expect{x_2} \iff \cov{x_1}{x_2} = 0,
+\end{align*}
+
+Il concetto di covarianza è dunque legato a quello di indipendenza, nel senso
+che \emph{se due variabili sono indipendenti, la loro covarianza è nulla}.
+Questo non dovrebbe stupire, poiché se $x_1$ ed $x_2$ sono indipendenti,
+allora non c'è nessun motivo per cui valori di $x_1$ al di sotto (o al di
+sopra) della media debbano essere associati preferenzialmente a valori di $x_2$
+al di sotto (o al di sopra della media), per cui valori positivi e negativi dei
+due fattori della~\eqref{eq:covarianza} tendono cancellarsi tra di loro.
+
+\`E interessante notare come l'implicazione inversa non valga in generale,
+cioè \emph{il fatto che la covarianza tra due variabili sia nulla non
+  implica necessariamente che le due variabili siano indipendenti}, come
+illustrato nell'esempio~\ref{exp:covarianza_x_x2}. Il motivo è che la
+covarianza è sensibile solo ad un tipo specifico di mutua dipendenza, ovvero
+quello lineare.
+
+\begin{examplebox}
+  \begin{example}\label{exp:covarianza_x_x2}
+    Consideriamo una variabile casuale continua $x$ con funzione di
+    distribuzione $p(x)$ simmetrica rispetto a $0$---il che implica che tutti
+    i momenti algebrici di ordine dispari sono nulli. Si ha banalmente
+    \begin{align*}
+      \cov{x}{x^2} = \expect{x^3} - \expect{x}\expect{x^2} = 0
+    \end{align*}
+    poiché sia $\expect{x^3}$ che $\expect{x}$ sono nulli. Dunque la
+    covarianza tra $x$ ed $x^2$ è nulla, eppure è ovvio che le due
+    variabili non sono indipendenti, in quanto la seconda è univocamente
+    determinata dalla prima.
+  \end{example}
+\end{examplebox}
+
+Da un punto di vista matematico, la covarianza è una forma bilineare
+simmetrica, nel senso che gode delle seguenti proprietà elementari
+\begin{align}
+  \cov{x_1}{x_2} & = \cov{x_2}{x_1}\\
+  \cov{c_1x_1 + c_2x_2}{x_3} & = c_1\cov{x_1}{x_3} + c_2 \cov{x_2}{x_3}\\
+  \cov{x_1}{c_2x_2 + c_3x_3} & = c_2\cov{x_1}{x_2} + c_3 \cov{x_1}{x_3}
+\end{align}
+Si dimostra anche banalmente che la covarianza di una variabile casuale con
+una costante è identicamente nulla e che la covarianza di una variabile
+casuale con se stessa non è altro che la varianza della variabile stessa
+\begin{align}
+  \cov{x}{c} & = 0 \\
+  \cov{x}{x} & = \var{x}.
+\end{align}
+
+Le covarianze \cov{x_i}{x_j} di $n$ variabili casuali si possono organizzare in
+modo naturale in una matrice simmetrica $n \times n$ che prende il nome di
+\emph{matrice di covarianza} e che, nel caso $n = 2$, si scrive esplicitamente
+come
+\begin{align}
+  \Sigma =
+  \begin{bmatrix}
+    \cov{x_1}{x_1} & \cov{x_1}{x_2}\\
+    \cov{x_2}{x_1} & \cov{x_2}{x_2}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    \sigma^2_1 & \cov{x_1}{x_2}\\
+    \cov{x_2}{x_1} & \sigma^2_2
+  \end{bmatrix} =
+  \begin{bmatrix}
+    \sigma^2_1 & \cov{x_1}{x_2}\\
+    \cov{x_1}{x_2} & \sigma^2_2
+  \end{bmatrix}.
+\end{align}
+(La generalizzazione al caso generale dovrebbe essere ovvia.)
+
+A partire dalla covarianza si definisce una sua versione \emph{riscalata}
+che prende il nome di correlazione $\corr{x_1}{x_2}$ o $\varrho_{x_1x_2}$
+\begin{align}
+  \corr{x_1}{x_2} = \varrho_{x_1x_2} = \frac{\cov{x_1}{x_2}}{\sigma_1 \sigma_2},
+\end{align}
+in cui $\sigma_1$ e $\sigma_2$ sono le deviazioni standard di $x_1$ ed $x_2$,
+rispettivamente. La correlazione possiede banalmente tutte le proprietà della
+covarianza---in particolare è nulla se le variabili $x_1$ ed $x_2$ sono
+indipendenti (ma, di nuovo, l'implicazione inversa non è vera in generale).
+
+La correlazione è una quantità adimensionale che assume valori compresi
+tra $-1$ ed $1$ (non lo dimostreremo formalmente, ma la covarianza è una
+sorta di prodotto scalare, mentre la deviazione standard ha il significato di
+una norma, per cui questa proprietà segue essenzialmente dalla disuguaglianza
+di Cauchy-Schwarz). Se la correlazione tra due variabili è nulla, esse si
+dicono \emph{scorrelate}. Se la correlazione è maggiore (minore) di $0$, esse
+si dicono \emph{positivamente (negativamente) correlate}. Nel caso particolare
+in cui una variabile casuale dipenda linearmente da un'altra
+\begin{align}
+  x_2 = mx_1 + q \quad \text{(per cui $\sigma_2 = \abs{m}\sigma_1$)}
+\end{align}
+allora si ha
+\begin{align}
+  \corr{x_1}{x_2} = \frac{\cov{x_1}{x_2}}{\sigma_1\sigma_2} =
+  \frac{\cov{x_1}{mx_1 + q}}{\sigma_1\sigma_2} =
+  \frac{m\cov{x_1}{x_1}}{\abs{m}\sigma_1^2} = \frac{m}{\abs{m}} = \pm 1
+\end{align}
+ovverosia la correlazione è $\pm 1$ a seconda che il segno di $m$ sia
+positivo o negativo. Si può anche dimostrare il contrario, ovverosia la
+correlazione tra due variabili è (in modulo) unitaria se e solo se esse
+sono legate tra loro da una relazione lineare. Ne segue banalmente che la
+correlazione di una variabile con se stessa è pari all'unità
+\begin{align}
+  \corr{x}{x} = 1.
+\end{align}
+
+In analogia alla matrice di covarianza si definisce la \emph{matrice di
+  correlazione} come
+\begin{align}
+  R =
+  \begin{bmatrix}
+    \corr{x_1}{x_1} & \corr{x_1}{x_2}\\
+    \corr{x_2}{x_1} & \corr{x_2}{x_2}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    1 & \corr{x_1}{x_2}\\
+    \corr{x_2}{x_1} & 1
+  \end{bmatrix} =
+  \begin{bmatrix}
+    1 & \corr{x_1}{x_2}\\
+    \corr{x_1}{x_2} & 1
+  \end{bmatrix}.
+\end{align}
+
+
+\summary
+
+\begin{itemize}
+\item La probabilità è una misura che associa ad ogni elemento dello spazio
+  degli eventi un numero reale che soddisfa gli assiomi di Kolmogorov.
+\item La probabilità condizionata $\prob{E_1 \cond E_2}$ è la probabilità
+  che si verifichi $E_1$, subordinata al fatto che si sia verificato $E_2$.
+  I due eventi $E_1$ ed $E_2$ si dicono indipendenti se
+  $\prob{E_1 \cond E_2} = \prob{E_1}$ e $\prob{E_2 \cond E_1} = \prob{E_2}$.
+  La probabilità che due eventi indipendenti si verifichino insieme è
+  uguale al prodotto delle probabilità.
+\item Il teorema di Bayes~\eqref{eq:teorema_bayes} lega tra di loro le
+  probabilità condizionate $\prob{E_1 \cond E_2}$ e $\prob{E_2 \cond E_1}$ ed
+  è di fondamentale importanza nei problemi di probabilità inversa.
+\item Data una variabile casuale $x$, la funzione di distribuzione è una
+  funzione che associa ad ogni valore di $x$ la sua probabilità (nel caso
+  discreto) o la sua densità di probabilità (nel caso continuo).
+\item A partire dal concetto di valore di aspettazione di una funzione di
+  variabile casuale si definiscono tutte le proprietà rilevanti delle
+  distribuzioni, tra cui
+  \begin{align*}
+    \mu & = \expect{x} & \text{(la media)}\\
+    \sigma^2 & = \expect{(x - \mu)^2} = \expect{x^2} - \mu^2 &
+    \text{(la varianza)}\\
+    \sigma & = \sqrt{\sigma^2} & \text{(la deviazione standard)}\\
+    \mom[x_0]{n} & = \expect{(x - x_0)^n} &
+    \text{(i momenti di ordine generico)}.
+  \end{align*}
+\end{itemize}

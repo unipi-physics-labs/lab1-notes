@@ -1,0 +1,54 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/residual\_plot.py}{https://bitbucket.org/.../residual\_plot.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{optimize} \PY{k+kn}{import} \PY{n}{curve\PYZus{}fit}
+
+\PY{c+c1}{\PYZsh{} Sample input data for the plot and the fit\PYZhy{}\PYZhy{}\PYZhy{}use your data points and errors :\PYZhy{})}
+\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{l+m+mf}{1.1}\PY{p}{,} \PY{l+m+mf}{1.7}\PY{p}{,} \PY{l+m+mf}{2.3}\PY{p}{,} \PY{l+m+mf}{2.9}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{,} \PY{l+m+mf}{4.1}\PY{p}{,} \PY{l+m+mf}{4.7}\PY{p}{,} \PY{l+m+mf}{5.3}\PY{p}{,} \PY{l+m+mf}{5.9}\PY{p}{,} \PY{l+m+mf}{6.5}\PY{p}{,} \PY{l+m+mf}{7.1}\PY{p}{,} \PY{l+m+mf}{7.7}\PY{p}{,} \PY{l+m+mf}{8.3}\PY{p}{,} \PY{l+m+mf}{8.9}\PY{p}{,} \PY{l+m+mf}{9.5}\PY{p}{]}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{35}\PY{p}{,} \PY{l+m+mi}{61}\PY{p}{,} \PY{l+m+mi}{76}\PY{p}{,} \PY{l+m+mi}{70}\PY{p}{,} \PY{l+m+mi}{92}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{,} \PY{l+m+mi}{111}\PY{p}{,} \PY{l+m+mi}{113}\PY{p}{,} \PY{l+m+mi}{140}\PY{p}{,} \PY{l+m+mi}{163}\PY{p}{,} \PY{l+m+mi}{177}\PY{p}{,} \PY{l+m+mi}{209}\PY{p}{,} \PY{l+m+mi}{223}\PY{p}{,} \PY{l+m+mi}{264}\PY{p}{,} \PY{l+m+mi}{290}\PY{p}{,} \PY{l+m+mi}{312}\PY{p}{]}\PY{p}{)}
+\PY{n}{sigma} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Definition of the model for fitting the data.}
+\PY{k}{def} \PY{n+nf}{model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{,} \PY{n}{c}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Simple quadratic fitting model.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{return} \PY{n}{a} \PY{o}{+} \PY{n}{b} \PY{o}{*} \PY{n}{x} \PY{o}{+} \PY{n}{c} \PY{o}{*} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.}
+
+\PY{c+c1}{\PYZsh{} Perform the fit...}
+\PY{n}{popt}\PY{p}{,} \PY{n}{pcov} \PY{o}{=} \PY{n}{curve\PYZus{}fit}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{n}{sigma}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} ...and calculate the residuals with respect to the best\PYZhy{}fit model.}
+\PY{n}{res} \PY{o}{=} \PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{model}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{o}{*}\PY{n}{popt}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Create the main figure...}
+\PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Un grafico dei residui}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} ...and make space for the two plots. Note that `gridspec\PYZus{}kw` and `hspace`}
+\PY{c+c1}{\PYZsh{} control the arrangements of the two sub\PYZhy{}panels within the figure, see}
+\PY{c+c1}{\PYZsh{} https://matplotlib.org/stable/api/\PYZus{}as\PYZus{}gen/matplotlib.gridspec.GridSpec.html}
+\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2} \PY{o}{=} \PY{n}{fig}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{sharex}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{gridspec\PYZus{}kw}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{height\PYZus{}ratios}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} \PY{n}{hspace}\PY{o}{=}\PY{l+m+mf}{0.05}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Main plot: the scatter plot of x vs. y, on the top panel.}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dati}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Plot the best\PYZhy{}fit model on a dense grid.}
+\PY{n}{xgrid} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xgrid}\PY{p}{,} \PY{n}{model}\PY{p}{(}\PY{n}{xgrid}\PY{p}{,} \PY{o}{*}\PY{n}{popt}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Modello di best\PYZhy{}fit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Setup the axes, grids and legend.}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y [a. u.]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dashed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} And now the residual plot, on the bottom panel.}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{res}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} This will draw a horizontal line at y=0, which is the equivalent of the best\PYZhy{}fit}
+\PY{c+c1}{\PYZsh{} model in the residual representation.}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{xgrid}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{xgrid}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Setup the axes, grids and legend.}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x [a. u.]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Residuals [a. u.]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lightgray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ls}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dashed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} The final touch to main canvas :\PYZhy{})}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlim}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{)}
+\PY{n}{fig}\PY{o}{.}\PY{n}{align\PYZus{}ylabels}\PY{p}{(}\PY{p}{(}\PY{n}{ax1}\PY{p}{,} \PY{n}{ax2}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}

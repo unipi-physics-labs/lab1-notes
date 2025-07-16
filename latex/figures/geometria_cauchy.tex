@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+  \pgfmathsetmacro{\d}{0.25}
+  \pgfmathsetmacro{\w}{7.5}
+  \pgfmathsetmacro{\h}{3.}
+  \pgfmathsetmacro{\p}{15.}
+  \node at (0, \h + 0.1) {};
+  \node at (0, -\h - 0.1) {};
+  \fill (\d, 0) circle [radius=3pt];
+  \draw[thick,-{>[scale=1.5]}] (\w, -\h - 0.25) -- (\w, \h + 0.25);
+  \node[anchor=west] at (\w, 0) {$x_0$};
+  \node[anchor=west] at (\w, {(\w - \d)*tan(\p)} ) {$x$};
+
+  \clip (0, -\h) rectangle (\w + 0.5, \h);
+  \foreach \phi in {-87.5, -85,...,87.5}
+  \draw[style=dotted] (\d, 0) -- (\w, {(\w - \d)*tan(\phi)} );
+
+  \draw[style=dotted] (\d, -2*\h) -- (\d, 2*\h);
+  \draw[thick] (\d, 0) -- (\w, 0);
+  \draw[thick] (\d, 0) -- (\w, {(\w - \d)*tan(\p)} );
+
+  \node[anchor=north] at ({0.5*(\d + \w)}, 0) {$\gamma$};
+  \draw[thick] (\d + 1, 0) arc (0:\p:1.05cm);
+  \node at (1.75 + \d,0.25) {$\phi$};
+  \node[anchor=south east] at (\d, 0) {$L$};
+\end{tikzpicture}

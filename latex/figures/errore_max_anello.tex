@@ -1,0 +1,81 @@
+\begin{tikzpicture}[scale=0.1]
+  \pgfmathsetmacro{\r}{6}
+  \pgfmathsetmacro{\dr}{1}
+  \pgfmathsetmacro{\R}{15}
+  \pgfmathsetmacro{\dR}{1}
+  \pgfmathsetmacro{\hpitch}{50}
+  \pgfmathsetmacro{\vpitch}{40}
+  \pgfmathsetmacro{\a}{30}
+  \pgfmathsetmacro{\b}{60}
+  % Nominal, measuring r and R.
+  \node at (-\hpitch-\R,\R) {a)};
+  \draw (-\hpitch,0) circle [radius=\r];
+  \draw (-\hpitch,0) circle [radius=\R];
+  \draw (-\hpitch,0)--({-\hpitch+\R*sin(\a)},{\R*cos(\a)});
+  \draw (-\hpitch,0)--({-\hpitch+\r*sin(\b)},{\r*cos(\b)});
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({-\hpitch+\R*sin(\a)},{\R*cos(\a)}) {$\hat{R}$};
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({-\hpitch+\r*sin(\b)},{\r*cos(\b)}) {$\hat{r}$};
+  % Biggest.
+  \node at (-\R,\R) {b)};
+  \draw[gray,style=densely dotted] (0, 0) circle [radius=\r];
+  \draw[gray,style=densely dotted] (0, 0) circle [radius=\R];
+  \draw (0, 0) circle [radius=\r-\dr];
+  \draw (0, 0) circle [radius=\R+\dR];
+  \draw (0,0)--({(\R+\dR)*sin(\a)},{(\R+\dR)*cos(\a)});
+  \draw (0,0)--({(\r-\dr)*sin(\b)},{(\r-\dr)*cos(\b)});
+  \node[anchor=south west,outer sep=-2pt] at%
+  ({(\R+\dR)*sin(\a)},{(\R+\dR)*cos(\a)}) {$\hat{R} + \Delta R$};
+  \node[anchor=south west,inner sep=0pt,outer sep=2pt,fill=white] at%
+  ({(\r-\dr)*sin(\b)},{(\r-\dr)*cos(\b)}) {$\hat{r} - \Delta r$};
+  % Smallest.
+  \node at (\hpitch-0.8*\R,\R) {c)};
+  \draw[gray,style=densely dotted] (\hpitch, 0) circle [radius=\r];
+  \draw[gray,style=densely dotted] (\hpitch, 0) circle [radius=\R];
+  \draw (\hpitch, 0) circle [radius=\r+\dr];
+  \draw (\hpitch, 0) circle [radius=\R-\dR];
+  \draw (\hpitch,0)--({\hpitch+(\R-\dR)*sin(\a)},{(\R-\dR)*cos(\a)});
+  \draw (\hpitch,0)--({\hpitch+(\r+\dr)*sin(\b)},{(\r+\dr)*cos(\b)});
+  \node[anchor=south west,outer sep=0pt] at%
+  ({\hpitch+(\R-\dR)*sin(\a)},{(\R-\dR)*cos(\a)}) {$\hat{R} - \Delta R$};
+  \node[anchor=south west,inner sep=0pt,fill=white] at%
+  ({\hpitch+(\r+\dr)*sin(\b)},{(\r+\dr)*cos(\b)}) {$\hat{r} + \Delta r$};
+  % Nominal, measuring R and d.
+  \node at (-\hpitch-\R,-\vpitch+\R) {d)};
+  \draw (-\hpitch,-\vpitch) circle [radius=\r];
+  \draw (-\hpitch,-\vpitch) circle [radius=\R];
+  \draw (-\hpitch,-\vpitch)--({-\hpitch+\R*sin(\a)},{-\vpitch+\R*cos(\a)});
+  \draw ({-\hpitch+\r*sin(\b)},{-\vpitch+\r*cos(\b)})--%
+  ({-\hpitch+\R*sin(\b)},{-\vpitch+\R*cos(\b)});
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({-\hpitch+\R*sin(\a)},{-\vpitch+\R*cos(\a)}) {$\hat{R}$};
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({-\hpitch+\R*sin(\b)},{-\vpitch+\R*cos(\b)}) {$\hat{d}$};
+  % Biggest.
+  \node at (-\R,-\vpitch+\R) {e)};
+  \draw[gray,style=densely dotted] (0, -\vpitch) circle [radius=\R];
+  \draw (0,-\vpitch) circle [radius=\R+\dR];
+  \draw (0,-\vpitch) circle [radius=\r];
+  \draw (0,-\vpitch)--({(\R+\dR)*sin(\a)},{-\vpitch+(\R+\dR)*cos(\a)});
+  \draw ({\r*sin(\b)},{-\vpitch+\r*cos(\b)})--%
+  ({(\R+\dR)*sin(\b)},{-\vpitch+(\R+\dR)*cos(\b)});
+  \node[anchor=south west,outer sep=-2pt] at%
+  ({(\R+\dR)*sin(\a)},{-\vpitch+(\R+\dR)*cos(\a)}) {$\hat{R} + \Delta R$};
+  \node[anchor=south west,outer sep=-2pt]%
+  at ({(\R+\dR)*sin(\b)},{-\vpitch+(\R+\dR)*cos(\b)}) {$\hat{d} + \Delta d$};
+  % Smallest.
+  \node at (\hpitch-0.8*\R,-\vpitch+\R) {f)};
+  \draw[gray,style=densely dotted] (\hpitch, -\vpitch) circle [radius=\R];
+  \draw (\hpitch,-\vpitch) circle [radius=\R-\dR];
+  \draw (\hpitch,-\vpitch) circle [radius=\r];
+  \draw (\hpitch,-\vpitch)--%
+  ({\hpitch+(\R-\dR)*sin(\a)},{-\vpitch+(\R-\dR)*cos(\a)});
+  \draw ({\hpitch+\r*sin(\b)},{-\vpitch+\r*cos(\b)})--%
+  ({\hpitch+(\R-\dR)*sin(\b)},{-\vpitch+(\R-\dR)*cos(\b)});
+  \node[anchor=south west,outer sep=0pt] at%
+  ({\hpitch+(\R-\dR)*sin(\a)},{-\vpitch+(\R-\dR)*cos(\a)}){$\hat{R}-\Delta R$};
+  \node[anchor=south west,outer sep=0pt]%
+  at ({\hpitch+(\R-\dR)*sin(\b)},{-\vpitch+(\R-\dR)*cos(\b)})%
+  {$\hat{d} - \Delta d$};
+\end{tikzpicture}

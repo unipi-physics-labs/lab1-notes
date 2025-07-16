@@ -1,0 +1,18 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/sample\_stat\_numpy\_vec.py}{https://bitbucket.org/.../sample\_stat\_numpy\_vec.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{n}{T} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mf}{1.53}\PY{p}{,} \PY{l+m+mf}{1.46}\PY{p}{,} \PY{l+m+mf}{1.44}\PY{p}{,} \PY{l+m+mf}{1.63}\PY{p}{,} \PY{l+m+mf}{1.38}\PY{p}{,} \PY{l+m+mf}{1.49}\PY{p}{,} \PY{l+m+mf}{1.50}\PY{p}{,} \PY{l+m+mf}{1.16}\PY{p}{]}\PY{p}{,}
+     \PY{p}{[}\PY{l+m+mf}{1.88}\PY{p}{,} \PY{l+m+mf}{1.75}\PY{p}{,} \PY{l+m+mf}{1.76}\PY{p}{,} \PY{l+m+mf}{1.82}\PY{p}{,} \PY{l+m+mf}{1.66}\PY{p}{,} \PY{l+m+mf}{1.92}\PY{p}{,} \PY{l+m+mf}{1.62}\PY{p}{,} \PY{l+m+mf}{1.79}\PY{p}{]}\PY{p}{,}
+     \PY{p}{[}\PY{l+m+mf}{2.16}\PY{p}{,} \PY{l+m+mf}{2.10}\PY{p}{,} \PY{l+m+mf}{1.90}\PY{p}{,} \PY{l+m+mf}{2.00}\PY{p}{,} \PY{l+m+mf}{2.12}\PY{p}{,} \PY{l+m+mf}{2.08}\PY{p}{,} \PY{l+m+mf}{1.99}\PY{p}{,} \PY{l+m+mf}{2.01}\PY{p}{]}\PY{p}{,}
+     \PY{p}{[}\PY{l+m+mf}{2.32}\PY{p}{,} \PY{l+m+mf}{2.15}\PY{p}{,} \PY{l+m+mf}{2.27}\PY{p}{,} \PY{l+m+mf}{2.35}\PY{p}{,} \PY{l+m+mf}{2.17}\PY{p}{,} \PY{l+m+mf}{2.24}\PY{p}{,} \PY{l+m+mf}{2.29}\PY{p}{,} \PY{l+m+mf}{2.18}\PY{p}{]}\PY{p}{]}
+
+\PY{n}{mean} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{T}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{stdev} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{T}\PY{p}{,} \PY{n}{ddof}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{mean}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{stdev}\PY{p}{)}
+
+[Output]
+[1.44875 1.775   2.045   2.24625]
+[0.13736682 0.10169984 0.08485281 0.07386039]
+\end{Verbatim}

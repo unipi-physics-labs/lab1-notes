@@ -1,0 +1,41 @@
+
+\newcommand{\pgffigone}[3][!htb]{%
+  \begin{figure}[#1]
+    \hstack[0.5]{\input{figures/#2.pgf}}{\caption{#3}\label{fig:#2}}
+  \end{figure}%
+}
+
+
+\newcommand{\pgffigtwo}[4][!htb]{%
+  \begin{figure}[#1]
+    \input{figures/#2.pgf}\hfill\input{figures/#3.pgf}
+    \caption{#4}\label{fig:#2_#3}
+  \end{figure}%
+}
+
+
+\newcommand{\pgffigthree}[5][!htb]{%
+  \begin{figure}[#1]
+    \hstack[0.5]{\input{figures/#2.pgf}}{\input{figures/#3.pgf}}
+    \hstack[0.5]{\input{figures/#4.pgf}}{\caption{#5}\label{fig:#2_three}}
+  \end{figure}%
+}
+
+
+\newcommand{\pgffigfour}[6][!htb]{%
+  \begin{figure}[#1]
+    \input{figures/#2.pgf}\hfill\input{figures/#3.pgf}
+    \input{figures/#4.pgf}\hfill\input{figures/#5.pgf}
+    \caption{#6}\label{fig:#2_four}
+  \end{figure}%
+}
+
+
+\newcommand{\pgffigsix}[8][!htb]{%
+  \begin{figure}[#1]
+    \input{figures/#2.pgf}\hfill\input{figures/#3.pgf}
+    \input{figures/#4.pgf}\hfill\input{figures/#5.pgf}
+    \input{figures/#6.pgf}\hfill\input{figures/#7.pgf}
+    \caption{#8}\label{fig:#2_six}
+  \end{figure}%
+}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}[main node/.style={rectangle,draw,minimum size=4mm}]%
+  \pgfmathsetmacro{\xscale}{0.4}
+  \pgfmathsetmacro{\yscale}{1.25}
+  \foreach \x in {1,...,39}
+  \node[main node] at (\x*\xscale, 0) {};
+  \foreach \e[count=\xi from 1] in {2,6,15,29,37} {
+    \fill (\e*\xscale, 0) circle [radius=3pt];
+    \node at (\e*\xscale, \yscale) {$t_\xi$};
+    \draw [out=-90,in=90,-{>[scale=1.8]}] (\e*\xscale, \yscale-0.5*\xscale) to (\e*\xscale, 0.5*\xscale);
+  }
+  \draw [out=0,in=180,{<[scale=1.8]}-{>[scale=1.8]}] (0.5*\xscale,1.9*\yscale) to (39.5*\xscale,1.9*\yscale);
+  \node at (19*\xscale,2.2*\yscale) {$\Delta t$};
+  \node at (19*\xscale,1.6*\yscale) {Numero medio di eventi: $\mu = \lambda \Delta t$};
+
+  \node at (19*\xscale,-1.25*\yscale) {$dt = \displaystyle\frac{\Delta t}{n}$ ($p = \lambda dt$)};
+  \draw [out=90,in=-90,-{>[scale=1.8]}] (19*\xscale, -1.25*\yscale+0.5*\xscale) to (19*\xscale, -0.5*\xscale);
+\end{tikzpicture}

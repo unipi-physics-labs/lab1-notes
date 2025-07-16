@@ -1,0 +1,21 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/sample\_stat4.py}{https://bitbucket.org/.../sample\_stat4.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{k}{def} \PY{n+nf}{sample\PYZus{}statistics}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} Using native numpy functions.}
+    \PY{n}{mean} \PY{o}{=} \PY{n}{values}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+    \PY{n}{stdev} \PY{o}{=} \PY{n}{values}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{ddof}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+    \PY{k}{return} \PY{n}{mean}\PY{p}{,} \PY{n}{stdev}
+
+\PY{c+c1}{\PYZsh{} Quick test with normally\PYZhy{}distributed random numbers.}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{values} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{sample\PYZus{}statistics}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} And now add 1,000,000 to all the values in the sample.}
+\PY{n}{values} \PY{o}{=} \PY{n}{values} \PY{o}{+} \PY{l+m+mf}{1.0e9}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{sample\PYZus{}statistics}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{)}
+
+[Output]
+(0.00977265669910497, 0.9988357867259919)
+(1000000000.0097727, 0.9988357862468052)
+\end{Verbatim}

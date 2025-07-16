@@ -1,0 +1,155 @@
+\chapter{Complementi di statistica}
+\label{chap:complementi}
+
+
+\section{La funzione generatrice dei momenti}
+
+La \emph{funzione generatrice dei momenti} $\momgenf(t)$ per una variabile
+casuale $x$ è definita come
+\begin{align}
+  \dccases{\momgenf(t) = \expect{e^{xt}}}%
+          {\sum_k e^{x_kt} \prob{x_k}}%
+          {\intinf e^{xt} p(x) \diff}
+\end{align}
+Sviluppando in serie l'esponenziale attorno al punto $t = 0$ possiamo scrivere
+\begin{align*}
+  \momgenf(t) & = \expect{e^{xt}} =
+  \expect{\sum_{n = 1}^{\infty} \frac{(xt)^n}{n!}} =
+  \sum_{n = 1}^{\infty} \frac{\expect{x^n}t^n}{n!} = 
+  \sum_{n = 1}^{\infty} \frac{\momalg{n}t^n}{n!} =
+  1 + \momalg{1}t + \frac{\momalg{2}t^2}{2} + \frac{\momalg{3}t^3}{6} +
+  \cdots
+\end{align*}
+e, derivando rispetto a $t$, si hanno le relazioni notevoli
+\begin{align} \label{eq:mgf_mean}
+  \momalg{n} = \td[n]{\momgenf}{t}{0}
+  \quad\text{e, in particolare}\quad
+  \mu = \td{\momgenf}{t}{0}.
+\end{align}
+(Da cui il nome di funzione generatrice dei momenti.)
+
+\begin{examplebox}
+  \begin{example}
+    Sia $x$ l'uscita di un dado equo a sei facce. La funzione generatrice dei
+    momenti è
+    \begin{align*}
+      \momgenf(t) = \sum_{k = 1}^{6} e^{x_kt} \prob{x_k} =
+      \sum_{k = 1}^{6} e^{kt} \prob{k} =
+      \frac{1}{6}\sum_{k = 1}^{6} e^{kt}
+    \end{align*}
+    e, calcolando la derivata prima nel punto $t = 0$ otteniamo banalmente
+    la definizione di media~\eqref{eq:mean}
+    \begin{align*}
+      \mu = \td{\momgenf}{t}{0} =
+      \at{\frac{1}{6} \sum_{k = 1}^{6} ke^{kt}}{t = 0}\mkern10mu = 
+      \frac{1}{6} \sum_{k = 1}^{6} k.
+    \end{align*}
+  \end{example}
+  
+  \begin{example}
+    Sia $x$ una variabile casuale continua distribuita uniformemente tra $0$ ed
+    $1$. Si ha
+    \begin{align*}
+      \momgenf(t) = \int_{0}^{1}e^{xt}p(x) \diff =
+      \int_{0}^{1}e^{xt} \diff = \frac{1}{t} \int_{0}^{t} e^y \diff[y] =
+      \frac{e^t - 1}{t}.
+    \end{align*}
+    Si tratta di un caso interessante, in quanto la derivata è una forma
+    indeterminata per $t \rightarrow 0$, che si può calcolare passando al
+    limite ed utilizzando il teorema di de L'H\^opital
+    \begin{align*}
+      \mu = \lim_{t \rightarrow 0} \td{\momgenf}{t}{t} =
+      \lim_{t \rightarrow 0} \frac{te^t - (e^t - 1)}{t^2} =
+      \lim_{t \rightarrow 0} \frac{te^t}{2t} = \frac{1}{2}.
+    \end{align*}
+    Giusto, ma significativamente più complicato che non applicare la
+    definizione~\eqref{eq:mean}.
+  \end{example}
+\end{examplebox}
+
+Analogamente, se la variabile casuale $x$ ha media definita $\mu$, si possono
+generare i momenti centrali a partire dalla funzione generatrice
+\begin{align*}
+  \momgenf[x - \mu](t) & = \expect{e^{(x - \mu)t}} =
+  \expect{\sum_{n = 1}^{\infty} \frac{(x-\mu)^nt^n}{n!}} =
+  \sum_{n = 1}^{\infty} \frac{\expect{(x - \mu)^n}t^n}{n!} =
+  \sum_{n = 1}^{\infty} \frac{\momcen{n}t^n}{n!} =
+  1 + \momcen{1}t + \frac{\momcen{2}t^2}{2} + \cdots
+\end{align*}
+calcolando, come prima, le derivate nel punto $t = 0$:
+\begin{align} 
+  \momcen{n} = \td[n]{\momgenf[x - \mu]}{t}{0}
+  \quad\text{e ancora}\quad
+  \sigma^2 = \td[2]{\momgenf[x - \mu]}{t}{0}.
+\end{align}
+
+
+\begin{examplebox}
+  \begin{example}
+    Sia $x$ l'uscita di un dado equo a sei facce. La funzione generatrice dei
+    momenti centrali e le derivate rilevanti sono
+    \begin{align*}
+      \momgenf[x - \mu](t) &= e^{-\mu t} \sum_{k = 1}^{6} e^{x_kt} \prob{x_k} =
+      e^{-\mu t} \sum_{k = 1}^{6} e^{kt} \prob{k} =
+      \frac{e^{-\mu t}}{6} \sum_{k = 1}^{6} e^{kt}\\
+      \td{\momgenf[x - \mu]}{t}{t} & =
+      \frac{e^{-\mu t}}{6} \left[-\mu  \sum_{k = 1}^{6} e^{kt} +
+        \sum_{k = 1}^{6} ke^{kt} \right] = 
+      \frac{e^{-\mu t}}{6} \sum_{k = 1}^{6} (k - \mu) e^{kt}\\
+      \td[2]{\momgenf[x - \mu]}{t}{t} & = 
+      \frac{e^{-\mu t}}{6} \left[ -\mu \sum_{k = 1}^{6} (k - \mu) e^{kt}
+        + \sum_{k = 1}^{6} k(k - \mu)  e^{kt} \right] = 
+      \frac{e^{-\mu t}}{6} \sum_{k = 1}^{6} (k - \mu)^2 e^{kt},
+    \end{align*}
+    da cui otteniamo il risultato già noto
+    \begin{align*}
+      \sigma^2 = \td[2]{\momgenf[x - \mu](t)}{t}{0} = 
+      \frac{1}{6}\sum_{k = 1}^{6} (k - \mu)^2.
+    \end{align*}
+  \end{example}
+
+  \begin{example}
+    Sia $x$ una variabile casuale continua distribuita uniformemente tra $0$ ed
+    $1$. La funzione generatrice dei momenti centrali è
+    \begin{align*}
+      \momgenf[x - \mu](t) = e^{-\mu t} \int_{0}^{1}e^{xt} \diff =
+      \frac{e^{-\frac{t}{2}} (e^t - 1)}{t} =
+      \frac{e^{\frac{t}{2}} - e^{-\frac{t}{2}}}{t} = 
+      \frac{2\sinh(t/2)}{t}
+    \end{align*}
+    (abbiamo sfruttato il fatto che $\mu = 1/2$) e le derivate prima e seconda
+    si scrivono come
+    \begin{align*}
+      \td{\momgenf[x - \mu](t)}{t}{} & =
+      \frac{t\cosh(t/2) - 2\sinh(t/2)}{t^2}\\
+      \td[2]{\momgenf[x - \mu](t)}{t}{} & = 
+      \frac{\frac{t^3}{2}\sinh(t/2) -
+        2t\left[t\cosh(t/2) - 2\sinh(t/2)\right]}{t^4} =
+       \frac{(\frac{t^2}{2} + 4)\sinh(t/2) - 2t\cosh(t/2) }{t^3}.
+    \end{align*}
+    La derivata seconda è ancora una forma indeterminata per cui, come prima,
+    calcoliamo il limite per $t \rightarrow 0$ usando il teorema di
+    de L'H\^opital:
+    \begin{align*}
+      \sigma^2 = \lim_{t \rightarrow 0} \td[2]{\momgenf[x - \mu](t)}{t}{} = 
+      \lim_{t \rightarrow 0} \frac{\frac{t^2}{4}\cosh(t/2)}{3t^2} = \frac{1}{12}
+    \end{align*}
+    che, di nuovo, è il risultato noto.
+  \end{example}
+\end{examplebox}
+
+Gli esempi appena illustrati mostrano come la funzione generatrice dei momenti
+non sia necessariamente la strada più semplice per il calcolo della media
+e della varianza (o più in generale dei momenti di ordine superiore) di una
+funzione di distribuzione data.
+
+Sotto ipotesi del tutto generali i momenti definiscono univocamente la
+funzione di distribuzione, nel senso che si può dimostrare che se due
+funzioni di distribuzione hanno momenti uguali a tutti gli ordini, allora
+sono identiche. 
+
+
+\section{La distribuzione $t$ di Student}
+
+
+\summary

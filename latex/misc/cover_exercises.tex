@@ -1,0 +1,48 @@
+
+\newcommand{\coauthor}[2]{{\Large \textsc{#1}} {(\texttt{#2})}
+
+    \medskip}
+\newcommand{\versiontag}[2]{Versione #1 compilata il #2}
+\newcommand{\gitrevision}[1]{Git sha1: #1}
+
+
+\newcommand*{\stattitle}{%
+  \begingroup\thispagestyle{empty}
+  \hbox{
+    \hspace*{0.16\textwidth}
+    \rule{1pt}{\textheight}
+    \hspace*{0.05\textwidth}
+    \parbox[b]{0.79\textwidth}{
+
+      % Title.
+      {\noindent\Huge\bfseries
+        Esercizi risolti
+      }
+
+      \vspace{2\baselineskip}
+
+      % Sub-title.
+      {\large \textit{Per il laboratorio di Fisica}}
+
+      \vspace{4\baselineskip}
+
+      % Authors.
+      \coauthor{Luca Baldini}{luca.baldini@pi.infn.it}
+      \vspace{0.5\textheight}
+
+      % Document version.
+      \versiontag{\input{version}}{\today}
+
+      \smallskip
+
+      web: \url{https://bitbucket.org/lbaldini/statnotes}
+
+      \smallskip
+
+      \gitrevision{\input{../.git/refs/heads/master}}
+
+      \vspace{\baselineskip}
+    }
+  }
+  \cleardoublepage
+  \endgroup}

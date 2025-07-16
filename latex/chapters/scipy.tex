@@ -1,0 +1,118 @@
+\chapter{Glossario di \scipy}
+\label{sec:scipy}
+
+Nello stesso spirito dell'appendice~\ref{sec:numpy}, riportiamo qui un breve
+glossario di \scipy, arricchito da una serie di piccoli frammenti di codice che
+illustrano problemi specifici incontrati nelle dispense.
+
+
+\section{Funzioni speciali}
+
+Il modulo \scipymodule{special} fornisce una vasta gamma di funzioni matematiche.
+(Quelle relative al calcolo combinatorio, in particolare, sono degne di nota,
+perché permettono di fare uso dell'aritmetica intera di \python, che per sua
+natura ha precisione arbitraria, in tutti i casi in cui uno abbia bisogno di una
+risposta non approssimata.
+
+\vfill
+
+\scipycmd{special.comb}{
+restituisce il coef\-fi\-cien\-te binomiale
+\begin{align*}
+  \binom{n}{k} = \frac{n!}{k! (n - k!)}.
+\end{align*}
+Di \foreign{default} il risultato è restituito (in forma approssimata) in virgola
+mobile. Se specifichiamo l'argomento \code{exact=True}, allora il calcolo
+sfrutta la precisione illimitata dell'aritmetica intera di \python.
+}
+
+\scipycmd{special.erf}{%
+implementazione della \foreign{error function} che può inter-operare nativamente con
+\nparray. Nell'esempio a fianco abbiamo ricavato di nuovo la
+regola~\eqref{eq:65-95-99rule} utilizzando il fatto che
+\begin{align*}
+  P(-z_0 \leq z \leq z_0) = \erf{\frac{z_0}{\sqrt{2\pi}}}.
+\end{align*}
+}
+
+\scipycmd{special.factorial}{%
+restituisce il fattoriale del primo argomento
+\begin{align*}
+  n! = n(n-1)(n-2) \cdots 1.
+\end{align*}
+Di \foreign{default} il risultato è restituito (in forma approssimata) in virgola
+mobile. Se specifichiamo l'argomento \code{exact=True}, allora il calcolo
+sfrutta la precisione illimitata dell'aritmetica intera di \python.
+}
+
+\scipycmd{special.gamma}{%
+restituisce il valore della funzione $\Gamma$ dell'argomento. La funzione
+$\Gamma$ soddisfa la relazione
+\begin{align*}
+  \Gamma (n + 1) = n!,
+\end{align*}
+ed è la stessa funzione che interviene nella definizione della distribuzione
+del $\chisq$.}
+
+
+\section{Funzioni statistiche}
+
+Il modulo \href{https://docs.scipy.org/doc/scipy/reference/stats.html}{scipy.stats}
+contiene, tra le altre cose, una vasta collezioni di distribuzioni di probabilità,
+discrete e continue. In particolare, gli oggetti restituiti dalle funzioni
+descritte in questa sezione rappresentano vere e proprie \emph{variabili causali},
+in tutta la loro ricchezza e complessità, e forniscono tutte le interfacce
+necessarie ad inter-operare con esse nei modi in cui abbiamo studiato.
+
+Più in dettaglio, ogni variabile casuale restituita dalle funzioni di \code{scipy.stat}
+mette a disposizione, tra gli altri, i seguenti metodi fondamentali:
+\begin{itemize}
+  \item \pyfunc{pmf} o \pyfunc{pdf} restituiscono rispettivamente la probabilità
+  (\foreign{probability mass function}, per le variabili casuali discrete) o la
+  densità di probabilità (\foreign{probability density function}, per le variabili
+  casuali continue);
+  \item \pyfunc{cdf} restituisce la funzione cumulativa
+  (cfr. sezione~\ref{sec:funzione_cumulativa});
+  \item \pyfunc{ppf} restituisce la \foreign{percent point function}, o funzione
+  cumulativa inversa (cfr. sezione~\ref{sec:funzione_cumulativa});
+  \item \pyfunc{rvs} restituisce un \foreign{array} di valori numerici, di lunghezza
+  arbitraria, ottenuto campionando la distribuzione di probabilità in
+  questione---essenzialmente la stessa cosa che forniscono le funzioni del
+  modulo \npmodule{random}.
+\end{itemize}
+
+
+\scipycmd{stats.binom}{%
+restituisce una variabile casuale discreta con funzione di distribuzione
+binomiale (cfr. sezione~\ref{sec:distribuzione_binomiale}).}
+
+\scipycmd{stats.chi2}{%
+restituisce una variabile casuale discreta distribuita come un $\chisq$
+(cfr. sezione~\ref{sec:pdf_chi2}). Fissato il numero di gradi di libertà,
+la funzione cumulativa e la \foreign{percent point function} si possono
+utilizzare per passare dal valore ottenuto al \pvalue\ corrispondente
+e viceversa (i.e., per calcolare il valore del $\chisq$ che corrisponde ad
+un determinato \pvalue).}
+
+\scipycmd{stats.norm}{
+restituisce una variabile casuale continua con funzione di distribuzione Gaussiana
+(cfr. sezione~\ref{sec:distribuzione_gauss}). Nell'esempio a fianco abbiamo
+utilizzato la densità di probabilità per calcolare
+\begin{align*}
+  \gausspdf{0; \mu=0, \sigma=1} = \frac{1}{\sqrt{2\pi}}
+\end{align*}
+e la funzione cumulativa per ricavare di nuovo la regola~\eqref{eq:65-95-99rule}.}
+
+\scipycmd{stats.poisson}{%
+restituisce una variabile casuale discreta con funzione di distribuzione
+Poissoniana (cfr. sezione~\ref{sec:poisson_pdf}).}
+
+
+\section{Ottimizzazione}
+
+Il modulo \scipymodule{optimize} contiene tutto ciò che serve per risolvere
+problemi di ottimizzazione, minimizzazione di funzioni, e ricerca di zeri.
+
+Abbiamo descritto in dettaglio la funzione \pyfunc{curve_fit} nelle
+sezioni~\ref{sec:fit_numerici} e \ref{sec:dettagli_curve_fit}, ma la
+documentazione del modulo vale senza dubbio un'occhiata.

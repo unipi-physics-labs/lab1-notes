@@ -1,0 +1,22 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/erf.py}{https://bitbucket.org/.../erf.py}},commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+
+\PY{k}{def} \PY{n+nf}{Phi}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Gaussian cumulative function.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{return} \PY{l+m+mf}{0.5} \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{math}\PY{o}{.}\PY{n}{erf}\PY{p}{(}\PY{n}{z} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}
+
+\PY{k}{def} \PY{n+nf}{integrate\PYZus{}gauss}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Integrate a generic gaussian between x1 and x2.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{z1} \PY{o}{=} \PY{p}{(}\PY{n}{x1} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)} \PY{o}{/} \PY{n}{sigma}
+    \PY{n}{z2} \PY{o}{=} \PY{p}{(}\PY{n}{x2} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)} \PY{o}{/} \PY{n}{sigma}
+    \PY{k}{return} \PY{n}{Phi}\PY{p}{(}\PY{n}{z2}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{Phi}\PY{p}{(}\PY{n}{z1}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{integrate\PYZus{}gauss}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{integrate\PYZus{}gauss}\PY{p}{(}\PY{l+m+mf}{22.0}\PY{p}{,} \PY{l+m+mf}{24.0}\PY{p}{,} \PY{l+m+mf}{20.0}\PY{p}{,} \PY{l+m+mf}{4.0}\PY{p}{)}\PY{p}{)}
+
+[Output]
+0.6826894921370859
+0.1498822847945298
+\end{Verbatim}

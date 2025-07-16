@@ -1,0 +1,15 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/modulo.py}{https://bitbucket.org/.../modulo.py}},commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Define m and p, and initialize an empty list.}
+\PY{n}{m} \PY{o}{=} \PY{l+m+mi}{11}
+\PY{n}{p} \PY{o}{=} \PY{l+m+mi}{7}
+\PY{n}{sequence} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} Calculate k\PYZca{}p mod m for all positive k \PYZlt{} m.}
+\PY{c+c1}{\PYZsh{} Note ** is the power and \PYZpc{} the modulo operator.}
+\PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{m}\PY{p}{)}\PY{p}{:}
+    \PY{n}{sequence}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{k}\PY{o}{*}\PY{o}{*}\PY{n}{p} \PY{o}{\PYZpc{}} \PY{n}{m}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Print the sequence.}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{sequence}\PY{p}{)}
+
+[Output]
+[0, 1, 7, 9, 5, 3, 8, 6, 2, 4, 10]
+\end{Verbatim}

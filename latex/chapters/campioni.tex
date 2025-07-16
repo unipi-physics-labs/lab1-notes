@@ -1,0 +1,1500 @@
+\chapter{Variabili campione e propagazione dell'errore statistico}
+\label{sec:teoria_dei_campioni}
+
+\`E giunto adesso il momento di fare tesoro dei concetti che abbiamo
+introdotto nel capitolo precedente per rivedere criticamente la nozione di
+errore di misura. Quando misuriamo una grandezza fisica---e specialmente quando
+il valore della misura fluttua---possiamo pensare che il valore stesso sia
+una variabile casuale con una certa distribuzione (tipicamente incognita a
+priori) che chiamiamo \emph{distribuzione generatrice}. In questo schema
+concettuale fare $n$ misure di una stessa grandezza fisica in condizioni di
+ripetitività (che era il problema da cui eravamo partiti nel
+capitolo~\ref{sec:primi_passi}) equivale a \emph{campionare} $n$ volte la
+distribuzione generatrice corrispondente. \`E ovvio, allora, che in generale
+non potremo conoscere mai perfettamente la forma della distribuzione
+generatrice, né le sue caratteristiche (e.g., la media o la deviazione
+standard); ma è altresì ovvio che, in questo processo di campionamento,
+acquisiamo progressivamente informazioni sulla distribuzione stessa.
+Se facciamo, ad esempio, un istogramma dei valori delle misure ottenute, ci
+aspettiamo che per $n \rightarrow \infty$ la forma del nostro istogramma tenda
+alla forma della distribuzione generatrice, e che, a partire dal nostro
+campione, possiamo fornire stime via via più accurate delle sue
+caratteristiche.
+
+Se torniamo allora al problema iniziale di scrivere il risultato di una misura
+come il dato di un valore centrale e di un'incertezza di misura ad esso
+associata, cominciamo ad intravedere una possibilità operativa nel linguaggio
+della teoria della probabilità che abbiamo imparato. Se è vero che il nostro
+processo di misura equivale al campionamento ripetuto di una distribuzione,
+allora potremo prendere come miglior stima della grandezza cui siamo
+interessati una delle misure di tendenza centrale (tipicamente la media) della
+distribuzione e come incertezza associata la sua deviazione standard---che,
+come abbiamo visto, rappresenta l'entità delle fluttuazioni attorno al valor
+medio e fornisce una misura conveniente delle fluttuazioni stesse.
+
+Ripartiamo dunque dalla~\eqref{eq:errore_stat}, che costituisce il modo standard
+in cui scriviamo il risultato di una misura%
+\footnote{La scelta, onnipresente in letteratura, di utilizzare la lettera
+  $\sigma$ per indicare sia la deviazione standard di una distribuzione che
+  l'errore statistico è largamente infelice, perché le due cose sono
+  concettualmente diverse. La prima è una proprietà matematica che si
+  calcola dai principi primi, mentre il secondo, pur rappresentando una stima
+  di una deviazione standard è, nella maggior parte dei casi, una quantità
+  che si stima sperimentalmente. Purtuttavia ci adegueremo, sperando che il
+  contesto sia sufficiente ad evitare ambiguità.}
+\begin{align*}
+  x = \hat{x} \pm \sigma_x~\text{[unità di misura]}.
+\end{align*}
+Come abbiamo avuto modo di dire, questa equazione definisce un intervallo
+corrispondente ad una probabilità ben definita (che chiameremo
+\emph{livello di confidenza}, o CL, dall'inglese \foreign{confidence level})
+di contenere il valore del misurando.
+Nella nostra prescrizione il livello di confidenza corrisponde all'integrale
+della distribuzione generatrice entro una deviazione standard dalla media, e si
+può stimare esplicitamente a partire della distribuzione generatrice stessa.
+Il valore sarà in generale diverso caso per caso, ma sappiamo già che, nei
+casi tipici, sarà grossolanamente dell'ordine del $60$--$70\%$.
+Per completezza, e per evitare qualsiasi possibile ambiguità, uno può
+(e dovrebbe) specificare esplicitamente il livello di confidenza, e.g.
+\begin{align}\label{eq:errore_stat_cl}
+  x = \hat{x} \pm \sigma_x~\text{[unità di misura]}~(68\%~\text{CL})
+\end{align}
+(o qualunque sia il livello di confidenza scelto.)
+
+
+\section{Campionamenti singoli}
+\label{sec:errore_campionamenti_singoli}
+
+Se conosciamo a priori la deviazione standard $\sigma$ della distribuzione
+generatrice del misurando cui siamo interessati, oppure ne abbiamo una stima,
+allora una singola misura (cioè un singolo campionamento) è sufficiente per
+definire tutte le componenti della~\eqref{eq:errore_stat}---prenderemo il (singolo)
+valore misurato come valore centrale e $\sigma$ come incertezza associata.
+
+Se conosciamo (esattamente o approssimativamente) la forma della
+distribuzione generatrice, allora possiamo anche calcolare il livello di
+confidenza associato ad una deviazione standard, oppure utilizzare come stima
+dell'incertezza di misura un multiplo o sottomultiplo della deviazione standard
+per ottenere un livello confidenza fissato a priori. Torneremo su questo
+problema specifico nel seguito, e vedremo che utilizzare una deviazione
+standard come incertezza (con un livello di confidenza che, di conseguenza,
+dipende dai dettagli della distribuzione generatrice) è comodo in pratica.
+
+\begin{examplebox}
+  \begin{example}
+    Supponiamo di misurare il peso $m$ di un oggetto con una bilancia digitale
+    con una risoluzione di $1$~g. Se il valore indicato dal display è $58$~g
+    possiamo assumere che, in assenza di errori sistematici, la distribuzione
+    generatrice del misurando sia uniforme tra $57.5$~g e $58.5$~g, e possiamo
+    utilizzare la deviazione standard di questa distribuzione (che
+    dall'esercizio~\ref{exp:varianza_dist_uniforme} sappiamo essere
+    $\sqrt{\nicefrac{1}{12}} \approx 0.29$~g) come incertezza di misura.
+    Sappiamo inoltre che per una distribuzione uniforme la probabilità che
+    la variabile disti meno di una deviazione standard dalla media è pari
+    a circa il $58\%$, per cui possiamo scrivere
+    \begin{align*}
+      m = 58.00 \pm 0.29~g~(58\%~\text{CL}).
+    \end{align*}
+  \end{example}
+
+  \begin{example}
+    Il ragionamento dell'esempio precedente si applica banalmente alla misura di
+    una lunghezza con un metro a nastro e, più in generale, a tutti gli
+    strumenti digitali---nel caso in cui decidiamo di non interpolare tra le
+    divisioni e assumendo di non commettere errori di lettura.
+  \end{example}
+
+  \begin{example}
+    In generale gli strumenti si possono \emph{calibrare} attraverso misure
+    ripetute di grandezze di riferimento (ad esempio misurate preliminarmente
+    con uno strumento di misura più accurato o con un metodo indipendente).
+    Questo permette, nel nostro linguaggio, di stimare la deviazione standard
+    della distribuzione generatrice (e magari anche la sua forma), che può poi
+    essere utilizzata come incertezza sulla singola misura.
+  \end{example}
+\end{examplebox}
+
+Se la deviazione standard della distribuzione generatrice non è nota a priori,
+possiamo stimarla a posteriori in base ad una serie di misure ripetute.
+Sappiamo che, in presenza di fluttuazioni statistiche, ripetere la misura più
+volte è anche un modo per aumentarne la precisione. Da un punto di vista
+operativo il nostro problema fondamentale diventa: data una serie di $n$ misure
+di una stessa grandezza fatte in condizioni di ripetitività, quali sono le
+migliori stime che possiamo dare della media e della deviazione standard della
+distribuzione generatrice? Si tratta di un problema che risolveremo in questo
+capitolo ma, per cominciare, abbiamo bisogno di sapere come si "sommano" le
+distribuzioni.
+
+
+\section{Somma di variabili casuali indipendenti}
+\label{sec:somma_variabili_indipendenti}
+
+Date due variabili casuali indipendenti $x_1$ ed $x_2$ (continue o discrete)
+caratterizzate dalle rispettive funzioni di distribuzione (in generale diverse),
+la loro somma $x = x_1 + x_2$ è ovviamente ancora una variabile
+casuale---ricordate l'esempio~\ref{exp:pdf_somma_due_dadi} del lancio di due
+dadi. Allora è lecito chiedersi quale sia la funzione di distribuzione di
+$x$ e come essa si possa calcolare a partire dalle funzioni di distribuzione
+di $x_1$ ed $x_2$.
+
+In generale si tratta di una domanda non banale, che richiede di identificare
+e \emph{pesare} opportunamente le diverse configurazioni di $x_1$ ed $x_2$ che
+danno origine allo stesso valore della somma $x$. Anche nel caso più semplice
+possibile, quello in cui $x_1$ ed $x_2$ sono variabili casuali continue
+distribuite entrambe uniformemente tra $0$ ed $1$, la risposta non è scontata.
+Possiamo sicuramente dire che $x$ sarà compresa tra $0$ e $2$; ma cosa altro?
+La densità di probabilità di $x$ sarà uniforme in questo intervallo?
+
+\pgffigtwo{somma_pdf_uniforme}{pdf_somma_pdf_uniforme}{
+  Rappresentazione geometrica della convoluzione di due funzioni di
+  distribuzione uniformi (a sinistra). Se $x_1$ ed $x_2$ sono uniformemente
+  distribuite tra $0$ ed $1$, allora le regioni del piano cartesiano a somma
+  costante sono segmenti di retta con coefficiente angolare~$-1$ e se $x_1$ ed
+  $x_2$ sono indipendenti, la probabilità che $x_1 + x_2$ assuma un valore
+  fissato è proporzionale alla lunghezza del segmento corrispondente.
+  I segmenti si riducono a punti per i casi limite $x_1 + x_2 = 0$ e
+  $x_1 + x_2 = 2$, ove la densità di probabilità della somma (mostrata a
+  destra) deve tendere a $0$.
+}
+In questo caso l'intuizione ci viene in aiuto nella forma del grafico mostrato
+in~figura~\ref{fig:somma_pdf_uniforme_pdf_somma_pdf_uniforme}: le
+configurazioni nel piano $x_1$--$x_2$ che danno origine ad un valore della somma
+$x$ fissato sono linee diagonali con pendenza $-1$, e la probabilità
+corrispondente sarà dunque proporzionale alla lunghezza delle linee
+stesse---identicamente nulla in $x = 0$ ed $x = 2$ (ove le linee si riducono a
+punti), massima in $x = 1$ e linearmente crescente/decrescente nelle due metà
+dell'intervallo $[0,~2]$. La densità di probabilità cercata è dunque
+triangolare
+\begin{align*}
+  p(x) =
+  \begin{cases}
+    x & \text{se}~x \leq 1\\
+    (2 - x) &  \text{se}~x > 1,
+  \end{cases}
+\end{align*}
+come mostrato in figura~\ref{fig:somma_pdf_uniforme_pdf_somma_pdf_uniforme}.
+(Se questo vi sorprende, tornate per un attimo indietro a guardare la
+figura~\ref{fig:pdf_un_dado_pdf_somma_due_dadi} e gli
+esempi~\ref{exp:pdf_un_dado} e \ref{exp:pdf_somma_due_dadi}---si tratta
+sostanzialmente dello stesso fenomeno, visto questa volta per una variabile
+casuale continua.)
+
+
+\subsection{Media e varianza della somma di variabili casuali indipendenti}
+\label{sec:media_varianza_somma}
+
+Torniamo al nostro problema iniziale, ovvero le proprietà della funzione
+di distribuzione della somma $x = x_1 + x_2$ di due variabili casuali
+indipendenti. Abbiamo visto che calcolare esplicitamente la funzione di
+distribuzione, nel caso generale, non è banale. Fortunatamente il calcolo
+della media e della varianza di $x$ sono problemi più facilmente
+trattabili. La prima si scrive banalmente come
+\begin{align}\label{eq:media_somma_ind}
+  \mu = \expect{x} = \expect{x_1 + x_2} = \expect{x_1} + \expect{x_2} =
+  \mu_1 + \mu_2.
+\end{align}
+E la varianza $\sigma^2$ è leggermente più complicata
+\begin{align*}
+  \sigma^2 & = \var{x} = \expect{(x - \mu)^2} = \expect{x^2} - \mu^2 =
+  \expect{(x_1 + x_2)^2} - (\mu_1 + \mu_2)^2 =\\
+  & = \expect{x_1^2} + \expect{x_2^2} + 2\expect{x_1x_2} -
+  \mu_1^2 - \mu_2^2 - 2\mu_1\mu_2 =
+  \sigma_1^2 + \sigma_2^2 + 2\expect{x_1x_2} - 2\mu_1\mu_2.
+\end{align*}
+(Nell'ultimo passaggio $\sigma_1^2$ e $\sigma_2^2$ sono le varianze di $x_1$ ed
+$x_2$, rispettivamente.) Nell'espressione che abbiamo ottenuto riconosciamo
+la covarianza delle due variabili di partenza, per cui nel caso generale
+possiamo scrivere
+\begin{align}\label{eq:varianza_somma}
+  \sigma^2 =  \sigma_1^2 + \sigma_2^2 + 2\cov{x_1}{x_2}
+\end{align}
+e, nel caso in cui $x_1$ ed $x_2$ siano indipendenti, la loro covarianza è
+per definizione nulla e la~\eqref{eq:varianza_somma} si semplifica in
+\begin{align}\label{eq:varianza_somma_ind}
+  \sigma^2 = \sigma_1^2 + \sigma_2^2 \quad \text{da cui} \quad
+  \sigma = \sqrt{\sigma_1^2 + \sigma_2^2}
+\end{align}
+La scrittura nell'ultimo passaggio della~\eqref{eq:varianza_somma_ind} prende
+generalmente il nome di \emph{somma in quadratura}. Notiamo che la somma in
+quadratura è in generale più piccola della somma propriamente detta
+\begin{align*}
+  \sqrt{\sigma_1^2 + \sigma_2^2} \leq (\sigma_1 + \sigma_2),
+\end{align*}
+come si può dimostrare banalmente per via geometrica (pensate al teorema di
+Pitagora).
+
+A posteriori questo risultato non deve sorprendere---nel
+capitolo~\ref{sec:probabilita} abbiamo visto, e.g., che la media della somma
+delle uscite di due dadi equi è il doppio della media dell'uscita di un dado
+equo (esempi~\ref{exp:media_dado} e~\ref{exp:media_due_dadi}) e che la varianza
+della somma delle uscite di due dadi equi è il doppio della varianza
+dell'uscita di un dado equo (esempi~\ref{exp:varianza_dado}
+e~\ref{exp:varianza_due_dadi}).
+L'esempio~\ref{exp:media_varianza_pdf_triangolare} mostra che la stessa cosa
+è vera per la distribuzione triangolare in
+figura~\ref{fig:somma_pdf_uniforme_pdf_somma_pdf_uniforme}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:media_varianza_pdf_triangolare}
+    Consideriamo la distribuzione triangolare in
+    figura~\ref{fig:somma_pdf_uniforme_pdf_somma_pdf_uniforme}. Poiché essa
+    è simmetrica rispetto a $x = 1$, la media sarà proprio $\mu = 1$.
+    Per la varianza possiamo al solito utilizzare la~\eqref{eq:variance_alt}
+    \begin{align*}
+      \expect{x^2} & = \int_0^2 x^2 p(x) dx =
+      \int_0^1 x^3 dx + \int_1^2 x^2(2 - x) dx =
+      \eval{\frac{x^4}{4}}{0}{1} +
+      \eval{\frac{2x^3}{3}}{1}{2} -
+      \eval{\frac{x^4}{4}}{1}{2} =\\
+      & = \left( \frac{1}{4} - 0 \right) +
+      \left( \frac{16}{3} - \frac{2}{3} \right) -
+      \left( \frac{16}{4} - \frac{1}{4} \right) =
+      \frac{3 - 0 + 64 - 8 - 48 + 3}{12} = \frac{14}{12},
+    \end{align*}
+    da cui
+    \begin{align*}
+      \sigma^2 = \expect{x^2} - \mu^2 = \frac{14}{12} - 1 = \frac{2}{12} =
+      \frac{1}{6}.
+    \end{align*}
+    La distribuzione in questione è la "somma" di due distribuzioni
+    uniformi tra $0$ ed $1$ identiche, con media
+    $\mu_1 = \mu_2 = \nicefrac{1}{2}$ e varianza
+    $\sigma_1^2 = \sigma_2^2 = \nicefrac{1}{12}$, come illustrato negli
+    esempi~\ref{exp:media_dist_uniforme} e~\ref{exp:varianza_dist_uniforme}.
+  \end{example}
+\end{examplebox}
+
+La~\eqref{eq:media_somma_ind} e la~\eqref{eq:varianza_somma_ind} si
+generalizzano banalmente alla somma di un numero arbitrario di variabili
+casuali indipendenti $x = \sum_{i = 1}^{n} x_i$ con medie $\expect{x_i} = \mu_i$
+e varianze $\var{x_i} = \sigma_i^2$. Dette $\mu = \expect{x}$ e
+$\sigma^2 = \var{x}$ si ha
+\begin{align}\label{eq:media_varianza_somma_ind}
+  \mu = \sum_{i = 1}^{n} \mu_i \quad \text{e} \quad
+  \sigma^2 = \sum_{i = 1}^{n} \sigma_i^2 \quad \text{ovvero} \quad
+  \sigma  = \sqrt{\sum_{i = 1}^{n} \sigma_i^2}
+\end{align}
+In altre parole abbiamo il risultato fondamentale che
+\emph{date $n$ variabili casuali indipendenti: la media della somma è uguale
+  alla somma delle medie e la varianza della somma è uguale alla somma delle
+  varianze---da cui la deviazione standard della somma è uguale alla somma
+  in quadratura delle deviazioni standard.}
+(Notiamo, per inciso, come quest'ultima proprietà sia uno dei motivi
+fondamentali per definire la varianza come abbiamo fatto
+nella~\eqref{eq:variance}. Se avessimo usato, ad esempio, il modulo al posto
+del quadrato, non esisterebbe un equivalente altrettanto semplice di questa
+legge di somma.)
+
+
+\subsection{Una applicazione interessante: il \foreign{random walk} uni-dimensionale}
+\label{sec:random_walk}
+
+\danger%
+Consideriamo un punto materiale vincolato a muoversi su una retta (per fissare
+le idee consideriamo un sistema di coordinate diretto lungo la retta e la cui
+origine coincida con la posizione del punto all'istante iniziale). Supponiamo
+inoltre che il moto del nostro punto avvenga nella forma di una successione
+(arbitrariamente lunga) di passi elementari di lunghezza prefissata
+$\ell$, nella direzione delle coordinate positive o negative con uguale
+probabilità. Siamo interessati a studiare la posizione $x_n$ del punto dopo
+$n$ passi---che, va da sé, è una variabile casuale.
+
+La variabile casuale $s$ che descrive il singolo passo può assumere i valori
+$+\ell$ e $-\ell$ con funzione di distribuzione
+\begin{align}
+  \prob{s = +\ell} = \prob{s = -\ell} = \frac{1}{2},
+\end{align}
+ed è facile calcolarne media e varianza:
+\begin{align*}
+  \expect{s} = \ell \times \frac{1}{2} - \ell \times \frac{1}{2} = 0
+  \quad \text{e} \quad
+  \var{s} = \expect{s^2} - \mu_s^2 = \expect{s^2} =
+  \ell^2 \times \frac{1}{2} + \ell^2 \times \frac{1}{2} = \ell^2.
+\end{align*}
+La variabile casuale $x_n$ (cioè la posizione cercata) sarà data dunque
+dalla somma di $n$ variabili casuali identiche distribuite come $s$. Ma allora
+sappiamo immediatamente che
+\begin{align}\label{eq:media_varianza_random_walk}
+  \expect{x_n} = n \expect{s} = 0 \quad \text{e} \quad
+  \var{x_n} = \expect{x_n^2} - \mu_{x_n}^2 = \expect{x_n^2} =
+  n \expect{s^2} = n\ell^2,
+\end{align}
+cioè la posizione media del punto dopo un numero arbitrario di passi $n$ è
+$0$ (il che non dovrebbe sorprendere, dato che, ad ogni passo, ci muoviamo con
+uguale probabilità verso destra o verso sinistra) e la varianza di $x_n$ è
+pari ad $n\ell^2$---per cui la sua deviazione standard è proporzionale
+a~$\sqrt{n}\ell$.
+
+Il processo che abbiamo appena descritto prende generalmente il nome di
+\foreign{random walk} uni-dimensionale. La figura~\ref{fig:random_walk} mostra, a
+scopo illustrativo, 15 realizzazioni indipendenti dei primi $500$ passi di un
+\foreign{random walk} uni-dimensionale con lunghezza unitaria $\ell = 1$.
+
+\pgffigone{random_walk}{
+  15 realizzazioni indipendenti dei primi $500$ passi di un \foreign{random walk}
+  uni-dimensionale con lunghezza unitaria $\ell = 1$ (in unità di misura
+  arbitrarie). La posizione $x_n$ è mostrata in funzione del numero di
+  passo $n$. Le linee indicano i contorni ad $1$ e $2$ deviazioni standard,
+  cioè $x_n = \pm \sqrt{n}$ e $x_n = \pm 2\sqrt{n}$.
+}
+
+La cosa interessante del \foreign{random walk} è che la distanza media $d_n$
+dall'origine al passo $n$-esimo, che sarà proporzionale alla deviazione
+standard di $x_n$, scala con la radice quadrata di $n$ per
+la~\eqref{eq:media_varianza_random_walk}
+\begin{align}\label{eq:distanza_random_walk}
+  d_n \propto \ell\sqrt{n},
+\end{align}
+(mentre se uno viaggiasse in linea retta si avrebbe banalmente $d_n = \ell n$).
+La differenza non è da poco, e produce spesso situazioni sorprendenti, come
+quella descritta nell'esempio~\ref{exp:random_walk_ubriaco}
+
+\begin{examplebox}
+  \begin{example}\label{exp:random_walk_ubriaco}
+    Un ubriaco esce dal bar e compie un \foreign{random walk} fino al suo hotel,
+    che si trova sullo stesso viale a distanza $d = 1$~km. Assumendo che faccia
+    un passo al secondo (verso destra o verso sinistra con probabilità
+    $\nicefrac{1}{2}$) e che la lunghezza (fissa) di ciascun
+    passo  sia $l = 1$~m, quanto tempo impiega (in media) per arrivare a
+    destinazione? Trascurando il fattore di proporzionalità
+    nella~\eqref{eq:distanza_random_walk}
+    \begin{align*}
+      n \sim (d/l)^2 = 10^6
+    \end{align*}
+    e dunque $t \sim 10^6$~s (ossia quasi due settimane). Per confronto, ad un
+    sobrio servirebbero $n \sim d/l = 10^3$ passi, ossia circa un quarto
+    d'ora.
+  \end{example}
+\end{examplebox}
+
+
+\section{Misure ripetute: media e varianza campione}
+\label{sec:media_varianza_campione}
+
+Riprendiamo il filo della discussione. Abbiamo iniziato questo capitolo con la
+domanda: data una serie di misure $x_i$ ($i = 1\ldots n$) indipendenti di una
+stessa grandezza $x$ fatte in condizioni di ripetitività, quali sono le
+migliori stime che possiamo dare della media $\mu$ e della varianza $\sigma^2$
+della distribuzione generatrice?
+
+Come stima $m$ della media possiamo prendere la media aritmetica delle misure,
+che viene generalmente chiamata \emph{media campione}
+\begin{align}\label{eq:media_campione}
+  m = \frac{1}{n}\sum_{i = 1}^n x_i.
+\end{align}
+La media campione ha la buona proprietà che il suo valore di aspettazione
+è uguale alla media della distribuzione generatrice
+\begin{align*}
+  \expect{m} = \expect{\frac{1}{n}\sum_{i = 1}^n x_i} =
+  \frac{1}{n}\sum_{i = 1}^n \expect{x_i} = \frac{1}{n}\sum_{i = 1}^n \mu =
+  \frac{n\mu}{n} = \mu.
+\end{align*}
+Per completezza, un estimatore che soddisfa questa proprietà (cioè il
+cui valore di aspettazione coincida con la grandezza da stimare) si dice
+\emph{imparziale}.
+
+La questione della varianza è leggermente più complicata. Formalmente, se
+conoscessimo a priori il valore $\mu$ della media della distribuzione
+generatrice, l'analogo della~\eqref{eq:media_campione} sarebbe
+\begin{align*}
+  s^2 = \frac{1}{n}\sum_{i = 1}^n (x_i - \mu)^2,
+\end{align*}
+il cui valore di aspettazione, come prima, coincide con la quantità che
+vogliamo stimare ($s$ così scritto sarebbe, cioè, imparziale):
+\begin{align*}
+  \expect{s^2} = \expect{\frac{1}{n}\sum_{i = 1}^n (x_i - \mu)^2} =
+  \frac{1}{n}\sum_{i = 1}^n\expect{(x_i - \mu)^2} =
+  \frac{1}{n}\sum_{i = 1}^n \sigma^2 = \frac{1}{n} \times n\sigma^2 = \sigma^2.
+\end{align*}
+Il problema è che in generale non conosciamo $\mu$---abbiamo solo la stima
+$m$ data dalla~\eqref{eq:media_campione}. Come miglior stima della varianza
+della distribuzione generatrice potremmo allora essere tentati di prendere
+\begin{align}\label{eq:varianza_campione}
+  s_n^2 = \frac{1}{n}\sum_{i = 1}^n (x_i - m)^2
+\end{align}
+E qui arriva la parte più interessante. La prima cosa che possiamo chiederci
+è se il valore di aspettazione della~\eqref{eq:varianza_campione} sia ancora
+pari a $\sigma^2$. Come vedremo tra un attimo la risposta è no, ed un modo
+immediato per rendersene conto è che, detta $\xi$ una generica stima della
+media, la derivata
+\begin{align*}
+  \td{s_n^2}{\xi}{} =
+  \td{}{\xi}{} \left[\frac{1}{n}\sum_{i = 1}^n (x_i - \xi)^2\right] =
+  -\frac{2}{n}\sum_{i = 1}^n (x_i - \xi) =
+  -2 \left[ \frac{1}{n} \sum_{i = 1}^n x_i - \frac{1}{n} \times n\xi\right] =
+  -2 (m - \xi)
+\end{align*}
+si annulla per $\xi = m$---cioè la~\eqref{eq:media_campione} è la stima
+della media che \emph{minimizza} la stima della varianza
+campione~\eqref{eq:varianza_campione}. Questo ci dice che, in media,
+$s_n^2$ è una sottostima di $\sigma^2$.
+Il valore di aspettazione di $s^2_n$ si calcola esplicitamente come
+\begin{align*}
+  \expect{s^2_n} = \expect{\frac{1}{n}\sum_{i = 1}^n (x_i - m)^2} =
+  \frac{1}{n}\sum_{i = 1}^n \expect{x_i^2 + m^2 - 2mx_i}
+\end{align*}
+e, dato che i valori di aspettazione all'interno dell'ultima sommatoria sono
+identici poiché gli $x_i$ hanno tutti la stessa distribuzione generatrice,
+basta in effetti calcolarne uno solo.
+Consideriamo dunque i pezzi uno alla volta; il primo si calcola facilmente come
+\begin{align*}
+  \expect{x_i^2} = \sigma^2 + \mu^2.
+\end{align*}
+Il secondo è più complicato
+\begin{align*}
+  \expect{m^2} & =
+  \expect{\frac{1}{n^2}\sum_{j = 1}^n x_j\sum_{k = 1}^n x_k} =
+  \frac{1}{n^2}\expect{\sum_{j,k = 1}^n x_jx_k} =
+  \frac{1}{n^2}\expect{\sum_{j = 1}^nx_j^2 + \sum_{j = 1}^n\sum_{k \neq j}x_jx_k} =\\
+  & = \frac{1}{n^2}\left( \sum_{j = 1}^n\expect{x_j^2} +
+  \sum_{j = 1}^n\sum_{k \neq j} \expect{x_jx_k} \right) =
+  \frac{1}{n^2}\left(n(\sigma^2 + \mu^2) +
+  \sum_{j = 1}^n\sum_{k \neq j}\expect{x_j}\expect{x_k} \right) =\\
+  & = \frac{1}{n^2}\left[ n(\sigma^2 + \mu^2) + n(n - 1)\mu^2 \right] =
+  \frac{1}{n}\sigma^2 + \mu^2.
+\end{align*}
+(Abbiamo spezzato la somma doppia in due termini, a seconda del fatto che gli
+indici $j$ e $k$ siano uguali o diversi. Nel primo caso si ha sostanzialmente
+il valore di aspettazione di $x_j^2$, mentre nel secondo, essendo le misure
+indipendenti, il valore di aspettazione di $x_jx_k$ si può fattorizzare come
+prodotto di valori di aspettazione delle singole variabili.) L'ultimo pezzo
+vale
+\begin{align*}
+  \expect{mx_i} = \expect{\frac{1}{n}\sum_{j = 1}^nx_jx_i} =
+  \frac{1}{n} \expect{x_i^2 + \sum_{j \neq i} x_ix_j} =
+  \frac{1}{n} \left( \sigma^2 + \mu^2 + (n - 1)\mu^2 \right) =
+  \frac{1}{n}\sigma^2 + \mu^2.
+\end{align*}
+Vale la pena notare come nessuno dei tre valori di aspettazione che abbiamo
+appena calcolato dipenda dall'indice $i$, per cui in effetti siamo di fronte
+ad una sommatoria di $n$ termini identici---in altre parole: il segno di
+sommatoria si elide con il termine moltiplicativo $\nicefrac{1}{n}$ e mettendo
+tutto insieme si ottiene il risultato
+\begin{align*}
+  \expect{s^2_n} = \sigma^2 + \mu^2 + \frac{1}{n}\sigma^2 + \mu^2
+  - \frac{2}{n}\sigma^2 - 2\mu^2 = \sigma^2 - \frac{1}{n}\sigma^2 =
+  \frac{(n - 1)}{n}\sigma^2.
+\end{align*}
+La varianza campione, scritta come la~\eqref{eq:varianza_campione}, non
+è imparziale se non asintoticamente, nel senso che il suo valore di
+aspettazione, in generale, non è uguale alla varianza della distribuzione
+generatrice se non per $n \rightarrow \infty$. Fisicamente questo dipende dal
+fatto che le $n$ quantità nella somma~\eqref{eq:varianza_campione} non sono
+tutte indipendenti---sono legate dalla stima della media $m$ e, se conosco
+i primi $n - 1$ termini ed $m$, posso banalmente calcolare il termine
+$n$-esimo. (Tecnicamente si dice che il fatto di utilizzare $m$ al posto di
+$\mu$ causa la perdita di un grado di libertà.)
+
+Si può ottenere una stima imparziale della varianza della distribuzione
+generatrice semplicemente moltiplicando per il fattore correttivo
+$\nicefrac{n}{(n - 1)}$
+\begin{align}\label{eq:varianza_campione_imparziale}
+  s^2_{n - 1} = \frac{1}{(n - 1)}\sum_{i = 1}^n (x_i - m)^2
+  \quad \text{che soddisfa banalmente} \quad
+  \expect{s^2_{n - 1}} = \sigma^2.
+\end{align}
+Per $n$ grande le due definizioni coincidono, ma in alcuni testi la proprietà
+di imparzialità è considerata così importante che la varianza del campione
+è \emph{definita} secondo la~\eqref{eq:varianza_campione_imparziale}. Noi
+utilizzeremo questa definizione, ma mantenendo una posizione pragmatica e non
+ideologica, come discusso brevemente nella prossima sezione.
+
+
+\subsection{Digressione: l'imparzialità è davvero irrinunciabile?}
+\label{sec:imparzialita_var_campione}
+
+\danger%
+A questo punto la domanda è d'obbligo: è più "giusta"
+la~\eqref{eq:varianza_campione} o la~\eqref{eq:varianza_campione_imparziale}?
+Nella maggioranza dei casi si tratta di un problema più formale che
+sostanziale---il rapporto tra le due tende a $1$ per $n$ grande
+\begin{align*}
+  \lim_{n \rightarrow \infty} \frac{s_n^2}{s_{n-1}^2} =
+  \lim_{n \rightarrow \infty} \frac{(n - 1)}{n} = 1
+\end{align*}
+e la differenza numerica tra $s_n^2$ e $s_{n-1}^2$ è entro il $10\%$ per
+$n > 10$. Per piccoli campioni, però, la domanda è rilevante, e la
+diversa distribuzione delle due stime è mostrata in
+figura~\ref{fig:bias_varianza_campione} per $100\,000$ campioni di prova con
+$n = 8$ elementi estratti da una distribuzione generatrice di varianza (nota)
+$\sigma^2 = 1$.
+
+\pgffigone{bias_varianza_campione}{
+  Varianza campione, calcolata secondo le~\eqref{eq:varianza_campione}
+  e~\eqref{eq:varianza_campione_imparziale} per $100\,000$ campioni di $n = 8$
+  elementi estratti da una distribuzione generatrice di varianza $\sigma^2 = 1$
+  (indicata della linea verticale tratteggiata).
+  La stima imparziale è mostrata in grigio, mentre quella "non corretta"
+  è in nero. Entrambe le distribuzioni sono evidentemente asimmetriche;
+  la media di $s_{n-1}^2$ coincide con la varianza $\sigma^2$ della distribuzione
+  generatrice, ma allo stesso tempo la coda a destra è pi\'u pronunciata.
+}
+
+Notiamo innanzitutto che le due distribuzioni sono asimmetriche ed in entrambi i
+casi la moda (cioè il valore più probabile) è significativamente diversa
+dal valore vero di $\sigma^2$ indicato dalla linea verticale tratteggiata.
+La stima imparziale $s_{n-1}^2$ ha (come abbiamo visto) media $\sigma^2$, ma il
+fattore correttivo che garantisce l'imparzialità ha l'effetto collaterale di
+enfatizzare la coda a destra della distribuzione---cioè di aumentare la
+frequenza relativa dei valori più distanti da $\sigma^2$. Il risultato è
+che, in questo caso particolare, tra le $100\,000$ realizzazioni
+mostrate in figura~\ref{fig:bias_varianza_campione} la stima non corretta
+$s_n^2$ della varianza è più vicina al valore vero $\sigma^2$ rispetto
+alla stima imparziale $s_{n-1}^2$ in circa il $62\%$ dei casi. Siamo cioè nella
+situazione interessante in cui una stima è \emph{giusta in media} e
+l'altra è più vicina al valore vero nella maggior parte dei casi.
+(Aggiungiamo, per completezza, che il fatto che $s_{n-1}^2$ sia una stima
+imparziale di $\sigma^2$ non implica di per sé che la sua radice $s_{n-1}$ sia
+una stima imparziale di $\sigma$.)
+
+\`E tempo di passare oltre---abbiamo discusso il problema abbastanza a lungo e,
+come detto, si tratta tutto sommato di una questione inessenziale. Utilizziamo
+pure la~\eqref{eq:varianza_campione_imparziale} ma teniamo a mente il fatto
+che essa non ha niente di fondamentalmente più giusto
+della~\eqref{eq:varianza_campione}.
+
+
+\subsection{La deviazione standard della media}
+\label{sec:deviazione_standard_media}
+
+Ricapitoliamo ciò che abbiamo imparato fino a questo momento. Abbiamo
+modellizzato il problema della misura di una grandezza fisica in condizioni di
+ripetitività come il campionamento di una variabile casuale caratterizzata da
+una funzione di distribuzione (in generale ignota) che chiamiamo distribuzione
+generatrice, e abbiamo derivato le relazioni fondamentali per la migliore stima
+della media e della varianza di questa distribuzione generatrice a partire da
+un campione finito $x_1 \ldots x_n$ di misure. La domanda ovvia adesso è:
+qual è la relazione tra queste stime ed il modo in cui scriviamo il risultato
+di una misura?
+
+La media campione~\eqref{eq:media_campione} è il candidato ovvio per il
+valore centrale della misura---questa è la parte semplice. Per l'incertezza
+associata potremmo essere tentati di prendere la varianza
+campione~\eqref{eq:varianza_campione_imparziale}, ma qui le cose si fanno più
+complicate, perché la varianza campione è rappresentativa delle fluttuazioni
+della \emph{singola misura}, mentre ciò a cui siamo interessati sono le
+fluttuazioni del valore centrale, cioè della media. E, intuitivamente, è
+lecito aspettarsi che le fluttuazioni della media di $n$ misure siano più
+piccole di quelle sulla singola misura---e tanto più piccole quanto più
+grande è $n$. (In fondo, se così non fosse, perché le persone si
+affannerebbero a prendere dati il più a lungo possibile?)
+
+Torniamo dunque per un attimo alla media campione~\eqref{eq:media_campione}.
+Essendo una media di variabili casuali, $m$ è essa stessa una variabile
+casuale. Se siamo interessati alle fluttuazioni di $m$, la domanda giusta, nel
+nostro linguaggio, è il valore della deviazione standard di $m$:
+\begin{align}
+  \var{m} = \var{\frac{1}{n}\sum_{i = 1}^n x_i} =
+  \frac{1}{n^2}\sum_{i = 1}^n \var{x_i} = \frac{n\sigma^2}{n^2} =
+  \frac{\sigma^2}{n},
+\end{align}
+da cui la deviazione standard della media $\sigma_m$ è banalmente
+\begin{align}\label{eq:stdev_media}
+  \sigma_m = \sqrt{\var{m}} = \frac{\sigma}{\sqrt{n}}.
+\end{align}
+
+La~\eqref{eq:stdev_media} è un risultato di fondamentale importanza, che ci
+dice nel dettaglio come le fluttuazioni della media di $n$ misure si riducono,
+al variare di $n$, rispetto alle fluttuazioni sulla singola misura.
+Possiamo utilizzare questo risultato, insieme alla stima della varianza
+campione, per la stima della varianza e della deviazione standard della media
+$s_m$:
+\begin{align}\label{eq:std_media_imparziale}
+  s^2_m = \frac{1}{n(n - 1)}\sum_{i = 1}^n (x_i - m)^2 \quad \text{e} \quad
+  s_m = \sqrt{\frac{1}{n(n - 1)}\sum_{i = 1}^n (x_i - m)^2}.
+\end{align}
+Questo risponde alla nostra domanda iniziale, e con il nostro nuovo bagaglio di
+conoscenze~\eqref{eq:media_campione} e \eqref{eq:varianza_campione_imparziale}
+possiamo riscrivere la~\eqref{eq:errore_stat} nella forma che utilizzeremo in
+pratica
+\begin{align}
+  x = m \pm s_m~\text{[unità di misura].}
+\end{align}
+Vedremo più avanti che per $n$ abbastanza grande il teorema centrale del limite
+ci garantisce anche la possibilità di calcolare il livello di confidenza
+corrispondente.
+
+
+\subsection{Un esempio concreto: la statura dei coscritti}
+
+Illustriamo la differenza tra la deviazione standard del campione e la
+deviazione standard della media con un esempio concreto.
+La tabella~\ref{tab:statura_leva} riporta alcuni dati (anno di nascita, numero
+di iscritti, media campione e suddivisione in classi) relativi alla statura
+degli iscritti di leva nati negli anni 1972--1980, che l'Istituto Nazionale di
+Statistica mette a disposizione insieme a decine di altre serie storiche
+interessanti.
+
+\begin{table}[htb!]
+  \begin{center}
+  \begin{tabular}{lllllllllllll}
+    \hline
+    Anno di & Iscritti & Statura &
+    \multicolumn{8}{c}{Ripartizione percentuale per classi di statura}\\
+    \cline{4-11}%\\[0pt]
+    nascita & & media & \small$<150$ & \small$150$--$154$ &
+    \small$155$--$159$ & \small$160$--$164$ & \small$165$--$169$ &
+    \small$170$--$174$ & \small$175$--$179$ & \small$\geq 180$\\
+    \hline
+    \hline
+    1972&$445451$&$173.96$&$0.0$&$0.1$&$1.6$&$6.8$&$18.6$&$29.1$&$25.2$&$18.6$\\
+    1973&$440115$&$174.12$&$0.1$&$0.2$&$1.2$&$6.5$&$18.1$&$29.3$&$25.8$&$18.8$\\
+    1974&$429159$&$174.18$&$0.1$&$0.2$&$1.1$&$6.1$&$17.8$&$29.1$&$26.0$&$19.6$\\
+    1975&$382065$&$174.29$&$0.1$&$0.2$&$1.1$&$6.0$&$17.4$&$29.5$&$26.0$&$19.7$\\
+    1976&$366357$&$174.42$&$0.1$&$0.4$&$1.1$&$6.2$&$17.8$&$28.4$&$26.0$&$20.0$\\
+    1977&$324080$&$174.44$&$0.1$&$0.3$&$1.0$&$6.3$&$17.9$&$28.4$&$26.0$&$20.0$\\
+    1978&$366804$&$174.45$&$0.1$&$0.3$&$1.0$&$6.1$&$18.0$&$28.5$&$26.0$&$20.0$\\
+    1979&$368336$&$174.49$&$0.1$&$0.3$&$1.0$&$6.1$&$18.0$&$28.3$&$26.1$&$20.1$\\
+    1980&$369310$&$174.58$&$0.1$&$0.3$&$1.0$&$6.1$&$18.0$&$28.3$&$26.1$&$20.1$\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Statura media e ripartizione percentuale per classi di statura
+    degli iscritti di leva nati negli anni 1972--1980 (adattato dalle
+    \href{http://seriestoriche.istat.it/}{serie storiche} dell'Istituto
+    Nazionale di Statistica). Tutte le stature sono misurate in~cm.}
+  \label{tab:statura_leva}
+\end{table}
+
+\pgffigone{stature_leva_classi_1980}{
+  Ripartizione percentuale per classi di statura dei nati nel 1980, in base ai
+  dati della tabella~\ref{tab:statura_leva}. La classe più a destra include
+  tutti i coscritti più alti di $180$~cm, il che rende difficile stimare
+  la varianza del campione. La linea grigia tratteggiata rappresenta, a scopo
+  puramente illustrativo, una possibile distribuzione generatrice.
+}
+
+La ripartizione percentuale è interessante perché ci dà un'idea diretta
+della forma della distribuzione generatrice delle stature. Purtroppo la
+definizione degli intervalli per la ripartizione in classi è rimasta
+invariata dal 1854 e, a causa dell'aumento della statura media avvenuta
+negli ultimi $120$~anni, non permette di campionare adeguatamente per anni
+recenti la distribuzione generatrice al di sopra di $180$~cm (ove abbiamo
+una sola classe). Questo rende difficile valutarne con precisione la
+deviazione standard, ma sulla base del fatto che la maggior parte delle
+misure cadono entro quattro intervalli (di $5$~cm) attorno al valor medio
+possiamo dire rozzamente che essa sarà dell'ordine di $\sim 10$~cm.
+\emph{Questo è il numero rappresentativo delle fluttuazioni intorno
+  al valor medio per la singola misura.} Se prendiamo una persona a caso
+nata negli anni settanta ci aspettiamo che la sua statura sia $174 \pm 10$~cm
+(a patto che la nostra stima ad occhio della deviazione standard possa essere
+considerata affidabile).
+
+Tutt'altro discorso vale per la media delle stature su un campione di
+persone. La terza colonna della tabella indica che le stature medie
+fluttuano negli anni molto meno di questi $10$~cm. Con circa $400\,000$
+misure ci aspettiamo che la deviazione standard della media sia circa
+$630$~volte più piccola di quella del campione---nel nostro caso
+specifico dell'ordine di $\sim 0.2$~mm.
+\emph{Questo è il numero rappresentativo delle fluttuazioni intorno al
+  valor medio per la media di circa $400\,000$ misure.}
+In effetti, a guardare bene la tabella, la media del campione cresce
+sistematicamente con il tempo---e di circa $1$~mm l'anno, come mostrato in
+figura~\ref{fig:stature_leva_trend}. Il fatto che questa crescita si veda così
+chiaramente implica che le fluttuazioni statistiche sul singolo punto
+debbono essere $\ll 1$~mm, che è compatibile con la nostra stima grossolana
+di $0.2$~mm.
+
+\pgffigone{stature_leva_trend}{
+  Andamento temporale della statura media dei coscritti in funzione dell'anno
+  di nascita, in base ai dati della tabella~\ref{tab:statura_leva}. Le barre
+  d'errore corrispondono alla deviazione standard della media per un campione
+  di $400\,000$ unità, che abbiamo stimato rozzamente essere dell'ordine di
+  $0.2$~mm. Si vede chiaramente un aumento significativo della statura in
+  funzione del tempo dell'ordine di $\sim 1$~mm l'anno, il che implica che le
+  fluttuazioni statistiche dei singoli punto debbono essere $\ll 1$~mm.
+}
+
+
+\section{Calcolo della media e varianza campione in pratica}
+
+Nella vita reale, ogni volta che vi trovate a dover calcolare la media e la
+deviazione standard di un campione (o la deviazione standard della media),
+tenete a mente questa semplice regola: non cedete alla tentazione di re-inventare
+la ruota, ed usate invece quello che il vostro \foreign{software} di analisi
+preferito mette a disposizione---ad esempio le funzioni \npfunc{mean} e
+\npfunc{std} di \numpy\ descritte in appendice~\ref{sec:numpy}.
+Il frammento di codice~\ref{snip:sample_stat_numpy} mostra un semplice esempio
+di calcolo della statistica di base di un piccolo campione, che potete usare
+come ispirazione ed adattare alle vostre esigenze nei casi più semplici.
+
+\snip{sample_stat_numpy}{
+  Calcolo della media e della deviazione standard campione utilizzando le
+  funzioni di \numpy\ descritte in appendice~\ref{sec:numpy}. Si noti l'uso
+  dell'argomento \texttt{ddof=1} per ottenere l'estimatore imparziale $s_{n-1}$,
+  in assenza del quale la funzione restituirebbe $s_n$.}
+
+Un aspetto interessante delle funzioni statistiche di \numpy, su cui non
+insisteremo troppo, ma che illustriamo brevemente data la sua rilevanza pratica,
+è il supporto che esse offrono alla \emph{vettorizzazione} dei problemi.
+Spesso, in laboratorio, ci troviamo a dover eseguire un certo numero di serie di
+misure prese in condizioni diverse---ad esempio misure ripetute del periodo di
+un pendolo in corrispondenza di diversi valori della lunghezza---e dover calcolare
+media e deviazione standard separatamente per ciascuna serie. In situazioni di
+questo tipo processare le serie di misure una alla volta utilizzando l'approccio
+illustrato nel frammento~\ref{snip:sample_stat_numpy} diventa macchinoso molto
+velocemente, ed è invece più comodo e naturale organizzare i nostri dati in
+forma matriciale, utilizzando \numpy\ per calcolare le grandezze statistiche
+desiderate per righe o per colonne, come illustrato nel
+frammento~\ref{snip:sample_stat_numpy_vec}
+
+\snip{sample_stat_numpy_vec}{
+  Calcolo della media e della deviazione standard campione per quattro serie
+  di misure distinte---che potrebbero rappresentare, ad esempio, misure ripetute
+  del periodo di un pendolo per 4~valori diversi della lunghezza del pendolo
+  stesso. Organizzando i dati in modo opportuno, ovverosia come una matrice
+  $4 \times 8$ in cui ciascuna riga corrisponde ad un valore specifico di lunghezza,
+  si possono calcolare le medie e le deviazioni standard riga per riga utilizzando
+  l'argomento \texttt{axis=1} delle funzioni statistiche di \numpy.}
+
+
+\subsection{Algoritmi di calcolo a ciclo singolo}
+
+\danger%
+Il modo più immediato per calcolare la media e la deviazione standard di un
+campione di dati è quello di eseguire due cicli separati sui dati stessi---il
+primo per calcolare la media campione $m$ secondo la~\eqref{eq:media_campione}
+ed il secondo per calcolare la varianza campione $s_{n-1}^2$, una volta nota $m$.
+Anche nei due frammenti~\ref{snip:sample_stat_numpy} e \ref{snip:sample_stat_numpy_vec}
+che abbiamo appena visto, sebbene i cicli siano \emph{nascosti} dentro le funzioni
+di \numpy\, la chiamata a \npfunc{std} richiede internamente il calcolo della media
+campione, da utilizzare nella~\eqref{eq:varianza_campione_imparziale}---in
+pratica stiamo calcolando la media campione due volte!
+
+Anche se, in situazioni semplici come quelle che abbiamo analizzato, la ripetizione
+del calcolo della media campione non ha tipicamente conseguenze pratiche misurabili,
+esiste una classe di algoritmi che permette di calcolare media e deviazione
+standard di un campione all'interno dello stesso ciclo---cioè in un passo.
+Questi algoritmi sono utili non solo perché computazionalmente più efficienti,
+ma anche (e soprattutto) perché si prestano naturalmente ad aggiornare la stima
+delle nostre statistiche ogni volta che aggiungiamo un elemento al campione, senza
+dovere riprocessare tutti i valori precedenti, e senza dover conservare in
+memoria il campione intero---cosa che è chiaramente desiderabile, e.g., nelle
+applicazioni in tempo reale.
+
+Con qualche semplice manipolazione algebrica la formula per la varianza
+campione~\eqref{eq:varianza_campione_imparziale} può essere trasformata in
+\begin{align*}
+  s_{n - 1}^2 & = \frac{1}{(n - 1)}\sum_{i = 1}^n (x_i - m)^2 =
+  \frac{1}{(n - 1)}\sum_{i = 1}^n(x_i^2 + m^2 - 2mx_i) =
+  \frac{1}{(n - 1)}\left( \sum_{i = 1}^nx_i^2 + nm^2 - 2m\sum_{i = 1}^nx_i\right)=\\
+  & = \frac{1}{(n - 1)}\left( \sum_{i = 1}^nx_i^2 + nm^2 - 2nm^2 \right) =
+  \frac{1}{(n - 1)}\left( \sum_{i = 1}^nx_i^2 - nm^2 \right) =
+  \frac{1}{(n - 1)}\sum_{i = 1}^nx_i^2 - \frac{n}{(n - 1)}m^2,
+\end{align*}
+che è l'equivalente della~\eqref{eq:variance_alt} nel contesto della teoria
+dei campioni. Questa formulazione alternativa ci permette, come abbiamo detto,
+di eseguire il calcolo della media e della deviazione standard con un solo
+ciclo in cui accumuliamo in parallelo le somme parziali di $x_i$ e $x_i^2$.
+
+\snip{sample_stat_single}{
+  Calcolo della media e della deviazione standard del campione con un ciclo
+  singlo, in cui accumuliamo le somme di $x_i$ e $x_i^2$. Se applicata sullo
+  stesso campione del frammento~\ref{snip:sample_stat_numpy}, la funzione
+  \pyfunc{sample_stats} resitusce lo stesso risultato, entro l'accuratezza
+  intrinseca dell'aritmetica in virgola mobile. Se però la media del campione
+  in ingresso è molto più grande della sua deviazione standard, in generale
+  questo algoritmo richiede la sottrazione di numeri potenzialmente molto grandi
+  e vicini tra loro e diventa numericamente instabile---quando gli $x_i$ sono
+  molto grandi l'accumulazione di $x_i^2$ è problematica.}
+
+Il frammento~\ref{snip:sample_stat_single} mostra la più semplice implementazione
+possibile di questa idea, nella forma di un semplice ciclo \emph{for} in \python,
+ed effettivamente fornisce la risposta corretta se applicato sul campione
+di test utilizzato nel frammento~\ref{snip:sample_stat_numpy}. Se però adesso
+aggiungiamo a tutti gli elementi del nostro campione un numero grande ($10^9$
+nel caso in questione) succede una cosa inattesa e sorprendente: la deviazione
+standard, che dovrebbe rimanere rigorosamente invariata, diventa molto più
+grande---e dunque, chiaramente, il risultato è sbagliato.
+Come è possibile? Il problema è una combinazione dei due fatti: (i) poiché gli
+$x_i$ sono grandi, la somma parziale $\sum x_i^2$ tende a crescere velocemente;
+e (ii) poiché la deviazione standard del campione è piccola, $\sum x_i^2$ e $(\sum x_i)^2$
+non sono molto diversi tra di loro---e quando sottraiamo due numeri molto grandi
+vicini tra loro, l'errore numerico può diventare arbitrariamente grande.
+Questa fenomeno mette in luce come questo tipo di algoritmi sia potenzialmente
+suscettibile a instabilità numerica, e richieda una certa attenzione in fase di
+implementazione. (In altre parole abbiamo imparato che, a causa della natura
+intrinsecamente inesatta dell'aritmetica in virgola mobile, due espressioni
+esattamente equivalenti sulla carta, possono fornire risultati diversi se calcolate
+su un computer. Il lettore interessato è incoraggiato a procedere con la lettura dell'appendice~\ref{sec:sistema_binario}.)
+
+\snip{sample_stat_welford}{
+  Calcolo della media e della deviazione standard campione secondo l'algoritmo
+  di Welford~\cite{welford}, che permette di utilizzare un ciclo singolo e,
+  allo stesso tempo, è numericamente stabile.}
+
+A questo punto possiamo chiederci se ci sia una soluzione al problema che abbiamo
+appena incontrato. La risposta è in un algoritmo dovuto a Welford~\cite{welford}
+e descritto in dettaglio in~\cite{taocp2}, di cui mostriamo una semplice implementazione nel
+frammento~\ref{snip:sample_stat_welford}. (Si tratta di un'idea tanto semplice
+quanto ingegnosa, ed il lettore è senz'altro incoraggiato a consultare l'articolo
+originale.)
+Rimandiamo il lettore alle referenze~\cite{welford,taocp2} per una dimostrazione
+formale della correttezza dell'algoritmo e ci limitiamo a notare come
+esso funzioni (a parte l'usuale rumore numerico) anche nel caso in cui
+quello mostrato nel frammento~\ref{snip:sample_stat_single} fallisce miseramente.
+
+
+\section{Covarianza e correlazione campione}
+\label{sec:covarianza_campione}
+
+Supponiamo di avere una serie di campionamenti $x_i$ ed $y_i$, con
+$i = 1\ldots n$ di due variabili casuali $x$ ed $y$, ovverosia una serie di
+$n$ coppie ordinate $(x_i, y_i)$. Se diciamo $m_x$ ed $m_y$ le rispettive
+medie campione
+\begin{align*}
+  m_x = \frac{1}{n}\sum_{i = 1}^n x_i \quad \text{e} \quad
+  m_y = \frac{1}{n}\sum_{i = 1}^n y_i
+\end{align*}
+possiamo, analogamente a quanto abbiamo fatto in precedenza con la varianza,
+stimare la covarianza $\cov{x}{y}$ delle variabili di partenza attraverso la
+covarianza del campione
+\begin{align}\label{eq:covarianza_campione}
+  q_{xy} = \frac{1}{(n - 1)} \sum_{i = 1}^n (x_i - m_x)(y_i - m_y).
+\end{align}
+Abbiamo sviscerato ampiamente la questione del $(n - 1)$ nella
+sezione~\ref{sec:imparzialita_var_campione} e non insisteremo oltre, così come
+non insisteremo oltre sull'efficienza e la stabilità degli algoritmi
+a disposizione per il calcolo della~\eqref{eq:covarianza_campione} in pratica.
+
+La stima della correlazione $r_{xy}$ (o semplicemente $r$) del campione si
+scrive banalmente in termini delle stime $s_x$ ed $s_y$ delle deviazioni
+standard di $x$ ed $y$
+\begin{align*}
+  s^2_x = \frac{1}{(n - 1)}\sum_{i = 1}^n (x_i - m_x)^2 \quad \text{e} \quad
+  s^2_y = \frac{1}{(n - 1)}\sum_{i = 1}^n (y_i - m_y)^2
+\end{align*}
+come
+\begin{align}\label{eq:coeff_correlazione}
+  r_{xy} = \frac{q_{xy}}{s_x s_y} =
+  \frac{\sum_{i = 1}^n (x_i - m_x)(y_i - m_y)}%
+  {\sqrt{\sum_{i = 1}^n (x_i - m_x)^2 \sum_{i = 1}^n (y_i - m_y)^2}}
+\end{align}
+che è talvolta chiamato anche \emph{coefficiente di correlazione lineare} o
+\emph{indice di correlazione di Pearson} ed è molto utilizzato in pratica.
+
+\pgffigone{chiodini_scatter}{
+  Grafico di dispersione della massa $m$ in funzione della lunghezza $l$ per un
+  campione di $70$ chiodini (le misure sono state realmente effettuate il $5$
+  agosto 2005 da uno degli autori). Le misure di lunghezza sono state effettuate
+  con un calibro Palmer (risoluzione $0.01$~mm) e quelle di massa con una
+  bilancia di precisione (risoluzione $1$~mg), per cui le incertezze di
+  misura sono molto più piccole della dispersione delle due quantità.
+  \`E chiaro che a valori piccoli (grandi) della lunghezza tendono ad essere
+  associati valori piccoli (grandi) della massa, per cui le due quantità sono
+  correlate. L'indice di correlazione di Pearson, calcolato secondo
+  la~\eqref{eq:coeff_correlazione}, è $0.85$.
+}
+
+Uno dei modi più semplici per individuare una possibile correlazione tra due
+variabili in un campione è quello di realizzare un grafico di dispersione,
+come mostrato in figura~\ref{fig:chiodini_scatter}. Se valori piccoli di una
+variabile tendono ad essere associati a valori piccoli (o grandi) dell'altra, e
+viceversa, questo è indice di una correlazione positiva (o negativa). Se le
+fluttuazioni attorno al valor medio delle due quantità appaiono indipendenti,
+cioè la distribuzione dei punti nel diagramma di dispersione non è elongata
+in una direzione privilegiata, allora le quantità sono \emph{scorrelate}.
+L'indice di Pearson indica l'entità della correlazione ed è $\pm1$ se e solo
+se le due grandezze nel grafico di dispersione stanno esattamente su una retta.
+
+
+\subsection{Correlazioni e rapporti di causa effetto}
+
+Per quanto la tentazione di fare il collegamento possa essere forte, non si
+può sottolineare abbastanza il fatto che \emph{una correlazione tra due
+  grandezze non implica necessariamente un rapporto di causa-effetto tra le
+  grandezze stesse.} In altre parole, se $x$ ed $y$ sono correlate non è
+detto che $x$ causi $y$ o $y$ causi $x$. Lo abbiamo visto in concreto nel caso
+dei chiodini di figura~\ref{fig:chiodini_scatter}, in cui non diremmo
+che la massa causa la lunghezza o viceversa, e la correlazione, più
+prosaicamente, è determinata da un fattore fisico (il fatto che i chiodi siano
+fatti tutti dello stesso materiale) che influenza entrambe le grandezze sotto
+studio. Negli studi clinici e sociologici, tanto per fare un esempio, spesso
+non è semplice fattorizzare l'effetto che determinate concause ambientali
+possono avere sulle grandezze oggetto di studio, e questo costituisce una delle
+difficoltà maggiori nel passaggio delicato dall'osservazione di una
+correlazione allo stabilire una relazione di causa ed effetto.
+
+\pgffigone{miss_america}{
+  Grafico di dispersione del numero di omicidi per anno commessi negli Stati
+  Uniti utilizzando vapore o oggetti caldi in funzione dell'età di Miss
+  America (nello stesso anno)---per gli anni 1999--2009 (adattato da
+  \url{http://tylervigen.com/spurious-correlations}). L'indice di correlazione
+  di Pearson è $0.87$ ma in questo caso è ovvio che la correlazione è
+  puramente casuale e nessuno direbbe che l'età di Miss America sia
+  legata causalmente con il numero di omicidi.
+}
+
+La materia è complessa e non abbiamo il tempo di sviscerarla in dettaglio.
+La figura~\ref{fig:miss_america} è un buon modo per convincersi del punto
+principale di questa sezione---correlazione e causalità non sono la stessa
+cosa---e che, a cercare bene è sorprendentemente facile trovare
+correlazioni tra cose che non hanno niente a che vedere l'una con l'altra.
+Se non sapevate che il numero di persone morte per affogamento in piscina per
+anno negli Stati Uniti è positivamente correlato con il numero di film
+(dello stesso anno) in cui Nicolas Cage appare,provate a dare un'occhiata a
+\url{http://tylervigen.com/spurious-correlations}.
+
+
+\section{Media e varianza di una funzione di variabili casuali}
+\label{sec:media_var_funzioni}
+
+Riprendiamo adesso il filo del discorso. Nella sezione~\ref{sec:somma_variabili_indipendenti}
+abbiamo imparato a \emph{sommare} le distribuzioni. Prima di tornare di nuovo
+sulla propagazione degli errori ci rimane ancora un ulteriore piccolo passo da
+fare. La domanda che ci facciamo in questa sezione è la seguente: come possiamo
+stimare, anche approssimativamente, la media e la varianza di una funzione generica
+di variabili casuali?
+
+
+\subsection{Il caso uni-dimensionale}
+
+Consideriamo dunque una variabile casuale $x$, di cui assumiamo di sapere la
+funzione di distribuzione---e sia $\mu$ il valor medio di $x$ e $\sigma$ la
+sua deviazione standard. Come detto all'inizio della sezione, il nostro scopo
+è quello di stimare la media $\mu_f$ e la varianza $\sigma^2_f$ di una
+generica funzione $f(x)$.
+Poiché sappiamo che i valori di $x$ tendono a \emph{concentrarsi} attorno al
+valor medio, possiamo partire dallo sviluppo in serie di Taylor di $f(x)$
+attorno a~$\mu$ troncato al prim'ordine:
+\begin{align*}
+  f(x) \approx f(\mu) + \td{f}{x}{\mu}(x - \mu)
+  \quad \text{ovvero} \quad
+  f(x) - f(\mu) \approx \td{f}{x}{\mu}(x - \mu).
+\end{align*}
+
+La media si calcola formalmente come il valore di aspettazione $\expect{f(x)}$,
+che sviluppato al prim'ordine diviene
+\begin{align*}
+  \mu_f = \expect{f(x)} \approx \expect{f(\mu) +
+    \td{f}{x}{\mu}(x - \mu)} =
+  \expect{f(\mu)} + \td{f}{x}{\mu}\expect{x - \mu}.
+\end{align*}
+(Ricordate: $f(\mu)$ è una costante che può essere portata fuori dal
+valore di aspettazione, e così pure la derivata---sono entrambe calcolate in
+un punto e dunque non dipendono da $x$.) A questo punto, notando che
+$\expect{x - \mu}$ si annulla banalmente per la linearità del valore di
+aspettazione, si ottiene
+\begin{align}\label{eq:media_f_unidim}
+  \mu_f \approx f(\mu).
+\end{align}
+Il valor medio di $f(x)$, cioè, può essere approssimato con il valore della
+funzione $f(x)$ calcolata nel valor medio di $x$, a meno di termini del
+second'ordine in $(x - \mu)$. Che il termine al prim'ordine dello sviluppo si
+annulli è un fatto importante, che ci dice che la~\eqref{eq:media_f_unidim}
+vale \emph{esattamente} se $f(x)$ è una funzione lineare di $x$.
+
+Per la varianza possiamo procedere analogamente, utilizzando il nostro
+sviluppo in serie di $f(x)$ ed il risultato che abbiamo appena ottenuto per la
+media
+\begin{align*}
+  \sigma^2_f = \expect{\left(f(x) - \mu_f\right)^2} \approx
+  \expect{\left(f(x) - f(\mu)\right)^2} \approx
+  \expect{\left(\td{f}{x}{\mu}(x - \mu)\right)^2} =
+  \left(\td{f}{x}{\mu}\right)^2\expect{(x - \mu)^2},
+\end{align*}
+da cui
+\begin{align}\label{eq:sigma_f_unidim}
+  \sigma^2_f \approx \left(\td{f}{x}{\mu}\right)^2\sigma^2.
+\end{align}
+
+
+\subsection{Il caso generale}
+
+Nel caso multidimensionale (quando, cioè, si ha una funzione
+$f(x_1, x_2, x_3\ldots)$ di un certo numero di variabili casuali $x_1$,  $x_2$,
+$x_3$\ldots con medie $\mu_1$, $\mu_2$, $\mu_3$\dots e varianze
+$\sigma^2_1$, $\sigma^2_2$, $\sigma^2_3$\dots)
+il linguaggio rimane sostanzialmente lo stesso, ma la situazione diventa più
+interessante---e rientra in gioco la questione dell'indipendenza statistica tra
+le variabili che abbiamo già affrontato nella
+sezione~\ref{sec:somma_variabili_indipendenti} a proposito della somma.
+
+Andiamo per gradi e cominciamo dal caso relativamente semplice di una funzione
+$f(x_1, x_2)$ di due variabili casuali. Lo sviluppo in serie di Taylor al
+prim'ordine è in questo caso
+\begin{align*}
+  f(x_1, x_2) \approx f(\mu_1, \mu_2) +
+  \pd{f}{x_1}{\mu_1, \mu_2}(x_1 - \mu_1) +
+  \pd{f}{x_2}{\mu_1, \mu_2}(x_2 - \mu_2).
+\end{align*}
+La media di $f$ (sviluppata al prim'ordine) sarà, esattamente come prima
+\begin{align}\label{eq:media_f2}
+  \mu_f = \expect{f(x_1, x_2)} \approx
+  f(\mu_1, \mu_2) +
+  \pd{f}{x_1}{\mu_1, \mu_2}\expect{x_1 - \mu_1} +
+  \pd{f}{x_2}{\mu_1, \mu_2}\expect{x_2 - \mu_2} = f(\mu_1, \mu_2).
+\end{align}
+Per la varianza il calcolo è leggermente più complicato. Partendo dalla
+definizione si ha, ricordando che come nel caso uni-dimensionale le derivate
+sono valutate nei valori medi, per cui sono \emph{numeri} che passano al di
+fuori dei valori di aspettazione
+\begin{align*}
+  \sigma^2_f & =
+  \expect{\left(f(x_1, x_2) - f(\mu_1, \mu_2)\right)^2} \approx
+  \expect{\left(
+    \pd{f}{x_1}{\mu_1, \mu_2}(x_1 - \mu_1) +
+    \pd{f}{x_2}{\mu_1, \mu_2}(x_2 - \mu_2)
+    \right)^2} =\\
+  %& =
+  %\left(\pd{f}{x_1}{\mu_1, \mu_2}\right)^2 \expect{(x_1 - \mu_1)^2} +
+  %\left(\pd{f}{x_2}{\mu_1, \mu_2}\right)^2 \expect{(x_2 - \mu_2)^2} +\\
+  %& + 2\pd{f}{x_1}{\mu_1, \mu_2}\pd{f}{x_2}{\mu_1, \mu_2}
+  %\expect{(x_1 - \mu_1)(x_2 - \mu_2)} = \\
+  & =
+  \left(\pd{f}{x_1}{\mu_1, \mu_2}\right)^2 \sigma^2_1 +
+  \left(\pd{f}{x_2}{\mu_1, \mu_2}\right)^2 \sigma^2_2 +
+  2\pd{f}{x_1}{\mu_1, \mu_2}\pd{f}{x_2}{\mu_1, \mu_2}\,\cov{x_1}{x_2}.
+\end{align*}
+L'espressione che abbiamo appena ricavato si può riscrivere più
+convenientemente utilizzando la definizione di coefficiente di correlazione
+lineare come
+\begin{align}\label{eq:varianza_f2}
+  \sigma^2_f & \approx
+  \left(\pd{f}{x_1}{\mu_1, \mu_2}\right)^2 \sigma^2_1 +
+  \left(\pd{f}{x_2}{\mu_1, \mu_2}\right)^2 \sigma^2_2 +
+  2\pd{f}{x_1}{\mu_1, \mu_2}\pd{f}{x_2}{\mu_1, \mu_2}\,
+  \corr{x_1}{x_2} \sigma_1 \sigma_2.
+\end{align}
+
+Le~\eqref{eq:media_f2} e~\eqref{eq:varianza_f2} si possono generalizzare al
+caso di un numero arbitrario di variabili nella forma compatta
+\begin{align}\label{eq:media_varianza_func}
+  \mu_f \approx f(\mu_1,\ldots,\mu_n) \quad \text{e} \quad
+  \sigma^2_f \approx \sum_{i = 1}^n \sum_{j = 1}^n
+  \pd{f}{x_i}{\mu_1, \ldots, \mu_n}\pd{f}{x_j}{\mu_1, \ldots, \mu_n}
+  \,\corr{x_i}{x_j} \sigma_i \sigma_j,
+\end{align}
+che costituisce la formula generale linearizzata per il calcolo della
+varianza di una funzione di variabili casuali.
+
+La cosa interessante è che se le variabili casuali sono mutuamente
+indipendenti, tutte le correlazioni $\corr{x_i}{x_j}$ con $i \neq j$ si
+annullano e la formula per la varianza si semplifica notevolmente: ricordando
+che $\corr{x_i}{x_i} = 1$
+\begin{align}\label{eq:varianza_func_indipendente}
+  \sigma^2_f \approx
+  \sum_{i = 1}^{n} \left(\pd{f}{x_i}{\mu_1,\ldots,\mu_n}\right)^2 \sigma^2_i.
+\end{align}
+
+Vale la pena sottolineare come tutte le relazioni che abbiamo ricavato in
+questa sezione valgono approssimativamente quando i termini di ordine
+superiore al primo sono trascurabili ed esattamente nel caso lineare, come
+illustrato nell'esempio~\ref{exp:varianza_somma}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:varianza_somma}
+    Possiamo utilizzare il formalismo sviluppato in questa sezione per ricavare
+    le formule per la media e la deviazione standard della somme di due
+    variabili casuali indipendenti $x_1$ ed $x_2$---che abbiamo calcolato
+    direttamente nella sezione~\ref{sec:media_varianza_somma}.
+    Sia dunque $f(x_1, x_2) = x_1 + x_2$. La funzione è lineare in entrambe
+    le variabili, nel senso che le derivate parziali di ordine superiore al
+    primo rispetto ad entrambe le variabili si annullano---ragion per cui
+    la~\eqref{eq:media_varianza_func} è in questo caso esatta. Abbiamo
+    \begin{align*}
+      \pd{f}{x_1}{x_1, x_2} = \pd{f}{x_2}{x_1, x_2} = 1,
+    \end{align*}
+    da cui segue direttamente
+    \begin{align*}
+      \mu_f = f(\mu_1, \mu_2)
+      \quad \text{e} \quad
+      \sigma_f = \sqrt{\sigma_1^2 + \sigma_2^2},
+    \end{align*}
+    che sono gli stessi risultati della~\eqref{eq:media_somma_ind} e
+    \eqref{eq:varianza_somma_ind}.
+  \end{example}
+\end{examplebox}
+
+
+\section{La propagazione dell'errore statistico}
+\label{sec:prop_errore_stat}
+
+Siamo pronti per chiudere il cerchio---riprendiamo il filo della nostra
+discussione e riesaminiamo, nel linguaggio della probabilità e delle funzioni
+di distribuzione, la propagazione dell'errore che abbiamo discusso, in un
+contesto diverso, nella sezione~\ref{sec:propagazione_errrore_max}.
+Abbiamo visto che, nella teoria dei campioni, l'incertezza di misura ha il
+significato di una stima della deviazione standard della distribuzione
+generatrice. Visto che sappiamo calcolare, almeno approssimativamente, la
+deviazione standard di una funzione arbitraria di variabili casuali, date le
+deviazioni standard delle variabili stesse, di fatto abbiamo tutti gli
+ingredienti per propagare gli errori in modo statisticamente corretto.
+
+Supponiamo dunque di avere una serie di $n$ grandezze misurate
+$x_i = \hat{x}_i \pm \sigma_i$ ed una generica funzione $f(x_1, \ldots, x_n)$,
+e partiamo dal caso più semplice---quello cioè in cui le grandezze di
+partenza sono tutte indipendenti. Come già sappiamo, la formula generale di
+propagazione dell'errore è:
+\begin{align}\label{eq:propagazione_errore_stat_ind}
+  \sigma^2_f \approx
+  \sum_{i = 1}^n
+  \left(\pd{f}{x_i}{\hat{x}_1,\ldots,\hat{x}_n}\right)^2 \sigma^2_i
+  \quad \text{ovvero} \quad
+  \sigma_f \approx \sqrt{\sum_{i = 1}^n
+    \left(\pd{f}{x_i}{\hat{x}_1,\ldots,\hat{x}_n}\right)^2 \sigma^2_i.
+  }
+\end{align}
+La~\eqref{eq:propagazione_errore_stat_ind} è formalmente identica alla
+\eqref{eq:varianza_func_indipendente} ma le due scritture sono logicamente
+diverse, perché in questo contesto i $\sigma_i$ rappresentano in generale le
+nostre miglior stime delle deviazioni standard delle distribuzioni generatrici e
+non i valori calcolati a partire dalla forma analitica delle funzioni di
+distribuzioni stesse. La differenza è sottile ma importante. Il contenuto
+fisico fondamentale della~\eqref{eq:propagazione_errore_stat_ind} è che nel
+caso di grandezze indipendenti (che è tipico in laboratorio) \emph{gli errori
+  statistici non si sommano linearmente come gli errori massimi, ma in
+  quadratura}.
+
+Possiamo andare oltre. Se le grandezze non sono indipendenti ed abbiamo delle
+stime $r_{ij}$ dei coefficienti di correlazione $\corr{x_i}{x_j}$,
+la~\ref{eq:propagazione_errore_stat_ind} si generalizza come
+\begin{align}\label{eq:propagazione_errore_stat}
+  \sigma^2_f \approx
+  \sum_{i = 1}^n \sum_{j = 1}^n
+  \pd{f}{x_i}{\hat{x}_1,\ldots,\hat{x}_n}
+  \pd{f}{x_j}{\hat{x}_1,\ldots,\hat{x}_n} \, r_{ij}\sigma_i\sigma_j.
+\end{align}
+
+\begin{examplebox}
+  \begin{example}\label{eq:prop_errore_densita}
+    Si misura la massa $m = \hat{m} \pm \sigma_m$ il volume
+    $V = \hat{V} \pm \sigma_V$ di un oggetto e si vuole stimare la densità
+    $\rho$ dell'oggetto stesso. La propagazione dell'errore nel caso generale si
+    scrive come
+    \begin{align*}
+      \sigma^2_\rho & =
+      \left( \pd{\rho}{m}{\hat{m}, \hat{V}} \right)^2 \sigma_m^2 +
+      \left( \pd{\rho}{V}{\hat{m}, \hat{V}} \right)^2 \sigma_V^2 +
+      2r_{mV} \pd{\rho}{m}{\hat{m}, \hat{V}}
+      \pd{\rho}{V}{\hat{m}, \hat{V}}\sigma_m \sigma_V =\\
+      & = \frac{\hat{m}^2 \sigma_V^2 + \hat{V}^2 \sigma_m^2 -
+        2r_{mV}\hat{m}\hat{V}\sigma_m \sigma_V}{\hat{V}^4}
+    \end{align*}
+    Se le due misure sono indipendenti $r_{mV}$ è nullo e la formula si
+    semplifica in
+    \begin{align*}
+      \sigma^2_\rho =
+      \frac{\hat{m}^2 \sigma_V^2 + \hat{V}^2 \sigma_m^2}{\hat{V}^4}.
+    \end{align*}
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Un esempio di propagazione degli errori per variabili correlate}
+
+Concludiamo il capitolo con un esempio di propagazione degli errori nel caso di
+variabili non indipendenti---e a questo scopo ripartiamo dall'esempio dei chiodini
+illustrato in figura~\ref{fig:chiodini_scatter}. La figura~\ref{fig:chiodini_scatter_hist} è
+una rappresentazione alternativa del grafico di dispersione che comprende le
+proiezioni sui due assi ortogonali---ovvero gli istogrammi uni-dimensionali delle
+due variabili in gioco. Questo tipo di rappresentazione riassume tutte le informazioni
+su una data coppia di quantità e si trova spesso utilizzata in pratica.
+
+\begin{figure}[!htb]
+  \centering\input{figures/chiodini_scatter_hist.pgf}
+  \caption{Grafico di dispersione dei dati mostrati in
+    figura~\ref{fig:chiodini_scatter} con l'aggiunta dei due istogrammi
+    uni-dimensionali delle due quantità in gioco. Le linee tratteggiate
+    indicano le medie campione delle due variabili e, per completezza, i
+    valori numerici delle medie stesse sono riportate nei due istogrammi insieme
+    a quelli delle stime imparziali delle rispettive deviazioni standard.}
+  \label{fig:chiodini_scatter_hist}
+\end{figure}
+
+Supponiamo adesso di voler stimare, a partire dai dati a nostra disposizione,
+la densità lineare dei nostri chiodini
+\begin{align*}
+  \lambda = \frac{m}{l}.
+\end{align*}
+(Se avessimo misurato il diametro dei chiodini, e assumendo i chiodini stessi
+perfettamente simmetrici, avremmo potuto anche stimare la densità del
+materiale propriamente detta, ma per i nostri fini si tratta di un dettaglio.)
+Al solito prenderemo la media campione e la stima della deviazione
+standard della media come valore centrale ed incertezza associata alla misura
+delle due grandezze di partenza e, in base alle informazioni in
+figura~\ref{fig:chiodini_scatter_hist}, scriveremo
+\begin{align*}
+  m = \hat{m} \pm s_m = 276.33 \pm 0.45~\text{mg} \quad \text{e} \quad
+  l = \hat{l} \pm s_l = 17.111 \pm 0.026~\text{mm}
+\end{align*}
+(abbiamo diviso le stime delle deviazioni standard del campione per
+$\sqrt{70}$ per passare alla deviazione standard della media). Ora, se
+utilizzassimo acriticamente le formule per la propagazione degli errori per
+variabili indipendenti scriveremmo
+\begin{align*}
+  \hat\lambda = \frac{\hat{m}}{\hat{l}}
+  \quad \text{e} \quad
+  \sigma^2_\lambda = \frac{\hat{m}^2\sigma_l^2 + \hat{l}^2\sigma_m^2}{\hat{l}^4}
+  \quad \text{ovverosia} \quad
+  \lambda = 16.149 \pm 0.036~\text{g~m}^{-1}.
+\end{align*}
+Se invece dividiamo, chiodino per chiodino, il valore della massa per il
+valore corrispondente della lunghezza, la deviazione standard della media
+per il campione risultante, che è rappresentato nell'istogramma in
+figura~\ref{fig:chiodini_lambda} è
+\begin{align*}
+  s_\lambda = 0.014,
+\end{align*}
+vale a dire circa due volte e mezzo più piccolo dell'errore propagato. Da
+dove viene, allora, la discrepanza?
+
+\pgffigone{chiodini_lambda}{
+  Istogramma dei valori di densità lineare $\lambda_i = \nicefrac{m_i}{l_i}$
+  ottenuti dividendo, chiodino per chiodino, i valori misurata di massa e
+  lunghezza---per l'intero campione mostrato nel diagramma di dispersione in
+  figura~\ref{fig:chiodini_scatter_hist}. Per completezza i valori della media
+  campione e della stima imparziale della deviazione standard sono
+  riportate esplicitamente.
+}
+
+La risposta è semplice: $m$ e $l$ hanno un coefficiente di correlazione
+diverso da zero, per cui non sono indipendenti, e
+la~\eqref{eq:propagazione_errore_stat_ind} non si applica. Dobbiamo invece
+utilizzare la formula completa~\eqref{eq:propagazione_errore_stat}
+\begin{align*}
+  \sigma^2_\lambda =
+  %\left( \pd{\lambda}{m}{\hat{m}, \hat{l}} \right)^2 \sigma_m^2 +
+  %\left( \pd{\lambda}{l}{\hat{m}, \hat{l}} \right)^2 \sigma_l^2 +
+  %2r_{ml} \pd{\lambda}{m}{\hat{m}, \hat{l}}
+  %\pd{\lambda}{l}{\hat{m}, \hat{l}} \sigma_m \sigma_l =
+  \frac{\hat{m}^2 \sigma_l^2 + \hat{l}^2 \sigma_m^2 -
+    2r_{ml}\hat{m}\hat{l}\sigma_m \sigma_l}{\hat{l}^4}
+\end{align*}
+che, non per caso, fornisce un valore
+\begin{align*}
+  \sigma_\lambda = 0.014
+\end{align*}
+consistente con la stima $s_\lambda$ fatta direttamente sul campione.
+
+
+\section{Il disegno degli esperimenti}
+
+Una delle applicazioni naturali della propagazione degli errori è la
+progettazione di esperimenti, che introduciamo qui in modo informale.
+
+
+\subsection{Un esempio storico}
+
+Nei suoi \emph{"Discorsi e dimostrazioni matematiche intorno a due nuove scienze
+attenenti alla meccanica e i movimenti locali"}, pubblicato nel 1638, Galileo
+propone uno schema di esperimento per la misura della velocità della luce:
+
+\begin{quotation}
+  La poca concludenza di queste e di altre simili osservazioni mi fece
+  una volta pensare a qualche modo di poterci senza errore accertar, se
+  l'illuminazione, cioè se l'espansion del lume, fusse veramente instantanea;
+  poiché il moto assai veloce del suono ci assicura, quella della luce
+  non poter esser se non velocissima: e l'esperienza che mi sovvenne, fu tale.
+  Voglio che due piglino un lume per uno, il quale, tenendolo dentro lanterna
+  o altro ricetto, possino andar coprendo e scoprendo, con l'interposizion
+  della mano, alla vista del compagno, e che, ponendosi l'uno incontro
+  all'altro in distanza di poche braccia, vadano addestrandosi nello scoprire
+  ed occultare il lor lume alla vista del compagno, sì che quando l'uno
+  vede il lume dell'altro, immediatamente scuopra il suo; la qual corrispondenza,
+  dopo alcune risposte fattesi scambievolmente, verrà loro talmente aggiustata,
+  che, senza sensibile svario, alla scoperta dell'uno risponderà immediatamente
+  la scoperta dell'altro, sì che quando l'uno scuopre il suo lume, vedrà
+  nell'istesso tempo comparire alla sua vista il lume dell'altro. Aggiustata cotal
+  pratica in questa piccolissima distanza, pongansi i due medesimi compagni con due simili
+  lumi in lontananza di due o tre miglia, e tornando di notte a far l'istessa esperienza,
+  vadano osservando attentamente se le risposte delle loro scoperte ed
+  occultazioni seguono secondo l'istesso tenore che facevano da vicino; che
+  seguendo, si potrà assai sicuramente concludere, l'espansion del lume essere
+  instantanea: ché quando ella ricercasse tempo, in una lontananza di tre
+  miglia, che importano sei per l'andata d'un lume e venuta dell'altro,
+  la dimora dovrebbe esser assai osservabile. E quando si volesse far tal osservazione
+  in distanze maggiori, cioè di otto o dieci miglia, potremmo servirci del telescopio,
+  aggiustandone un per uno gli osservatori al luogo dove la notte si hanno a mettere
+  in pratica i lumi; li quali, ancor che non molto grandi, e per ciò
+  invisibili in tanta lontananza all'occhio libero, ma ben facili a coprirsi
+  e scoprirsi, con l'aiuto de i telescopii già aggiustati e fermati potranno
+  esser commodamente veduti.
+\end{quotation}
+
+Sebbene questo passaggio sia lontano dagli standard moderni, è interessante
+notare come siano presenti, spiegati chiaramente ed in modo sintetico, tutti gli
+elementi qualificanti del metodo scientifico: le motivazioni ed il principio della
+misura, la \emph{calibrazione} dell'apparato, e, soprattutto, la verifica della
+consistenza interna---non basta fare la misura una volta, ma è necessario
+ripeterla ad una seconda distanza, più lunga, per assicurarsi che l'effetto
+scali correttamente.
+
+Parafrasando in notazione moderna il capoverso di Galileo, la proposta è
+essenzialmente quella di misurare (manualmente) il tempo di transito $\tau$
+che la luce impiega a percorrere (avanti e indietro) una distanza nota $d$
+\begin{align*}
+  c = \frac{2d}{\tau}.
+\end{align*}
+A posteriori sappiamo che, essendo la velocità della luce $c \approx 300000$~km/s,
+il tempo di transito sul doppio di una distanza di $5$~km sarebbe dell'ordine di
+$\tau \sim 3~\mu$s---Galileo non aveva alcuna speranza di misurare l'effetto con
+gli strumenti a sua disposizione. (Oggi la misura si potrebbe fare comodamente
+su un tavolo, con poca elettronica a basso costo, ma questo è un altro discorso.)
+
+Se esaminiamo la situazione dal punto di vista di Galileo---ovvero di chi
+deve pianificare la misura di una grandezza fisica di cui non si conosce il valore,
+nemmeno approssimativamente---il discorso è completamente diverso. Ed è qui che
+entra in gioco la propagazione degli errori. Assumendo che l'incertezza relativa
+sulla misura di $d$ sia molto più piccola di quella su $\tau$ (che è più o
+meno garantito in questo caso), la situazione è molto semplice:
+\begin{align}\label{eq:c_err}
+  \frac{\sigma^2_c}{\hat{c}^2} =
+  \frac{\sigma^2_d}{\hat{d}^2} + \frac{\sigma^2_\tau}{\hat{\tau}^2}
+  \approx \frac{\sigma^2_\tau}{\hat{\tau}^2} \quad \text{ovvero} \quad
+  \frac{\sigma_c}{\hat{c}} \approx \frac{\sigma_\tau}{\hat{\tau}} =
+  \frac{\hat{c}}{2\hat{d}} \sigma_\tau.
+\end{align}
+Parafrasando: l'errore relativo su $c$ è direttamente proporzionale all'incertezza
+su $\tau$ ed alla velocità (incognita) della luce, ed inversamente proporzionale
+alla distanza $d$. (Siccome su $c$ non abbiamo nessun controllo, quello che
+possiamo cercare di fare è di massimizzare la precisione nella misura dei tempi
+e la lunghezza di propagazione---ma questo lo sapevamo anche senza scrivere
+equazioni.)
+
+\pgffigone{misura_c}{Dipendenza dell'errore relativo sulla misura della
+velocità della luce $c$ dall'incertezza di misura su $\tau$, nell'esperimento
+di Galileo, per diversi valori ipotetici di $c$ e per una distanza $d=5$~km.
+La linea grigia tratteggiata rappresenta il valore esatto della velocità della
+luce $c = 299792458$~m~s$^{-1}$, che ovviamente Galileo non poteva sapere.
+L'estremo superiore dell'intervallo dinamico sull'asse $y$ è fissato a $1$
+(corrispondente ad un'incertezza relativa del $100\%$) perché oltre questo
+valore la misura è sostanzialmente impossibile.}
+
+Con un minimo di fantasia si può rappresentare questa informazione in un
+grafico come quello mostrato in figura~\ref{fig:misura_c}, in cui abbiamo
+l'incertezza assoluta sulle misure di tempo $\sigma_\tau$ sull'asse delle $x$,
+e l'incertezza relativa sulla misura di $c$ su quello delle $y$. Fissata la
+distanza $d$ (in questo caso $5$~km), per ogni valore di $c$ le due grandezze
+sono legate da una relazione di proporzionalità diretta, secondo
+la~\eqref{eq:c_err}. Un modo ovvio di leggere questo grafico (che è sostanzialmente
+il modo in cui lo presenteremmo ad un'agenzia finanziatrice) è quello di
+tracciare una linea verticale in corrispondenza della risoluzione temporale del
+nostro apparato di misura, e vedere come questa interseca le linee a $c$ fissata.
+Assumendo (ottimisticamente) che con il metodo di Galileo si possa raggiungere
+una precisione di un decimo di secondo ($\sigma_\tau = 0.1$~s), potremmo
+riformulare la sua proposta in termini moderni dicendo che l'esperimento
+permette di misurare $c$ all'$1\%$ se $c \sim 1000$~m~s$^{-1}$; nel caso
+$c \sim 10000$~m~s$^{-1}$ probabilmente possiamo ancora fare una misura
+ragionevole, ma per $c \gg 10000$~m~s$^{-1}$ la nostra risoluzione temporale
+semplicemente non è sufficiente. In quel caso, se non misuriamo niente,
+possiamo mettere un \emph{limite inferiore} su $c$.
+
+
+\subsection{Un esempio più interessante}
+
+Supponiamo di avere un apparato sperimentale, come quello illustrato in
+figura~\ref{fig:tracciatore}, composto da una sorgente infinitamente sottile
+centrata nell'origine del nostro sistema di coordinate e due piani di rivelazione
+posti a distanza $x_1$ ed $x_2$. La sorgente emette particelle cariche---che, per
+semplicità, assumeremo viaggiare su una linea retta---ed i piani di
+rivelazione misurano le coordinate di passaggio $y_1$ ed $y_2$ con incertezza
+di misura $\sigma_{y_1}$ e $\sigma_{y_2}$. Lo scopo è quello di ricostruire la coordinata
+di partenza $y_0$ in cui è stata emessa la particella.
+
+\begin{figure}[!htbp]
+  \center\input{figures/tracciatore}
+  \caption{Illustrazione schematica di un \emph{tracciatore} di particelle a due
+  piani per la determinazione della coordinata $y_0$ di partenza della particella.}
+  \label{fig:tracciatore}
+\end{figure}
+
+Non dovrebbe essere difficile convincersi che l'intercetta della retta passante
+per i due punti misurati, che coincide con coordinata cercata, si scrive come
+\begin{align*}
+  y_0 = y_1 - x_1 \frac{y_2 - y_1}{x_2 - x_1} = \frac{y_1x_2 - y_2x_1}{x_2 - x_1},
+\end{align*}
+e l'incertezza associata è
+\begin{align}\label{eq:errore_tracciatore}
+  \sigma^2_{y_0} = \left( \pd{y_0}{y_1}{\hat{y}_1, \hat{y}_2}\right)^2 \sigma^2_{y_1} +
+  \left( \pd{y_0}{y_2}{\hat{y}_1, \hat{y}_2}\right)^2 \sigma^2_{y_2} =
+  %\left( \frac{x_2}{x_2 - x_1} \right)^2 \sigma^2_{y_1} +
+  %\left( \frac{x_1}{x_2 - x_1} \right)^2 \sigma^2_{y_2} =
+  \frac{\hat{x}_2^2 \sigma^2_{y_1} + \hat{x}_1^2 \sigma^2_{y_2}}{(\hat{x}_2 - \hat{x}_1)^2}.
+\end{align}
+La~\eqref{eq:errore_tracciatore} è \emph{rivelatrice}: non solo ci permette
+di stimare l'incertezza sulla quantità misurata, data una generica configurazione
+sperimentale---ci dice esattamente come questa incertezza dipende dalle grandezze
+in gioco, e ci guida nella progettazione dell'apparato. Si tratta, formalmente,
+di una funzione di 4 variabili ($x_1$, $x_2$, $\sigma_{y_1}$ e $\sigma_{y_2}$),
+che non è banale da visualizzare in tutta la sua ricchezza. Vi è, tuttavia,
+un certo numero di cose che possiamo dire immediatamente, senza fare ulteriori assunzioni:
+\begin{itemize}
+  \item dato che $x_2 > x_1$, la risoluzione spaziale del piano più vicino alla
+  sorgente $\sigma_{y_1}$ è più critica di quella del rivelatore lontano e
+  al limite, quando $x_2 \gg x_1$, quest'ultima diviene irrilevante
+  \begin{align*}
+    \lim_{x_2 \gg x_1} \sigma_{y_0} = \sigma_{y_1}
+  \end{align*}
+  (in altre parole: \emph{il rivelatore vicino alla sorgente deve essere più preciso
+  di quello lontano}---e molto più preciso se quello lontano è molto più
+  lontano);
+  \item la~\eqref{eq:errore_tracciatore} è una funzione monotona crescente di
+  $\hat{x}_1$, come si può verificare calcolando la derivata
+  \begin{align*}
+    \pd{\sigma^2_{y_0}}{x_1}{} =
+    2\hat{x}_2 \frac{\left( \hat{x}_1\sigma^2_{y_2} + \hat{x}_2\sigma^2_{y_1} \right)}%
+    {(\hat{x}_2 - \hat{x}_1)^3} > 0,
+  \end{align*}
+  per cui \emph{il rivelatore vicino alla sorgente deve essere il più vicino
+  possibile alla sorgente};
+  \item analogamente, la~\eqref{eq:errore_tracciatore} è una funzione monotona
+  decrescente di $\hat{x}_2$
+  \begin{align*}
+    \pd{\sigma^2_{y_0}}{x_2}{} =
+    - 2\hat{x}_1 \frac{\left( \hat{x}_1\sigma^2_{y_2} + \hat{x}_2\sigma^2_{y_1} \right)}%
+    {(\hat{x}_2 - \hat{x}_1)^3} < 0,
+  \end{align*}
+  ovvero \emph{il rivelatore lontano dalla sorgente deve essere il più lontano
+  possibile dalla sorgente}.
+\end{itemize}
+Ovviamente, nella vita reale, queste considerazioni generali si scontrano
+con i problemi pratici del caso: migliorare la risoluzione dei piani di rivelazione
+è potenzialmente costoso, ha un impatto in termini di massa e di potenza assorbita e,
+oltre un certo livello, è tecnologicamente impossibile; e le distanze minime e
+massime dei piani dalla sorgente sono soggette ai vincoli logistici del resto
+dell'apparato sperimentale. \`E proprio questo che rende la progettazione di
+esperimenti una materia complessa e stimolante.
+
+
+\summary
+
+\begin{itemize}
+\item Possiamo modellizzare il processo di misura di una grandezza fisica in
+  condizioni di ripetitività come il campionamento di una distribuzione
+  di probabilità---che chiamiamo distribuzione generatrice. In questo schema
+  il valore centrale e l'incertezza di misura coincidono con la nostra miglior
+  stima della media e della deviazione standard della distribuzione generatrice.
+  Ne segue che l'intervallo determinato dall'incertezza di misura non è
+  garantito contenere il misurando, ma ha una probabilità data di contenerlo.
+\item Nella somma di variabili casuali indipendenti la media della somma è
+  uguale alla somma delle medie e la varianza della somma è uguale alla somma
+  delle varianze. Ne segue che le deviazioni standard si sommano in
+  quadratura.
+\item Nel caso di $n$ misure ripetute di una stessa grandezza in condizioni di
+  dispersione non nulle la media e la varianza campione
+  \begin{align*}
+    m = \frac{1}{n}\sum_{i = 1}^n x_i
+    \quad\text{e}\quad
+    s^2_{n - 1} = \frac{1}{(n - 1)}\sum_{i = 1}^n (x_i - m)^2
+  \end{align*}
+  sono le nostre migliori stime della media e della varianza della distribuzione
+  generatrice.
+\item La deviazione standard della media di $n$ campionamenti di una
+  distribuzione generatrice data è $\sqrt{n}$ volte più piccola della
+  deviazione standard della distribuzione stessa. Questa è la legge
+  fondamentale con cui scalano gli errori statistici in funzione della
+  dimensione del campione.
+\item Gli errori statistici su grandezze indipendenti si sommano in
+  quadratura---e non linearmente come gli errori massimi
+  \begin{align*}
+    s_f = \sqrt{\sum_{i = 1}^n
+      \left(\pd{f}{x_i}{\hat{x}_1,\ldots,\hat{x}_n}\right)^2 s^2_i
+    }.
+  \end{align*}
+  Questo deriva essenzialmente dal fatto che se le grandezze sono indipendenti
+  le fluttuazioni statistiche tendono in media a compensarsi ed è
+  relativamente poco probabile che esse tendano a contribuire nello stesso
+  verso per generare configurazioni estreme. Ne segue che l'errore massimo
+  tende sistematicamente ad essere una sovrastima dell'incertezza di misura.
+\end{itemize}

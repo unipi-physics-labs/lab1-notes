@@ -1,0 +1,132 @@
+
+% Get rid of the titlesec-related warnings, see
+% https://bitbucket.org/amiede/classicthesis/issues/92/titlesec-deprecated
+\RequirePackage{silence}
+\WarningFilter{scrbook}{Usage of package `titlesec' together}
+\WarningFilter{titlesec}{Non standard sectioning command}
+
+% Preambolo.
+\documentclass[10pt, a4paper, numbers=noenddot]{scrbook}
+
+% Definizione dei pacchetti
+\usepackage[italian]{babel}
+
+% This is a workaround for using classic thesis without aligning equations to
+% left (http://www.guit.sssup.it/phpbb/viewtopic.php?p=21797)
+\usepackage{amsmath}
+\let\origRequirePackage\RequirePackage
+\renewcommand{\RequirePackage}[2][]{%
+  \def\next{#2}\def\nxt{amsmath}%
+  \def\rightRequirePackage{\origRequirePackage[#1]{#2}}%
+  \ifx\next\nxt\else\expandafter\rightRequirePackage\fi}
+% End of workaround.
+
+\usepackage[linedheaders, eulerchapternumbers, eulermath, parts]{classicthesis}
+
+% And another ugly workaround for a TeXlive bug, see
+% http://tug.org/pipermail/tex-live/2018-May/041625.html
+%\def\requestedLaTeXdate{20180412}
+% End of workaround.
+
+% This is a workaround for avoiding overfull hboxes for page numbers greater
+% than 99.
+\settowidth{\newnumberwidth}{999}
+\setlength\cftpartnumwidth{\newnumberwidth}
+% End of workaround.
+
+% See http://stackoverflow.com/questions/30201310/use-of-hyphen-or-minus-sign-in-matplotlib-versus-compatibility-with-latex
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{2212}{$-$}
+
+\makeatletter
+% Small manual hack to avoid pygments-related warnings.
+% See https://tex.stackexchange.com/questions/224209
+\@namedef{T1/cmtt/b/n}{<->ssub*cmtt/bx/n}
+\@namedef{T1/fvm/m/sc}{<->ssub*fvm/m/n}
+\@namedef{T1/pplj/m/scit}{<->ssub*pplj/m/it}
+\makeatother
+
+% Suppress bogus pdfTeX warnings, see
+% https://tex.stackexchange.com/questions/76273
+\pdfsuppresswarningpagegroup=1
+
+% This magically fixes \texttt{} not working. See
+% https://tex.stackexchange.com/questions/664/why-should-i-use-usepackaget1fontenc
+\usepackage[T1]{fontenc}
+
+\usepackage{makeidx}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepgflibrary{arrows,arrows.meta}
+\usepackage[nice]{nicefrac}
+\usepackage{venndiagram}
+\usepackage{manfnt}
+\usepackage{tabularx}
+%\usepackage{wrapfig}
+\usepackage{eurosym}
+
+\newcommand{\danger}{%
+  \hangindent38pt\hangafter-3\noindent%
+  \makebox[0pt]{\hspace{-45pt}\raisebox{-7pt}[0pt][0pt]{\Large\dbend}}%
+}
+
+\usepackage{pifont}
+\newcommand{\cmark}{\text{\ding{51}}}%
+\newcommand{\xmark}{\text{\ding{55}}}%
+
+
+\usepackage{chngcntr}
+\counterwithin{figure}{chapter}
+
+\usepackage{fancyvrb}
+\fvset{frame=single, numbers=left, numbersep=3pt, fontsize=\small,
+       fontfamily=cmtt,
+       baselinestretch=1.0, rulecolor=\color{lightgray}, framesep=5pt}
+
+\usetikzlibrary{patterns}
+\usetikzlibrary{positioning}
+\graphicspath{{figures/}}
+
+% Setup per le legende
+\usepackage{caption}
+\captionsetup{labelfont=sc, textfont=rm, size=normal, labelsep=period,
+  format=plain}
+
+
+% Setup per i mini-indici
+\usepackage[tight, italian, nohints]{minitoc}
+\renewcommand{\mtifont}{\normalsize\scshape\lsstyle}
+\newcommand{\mt}{\minitoc\mtcskip}
+
+% Newcommands.
+\newcommand{\fixme}[1]{{\color{red}{Fixme: #1}}}
+\newcommand{\weblink}[1]{Web link: \url{#1}}
+\newcommand{\summary}{\section{In breve...}}
+
+\newcounter{qcounter}
+\renewenvironment{enumerate}{\begin{list}{\arabic{qcounter})}{%
+      \usecounter{qcounter}%
+      \setlength{\itemindent}{13pt}%
+      \setlength{\labelwidth}{25pt}%
+      \setlength{\leftmargin}{\rightmargin}}}
+                 {\end{list}}
+
+\usepackage{newfloat}
+\usepackage[nomessages]{fp}
+
+% Additional settings.
+\input{misc/layout}
+\input{misc/python}
+\input{misc/coding}
+\input{misc/math}
+\input{misc/prob}
+\input{misc/envs}
+\input{misc/figs}
+\input{misc/foreign}
+
+\makeindex

@@ -1,0 +1,30 @@
+\begin{tikzpicture}
+  \node at (0, 0) {};
+  \pgfmathsetmacro{\xa}{3.}
+  \pgfmathsetmacro{\xb}{5.}
+  \pgfmathsetmacro{\ya}{-1.5}
+  \pgfmathsetmacro{\yb}{-3.5}
+  \pgfmathsetmacro{\dx}{0.2}
+  \pgfmathsetmacro{\qx}{1.0}
+  \pgfmathsetmacro{\dy}{1.2}
+  \draw[very thick] (\xa, \ya+\dy) -- (\xa, \ya-\dy);
+  \draw[very thick] (\xa-\dx, \ya+\dy) -- (\xa+\dx, \ya+\dy);
+  \draw[very thick] (\xa-\dx, \ya-\dy) -- (\xa+\dx, \ya-\dy);
+  \fill (\xa, \ya) circle [radius=3pt];
+  \node[anchor=west] at (\xa + \dx, \ya) {$\hat{x_1}$};
+  \draw[thick,{<[scale=1.5]}-{>[scale=1.5]}]
+  (\xa - \qx, \ya+\dy) -- (\xa - \qx, \ya);
+  \node[anchor=east] at (\xa - \qx, \ya+0.5*\dy) {$\Delta x_1$};
+  
+  \draw[very thick] (\xb, \yb+\dy) -- (\xb, \yb-\dy);
+  \draw[very thick] (\xb-\dx, \yb+\dy) -- (\xb+\dx, \yb+\dy);
+  \draw[very thick] (\xb-\dx, \yb-\dy) -- (\xb+\dx, \yb-\dy);
+  \fill (\xb, \yb) circle [radius=3pt];
+  \node[anchor=west] at (\xb + \dx, \yb) {$\hat{x_2}$};
+  \draw[thick,{<[scale=1.5]}-{>[scale=1.5]}]
+  (\xb + \qx, \yb+\dy) -- (\xb + \qx, \yb);
+  \node[anchor=west] at (\xb + \qx, \yb+0.5*\dy) {$\Delta x_2$};
+
+  \draw[style=dotted] (\xa, \ya-\dy) -- (\xb, \ya-\dy);
+  \draw[style=dotted] (\xa, \yb+\dy) -- (\xb, \yb+\dy);
+\end{tikzpicture}

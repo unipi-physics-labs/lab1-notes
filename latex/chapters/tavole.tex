@@ -1,0 +1,115 @@
+\chapter{Tavole numeriche}
+
+In questa appendice riportiamo i valori tabulati di alcune funzioni statistiche
+rilevanti (e.g., l'integrale normale degli errori). Le tavole possono essere
+utili quando non si ha a disposizione un calcolatore.
+
+
+\clearpage
+
+
+\section{Integrale normale degli errori---I}
+\label{sec:tavola_erf3}
+
+\autohstack[3pt]{\input{figures/tab_erf3.pgf}}{
+  Valori tabulati per l'integrale di una distribuzione Gaussiana in forma
+  standard corrispondente all'ombreggiatura in figura
+  \begin{align*}
+    P = \Phi(z) - \frac{1}{2} =
+    \frac{1}{2}\,\erf{\frac{z}{\sqrt{2}}}.
+  \end{align*}
+  Nella tabella la prima colonna identifica le prime due cifre di $z$, mentre
+  la riga di intestazione identifica la seconda cifra decimale.
+}
+
+\vspace*{\fill}
+
+\begin{table}[!hb]
+  \begin{center}
+    {\small
+      \begin{tabular*}{\textwidth}{@{ \extracolsep{\fill}}ccccccccccc}
+        \hline
+        \input{tables/erf3}\\
+        \hline
+      \end{tabular*}
+    }
+  \end{center}
+\end{table}
+
+\clearpage
+
+\section{Integrale normale degli errori---II}
+\label{sec:tavola_erf5}
+
+\autohstack[3pt]{\input{figures/tab_erf5.pgf}}{
+  Valori tabulati per l'integrale di una distribuzione Gaussiana in forma
+  standard corrispondente all'ombreggiatura in figura
+  \begin{align*}
+    P = 1 - \Phi(z) =
+    \frac{1}{2} - \frac{1}{2}\,\erf{\frac{z}{\sqrt{2}}}.
+  \end{align*}
+  Nella tabella la prima colonna identifica le prime due cifre di $z$, mentre
+  la riga di intestazione identifica la seconda cifra decimale.
+}
+
+\vspace*{\fill}
+
+\begin{table}[!hb]
+  \begin{center}
+    {\small
+      \begin{tabular*}{\textwidth}{@{ \extracolsep{\fill}}ccccccccccc}
+        \hline
+        \input{tables/erf5}\\
+        \hline
+      \end{tabular*}
+    }
+  \end{center}
+\end{table}
+
+
+\begin{figure}
+  \input{figures/erf_tail.pgf}
+  \caption{Grafico della funzione
+    $1 - \Phi(z) = \frac{1}{2} - \frac{1}{2}\,\erf{\frac{z}{\sqrt{2}}}$.}
+  \label{fig:erf_tail}
+\end{figure}
+
+
+\clearpage
+
+\section{Funzione cumulativa del \texorpdfstring{$\chisq$}{chi quadro}}
+\label{sec:tavola_chisq1}
+
+\autohstack[3pt]{\input{figures/tab_chisq1.pgf}}{
+  Valori tabulati del valore $\chisq_p$ per cui la funzione cumulativa (cio\`e
+  l'area ombreggiata in figura) per una variabile $\chisq$ a $\nu$ gradi di
+  libert\`a vale esattamente p.
+
+  Per un numero di gradi di libert\`a $\nu > 40$ si pu\`o utilizzare un semplice
+  programma al calcolatore oppure si pu\`o sfruttare l'approssimazione
+  Gaussiana.
+}
+
+\vspace*{\fill}
+
+\begin{table}[!hb]
+  \begin{center}
+    {\small
+      \begin{tabular*}{\textwidth}{@{ \extracolsep{\fill}}cccccccccccccc}
+        \hline
+        \input{tables/chisq1}\\
+        \hline
+      \end{tabular*}
+    }
+  \end{center}
+\end{table}
+
+
+\begin{figure}
+  \input{figures/chi2_quantiles.pgf}
+  \caption{Quantili della distribuzione del $\chisq$ normalizzati al numero
+  $\nu$ di gradi di libert\`a. Le due linee tratteggiare rappresentano
+  l'approssimazione Gaussiana a $\pm 1~\sigma$, che, come si vede, \`e
+  ragionevolmente accurata per $\nu \geq 10$.}
+  \label{fig:chi2_quantiles}
+\end{figure}

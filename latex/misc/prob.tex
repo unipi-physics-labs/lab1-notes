@@ -1,0 +1,71 @@
+
+\newcommand{\prob}[1]{\displaystyle P\left(#1\right)}
+
+\newcommand{\pvalue}{\emph{$p$-\emph{value}}}
+
+\newcommand{\cond}{\,|\,}
+
+\newcommand{\expect}[1]{\displaystyle E\left[#1\right]}
+
+\newcommand{\mom}[2][]{\displaystyle {\cal M}_{#2}\ifx\\#1\\\else(#1)\fi}
+
+\newcommand{\momalg}[1]{\displaystyle \lambda_{#1}}
+
+\newcommand{\momcen}[1]{\displaystyle \mu_{#1}}
+
+\newcommand{\skewness}{\displaystyle \gamma_1}
+
+\newcommand{\kurtosis}{\displaystyle \gamma_2}
+
+\newcommand{\charf}[1][x]{\phi_{#1}}
+
+\newcommand{\momgenf}[1][x]{M_{#1}}
+
+\newcommand{\fwhm}{{\scriptstyle \textsc{FWHM}}}
+
+\newcommand{\hwhm}{{\scriptstyle \textsc{HWHM}}}
+
+\newcommand{\median}{\mu_{\nicefrac{1}{2}}}
+
+\newcommand{\var}[1]{\ensuremath{\text{Var}\left(#1\right)}}
+
+\newcommand{\cov}[2]{\ensuremath{\text{Cov}\left(#1, #2\right)}}
+
+\newcommand{\corr}[2]{\ensuremath{\text{Corr}\left(#1, #2\right)}}
+
+\newcommand{\like}{\mathcal L}
+
+\newcommand{\likelihood}[2][]{\like\ifx\\#2\\\else(#2\ifx\\#1\\\else;#1\fi)\fi}
+
+\newcommand{\chisq}{\ensuremath{\chi^2}}
+
+\newcommand{\chisquare}[2][]{\chisq\ifx\\#2\\\else(#2\ifx\\#1\\\else;#1\fi)\fi}
+
+\newcommand{\loglikelihood}[2][]{\log\likelihood[#1]{#2}}
+
+\newcommand{\pdf}[3][]{#2(#3\ifx\\#1\\\else;#1\fi)}
+
+\newcommand{\binomialpdf}[2][]{\pdf[#1]{\mathcal B}{#2}}
+
+\newcommand{\multinomialpdf}[2][]{\pdf[#1]{\mathcal M}{#2}}
+
+\newcommand{\poissonpdf}[2][]{\pdf[#1]{\mathcal P}{#2}}
+
+\newcommand{\uniformpdf}[2][]{\pdf[#1]{u}{#2}}
+
+\newcommand{\exponentialpdf}[2][]{\pdf[#1]{\varepsilon}{#2}}
+
+\newcommand{\gausspdf}[2][]{\pdf[#1]{N}{#2}}
+
+\newcommand{\chisquarepdf}[2][]{\pdf[#1]{\wp}{#2}}
+
+\newcommand{\cauchypdf}[2][]{\pdf[#1]{c}{#2}}
+
+\newcommand{\erf}[1]{\ensuremath{\text{erf}\left(#1\right)}}
+
+\newcommand{\dccases}[4][]{#2 \ifx\\#2\\\else=\fi %
+  \begin{cases}
+    \displaystyle #3 & \text{per variabili discrete}\\
+    \displaystyle #4 & \text{per variabili continue}#1
+  \end{cases}
+}

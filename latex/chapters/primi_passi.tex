@@ -1,0 +1,2454 @@
+\chapter{Primi passi: misure ed incertezze}
+\label{sec:primi_passi}
+
+Il concetto di \emph{incertezza} o \emph{errore} di misura gioca un ruolo centrale
+nelle scienze sperimentali. Visto che non è possibile misurare una grandezza fisica
+con accuratezza infinita, il risultato di una misura manca di una parte importante
+del proprio contenuto quantitativo in assenza di una stima (implicita o esplicita)
+dell'incertezza ad essa associata; quest'ultima è elemento imprescindibile per
+poter confrontare una misura con una predizione teorica o con un'altra misura.
+
+Nel linguaggio comune è piuttosto inusuale fare menzione esplicita delle
+incertezze di misura: vi immaginate comperare mezzo kilogrammo di pane al
+supermercato e chiedere all'inserviente
+"potrebbe tagliarlo con una tolleranza di 10 grammi, per cortesia?".
+Eppure il fatto che, a fronte di una richiesta di mezzo kilogrammo, 600~grammi
+sarebbero probabilmente accettabili dalla maggior parte dei clienti, mentre
+2~kilogrammi no, ci dice che in fondo la nozione di errore di misura deve
+essere in qualche modo connaturata con il nostro senso comune.
+
+In Fisica, e nelle scienze sperimentali in genere, si cerca tipicamente di
+evitare ambiguità ed usare le parole in un modo per quanto possibile
+quantitativo e ben definito. Ciò nonostante anche in letteratura scientifica
+si trovano occasionalmente diciture in cui l'errore di misura è omesso---di
+solito volontariamente e consapevolmente. Anche in questo caso, come vedremo,
+è il bagaglio di conoscenze comuni (che cominceremo a sviluppare in questo
+capitolo) a guidarci.
+
+In questo primo capitolo introdurremo in parallelo due nozioni di incertezza:
+quella \emph{massima} e quella \emph{statistica}---la prima perché non
+richiede nessuna nozione pregressa ed è utile per introdurre alcuni concetti
+fondamentali, e la seconda perché è quella \emph{corretta} e che
+utilizzeremo sin dall'inizio (anche se la giustificheremo rigorosamente solo
+nel capitolo~\ref{sec:teoria_dei_campioni}). Ove possibile utilizzeremo la prima
+per giustificare intuitivamente, per analogia, alcune \emph{ricette} che daremo
+inizialmente senza dimostrazione a proposito della seconda.
+
+
+\section{Unità di misura e ordini di grandezza}
+\label{sec:unita_di_misura}
+
+L'accuratezza delle misure raggiunta in alcune aree della Fisica è niente di
+meno che stupefacente. In elettrodinamica quantistica, una delle teorie fisiche
+meglio verificate sperimentalmente, il momento magnetico dell'elettrone è
+misurato a meglio di una parte su $10^{12}$~\cite{PhysRevA.83.052122}---e la
+misura è in accordo con i calcoli teorici, che hanno a loro volta raggiunto un
+livello di sofisticazione tale da consentire di avere incertezze dello stesso
+ordine di grandezza~\cite{PhysRevLett.109.111807}. Tanto per fissare le idee:
+sarebbe come misurare la distanza tra Londra e New York con una precisione di
+$1~\mu$m (un millesimo di mm): non sfuggirà la portata dei problemi operativi
+connessi con il raggiungimento di un tale livello di riproducibilità, che
+costituiscono una delle aree di studio delle moderna metrologia.
+
+
+\subsection{Il Sistema Internazionale di unità di misura}
+
+Il primo sforzo sistematico dell'età moderna in direzione di un sistema
+standard di unità di misura è costituito dalla definizione, nella Francia
+della fine del XVIII secolo, del sistema metrico decimale---basato sulle
+unità standard di \emph{metro} e \emph{kilogrammo}. Definiti inizialmente
+come la decimilionesima parte della lunghezza del meridiano terrestre%
+\footnote{La cosa ci porterebbe troppo lontano, ma il lettore curioso è
+  incoraggiato a leggere la referenza~\cite{dagostini_metro} per una
+  discussione interessante e non convenzionale sull'origine storica della
+  definizione del metro.}
+e come la massa di $1000$~cm$^3$ di acqua alla temperatura di fusione del
+ghiaccio, il metro ed il kilogrammo sono stati ridefiniti circa un secolo più
+tardi sulla base di due manufatti (il metro campione ed il kilogrammo campione)
+realizzati in una lega di platino-iridio e conservati a Parigi, con un certo
+numero di repliche \emph{identiche} distribuite ai principali istituti di
+metrologia. \`E chiaro che l'utilizzo di manufatti fisici come unità
+fondamentali costituisce di per sé un limite alla riproducibilità delle
+misure fisiche. Tanto per fare un esempio, il kilogrammo campione, conservato
+insieme a sei copie di riferimento presso il \foreign{Bureau International des Poids et Mesures},
+è soggetto ad una contaminazione superficiale al livello di $\sim 1~\mu$g
+all'anno. Questa contaminazione, largamente reversibile, rende periodicamente
+necessarie sofisticate operazioni di pulizia. Nonostante tutti gli accorgimenti
+del caso, tra 1889 al 1989 si è osservata una variazione relativa di massa del
+kilogrammo campione rispetto alle sei copie al livello di alcune decine di
+$\mu$g~\cite{si_unit_mass}.
+
+Ormai adottato quasi universalmente (sia pure con importanti eccezioni), il
+Sistema Internazionale (SI) di unità di misura costituisce ad oggi lo stato
+dell'arte nella materia. Il SI include 7 unità di base~\cite{si_brochure}
+per la misura di altrettante grandezze fisiche: lunghezza, massa, tempo,
+corrente elettrica, temperatura termodinamica, quantità di sostanza ed intensità
+luminosa---come mostrato nella tabella~\ref{tab:unita_si}.
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{llll}
+      \hline
+      Quantità & Simbolo & Unità & Simbolo\\
+      \hline
+      \hline
+      Lunghezza & $l$ & metro & m\\
+      Massa & $m$ & kilogrammo & kg\\
+      Tempo & $t$ & secondo & s\\
+      Corrente elettrica & $I$, $i$ & ampere & A\\
+      Temperatura & $T$ & kelvin & K\\
+      Quantità di sostanza & $n$ & mole & mol \\
+      Intensità luminosa & $I_\nu$ & candela & cd\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Tabella delle 7 grandezze fisiche di base, con relative unità di
+      misura, su cui è fondato il Sistema Internazionale.
+      (Adattato da~\cite{si_brochure}.)}
+    \label{tab:unita_si}
+  }
+\end{table}
+
+Storicamente, le unità fondamentali sono state definite in vario modo---utilizzando
+manufatti come il metro ed il kilogrammo campione, stati specifici della
+materia come il punto triplo dell'acqua, costanti fondamentali della natura come
+la velocità della luce, o prescrizioni sperimentali idealizzate.
+A partire dal 20 maggio 2019, \emph{il Sistema Internazionale è definito sulla
+base del valore numerico di 7 costanti fondamentali della Natura, che si
+assumono note esattamente}. In particolare, il SI è il sistema in cui:
+\begin{itemize}
+\item la frequenza della transizione iper-fine dello stato fondamentale non
+  perturbato dell'atomo di $^{133}$Cs vale esattamente
+  $\Delta\nu_{Cs} = 9\,192\,631\,770$~Hz;
+\item la velocità della luce nel vuoto vale esattamente $c = 299\,792\,458$~m~s$^{-1}$;
+\item la costante di Planck vale esattamente $h = 6.626\,070\,15 \times 10^{-34}$~J~s;
+\item la carica elementare vale esattamente $e = 1.602\,176\,634 \times 10^{-19}$~C;
+\item la costante di Boltzmann vale esattamente $k = 1.380\,649 \times 10^{-23}$~J~K$^{-1}$;
+\item il numero di Avogadro vale esattamente $N_A = 6.022\,140\,76 \times 10^{23}$~mol$^{-1}$;
+\item l'efficacia luminosa della radiazione monocromatica di frequenza
+  $540 \times 10^{12}$~Hz vale esattamente $K_{cd} = 683$~lm~W$^{-1}$.
+\end{itemize}
+Così, ad esempio, il secondo corrisponde alla durata di $9\,192\,631\,770$
+periodi della transizione tra i due livelli iper-fini dello stato fondamentale
+dell'atomo di $^{133}$Cs, ed il metro è la lunghezza percorsa dalla luce nel
+vuoto in un intervallo di tempo pari a $1/299\,792\,458$~s.
+
+Arrivare ad un sistema in cui tutte le unità fondamentali sono definite in
+termini di \emph{invarianti} della natura, affrancandosi dalla necessità di
+ricorrere a manufatti, costituisce un traguardo fondamentale per la metrologia
+moderna, che ha richiesto uno sforzo lungo più di un secolo.
+Ed il Sistema Internazionale è in continua evoluzione, nel tentativo di rispondere
+alle esigenze sempre più stringenti dalla scienza e della tecnologia moderna.
+
+
+\subsection{Unità derivate ed unità riconosciute}
+
+Alcune unità di misura derivate hanno, nel Sistema Internazionale, nomi speciali,
+che corrispondono ad una forma convenientemente compatta di combinazioni specifiche
+delle 7 unità di base. Una lista parziale di queste unità derivate è presentata nella
+tabella~\ref{tab:unita_derivate_si}. (Notate che, ove l'unità di misura prenda il
+nome da una persona---tipicamente un illustre scienziato---si scrive convenzionalmente
+con la prima lettera minuscola.)
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{llll}
+      \hline
+      Quantità & Unità & Simbolo & Espressione SI\\
+      \hline
+      \hline
+      Angolo & radiante & rad & -\\
+      Angolo solido & steradiante & sr & -\\
+      Frequenza & hertz & Hz & s$^{-1}$ \\
+      Forza & newton & N & m~kg~s$^{-2}$ \\
+      Pressione & pascal & Pa & m$^{-1}$~kg~s$^{-2}$ \\
+      Energia & joule & J & m$^2$~kg~s$^{-2}$ \\
+      Potenza & watt & W & m$^2$~kg~s$^{-3}$ \\
+      Temperatura Celsius & grado Celsius & $^\circ$C & K\\
+      Carica elettrica & coulomb & C & s~A \\
+      Potenziale elettrico & volt & V & m$^2$~kg~s$^{-3}$~A$^{-1}$\\
+      Capacità & farad & F & m$^{-2}$~kg$^{-1}$~s$^{4}$~A$^{2}$ \\
+      Resistenza & ohm & $\Omega$ & m$^{2}$~kg~s$^{-3}$~A$^{-2}$ \\
+      Attività & becquerel & Bq & s$^{-1}$\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Lista (non esaustiva) delle unità derivate che hanno nomi
+      speciali nel Sistema Internazionale. Le corrispondenti espressioni in
+      termini delle 7 unità fondamentali del Sistema Internazionale sono
+      mostrate esplicitamente nell'ultima colonna.
+      (Adattato da~\cite{si_brochure}.)
+      \label{tab:unita_derivate_si}}
+  }
+\end{table}
+
+In generale l'espressione, in termini delle unità fondamentali del SI, per una
+generica grandezza derivata si ricava, più o meno banalmente, da una
+qualsiasi legge fisica che coinvolga l'unità derivata. Così, dalla legge di
+Newton
+\begin{align*}
+  F = ma \quad \text{[m~kg~s$^{-2}$]}
+\end{align*}
+sappiamo che la forza è una massa (kg) per un'accelerazione (m~s$^{-2}$),
+per cui il newton corrisponde a m~kg~s$^{-2}$; una pressione, d'altra parte,
+è una forza per unità di superficie (m$^2$)
+\begin{align*}
+  p = \frac{F}{A} \quad \text{[m$^{-1}$~kg~s$^{-2}$]}
+\end{align*}
+per cui il pascal corrisponde a m$^{-1}$~kg~s$^{-2}$; l'energia (o il lavoro) è
+il prodotto di una forza per uno spostamento (m),
+\begin{align*}
+L = F s \quad \text{[m$^2$~kg~s$^{-2}$]}
+\end{align*}
+per cui si misura in m$^2$~kg~s$^{-2}$, e così via.
+
+Vi è infine un certo numero di unità di misura che, pur non facendo parte
+del Sistema Internazionale, sono così comunemente usate (ad esempio il
+litro per le misure di volume) o sono così profondamente radicate nella
+nostra cultura (ad esempio le ore, i minuti ed i secondi per le misure di tempo)
+da essere ufficialmente riconosciute ed accettate, come illustrato nella
+tabella~\ref{tab:unita_non_si}.
+(Per inciso: l'atmosfera, che corrisponde a $101325$~Pa, non fa parte delle
+unità riconosciute.)
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{llll}
+      \hline
+      Quantità & Unità & Simbolo & Conversione SI\\
+      \hline
+      \hline
+      Tempo & minuto & min & $1~\text{min} = 60~\text{s}$\\
+      & ora & h & $1~\text{h} = 3600~\text{s}$\\
+      & giorno & d & $1~\text{d} = 86\,400~\text{s}$\\
+      Volume & litro & l & $1~\text{l} = 1~\text{dm}^3$\\
+      Massa & tonnellata & t & $1~\text{t} = 1000~\text{kg}$\\
+      Energia & electronvolt & eV &
+      $1~\text{eV} \approx 1.602 \times 10^{-19} ~\text{J}$ \\
+      & erg & erg & $1~\text{erg} = 10^{-7}~\text{J}$ \\
+      Pressione & bar & bar & $1~\text{bar} = 10^5~\text{Pa}$ \\
+      & mm di Hg & mmHg & $1~\text{mmHg} \approx 133.3~\text{Pa}$ \\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Lista (non esaustiva) delle unità che, pur non facendo parte
+      del Sistema Internazionale, sono riconosciute in quanto culturalmente o
+      storicamente rilevanti. (Adattato da~\cite{si_brochure}.)
+      \label{tab:unita_non_si}}
+  }
+\end{table}
+
+
+\subsection{Multipli, sottomultipli ed ordini di grandezza}
+
+Le grandezze oggetto di studio in Fisica possono differire tra loro di
+numerosi ordini di grandezza. Così, mentre il raggio di un protone è
+dell'ordine di $10^{-15}$~m, le sorgenti astronomiche più lontane si
+trovano a distanze di svariati Gpc (gigaparsec), cioè a distanze dell'ordine
+di~$10^{26}$~m.
+Analogamente, mentre la vita media dei bosoni $W$ e $Z_0$ è dell'ordine di
+$10^{-25}$~s, l'età del nostro universo è dell'ordine di 10~miliardi di
+anni, o $10^{17}$~s. In entrambi i casi la \emph{gamma dinamica} corrisponde a
+più di $40$ ordini di grandezza.
+A questo scopo il Sistema Internazionale definisce una serie di prefissi
+per facilitare la scrittura di grandezze il cui valore sia molto più piccolo
+o molto più grande della relativa unità di misura, come mostrato in
+tabella~\ref{tab:prefissi_si}.
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{llllll}
+      \hline
+      Fattore & Nome & Simbolo & Fattore & Nome & Simbolo\\
+      \hline
+      \hline
+      $10^{1}$  & deca  & da & $10^{-1}$ & deci & d\\
+      $10^{2}$  & hecto & h  & $10^{-2}$ & centi & c\\
+      $10^{3}$  & kilo  & k  & $10^{-3}$ & milli & m\\
+      $10^{6}$  & mega  & M  & $10^{-6}$ & micro & $\mu$\\
+      $10^{9}$  & giga  & G  & $10^{-9}$ & nano & n\\
+      $10^{12}$ & tera  & T  & $10^{-12}$ & pico & p\\
+      $10^{15}$ & peta  & P  & $10^{-15}$ & femto & f\\
+      $10^{18}$ & exa   & E  & $10^{-18}$ & atto & a\\
+      $10^{21}$ & zetta & Z  & $10^{-21}$ & zepto & z\\
+      $10^{24}$ & yotta & Y  & $10^{-24}$ & yocto & y\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Prefissi per i multipli e sottomultipli decimali delle unità di
+      misura del Sistema Internazionale. Il kg si trova nella situazione
+      peculiare di rappresentare una delle unità fondamentali pur essendo
+      preceduto dal prefisso k. (Adattato da~\cite{si_brochure}.)
+      \label{tab:prefissi_si}}
+  }
+\end{table}
+
+\section{Cenni di analisi dimensionale}
+\label{sec:calcolo_dimensionale}
+
+Quando si ha a che fare con un sistema fisico descritto da grandezze non
+adimensionali, le equazioni che lo descrivono debbono soddisfare il requisito
+di base di essere \emph{dimensionalmente corrette}---cioè le dimensioni
+fisiche dei due membri devono essere omogenee. In caso contrario l'equazione
+è banalmente sbagliata. Controllare sistematicamente le dimensioni fisiche
+in ogni passaggio di un calcolo permette spesso di evitare errori banali.
+
+Nel seguito indicheremo le dimensioni fisiche di una generica grandezza
+con il simbolo corrispondente in tabella~\ref{tab:unita_si} racchiuso in
+parentesi quadre. Così, e.g.,  diremo che il raggio della Terra ha le
+dimensioni di una lunghezza, che indicheremo con $[l]$. Le grandezze derivate
+seguono le regole del prodotto, e le dimensioni fisiche di una velocità,
+e.g., sono quelle di una lunghezza per l'inverso di un tempo, o $[l~t^{-1}]$.
+
+Supponiamo allora di essere interessati alla relazione che lega il periodo
+$T$ di un pendolo alla sua lunghezza $l$. Se qualcuno scrivesse
+\begin{align*}
+  T = 2\pi \frac{l}{g} \quad \text{(dimensionalmente non corretta)}
+\end{align*}
+potremmo smentire l'affermazione, anche ignorando le leggi fondamentali della
+meccanica, sulla base del fatto che le dimensioni fisiche del membro di destra
+dell'equazione sono quelle di un tempo al quadrato e non quelle di un tempo
+\begin{align*}
+  [t] \neq [l] \times [l~t^{-2}]^{-1} = [t^{2}]
+\end{align*}
+
+L'analisi dimensionale, se utilizzata opportunamente, può anche avere potere
+predittivo. Nel caso specifico, se ipotizziamo che il periodo $T$ possa
+dipendere dalla lunghezza $l$ del pendolo e dalla sua massa $m$, oltre che
+dall'accelerazione di gravità $g$, ci troviamo con il problema di capire
+quali siano le combinazioni funzionali di queste tre grandezze che forniscono
+una quantità con le dimensioni fisiche giuste. Se partiamo dall'ipotesi di
+lavoro (arbitraria, ma non irragionevole) che il periodo cercato si possa
+scrivere nella forma
+\begin{align*}
+  T = l^{\alpha_1} m^{\alpha_2} g^{\alpha_3},
+\end{align*}
+allora da un punto di vista dimensionale possiamo scrivere
+\begin{align*}
+  [t] = [l]^{\alpha_1} \times [m]^{\alpha_2} \times [l~t^{-2}]^{\alpha_3} =
+  [l]^{\alpha_1 + \alpha_3} \times [m]^{\alpha_2} \times [t]^{-2\alpha_3},
+\end{align*}
+che a sua volta può essere trasformato nel sistema di equazioni
+\begin{align*}
+  \begin{cases}
+    \alpha_1 + \alpha_3 = 0\\
+    \alpha_2 = 0\\
+    -2\alpha_3 = 1
+  \end{cases}
+  \text{ossia} \quad
+  \begin{cases}
+    \alpha_1 = 1/2\\
+    \alpha_2 = 0\\
+    \alpha_3 = -1/2.
+  \end{cases}
+\end{align*}
+In questo caso specifico l'analisi dimensionale da sola ci permette dunque di
+concludere che il periodo del pendolo non può dipendere dalla massa (a meno
+che non inseriamo nel problema dall'esterno un'ulteriore grandezza che abbia
+la massa nelle sue dimensioni fisiche, ad esempio nella forma di un coefficiente
+di attrito viscoso) e che l'equazione cercata deve essere nella forma
+\begin{align*}
+  T \propto \sqrt{\frac{l}{g}}.
+\end{align*}
+Come sappiamo la conclusione è corretta ed il fattore di proporzionalità
+è, nel limite di piccole oscillazioni, $2\pi$. Per completezza, come
+vedremo nella sezione~\ref{sec:piccole_oscillazioni}, nel caso di ampiezza
+iniziale $\theta_0$ non nulla si ha un ulteriore fattore moltiplicativo
+adimensionale, funzione di $\theta_0$ che non si può ovviamente ricavare per
+via dimensionale.
+
+In generale, se siamo interessati alla relazione funzionale che lega una
+generica grandezza $y$ ad una serie di grandezze $x_1, x_2 \ldots x_n$
+possiamo---anche se non vi è garanzia che questo funzioni---provare a
+scrivere la grandezza cercata nella forma
+\begin{align}
+  y = x_1^{\alpha_1}x_2^{\alpha_2} \ldots x_n^{\alpha_n}.
+\end{align}
+Il requisito che l'equazione scritta sopra sia dimensionalmente corretta può
+essere trasformato in un sistema di equazioni lineari per gli esponenti
+$\alpha_1, \alpha_2 \ldots \alpha_n$ che a sua volta può fornire informazioni
+non banali sul sistema che stiamo studiando, come illustrato
+nell'esempio~\ref{exp:calcolo_dimensionale_keplero}.
+Per completezza gli argomenti che abbiamo illustrato brevemente in questa
+sezione si possono sviluppare in modo rigoroso e costituiscono il contenuto del
+celebre teorema~$\pi$~\cite{teorema_pi}.
+
+
+\begin{examplebox}[htb]
+  \begin{example}[terza legge di Keplero]
+    \label{exp:calcolo_dimensionale_keplero}
+    Ci proponiamo di ricavare per via dimensionale la terza legge di Keplero,
+    ossia la relazione che lega il periodo orbitale $T$ di un pianeta al
+    semiasse maggiore $a$ della sua orbita. Assumeremo che gli ulteriori
+    parametri che entrano nel problema siano la costante di gravitazione
+    universale $G$ e la massa del Sole $m_\odot$ e che possiamo scrivere la
+    relazione cercata come $T = G^{\alpha_1} m_\odot^{\alpha_2} a^{\alpha_3}$.
+    (Se a questo punto vi state chiedendo perché non abbiamo incluso la
+    massa del pianeta nella lista\ldots\ si tratta di un'ottima domanda, cui
+    l'analisi dimensionale da sola non fornisce una risposta soddisfacente,
+    ma procediamo ugualmente e vediamo dove ci porta il nostro ragionamento.)
+    Le unità di misura di $G$ si possono ricavare, e.g. dalla legge di
+    gravitazione universale
+    \begin{align}
+      F = G \frac{m_1 m_2}{r^2} \quad \text{da cui} \quad
+      G = \frac{Fr^2}{m_1 m_2}
+    \end{align}
+    e sono, nel sistema internazionale m$^3$~kg$^{-1}$~s$^{-2}$. Ragionando come
+    prima si ha allora
+    \begin{align*}
+      [t] = [l^3~m^{-1}~t^{-2}]^{\alpha_1} \times [m]^{\alpha_2} \times [l]^{\alpha_3} =
+      [l]^{3\alpha_1 + \alpha_3} \times [m]^{\alpha_2 - \alpha_1} \times [t]^{-2\alpha1},
+    \end{align*}
+    da cui
+     \begin{align}\label{eq:legge_di_keplero}
+      \begin{cases}
+        3\alpha_1 + \alpha_3 = 0\\
+        \alpha_2 - \alpha_1 = 0\\
+        -2\alpha_1 = 1
+      \end{cases}
+      \quad \text{ossia} \quad
+      \begin{cases}
+        \alpha_1 = -1/2\\
+        \alpha_2 = -1/2\\
+        \alpha_3 = 3/2.
+      \end{cases}
+      \quad \text{e infine} \quad
+      T \propto \frac{a^{\frac{3}{2}}}{\sqrt{Gm_\odot}}.
+     \end{align}
+     La conclusione (tutt'altro che ovvia) è corretta ed il fattore di
+     proporzionalità è di nuovo $2\pi$---ma, va da sé, si tratta di una
+     semplice coincidenza.
+  \end{example}
+\end{examplebox}
+
+
+\section{Il concetto di incertezza di misura}
+\label{sec:errore_max}
+
+Nella sua formulazione più elementare, il concetto di \emph{errore massimo}
+è legato alla domanda: "qual è il più piccolo intervallo che contiene
+con certezza il valore numerico della quantità che sto misurando?"
+In altre parole, se scriviamo il risultato della misura di una generica
+grandezza fisica $x$ come:
+\begin{align}\label{eq:errore_max}
+  x = \hat{x} \pm \Delta x~\text{[unità di misura]}
+\end{align}
+intendendo $\Delta x$ come errore massimo, allora in effetti stiamo dicendo che
+l'intervallo $[\hat{x} - \Delta x, \hat{x} + \Delta x]$ è il più piccolo
+intervallo possibile che ci dia la certezza di includere il valore (incognito)
+di~$x$. Se scriviamo, ad esempio, $l = 12.4 \pm 0.2$~cm, stiamo dicendo di
+essere certi che $l$ sia compreso tra $12.2$ e~$12.6$~cm, e che l'intervallo
+$[12.2, 12.6]$~cm è il più piccolo che ci possa dare tale certezza.
+
+Gli ingredienti della~\eqref{eq:errore_max} hanno ciascuno un significato ben
+preciso che è bene fissare il prima possibile:
+\begin{itemize}
+\item $x$ è il valore, incognito, della grandezza che vogliamo misurare, che
+  chiameremo \emph{misurando} (cercando deliberatamente di evitare l'espressione
+  \emph{valore vero}, che pure si trova usata in letteratura);
+\item $\hat{x}$ è la \emph{miglior stima} di $x$ che possiamo fornire a
+  partire dai dati a nostra disposizione---che chiameremo anche
+  \emph{valore centrale} o \emph{migliore stima} della misura;
+\item $\Delta x$ è l'incertezza di misura---o più precisamente, in questo
+  contesto, l'\emph{errore massimo}, nel senso che abbiamo
+  precisato sopra. (Notiamo che, per definizione, $\Delta x$ rappresenta la
+  lunghezza di un intervallo ed è perciò una grandezza definita positiva.)
+\end{itemize}
+Vale la pena sottolineare che il risultato di una misura non ha senso se non
+sono indicate, ove necessario, le unità di misura.
+
+Quando il risultato di una misura fluttua, la nozione di errore massimo porta
+in sé una contraddizione logica dovuta al fatto che, da un punto di vista
+operativo, non è possibile garantire a priori che una nuova misura della
+stessa grandezza non fornisca un valore al di fuori dell'intervallo iniziale di
+incertezza. Ove questo accada siamo costretti ad allargare tale intervallo---ci
+troviamo, cioè, nella situazione assurda in cui acquisire nuova informazione
+può solo peggiorare (o, al massimo, lasciare invariato) il nostro stato di
+conoscenza, nella misura in cui esso è determinato dall'incertezza di misura.
+
+Questo è il motivo per cui in pratica non useremo \emph{mai} il concetto
+di errore massimo, ma utilizzeremo fin da subito quello che comunemente va
+sotto il nome di errore statistico:
+\begin{align}\label{eq:errore_stat}
+  x = \hat{x} \pm \sigma_x~\text{[unità di misura]}.
+\end{align}
+La~\eqref{eq:errore_stat} ha un significato fondamentalmente diverso
+dalla~\eqref{eq:errore_max}: come vedremo in dettaglio nel
+capitolo~\ref{sec:teoria_dei_campioni} essa definisce un intervallo che non ci
+dà la \emph{certezza}, ma solo una \emph{probabilità} ben definita di
+contenere il valore del misurando. (Purtroppo introdurremo il concetto di
+probabilità solo nel capitolo~\ref{sec:probabilita}.)
+A questo livello potrebbe sembrare una mera questione di notazione (una
+$\sigma$ al posto di una $\Delta$), ma si tratta in realtà di una differenza
+profonda e carica di conseguenze.
+
+
+\subsection{Errore assoluto ed errore relativo}
+\label{sec:errore_assoluto_relativo}
+
+Definiamo \emph{errore relativo} (detto anche \emph{errore percentuale}) il
+rapporto tra l'incertezza della misura (detta anche \emph{errore assoluto}) ed
+il suo valore centrale. In particolare, utilizzando la nostra notazione:
+\begin{align}\label{eq:errore_max_relativo}
+  \text{Errore relativo} := \frac{\sigma_x}{\abs{\hat{x}}}.
+\end{align}
+Poiché l'incertezza ha, per ovvie ragioni, le stesse dimensioni fisiche della
+misura a cui si riferisce, l'errore relativo è una quantità adimensionale
+(e definita positiva).
+
+\begin{examplebox}
+  \begin{example}
+    Si misura una lunghezza $l$ ottenendo il risultato $l = 12.4 \pm 0.2$~cm.
+    L'errore relativo è in questo caso $0.016$, vale a dire $1.6\%$.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Precisione ed accuratezza}
+
+In letteratura si trova la distinzione tra i concetti di \emph{accuratezza},
+intesa come accordo tra il valore della misura e quello del misurando, e di
+\emph{precisione}, intesa come consistenza tra risultati di successive misure
+della stessa quantità nelle medesime condizioni.
+
+Si tratta di una distinzione molto rilevante, poiché un dato strumento può
+essere molto accurato ma poco preciso (se fornisce in media la risposta giusta,
+ma con fluttuazioni rilevanti tra misurazioni successive) o---il che è
+potenzialmente più pericoloso---molto preciso ma poco accurato (se fornisce
+in modo estremamente riproducibile la risposta sbagliata). Avremo tempo di
+tornare sull'argomento in seguito, ma diciamo fin da subito che cercheremo
+scrupolosamente di usare questi due termini nell'accezione appena indicata.
+
+\pgffigfour[!b]{precisione_accuratezza_1}{precisione_accuratezza_2}{precisione_accuratezza_3}{precisione_accuratezza_4}{
+  Illustrazione grafica dei concetti di precisione ed accuratezza
+  (adattato da \url{https://www.roma1.infn.it/~dagos/BMS/node116.html}).
+  In tutte e quattro le figure la linea verticale rappresenta il misurando
+  mentre la curva serve a dare un'idea, che a
+  questo livello è puramente qualitativa, delle fluttuazioni delle misure
+  attorno al misurando stesso. Va da sé che gli aggettivi "buono" e
+  "scarso" debbono essere intesi in senso relativo, come metrica di
+  confronto tra le varie situazioni.
+}
+
+Per completezza, la figura~\ref{fig:precisione_accuratezza_1_four} illustra
+graficamente i concetti di precisione ed accuratezza che abbiamo appena
+definito. In ciascuno dei quattro grafici la curva rappresenta in modo
+qualitativo le fluttuazioni delle misure attorno al misurando (incognito), che
+è a sua volta indicato dalla linea verticale. Con leggero abuso di
+linguaggio potremmo dire che la precisione ha a che vedere con la larghezza
+della curva, mentre l'accuratezza ha a che vedere con la vicinanza tra il
+massimo della curva ed il misurando.
+
+
+\section{Cifre significative e convenzioni di scrittura}
+\label{sec:cifre_significative}
+
+Prima ancora di capire come si stima in pratica l'incertezza massima di misura,
+ci soffermiamo per un attimo su alcune questioni, semplici ma importanti, di
+notazione. In un articolo scientifico non troverete mai scritto (sperabilmente)
+che la massa di un oggetto è $74.562572 \pm 0.024894$~kg. Ed il motivo è
+semplice: se l'errore di misura è dell'ordine di 25~g, è palesemente
+assurdo scrivere il valore centrale fino al~$\mu$g (cioè fino al millesimo di
+mg!). Le ultime tre cifre (almeno) sono irrilevanti---semplice rumore numerico.
+
+Facciamo un passo indietro. La questione si può inquadrare quantitativamente
+attraverso la nozione di \emph{cifra significativa}, che si definisce mediante
+tre semplici regole, illustrate dall'esempio~\ref{exp:cifre_significative}.
+Dato un valore generico:
+\begin{itemize}
+\item la cifra più significativa è quella più a sinistra diversa
+  da zero;
+\item la cifra meno significativa è quella più a destra (inclusi gli
+  zeri a destra del separatore decimale, ma fatta eccezione per gli zeri che
+  definiscono l'ordine di grandezza per i numeri interi);
+\item tutte le cifre comprese tra la più significativa e la
+  meno significativa sono significative.
+\end{itemize}
+
+\begin{examplebox}
+  \hstack[0.8]{\begin{example}\label{exp:cifre_significative}
+      Negli esempi qui di fianco indichiamo con una sottolineatura la cifra meno
+      significativa, con una sopralineatura quella più significativa e tra
+      parentesi quadre il numero di cifre significative, in una serie di
+      situazioni tipiche. (Si tratta di una cosa di importanza basilare, per cui
+      assicuratevi di dominare l'argomento prima di procedere.)
+  \end{example}}{
+    \vspace*{7pt}
+    \rule{12pt}{0pt}%
+    \begin{tabular}{ll}
+      $\overline{3}11\underline{5}$ & [$4$]\\
+      $\overline{3}212.\underline{5}$ & [$5$]\\
+      $0.0\overline{3}2\underline{5}$ & [$3$]\\
+      $0.0\overline{3}0\underline{0}$ & [$3$]\\
+      $\overline{3}00.0\underline{0}$ & [$5$]
+    \end{tabular}
+  }
+\end{examplebox}
+
+Torniamo allora al nostro problema originale. La nozione di cifra significativa
+è strettamente connessa con quella di arrotondamento del valore centrale
+della misura ed il numero di cifre significative con cui si deve scrivere tale
+valore è determinato dall'incertezza associata. Più precisamente:
+\emph{si scrive l'incertezza di misura con una o al massimo due cifre
+  significative (arrotondando opportunamente), e si arrotonda il valore
+  centrale in modo da essere consistente, in termini di cifre decimali, con
+  l'incertezza associata}.
+
+Così $74.563 \pm 0.025$~kg e $74.56 \pm 0.02$~kg sono entrambe scritture
+accettabili per la massa dell'oggetto con cui abbiamo aperto questa sezione.
+(Va da sé che, quando i risultati di misure, dirette o indirette, vengono
+usati per stimare grandezze derivate, è buona norma avere cura che gli
+arrotondamenti effettuati nei passaggi intermedi non introducano errori
+significativi nel risultato finale.) Il lettore è incoraggiato ad esaminare
+scrupolosamente l'esempio~\ref{exp:errori_cifre_significative}, che rappresenta
+un breve campionario di modi in cui \emph{non} scrivere il risultato della
+misura.
+
+\begin{examplebox}
+  \begin{example}\label{exp:errori_cifre_significative}
+    La seguente è una breve lista di errori tipici che si possono compiere;
+    i valori tra parentesi quadre indicano la (o una) possibile versione
+    corretta.
+
+    \medskip
+    \begin{tabular}{l@{\hskip 18pt}l@{\hskip 18pt}l}
+      $3.436 \pm 0.542$ & incertezza con troppe (tre) cifre significative &
+      [$3.44\pm0.54$]\\
+      $3.4 \pm 0.54$ & incertezza con una cifra significativa di troppo &
+      [$3.4 \pm 0.5$]\\
+      & oppure valore centrale con una cifra significativa mancante &
+      [$3.40 \pm 0.54$]\\
+      $3.44 \pm 0.5$ & valore centrale con una cifra significativa di troppo &
+      [$3.4 \pm 0.5$]\\
+      & oppure incertezza con una cifra significativa mancante &
+      [$3.44 \pm 0.50$]\\
+      $3000 \pm 100$ & scrittura ambigua per gli zeri meno significativi &
+      [$(3.0 \pm 0.1)\times 10^3$]
+    \end{tabular}
+  \end{example}
+\end{examplebox}
+
+La capacità di scrivere correttamente il risultato di una misura è di
+fondamentale importanza e va acquisita il prima possibile. Troncare l'incertezza
+di misura a una o due cifre significative può a prima vista apparire come una
+genuina perdita di informazione, ma è importante realizzare subito che così
+non è, perché le cifre che tronchiamo
+\emph{non contengono nessuna informazione}.
+Se misuriamo la lunghezza di un tavolo con un metro a nastro non c'è nessuna
+informazione utile nella cifra corrispondente ad $1~\mu$m; quando ci pesiamo su
+una bilancia pesapersone non c'è nessuna informazione utile nella cifra
+corrispondente al decimo di grammo. Per cui, lo ripetiamo perché non vi
+è rischio di enfatizzare troppo il concetto,
+\emph{scrivere un'incertezza con più di due cifre significative non ha alcun
+  senso}. Nella maggior parte dei casi una è sufficiente.
+
+Per completezza notiamo che non è inconsueto in letteratura che l'incertezza
+di misura venga (consapevolmente) omessa. In questi casi la precisione del
+risultato sperimentale è, almeno parzialmente, implicita nel modo in cui il
+risultato stesso è scritto, e si può assumere che l'errore sia da
+considerarsi pari ad una unità della cifra meno significativa del valore
+centrale. Così i valori $5.0$~m, e $5.00$~m hanno significati diversi:
+il primo è da leggersi come $5.0 \pm 0.1$~m, mentre il secondo come
+$5.00 \pm 0.01$~m. Inutile a dirsi, riportare esplicitamente l'errore di misura
+è il modo migliore per evitare ambiguità di sorta.
+
+
+\subsection{Alcune precisazioni sugli arrotondamenti}
+
+Nella sezione precedente abbiamo accennato sommariamente al problema degli
+arrotondamenti, ma ci sono un paio di dettagli che vale la pena sviscerare
+prima di procedere.
+
+Tecnicamente per \emph{arrotondamento} si intende il processo di riduzione
+del numero di cifre significative con cui si rappresenta una quantità fisica.
+L'arrotondamento può essere per difetto, se il valore arrotondato è minore
+di quello originale, e per eccesso in caso contrario. Ove non si specifichi
+altrimenti, si dà per inteso che gli arrotondamenti si eseguono in modo
+che il valore arrotondato sia quello più vicino a quello originale. Così, se
+vogliamo arrotondare a 2~cifre significative si ha
+\begin{align*}
+  3.21 & \rightarrow 3.2 \quad \text{(arrotondamento per difetto)} \\
+  3.27 & \rightarrow 3.3 \quad \text{(arrotondamento per eccesso).}
+\end{align*}
+
+Tecnicamente questa prescrizione non è ben definita quando i valori
+arrotondati per eccesso e per difetto sono equidistanti dal valore originale,
+e.g.,
+\begin{align*}
+  3.25 \rightarrow\ ? \quad \text{(arrotondamento per difetto o per eccesso?).}
+\end{align*}
+In questi casi arrotondare sempre per difetto o sempre per eccesso porterebbe
+ad una sottostima o una sovrastima sistematica (e potenzialmente pericolosa)
+delle misure---che è per ovvie ragioni da evitare. Una prescrizione possibile
+è allora arrotondare per difetto se la cifra a sinistra del $5$ è pari
+(come è il $2$ in questo caso) ed arrotondare per eccesso se la cifra è
+dispari%
+\footnote{Tecnicamente l'idea funziona se la frequenza delle cifre pari è
+  uguale a quella delle cifre dispari---cosa che, pur essendo apparentemente
+  ragionevole, a rigore non è garantita, come vedremo nella
+  sezione~\ref{sec:legge_di_benford}.
+  Ma abbiamo discusso il problema a sufficienza ed è arrivato il momento di
+  dichiararci soddisfatti e procedere.}%
+:
+\begin{align*}
+  3.25 & \rightarrow 3.2 \quad \text{(arrotondamento per difetto)} \\
+  3.35 & \rightarrow 3.4 \quad \text{(arrotondamento per eccesso).}
+\end{align*}
+
+
+\section{Digressione: \python\ come calcolatore tascabile}
+
+Interrompiamo per un attimo il filo della discussione per introdurre \python,
+il linguaggio di programmazione che ci accompagnerà lungo tutto il nostro
+viaggio. Per poter essere utilizzati, gli esempi inclusi in questa sezione, e
+quelli che seguiranno, presuppongono che abbiate un'installazione funzionante
+di \python. Sottolineiamo che queste dispense non hanno la benché minima pretesa
+di essere un corso auto-contenuto di \python, ed il lettore che non fosse già
+familiare con la materia avrà bisogno senza dubbio di risorse aggiuntive per
+mettersi in condizione di utilizzare gli esempi mostrati nel seguito---ma il
+\foreign{web} è letteralmente stracolmo di istruzioni e \emph{tutorial} al
+proposito, per cui non dovrebbe essere difficile trovare quello che fa più al
+caso vostro.
+
+Nella modalità di utilizzo più semplice, \python\ può essere usato in modo
+\emph{interattivo}---ovvero lanciando l'interprete da linea di comando ed
+inserendo comandi \python\ (validi) nell'interprete stesso. La cosa è
+interessante perché in questa modalità l'interprete \emph{risponde} ad
+ogni comando stampando sullo schermo il risultato del comando stesso ogni qual
+volta si preme il tasto di invio, cosa che può risultare utile di tanto in
+tanto---specialmente quando si sperimenta.
+
+L'esempio che segue illustra l'utilizzo di \python\ come una sorta di calcolatore
+tascabile. Notiamo in particolare:
+\begin{itemize}
+\item le quattro operazioni elementari sono implementate attraverso gli
+  operatori \cchar{+}, \cchar{-}, \cchar{*} e \cchar{/}, con le consuete regole
+  di precedenza;
+\item l'operatore \cchar{**} (che ha precedenza sui quattro elencati sopra)
+  corrisponde all'elevamento a potenza;
+\item la funzione \code{round()} permette di arrotondare un numero reale
+  all'intero più vicino.
+\end{itemize}
+
+\begin{Verbatim}
+[lbaldini@nbbaldini ~]$ python
+Python 3.7.4 (default, Jul  9 2019, 16:32:37)
+[GCC 9.1.1 20190503 (Red Hat 9.1.1-1)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> (3 + 3) / 2.2
+2.727272727272727
+>>> 2.4 * 15.3
+36.72
+>>> 3.**2.
+9.0
+>>> round(2.49)
+2
+>>> round(2.51)
+3
+>>>
+\end{Verbatim}
+
+Chi non avesse già familiarità con la cosa è vivamente incoraggiato ad
+aprire un interprete \python\ e sperimentare. Non vi è rischio di rompere
+niente ed è un buon modo per prepararsi al lavoro vero che arriverà a breve!
+
+Nella stragrande maggioranza dei casi, tuttavia, non lavoreremo in modalità
+interattiva; scriveremo viceversa la nostra serie di comandi in un \emph{file}
+di testo nella forma di un \emph{programma} che l'interprete esegue
+sequenzialmente. Questo ha il vantaggio che il lavoro che facciamo non va
+perduto al termine della sessione interattiva, ma può essere salvato,
+modificato, condiviso ed eseguito all'occorrenza. Essere capaci di scrivere ed
+eseguire il nostro primo programma, per quanto semplice, è il secondo passo
+fondamentale verso l'arte della programmazione. Da qui in poi la strada è in
+discesa.
+
+Come vedremo, gli strumenti che l'interprete \python\ mette a disposizione di
+\emph{default} all'avvio non ci basteranno. Dovremo utilizzare una serie
+di librerie, sia dalla libreria standard di \python\ che da pacchetti esterni,
+che implementano funzionalità più avanzate, e che vedremo via via. La
+libreria \code{math}, ad esempio, mette a disposizione una serie di costanti
+(e.g., $\pi$) e di funzioni matematiche (esponenziale, logaritmi, funzioni
+trigonometriche) che ci saranno utili in seguito.
+
+\begin{snippet}[htb!]
+  \bigskip % This is ugly and should be taken care of automagically.
+  \hstack[0.45]{\input{texcode/rounding}}{
+    \caption{Illustrazione di un piccolo sottoinsieme delle funzioni che
+      la libreria standard \code{math} di \python\ mette a disposizione.
+      Per ciò che riguarda l'arrotondamento ad intero dei numeri in virgola
+      mobile: \code{round()} arrotonda all'intero più vicino,
+      \code{math.floor()} e \code{math.ceil()} arrotondano per difetto e per
+      eccesso, rispettivamente, e \code{math.trunc()} tronca la parte decimale.
+    }
+    \label{snip:rounding}
+  }
+\end{snippet}
+
+
+\section{Stima dell'incertezza in condizioni di ripetitività}
+\label{sec:stima_errore_max}
+
+Torniamo adesso alla discussione delle incertezze di misura che abbiamo
+temporaneamente messo da parte dopo la sezione~\ref{sec:errore_max}.
+Quando una misura è fatta più volte in condizioni di ripetitività si
+hanno due casi tipici: (i) la dispersione delle misure è nulla---cioè
+otteniamo sempre lo stesso risultato---oppure (ii) il valore ottenuto
+fluttua---cioè misure successive forniscono risultati in generale diversi
+tra loro.
+
+
+\subsection{Misure in regime di dispersione nulla: la risoluzione strumentale}
+
+La \emph{risoluzione} di uno strumento è la più piccola \emph{variazione}
+della quantità da misurare che è possibile apprezzare con lo strumento
+stesso%
+\footnote{Notiamo, per completezza, che la risoluzione in generale non coincide
+con la più piccola quantità che uno strumento può apprezzare (che
+si dice \emph{sensibilità}). Notiamo anche che la risoluzione non coincide
+necessariamente con l'unità di formato dello strumento (e.g., la divisione
+più piccola di una scala graduata).}.
+Così la risoluzione di un metro a nastro è $1$~mm, quella di un calibro
+ventesimale $0.05$~mm e quella di un calibro Palmer $0.01$~mm, tanto
+per fare alcuni esempi (vedi appendice~\ref{sec:strumenti}). In pratica capita
+di frequente che la risoluzione dello strumento che utilizziamo non sia nota
+a priori, e vedremo nel seguito alcuni modi comunemente usati per stimarla, ove
+ciò fosse necessario.
+
+\emph{Quando eseguiamo una misura in condizioni di dispersione nulla, cioè
+  misure successive della stessa quantità forniscono sempre lo stesso
+  risultato, almeno nei casi più semplici si può assumere la risoluzione
+  strumentale (o metà della risoluzione strumentale) come errore di misura}.
+(Avvertiamo fin da subito che torneremo sulla questione nella
+sezione~\ref{sec:errore_campionamenti_singoli} e la risposta formalmente
+corretta richiederà un fattore $\sqrt{12}$ al denominatore, ma per il momento
+la cosa non ci interessa.)
+
+\begin{examplebox}
+  \begin{example}\label{exp:metro_a_nastro}
+    Se misuriamo la lunghezza $l$ di un tavolo con un metro a nastro (con una
+    risoluzione di $1$~mm) ottenendo il valore $189.4$~cm, scriveremo la nostra
+    misura come $l = 189.4 \pm 0.1$~cm.
+  \end{example}
+
+  \begin{example}\label{exp:termometro_digitale}
+    Misuriamo la temperatura $T$ dell'acqua in un recipiente con un termometro
+    digitale ed il \emph{display} indica $34.5^\circ$C. In mancanza di
+    informazioni aggiuntive (ad esempio fornite dal \emph{data sheet} dello
+    strumento), dobbiamo assumere che tutte le cifre siano significative e che
+    la risoluzione dello strumento sia $0.1^\circ$C. Scriveremo dunque il
+    risultato della misura come $T = 34.5 \pm 0.1^\circ$C.
+  \end{example}
+\end{examplebox}
+
+Per quanto apparentemente banali, gli esempi~\ref{exp:metro_a_nastro}
+e~\ref{exp:termometro_digitale} non devono trarre in inganno: la vita è
+spesso più complicata e a volte identificare l'accuratezza di una misura
+(nel senso della distanza dal misurando) con la risoluzione dello strumento
+utilizzato può portare ad errori apprezzabili.
+In una determinata situazione potremmo avere difficoltà pratiche nella
+lettura del metro a nastro o nella definizione stessa della lunghezza da
+misurare (ad esempio per problemi di messa a fuoco nelle misure di ottica).
+Oppure il nostro termometro potrebbe non essere correttamente calibrato (di un
+fattore che non conosciamo) per cui, dato lo stesso oggetto, ci fornisce sempre
+la stessa temperatura, ma quest'ultima è sistematicamente sbagliata.
+(Torneremo brevemente sulla questione dei cosiddetti errori sistematici nella
+sezione~\ref{sec:errori_sistematici}.)
+
+
+\subsection{Un semplice esperimento: l'incertezza di misura con il metro a
+  nastro}
+\label{sec:interpolazione_metro_a_nastro}
+
+A corredo della discussione sulla stima dell'incertezza di misura, in
+figura~\ref{fig:interpolazione_metro_2} mostriamo i risultati di un semplice
+esperimento in cui si è chiesto ad un gruppo di $33$ studenti di Fisica del
+primo anno di misurare indipendentemente con un metro a nastro,
+\emph{interpolando tra le divisioni al meglio delle loro capacità},
+la lunghezza $l$ del lato di una lastrina di ottone.
+
+La lunghezza stessa era stata preliminarmente (ed accuratamente) misurata con
+un calibro cinquantesimale ottenendo il valore $l = 4.323 \pm 0.002$~cm.
+Si tratta di una situazione interessante in cui, dal punto di vista della misura
+con il metro a nastro, il misurando è noto a priori con precisione
+\emph{infinita}---la risoluzione del calibro cinquantesimale è molto minore
+di quella del metro a nastro, e la cosa può essere utilizzata per ricavare
+una serie di conseguenze sulla misura stessa. Tenetelo a mente, perché l'idea
+di \emph{calibrare} uno strumento relativamente poco preciso con uno molto
+più preciso è utilizzata molto comunemente in Fisica sperimentale.
+
+\pgffigone{interpolazione_metro_2}{
+  Istogramma delle lunghezze $l$ del lato di una lastrina di ottone misurate
+  indipendentemente da un gruppo di $33$ studenti, interpolando ad occhio tra le
+  divisioni di un metro a nastro. La freccia indica il valore misurato con il
+  calibro cinquantesimale, che per i nostri scopi coincide a tutti gli effetti
+  con il misurando, mentre le due linee verticali tratteggiate indicano
+  l'intervallo al di fuori del quale siamo di fronte ad un banale errore di
+  lettura.
+}
+
+L'istogramma in figura~\ref{fig:interpolazione_metro_2} (chi non sapesse
+cosa è un istogramma può saltare per un attimo alla
+sezione~\ref{sec:barre_e_istogrammi}) è interessante sotto
+diversi aspetti. Se non avessimo richiesto di interpolare tra le tacche del
+metro a nastro ci aspetteremmo di essere in regime di dispersione nulla (cioè
+tutti avrebbero dovuto leggere $l = 4.3$~cm, ovvero il valore corrispondente
+alla divisione del metro più vicina al misurando), ma è chiaro che qui
+il panorama è estremamente più complicato:
+\begin{itemize}
+\item il picco più alto è proprio in corrispondenza del valore misurato
+  con il calibro cinquantesimale---una frazione significativa degli studenti
+  (per la precisione $9$ su $33$) ha fornito una misura con una precisione
+  di $0.1$~mm o meno, il che dimostra la possibilità di interpolare ben al
+  di sotto della risoluzione strumentale (a patto che si facciano le cose con
+  cura);
+\item vi sono due picchi intermedi a $l = 4.3$~mm ($4$ studenti) e $l = 4.4$~mm
+  (3 studenti)---in questo caso evidentemente gli studenti hanno deciso di non
+  interpolare e di leggere direttamente il valore della misura come la divisione
+  più vicina sul metro (e il primo gruppo ha letto giusto, mentre il secondo
+  no);
+\item $9$ studenti su $33$ hanno riportato un valore che dista più di mezza
+  divisione ($0.5$~mm) dal misurando, e $3$ hanno sbagliato di più di una
+  divisione ($1$~mm)---tutti questi casi, e sono circa il $25\%$ costituiscono
+  banali errori di lettura.
+\end{itemize}
+
+Ora, è chiaro che se anche in una situazione apparentemente tanto semplice
+il risultato è così variegato, la nostra ricetta iniziale di prendere
+la risoluzione strumentale come stima dell'incertezza di misura va ponderata
+con attenzione caso per caso. Sicuramente sarebbe sbagliata, per motivi diversi,
+per la maggior parte degli studenti che hanno preso parte a questo
+esperimento.
+
+
+\subsection{Fluttuazioni casuali: stima a posteriori dell'incertezza}
+
+Il caso in cui i valori misurati sono soggetti a fluttuazioni statistiche
+è chiaramente, dal nostro punto di vista, più interessante---e quello in
+cui la nozione di errore massimo diventa problematica. Le fluttuazioni possono
+essere dovute alle caratteristiche dello strumento di misura (ad esempio il
+rumore in un dispositivo elettronico), alle proprietà intrinseche del sistema
+fisico sotto studio (ad esempio effetti quanto-meccanici), oppure ad una
+combinazione dei due fattori.
+
+In situazioni di questo tipo possiamo stimare a posteriori l'incertezza
+in base alla dispersione attorno al valor medio di misure successive eseguite
+in condizioni di ripetitività. Se eseguiamo, cioè, $n$ misure
+$x_1, x_2 \ldots x_n$ della grandezza $x$ cui siamo interessati, a questo
+livello potrebbe sembrare ragionevole prendere la media aritmetica delle misure
+stesse come valore centrale e la semidispersione come errore massimo:
+\begin{align}\label{eq:errore_max_fluttuazioni}
+  \hat{x} = \frac{1}{n} \sum_{i = 1}^n x_i \quad \text{e} \quad
+  \Delta x = \frac{x_{\max} - x_{\min}}{2}.
+\end{align}
+
+Per quanto apparentemente sensata, si tratta di nuovo di una ricetta che
+possiamo utilizzare per avere un'idea dell'incertezza di misura in alcune
+situazioni semplici, ma che è afflitta dai problemi insanabili descritti
+alla fine della sezione~\ref{sec:errore_max}. Il primo è che, data una serie
+finita di misure, nessuno ci assicura che misure successive non possano cadere
+al di fuori della semidispersione iniziale---il che, a rigore, contraddice la
+nostra definizione di errore massimo. Il secondo è che all'aumentare del
+numero $n$ di misure la semidispersione non può che aumentare, il che ci
+lascia nella situazione apparentemente assurda in cui eseguire nuove misure
+(cioè aggiungere informazione) causa un incremento dell'incertezza.
+
+Come abbiamo detto all'inizio, in pratica non utilizzeremo mai l'errore massimo,
+ed è giunto dunque il momento di dare la prima ricetta priva di
+dimostrazione. In presenza di fluttuazioni casuali stimeremo a posteriori
+l'errore statistico con quella che prende il nome di
+\emph{deviazione standard della media}
+\begin{align}\label{eq:stdev_media_intro}
+  \sigma_x = \sqrt{\frac{1}{n(n - 1)}\sum_{i = 1}^n (x_i - \hat{x})^2}.
+\end{align}
+Senza scendere nei dettagli, la~\eqref{eq:stdev_media_intro} costituisce una
+sorta di valor medio degli scarti quadratici delle singole misure rispetto
+al loro valor medio. Se vi state chiedendo il senso di utilizzare la media
+quadratica anziché quella aritmetica, anticipiamo che quest'ultima sarebbe
+identicamente nulla a causa del fatto che le fluttuazioni positive e quelle
+negative tendono a compensarsi:
+\begin{align*}
+  \sum_{i = 1}^n (x_i - \hat{x}) = \sum_{i = 1}^n x_i - n \hat{x} =
+  n \left( \frac{1}{n} \sum_{i = 1}^n x_i - \hat{x} \right) =
+  n (\hat{x} - \hat{x}) = 0.
+\end{align*}
+Avremo occasione di tornare sull'argomento e sviscerarlo in dettaglio nella
+sezione~\ref{sec:deviazione_standard_media}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:pendolo_errore}
+    Vogliamo misurare il periodo $T$ di un pendolo ed abbiamo a disposizione
+    un cronometro digitale con risoluzione di $0.01$~s. Si tratta di un caso
+    interessante, in cui l'apparato di misura è costituito, per così dire,
+    dal combinato del cronometro e della persona che fisicamente lo utilizza.
+    Non è banale quantificare a priori l'incertezza di misura, ma possiamo
+    sospettare che le fluttuazioni del tempo di reazione umano rappresentino il
+    contributo più rilevante.
+    Eseguiamo dunque $5$ misurazioni del periodo ottenendo i valori:
+    $2.12$~s, $2.22$~s, $2.16$~s, $2.10$~s e $2.15$~s. Seguendo
+    la~\eqref{eq:errore_max_fluttuazioni}, avremmo $T = 2.15 \pm 0.06$~s.
+    In realtà la risposta corretta è la~\eqref{eq:stdev_media_intro}, che
+    fornisce $T = 2.15 \pm 0.02$~s, o anche $T = 2.15 \pm 0.02$~s.
+    (Come atteso, l'errore statistico è più piccolo dell'errore massimo.)
+  \end{example}
+\end{examplebox}
+
+\begin{snippet}[htb!]
+  \bigskip % This is ugly and should be taken care of automagically.
+  \hstack[0.47]{\input{texcode/mean_stdev}}{
+    \caption{Illustrazione del calcolo della media, della semidispersione e
+      della deviazione standard della media per le misure di periodo
+      nell'esempio~\ref{exp:pendolo_errore},
+      utilizzando la libreria~\numpy\ di \python. (Potete confrontare
+      direttamente i risultati ottenuti.)
+      Il lettore è incoraggiato a consultare la documentazione online di
+      \numpy\ per una spiegazione esaustiva delle funzioni che abbiamo
+      utilizzato. Se la linea~8 (calcolo della deviazione standard della media)
+      in particolare vi sembra criptica, non preoccupatevi, perché dopo
+      aver letto la sezione~\ref{sec:deviazione_standard_media} vi sarà
+      chiarissima. Infine: vi siete chiesti come mai la semidispersione
+      calcolata non è \emph{esattamente} $0.06$?
+    }
+    \label{snip:mean_stdev}
+  }
+\end{snippet}
+
+
+\subsection{Si può ridurre l'incertezza di misura al di sotto della
+  risoluzione strumentale?}
+\label{sec:misure_sotto_risoluzione}
+
+Il titolo di questa sezione può sembrare provocatorio, ma la risposta,
+in generale, è affermativa---ed in effetti abbiamo già visto con
+l'esperimento descritto nella sezione~\ref{sec:interpolazione_metro_a_nastro}
+che interpolare tra le tacche di un metro a nastro è una via possibile.
+C'è un'altra situazione tipica in cui si può battere (per così dire) la
+risoluzione strumentale, quella cioè in cui si ha a disposizione un certo
+numero di copie \emph{identiche} (o abbastanza simili da poter essere
+considerate tali) dell'oggetto o della grandezza che vogliamo misurare.
+In tal caso si può fare una misura diretta della somma di queste copie
+e \emph{spalmare} la risoluzione strumentale su di esse, dividendo il
+valore centrale e l'errore per il loro numero, come illustrato negli
+esempi~\ref{exp:misura_spessore_foglio} e~\ref{exp:misura_peso_spillo}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:misura_spessore_foglio}
+    Si vuole misurare lo spessore $s$ di un foglio di carta disponendo solo di
+    un metro a nastro. A tale scopo si misura lo spessore $h$ di una risma di
+    $500$ fogli, ottenendo il valore $h = 40 \pm 1$~mm. Dividendo tutto per
+    $500$, possiamo scrivere $s = 0.080 \pm 0.002$~mm, con un errore massimo
+    $500$ volte più piccolo della risoluzione del metro a nastro.
+    (Notiamo che il risultato dipende dall'assunzione implicita che i 500~fogli
+    abbiano lo stesso spessore nei limiti dell'incertezza sperimentale.)
+  \end{example}
+
+  \begin{example}\label{exp:misura_peso_spillo}
+    Si vuole misurare il peso di uno spillo con una bilancia con risoluzione
+    di $1$~g. Come prima, se si dispone di un gran numero di spilli uguali,
+    possiamo pesarli tutti insieme e dividere il valore centrale e l'incertezza
+    di misura sul peso complessivo per questo numero.
+  \end{example}
+\end{examplebox}
+
+A complemento di questa sezione descriviamo il risultato di un semplice
+esperimento in cui si è chiesto ad un gruppo di studenti di misurare
+ripetutamente (per dieci volte) la durata di (i) un singolo periodo e (ii)
+di $10$ periodi del moto armonico di un cerchietto colorato simulato su un
+calcolatore portatile e proiettato su uno schermo. (Il vantaggio di utilizzare
+una simulazione anziché un oggetto reale è la possibilità di controllare
+il periodo con una precisione maggiore di tutte le incertezze in gioco
+nell'esperimento---che nel nostro linguaggio significa essenzialmente conoscere
+il valore del misurando). Va da sé che l'idea di base è che, dividendo
+le misure di $10$ periodi per $10$, ci aspettiamo di ottenere una misura più
+precisa che non misurando il periodo singolo direttamente.
+
+\pgffigtwo[!b]{periodo_pendolo1}{periodo_pendolo10}{
+  Distribuzione dei valori del periodo di un moto armonico di un cerchietto
+  proiettato su uno schermo, ottenuti misurando direttamente un periodo singolo
+  (a sinistra) e dividendo per $10$ la misura di $10$ periodi (a destra).
+  Nel secondo caso l'effetto delle fluttuazioni del tempo di reazione umano
+  è significativamente ridotto (e, incidentalmente, appare anche un piccolo
+  picco secondario a $\nicefrac{9}{10}$ del valore vero, dovuto evidentemente
+  ad un banale errore di conteggio).
+}
+
+In figura~\ref{fig:periodo_pendolo1_periodo_pendolo10} sono mostrate (sulla
+stessa scala orizzontale per evidenziare la differenza) le distribuzioni
+su un campione di $93$ studenti (per un totale di $930$ valori) delle misure
+di $1$ e $10$~periodi---queste ultime ovviamente divise per $10$. Le prime
+variano di qualche decimo di secondo (cioè qualche decina di volte la
+risoluzione strumentale, a conferma che la misura è dominata dalle
+fluttuazioni del tempo di reazione dello sperimentatore) e sono anche
+sistematicamente sottostimate rispetto al valore \emph{vero}, che è
+$1.76$~s come indicato dalla freccia verticale.
+Le altre tendono, almeno per la maggior parte, a fluttuare significativamente
+di meno (diciamo qualche centesimo di secondo) intorno al valore
+vero---esattamente come ci aspettavamo.
+
+Questo semplice esempio va estrapolato con un minimo di cura (e caso per caso)
+a situazioni diverse da quella descritta. In particolare se dovessimo misurare
+in questo modo il periodo di un pendolo, il cui moto non è armonico per
+angoli sufficientemente grandi, dovremmo fare attenzione ai possibili
+effetti dello smorzamento, che potrebbe provocare una diminuzione apprezzabile
+del periodo su tempi abbastanza lunghi. Purtuttavia l'idea di base è buona
+ed utilizzabile in pratica.
+
+Concludiamo notando come, nell'istogramma di destra in
+figura~\ref{fig:periodo_pendolo1_periodo_pendolo10}, appaia un piccolo picco
+secondario, contenente poche decine di misurazioni, a sinistra di quello
+principale. La posizione del picco è intorno a $1.58$~s, che corrisponde
+con buona precisione a $\nicefrac{9}{10}$ del valore vero $1.76$~s.
+Si tratta banalmente di un errore di conteggio (alcuni studenti hanno misurato
+il periodo corrispondente a $9$ periodi anziché $10$), che ci ricorda come
+sia sempre importante fare attenzione, perché di fronte agli errori
+(non intesi come incertezze) tutta la nostra teoria crolla.
+
+
+\section{Andamento asintotico dell'errore statistico}
+\label{sec:andamento_asintotico_stat}
+
+Torniamo per un attimo a guardare la~\eqref{eq:stdev_media_intro}. C'è una
+domanda fondamentale che possiamo farci (e a cui possiamo già rispondere),
+ovvero: \emph{come scala l'errore statistico al crescere del numero di
+misure?} La cosa, come è facile immaginare, è di interesse non solo
+accademico, perché è intimamente legata alla questione generale del progetto
+degli esperimenti---una parte essenziale del quale è stimare quante misure
+dobbiamo fare (ovverosia, per quanto tempo dobbiamo prendere dati) per
+raggiungere il livello di precisione voluto.
+
+Con un leggero abuso di notazione potremmo dire che siamo interessati a
+studiare il comportamento del limite
+\begin{align*}
+  \lim_{n \rightarrow \infty} \sqrt{\frac{1}{n(n - 1)}\sum_{i = 1}^n (x_i - \hat{x})^2},
+\end{align*}
+ma è importante notare fin dall'inizio, per evitare confusione, che non
+si tratta di un limite nel senso usuale del termine (come formalizzato,
+e.g., nel corso di analisi matematica)%
+\footnote{Vedremo più in dettaglio
+nella sezione~\ref{sec:prop_definizione_freq} il concetto della convergenza
+statistica, ma per questo dovremo prima acquisire i concetti di base della
+teoria della probabilità.}, perché le fluttuazioni delle misure attorno
+al misurando (o, per quel che conta, attorno al valor medio) hanno un carattere
+squisitamente aleatorio e non sono predicibili a priori.
+
+Osserviamo per prima cosa la sommatoria all'interno della radice quadrata. Come
+abbiamo detto, il valore del termine $i$-esimo fluttuerà casualmente e non
+è prevedibile a priori; tuttavia è ragionevole supporre che,
+trattandosi di una somma di $n$ termini definiti positivi, essa tenda a
+crescere linearmente con $n$, ovvero:
+\begin{align*}
+  \lim_{n \rightarrow \infty} \sum_{i = 1}^n (x_i - \hat{x})^2 \propto n.
+\end{align*}
+(In altre parole: più termini sommo, più è grande la somma.) Allora il
+limite cercato è semplice da calcolare utilizzando le regole consuete:
+\begin{align}\label{eq:errore_radice_n}
+  \lim_{n \rightarrow \infty} \sqrt{\frac{1}{n(n - 1)}\sum_{i = 1}^n (x_i - \hat{x})^2}
+  \propto \lim_{n \rightarrow \infty} \sqrt{\frac{n}{n(n - 1)}} =
+  \lim_{n \rightarrow \infty} \frac{1}{\sqrt{n}}.
+\end{align}
+In altre parole:
+\emph{l'errore statistico decresce come $\nicefrac{1}{\sqrt{n}}$} al
+crescere del numero $n$ delle misure. Una formulazione equivalente, ed
+altrettanto utile, di questo principio di base è la seguente:
+\emph{per aumentare la precisione di un fattore $c$ è necessario aumentare
+il numero di misure di un fattore $c^2$.} Tenetelo bene in mente perché si
+tratta di un'affermazione di validità estremamente più generale di quanto
+non possa apparire in questo momento.
+
+\begin{examplebox}
+  \begin{example}
+    Si misura il periodo $T$ di un pendolo con un cronometro digitale e la
+    distribuzione a posteriori di un certo numero di misure di prova indica che
+    l'incertezza (statistica) dovuta alle fluttuazioni del tempo di reazione
+    dello sperimentatore è $0.05$~s (5 centesimi di secondo). Qual è il
+    numero $n$ di misure singole che dobbiamo eseguire per arrivare ad una
+    precisione di $0.001$~s (1 millesimo di secondo) sul valor medio?
+
+    La risposta è data banalmente da
+    \begin{align*}
+      \frac{0.05}{\sqrt{n}} = 0.001 \quad \text{ovvero} \quad
+      n = \left(\frac{0.05}{0.001}\right)^2 = 2500.
+    \end{align*}
+    (Ovverosia: dobbiamo eseguire 2500 misure.)
+  \end{example}
+
+  \begin{example}
+    Un esperimento per la misura della massa $m$ di una nuova particella
+    raggiunge una precisione $\nicefrac{\sigma_{m}}{m} = 5\%$ in un anno di
+    presa dati. Per quanto tempo ancora si deve continuare ad operare (nelle
+    stesse condizioni) se si vuole raggiungere una precisione dell'$1\%$?
+
+    La risposta è semplice: dato che l'errore statistico scala come
+    $\nicefrac{1}{\sqrt{n}}$, per abbattere $\sigma_m$ di un fattore 5
+    dobbiamo aumentare la statistica di un fattore $5^2 = 25$---quindi dobbiamo
+    prendere dati per altri 24 anni.
+
+    (Per inciso: questo è un caso in cui, probabilmente, avrebbe più senso
+    pensare ad un \foreign{upgrade} dell'esperimento per accumulare statistica
+    più velocemente.)
+  \end{example}
+\end{examplebox}
+
+Notiamo esplicitamente che, benché la~\eqref{eq:errore_radice_n} sembri
+suggerire che sia possibile raggiungere un'incertezza di misura arbitrariamente
+piccola (e, almeno in linea di principio, anche nulla) semplicemente
+accumulando più dati, questo non è in generale vero a causa
+dell'impossibilità di controllare esattamente tutte le condizioni al contorno
+che potenzialmente influenzano la nostra misura. Questa impossibilità causa
+l'insorgenza di un nuovo tipo di incertezza, che è intrinsecamente diversa
+da quella statistica e che non può essere mitigata semplicemente eseguendo un
+numero maggiore di misure, come vedremo nella
+sezione~\ref{sec:errori_sistematici}.
+
+
+\subsection{L'andamento dell'errore statistico in un semplice esperimento}
+
+Supponiamo di fare il seguente semplice esperimento: misuriamo per 10 volte
+il periodo di un pendolo con un cronometro digitale e calcoliamo il valor medio
+$\hat{T}$ delle misure e l'incertezza statistica associata $\sigma_T$ secondo
+la~\eqref{eq:stdev_media_intro}. Poi eseguiamo altre 10 misure e ricalcoliamo
+$\sigma_T$ utilizzando 20 misure. Poi eseguiamo altre 10 misure e così via
+fin quando non ci annoiamo (e.g., dopo 150 misure), calcolando ogni volta
+l'incertezza sulla base di tutte le $n$ misure a disposizione.
+Come apparirà il grafico di $\sigma_T$ in funzione di $n$?
+
+\pgffigone{errore_asintotico}{
+  Incertezza statistica, stimata secondo la~\eqref{eq:stdev_media_intro},
+  in funzione del numero di misure effettuate per due realizzazioni
+  indipendenti del semplice esperimento (misura del periodo di un pendolo)
+  descritto nel corpo del testo. La linea tratteggiata rappresenta
+  l'andamento atteso in media, che è proporzionale a
+  $\nicefrac{1}{\sqrt{n}}$.}
+
+La risposta è in figura~\ref{fig:errore_asintotico}, in cui sono mostrate
+due realizzazioni indipendenti dell'esperimento appena descritto.
+Come vedete (e come era logico aspettarsi) le due realizzazioni sono diverse
+tra di loro, e nessuna delle due coincide esattamente con l'andamento atteso
+in media (rappresentato, quest'ultimo, dalla linea tratteggiata). Eppure
+entrambe decrescono (come è giusto che sia) al crescere di $n$ ed entrambe
+sembrano, almeno qualitativamente, avvicinarsi progressivamente all'andamento
+asintotico atteso al crescere del numero di misure.
+
+Torneremo a discutere più in dettaglio il concetto della convergenza statistica
+nella sezione~\ref{sec:prop_definizione_freq}, ma per il momento cominciamo ad
+abituarci a questo nuovo tipo di limite, e teniamolo a mente.
+
+
+\section{Digressione: sviluppi in serie}
+\label{sec:sviluppi_in_serie}
+
+A costo di interrompere il flusso naturale del discorso, in questa sezione
+ci soffermiamo per un attimo su un argomento intimamente connesso con il
+concetto di approssimazione che utilizzeremo frequentemente in seguito.
+Sotto ipotesi ragionevoli una generica funzione di una variabile reale $x$
+può essere rappresentata come la somma infinita
+\begin{align}\label{eq:sviluppo_taylor}
+  f(x) = \sum_{k=0}^\infty \frac{1}{k!}\td[k]{f}{x}{x_0} (x - x_0)^k =
+  f(x_0) + \td{f}{x}{x_0} (x - x_0) + \frac{1}{2}\td[2]{f}{x}{x_0} (x - x_0)^2 +
+  \cdots,
+\end{align}
+che prende il nome di
+\emph{sviluppo in serie di Taylor di $f$ intorno al punto $x_0$}. Non lasciatevi
+ingannare dall'apparente complicatezza della~\eqref{eq:sviluppo_taylor}.
+L'idea di fondo è che, se la quantità $(x - x_0)$ è abbastanza
+piccola---cioè se $x$ è abbastanza vicino ad $x_0$, allora i termini della
+serie sono via via più piccoli, e la funzione di partenza può essere
+approssimata efficacemente con una somma finita di un numero piccolo di addendi.
+
+\begin{examplebox}
+  \begin{example}\label{exp:sviluppo_taylor_seno}
+    Utilizziamo lo sviluppo in serie di $\sin(x)$ attorno al punto $x_0 = 0$
+    per approssimare il valore della funzione stessa nel punto $x = 0.1$~rad.
+    Si tratta di uno degli sviluppi in serie più semplici in assoluto,
+    poiché tutte le derivate di ordine pari sono della forma $\pm \sin(x)$,
+    per cui si annullano in $0$, e tutte le derivate di ordine dispari sono
+    della forma $\pm \cos(x)$, e calcolate in $0$ danno $\pm 1$, per cui:
+    \begin{align*}
+      \sin(x) = \sum_{k=0}^\infty  \frac{(-1)^k}{(2k + 1)!} \, x^{2k + 1} =
+      x - \frac{x^3}{6} + \frac{x^5}{120} -
+      \frac{x^7}{5040} \cdots
+    \end{align*}
+    Potete verificare per calcolo diretto che per $x = 0.1$ il primo termine
+    della serie fornisce un risultato che differisce di meno di due parti in
+    $10^3$ da quello esatto. Il secondo temine della serie è dell'ordine di
+    $10^{-4}$, il terzo di $10^{-8}$ ed il quarto di $10^{-11}$.
+  \end{example}
+
+  \begin{example}
+    Un corpo si muove lungo una retta di moto uniformemente accelerato.
+    Se sviluppiamo la legge oraria $x(t)$ in serie di Taylor attorno al
+    punto $t = 0$ si ha
+    \begin{align*}
+      x(t) = x(0) + \td{x}{t}{0} t + \frac{1}{2}\td[2]{x}{t}{0} t^2 +
+      \frac{1}{6}\td[3]{x}{t}{0} t^3 + \cdots =
+      x(0) + \dot{x}(0) t + \frac{1}{2}\ddot{x}(0) t^2
+      + \frac{1}{6}\dddot{x}(0)t^3 + \cdots
+    \end{align*}
+    (Abbiamo utilizzato la consueta notazione con i puntini per indicare le
+    derivate rispetto al tempo.) Notiamo che se il moto è uniformemente
+    accelerato, la derivata seconda è costante, e tutte le derivate di
+    ordine superiore si annullano. Se allora, con ovvio significato dei
+    termini, poniamo $x(0) = x_0$, $\dot{x}(0) = v_0$ e $\ddot{x}(0) = a$
+    otteniamo la relazione (esatta, poiché, come appena detto, le derivate
+    al di là della terza si annullano):
+    \begin{align*}
+      x(t) = x_0 + v_0t + \frac{1}{2}at^2.
+    \end{align*}
+  \end{example}
+\end{examplebox}
+
+L'esempio~\ref{exp:sviluppo_taylor_seno} illustra come il primo termine della
+serie sia sufficiente in molti casi di interesse concreto. Lo
+sviluppo in serie di Taylor troncato al primo ordine
+\begin{align}\label{eq:sviluppo_taylor_lineare}
+  f(x) \approx f(x_0) + \td{f}{x}{x_0} (x - x_0)
+\end{align}
+ha una semplice interpretazione geometrica, come mostrato in
+figura~\ref{fig:sviluppo_taylor_lineare}: essenzialmente equivale ad
+approssimare il valore della funzione in un generico punto $x$ con quello della
+retta tangente alla funzione stessa nel punto $x_0$ attorno al quale si esegue
+lo sviluppo. Chiaramente l'approssimazione è tanto migliore quanto più $x$
+ed $x_0$ sono vicini.
+
+\pgffigone{sviluppo_taylor_lineare}{
+  Interpretazione geometrica dello sviluppo in serie di Taylor troncato al
+  primo ordine per una funzione di variabile reale. La derivata della funzione
+  calcolata nel punto $x_0$ coincide con il coefficiente angolare della retta
+  tangente alla funzione in $x_0$---vale a dire la tangente dell'angolo che la
+  retta stessa forma con l'asse delle $x$. L'approssimazione al prim'ordine
+  diventa in generale tanto peggiore quanto più la quantità $(x - x_0)$ è
+  grande.
+}
+
+
+\subsection{Gli sviluppi in serie come ausilio al calcolo}
+
+Essere capaci di portare a termine con almeno un paio di cifre significative
+calcoli non troppo complicati senza l'utilizzo di carta e penna---o, peggio
+ancora, calcolatrice o \foreign{personal computer}---fa parte delle capacità che
+un Fisico deve acquisire prima o poi nella sua carriera. Gli sviluppi in serie
+di Taylor (tipicamente al primo ordine) possono costituire un ausilio pratico
+notevole allo scopo.
+
+A titolo di esempio sviluppiamo al primo ordine la funzione
+$f(x) = (1 + x)^\alpha$ attorno al punto $x = 0$. Ci serve la derivata prima
+valutata, appunto, in $x = 0$
+\begin{align}
+  \td{f}{x}{x} = \alpha (1 + x)^{\alpha - 1} \quad \text{da cui} \quad
+  \td{f}{x}{0} = \alpha \quad \text{e} \quad
+  f(x) \approx 1 + \alpha x.
+\end{align}
+Questo ci permette di derivare banalmente un certo numero di relazioni
+\begin{align}
+  \frac{1}{1 + x} \approx 1 - x, \quad
+  \sqrt{1 + x} \approx 1 + \frac{1}{2}x \quad \text{e} \quad
+  (1 + x)^2 \approx 1 + 2x
+\end{align}
+che sono utili in pratica poiché per le persone è più facile eseguire
+\emph{a mente} addizioni e sottrazioni che non moltiplicazioni, divisioni,
+estrazioni di radici ed elevamenti a potenza.
+
+\begin{examplebox}
+  \begin{example}[per ingannare il tempo al distributore]
+    Un litro di gasolio costa $1.124$~\euro; quanti litri possiamo mettere nel
+    serbatoio con $10$~euro? La risposta è semplice
+    \begin{align*}
+      \frac{10}{1.124} = \frac{10}{1 + 0.124}
+      \approx 10 \times (1 - 0.124) = 10 \times 0.876 = 8.76.
+    \end{align*}
+    La risposta esatta è $8.90$, e l'errore relativo
+    della nostra approssimazione è $1.5\%$. Non male.
+  \end{example}
+  \begin{example}
+    Una lente ha potere diottrico nominale $\nicefrac{1}{f} = 12~$m$^{-1}$;
+    quanto vale la distanza focale?
+    \begin{align*}
+      f = \frac{1}{12} = \frac{1}{10}\times\frac{1}{1.2} =
+      \frac{1}{10}\times\frac{1}{1 + 0.2} \approx \frac{1}{10} \times 0.8 =
+      0.08~\text{m} = 8~\text{cm}.
+    \end{align*}
+    Il risultato esatto è $f = 0.8\overline{3}$, ed il nostro errore
+    relativo è del $4\%$.
+  \end{example}
+\end{examplebox}
+
+
+\section{Primo approccio alla propagazione degli errori}
+\label{sec:propagazione_errrore_max}
+
+Riprendiamo il filo del discorso che avevamo momentaneamente interrotto.
+Adesso che abbiamo nel nostro bagaglio di conoscenze il concetto di incertezza
+di misura e sappiamo come stimarla---per lo meno nelle situazioni più
+semplici---per le misure dirette, siamo pronti ad affrontare il problema
+generale di come l'incertezza di misura si propaghi nelle misure indirette.
+
+Pur consci della potenziale ambiguità di questo approccio svilupperemo
+la maggior parte del formalismo nel contesto dell'errore massimo, che sappiamo
+essere statisticamente scorretto, ma che allo stesso tempo non richiede alcuna
+nozione di teoria (che ancora non avremmo) delle probabilità. Forniremo in
+parallelo la ricetta corretta per la propagazione dell'errore
+statistico, che utilizzeremo sin dall'inizio ma giustificheremo rigorosamente
+solo nella sezione~\ref{sec:prop_errore_stat}.
+
+
+\subsection{Problema generale della propagazione dell'errore massimo}
+
+Dato un certo numero di grandezze \emph{indipendenti}%
+\footnote{La richiesta dell'indipendenza delle grandezze, che in questo
+  momento non siamo attrezzati per discutere in maniera quantitativa, è
+  di fondamentale importanza per tutta la discussione sviluppata in questa
+  sezione. Si tratta di un aspetto su cui torneremo in seguito ma che è bene
+  tenere a mente sin dall'inizio.}
+$x, y, z\ldots$ (con errori massimi $\Delta x, \Delta y, \Delta z\ldots$) ed
+una funzione $f(x, y, z\ldots)$ delle grandezze stesse, vorremmo scrivere il
+risultato della nostra misura indiretta come $f = \hat{f} \pm \Delta f$ in modo
+da essere certi che l'intervallo $[\hat{f} - \Delta f, \hat{f} + \Delta f]$
+contenga il misurando $f$---così come siamo certi che l'intervallo
+$[\hat{x} - \Delta x, \hat{x} + \Delta x]$ contenga il valore di $x$ e così
+via.
+\`E ragionevole prendere come valore centrale della misura indiretta il valore
+della funzione calcolata in corrispondenza dei valori centrali delle
+grandezze di partenza
+\begin{align*}
+  \hat{f} = f(\hat{x}, \hat{y}, \hat{z}\ldots).
+\end{align*}
+Per stimare l'errore associato, invece, dovremmo calcolare i valori minimo e
+massimo che la funzione $f(x, y, z\ldots)$ assume al variare di $x, y, z\ldots$
+nei rispettivi intervalli di incertezza massima---e prenderne la
+semidispersione. Nel caso generale si tratta di un problema niente affatto
+banale. Fortunatamente, come vedremo tra un attimo, nella maggior parte dei
+casi di interesse pratico la soluzione del corrispondente problema linearizzato
+fornisce una risposta sufficientemente accurata.
+
+
+\subsection{Propagazione dell'errore nella somma e nella differenza}
+
+Cominciamo con il caso più semplice, ovvero la propagazione dell'errore
+massimo sulla somma $S = x + y$. I casi estremi sono quelli in cui le
+incertezze su $x$ e $y$ contribuiscono nello stesso verso:
+\begin{align*}
+  S_{\max} &= (\hat{x} + \Delta x) + (\hat{y} + \Delta y) =
+  (\hat{x} + \hat{y}) + (\Delta x + \Delta y)\\
+  S_{\min} &= (\hat{x} - \Delta x) + (\hat{y} - \Delta y) =
+  (\hat{x} + \hat{y}) - (\Delta x + \Delta y).
+\end{align*}
+Ne segue banalmente che in una somma gli errori massimi si sommano, cioè
+si ha:
+\begin{align}\label{eq:errore_max_somma}
+  \hat{S} = \frac{S_{\max} + S_{\min}}{2} = \hat{x} + \hat{y}
+  \quad \text{e} \quad
+  \Delta S = \frac{S_{\max} - S_{\min}}{2} = \Delta x + \Delta y.
+\end{align}
+
+Per analogia potremmo allora essere tentati di pensare che in una differenza gli
+errori si sottraggano. Invece, se proviamo a fare lo stesso esercizio sulla
+quantità $D = x - y$
+\begin{align*}
+  D_{\max} &= (\hat{x} + \Delta x) - (\hat{y} - \Delta y) =
+  (\hat{x} - \hat{y}) + (\Delta x + \Delta y)\\
+  D_{\min} &= (\hat{x} - \Delta x) - (\hat{y} + \Delta y) =
+  (\hat{x} - \hat{y}) - (\Delta x + \Delta y)
+\end{align*}
+scopriamo che gli errori massimi si sommano anche in una differenza:
+\begin{align}\label{eq:errore_max_differenza}
+  \hat{D} = \frac{D_{\max} + D_{\min}}{2} = \hat{x} - \hat{y}
+  \quad \text{e} \quad
+  \Delta D = \frac{D_{\max} - D_{\min}}{2} = \Delta x + \Delta y.
+\end{align}
+(Se siete veramente tentati di scrivere $\Delta D = \Delta x - \Delta y$
+pensate a cosa succederebbe nel caso $\Delta x = \Delta y$. Quando le grandezze
+misurate sono indipendenti gli errori purtroppo non si sottraggono mai.)
+
+Senza indugiare oltre, diciamo subito che la risposta giusta è simile a
+quella appena ottenuta nel contesto dell'errore massimo, con l'accorgimento
+di sostituire le somme nelle due formule delle incertezze con le corrispondenti
+somme in quadratura:
+\begin{align}\label{eq:errore_stat_somma_differenza}
+  \sigma_S = \sigma_D = \sqrt{\sigma_x^2 + \sigma_y^2}.
+\end{align}
+Tenetelo bene a mente perché si tratta, come vedremo, di un principio del
+tutto generale: \emph{per grandezze indipendenti gli errori si sommano
+in quadratura.}
+
+
+\begin{examplebox}
+  \begin{example}\label{exp:errore_max_somma_differenza}
+    Abbiamo misurato con un calibro ventesimale le due lunghezze
+    $a = 2.50 \pm 0.05$~mm e $b = 2.35 \pm 0.05$~mm e vogliamo propagare
+    l'errore sulla somma $S$ e sulla differenza $D$.
+    Se applicassimo la~\eqref{eq:errore_max_somma} e
+    la~\eqref{eq:errore_max_differenza} otterremmo $S = 4.85 \pm 0.10$~mm e
+    $D = 0.15 \pm 0.10$~mm.
+    In realtà sappiamo che se le misure sono indipendenti,
+    la~\eqref{eq:errore_stat_somma_differenza} fornisce
+    è $\sigma_S = \sigma_D = 0.07$~mm.
+
+    Notiamo come l'errore relativo sulla differenza sia del $\sim 50\%$,
+    nonostante le due grandezze di partenza siano misurate al $\sim 2\%$.
+    Si tratta di un problema tipico quando si sottraggono misure vicine tra
+    loro.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Propagazione dell'errore nel prodotto e nel quoziente}
+
+Il problema della propagazione dell'errore sulla somma e sulla differenza
+è peculiare per il fatto che la soluzione esatta si può scrivere in
+modo compatto.
+Nel caso del prodotto $P = xy$ (assumendo, senza perdere in generalità che
+$x$ ed $y$ siano positivi) i casi estremi si scrivono come
+\begin{align*}
+  P_{\max} &= (\hat{x} + \Delta x)(\hat{y} + \Delta y) =
+  \hat{x}\hat{y} + (\hat{x}\Delta y + \hat{y}\Delta x + \Delta x\Delta y)\\
+  P_{\min} &= (\hat{x} - \Delta x)(\hat{y} - \Delta y) =
+  \hat{x}\hat{y} - (\hat{x}\Delta y + \hat{y}\Delta x - \Delta x\Delta y)
+\end{align*}
+e la novità rispetto al caso precedente è che adesso appaiono termini
+contenenti il prodotto $\Delta x\Delta y$ degli errori sulle due
+grandezze---che con un leggero abuso di notazione potremmo chiamare
+infinitesimi del second'ordine. Questi nuovi termini rovinano tutto poiché
+non si elidono nel calcolo del valore centrale
+\begin{align*}
+  \hat{P} = \frac{P_{\max} + P_{\min}}{2} = \hat{x}\hat{y} + \Delta x\Delta y
+  \neq \hat{x}\hat{y}.
+\end{align*}
+Nella situazione (tipica, ma da verificare sempre caso per caso) in cui gli
+errori relativi sono piccoli, cioè $\Delta x \ll \abs{\hat{x}}$ e
+$\Delta y \ll \abs{\hat{y}}$, questi termini possono essere trascurati per
+ottenere la relazione approssimata
+\begin{align}\label{eq:errore_max_prodotto}
+  \hat{P} = \frac{P_{\max} + P_{\min}}{2} \approx \hat{x}\hat{y}
+  \quad \text{e} \quad
+  \Delta P = \frac{P_{\max} - P_{\min}}{2} \approx
+  \abs{\hat{x}}\Delta y + \abs{\hat{y}}\Delta x
+\end{align}
+(abbiamo ripristinato i valori assoluti che sono necessari per garantire che
+$\Delta P$ sia positivo).
+Va da sé che, in analogia con quanto visto per la somma e la differenza,
+la risposta corretta è:
+\begin{align}
+  \sigma_P \approx \sqrt{\hat{x}^2 \sigma_y^2 + \hat{y}^2 \sigma_x^2}.
+\end{align}
+
+Vale la pena ricordare che $\Delta P$ (o $\sigma_P$) rappresenta un errore di
+misura, e come tale non si scrive con più di due cifre significative---per
+cui conoscerlo al livello di qualche \% è tipicamente più che sufficiente.
+In molti casi i termini di tipo $\Delta x\Delta y$ (o $\sigma_x\sigma_y$) sono
+molto più piccoli della prima cifra affetta da errore e costituiscono
+essenzialmente rumore numerico.
+
+\begin{examplebox}
+  \begin{example}\label{exp:errore_max_prodotto}
+    Vogliamo propagare l'errore sul prodotto $P = ab$ delle due grandezze
+    dell'esempio~\ref{exp:errore_max_somma_differenza}. I due termini
+    della~\eqref{eq:errore_max_prodotto} sono
+    $\hat{a}\Delta b \approx 0.12$~mm$^2$
+    e $\hat{b}\Delta a \approx 0.12$~mm$^2$; per confronto, il termine che
+    abbiamo trascurato è $\Delta a\Delta b \approx 0.0025$~mm$^2$, ossia
+    circa $50$ volte più piccolo. Possiamo dunque sommare le incertezze in
+    quadratura e scrivere $P = 5.87 \pm 0.17$~mm$^2$.
+    (Notiamo esplicitamente che il termine $\Delta a\Delta b$ non influisce
+    sulle cifre significative con cui abbiamo scritto la misura.)
+  \end{example}
+\end{examplebox}
+
+La propagazione dell'errore massimo sul quoziente $Q = x/y$ è del tutto
+analoga, e ci limitiamo qui a fornire il risultato:
+\begin{align}\label{eq:errore_max_quoziente}
+  \hat{Q} = \frac{Q_{\max} + Q_{\min}}{2} \approx \frac{\hat{x}}{\hat{y}}
+  \quad \text{e} \quad
+  \Delta Q = \frac{Q_{\max} - Q_{\min}}{2} \approx
+  \frac{\abs{\hat{x}}\Delta y + \abs{\hat{y}}\Delta x}{\hat{y}^2}
+  \quad \text{e} \quad
+  \sigma_Q \approx \frac{\sqrt{\hat{x}^2 \sigma_y^2 + \hat{y}^2 \sigma_x^2}}{\hat{y}^2}.
+\end{align}
+
+Una conseguenza interessante dell'espressione appena scritta è che,
+\emph{Quando dividiamo una grandezza affetta da incertezza per un numero senza
+  errore, si divide per il numero stesso sia il valore centrale che l'incertezza
+  di partenza.}
+Questo è il principio alla base della possibilità di fare misure (indirette)
+con un errore massimo inferiore alla risoluzione strumentale, come già
+illustrato nella sezione~\ref{sec:misure_sotto_risoluzione}.
+
+Notiamo anche che, quando si propagano gli errori su un prodotto o un quoziente
+è comodo lavorare con gli errori relativi, poiché, come è facile
+dimostrare per calcolo diretto
+\begin{align}
+  \frac{\sigma_P}{\abs{\hat{P}}} = \frac{\sigma_Q}{\abs{\hat{Q}}} \approx
+  \sqrt{\frac{\sigma_x^2}{\hat{x}^2} + \frac{\sigma_y^2}{\hat{y}^2}},
+\end{align}
+ovvero \emph{nei prodotti e nei quozienti gli errori massimi relativi si
+ sommano (ovviamente in quadratura).}
+
+
+\subsection{Propagazione dell'errore nel caso generale}
+
+Generalizziamo quanto detto fino ad ora per le quattro operazioni elementari,
+cominciando dal caso di una funzione generica $f(x)$ di una sola
+grandezza $x$ (misurata), con errore massimo associato $\Delta x$. Possiamo
+sviluppare $f$ in serie di Taylor al prim'ordine attorno al punto $\hat{x}$
+\begin{align*}
+  f(\hat{x} \pm \Delta x) \approx
+  f(\hat{x}) \pm \td{f}{x}{\hat{x}}\,\Delta x
+\end{align*}
+da cui si ottiene banalmente
+\begin{align}\label{eq:errore_max_generale_unidimensionale}
+  \hat{f} = \frac{f_{\max} + f_{\min}}{2} \approx f(\hat{x})
+  \quad \text{e} \quad
+  \Delta f = \frac{f_{\max} - f_{\min}}{2} \approx
+  \abs{\td{f}{x}{\hat{x}}}\Delta x
+  \quad \text{da cui} \quad
+  \sigma_f = \abs{\td{f}{x}{\hat{x}}}\sigma_x.
+\end{align}
+Il simbolo $\approx$ ci ricorda che
+la~\eqref{eq:errore_max_generale_unidimensionale}
+è una relazione che vale approssimativamente nell'ipotesi in cui i termini di
+ordine superiore nello sviluppo di Taylor siano trascurabili. Geometricamente
+questo equivale a richiedere, come mostrato in
+figura~\ref{fig:linearizzazione_errore_max}, che la retta tangente ad $f$
+nel punto $\hat{x}$ sia una buona approssimazione di $f$ nell'intervallo
+$[\hat{x} - \Delta x, \hat{x} + \Delta x]$.
+
+\pgffigone[!htb]{linearizzazione_errore_max}{
+  Rappresentazione grafica della linearizzazione della propagazione dell'errore
+  su una generica funzione di una
+  variabile~\eqref{eq:errore_max_generale_unidimensionale}.
+  La derivata della funzione $f(x)$ nel punto $\hat{x}$ coincide con
+  il coefficiente angolare della retta tangente ad $f(x)$ e passante per il
+  punto $P = (\hat{x}, f(\hat{x}))$ e l'approssimazione lineare è tanto più
+  accurata quanto più la tangente è vicina alla funzione nell'intervallo
+  $[\hat{x} - \Delta x, \hat{x} + \Delta x]$.
+}
+
+Come detto in precedenza questa assunzione, che dipende sia dall'incertezza
+su $x$ che dalla forma della funzione $f(x)$ in un intorno di $\hat{x}$, va
+verificata caso per caso---un caso banale in cui il nostro sviluppo in serie
+troncato al prim'ordine non funziona è quello in cui $f'(\hat{x}) = 0$, come
+illustrato nell'esempio~\ref{exp:errore_max_derivata_nulla}.
+
+\begin{examplebox}
+  \begin{example}
+    Dato un angolo (misurato)
+    $\theta = \hat{\theta} \pm \sigma_\theta = (30 \pm 1)^\circ$ si vuole
+    propagare l'errore sulla funzione $\sin\theta$. Possiamo utilizzare
+    direttamente la~\eqref{eq:errore_max_generale_unidimensionale}, che nel
+    caso specifico fornisce:
+    \begin{align*}
+      \Delta(\sin\theta) \approx
+      \abs{\td{\sin}{\theta}{\hat{\theta}}}\sigma_\theta =
+      \abs{\cos\hat{\theta}}\sigma_\theta.
+    \end{align*}
+    Con l'accortezza necessaria di convertire $\sigma_\theta$ in radianti
+    (le derivate delle funzioni trigonometriche sono quelle note solo se
+    gli angoli sono misurati in radianti) possiamo scrivere
+    $\sin\theta = 0.500 \pm  0.015$.
+  \end{example}
+
+  \begin{example}\label{exp:errore_max_derivata_nulla}
+    Dato un angolo (misurato)
+    $\theta = \hat{\theta} \pm \sigma_\theta = (90 \pm 5)^\circ$ si vuole
+    propagare l'errore sulla funzione $\sin\theta$. In questo caso la derivata
+    prima si annulla nel punto $\hat{\theta}$ per cui il nostro formalismo è
+    inutilizzabile (si tratta di un caso in cui, per ovvie ragioni, i termini
+    di ordine superiore nello sviluppo di Taylor non sono trascurabili).
+    Allora possiamo stimare esplicitamente i casi estremi:
+    \begin{align*}
+      \sin(\hat\theta - \sigma_\theta) = \sin(\hat\theta + \sigma_\theta)
+      \approx 0.996
+      \quad \text{e} \quad \sin\theta = 1.000 \pm  0.004.
+    \end{align*}
+    Alternativamente possiamo estendere lo sviluppo in serie di Taylor
+    all'ordine successivo
+    \begin{align*}
+      \sigma_{(\sin\theta)} \approx
+      \frac{1}{2}\abs{\td[2]{\sin}{\theta}{\hat{\theta}}} \sigma_\theta^2
+      = \frac{1}{2} \abs{\sin\hat{\theta}} \sigma_\theta^2 \approx 0.004
+    \end{align*}
+    (che è in accordo con il risultato ottenuto per calcolo diretto.)
+    Notiamo anche che questo esempio è peculiare per un altro motivo:
+    dato che $\sin\theta \leq 1$, ci troviamo in un caso in cui l'intervallo
+    di incertezza sulla nostra grandezza derivata è asimmetrico. Più
+    correttamente dovremmo allora scrivere $\sin\theta = 1.000^{+0.000}_{-0.004}$.
+  \end{example}
+\end{examplebox}
+
+Siamo finalmente pronti per l'arma finale---ovverosia la formula generale di
+propagazione delle incertezze nel caso multidimensionale.
+I risultati precedenti si estendono più o meno banalmente (modulo uno
+sviluppo di Taylor al prim'ordine per una funzione di più variabili) al caso
+generale di una funzione $f(x, y, z\ldots)$ delle grandezze $x, y, z\ldots$
+\begin{align}\label{eq:intro_err_stat_multidimensionale}
+  \sigma^2_f \approx
+  \left(\pd{f}{x}{\hat{x}, \hat{y}, \hat{z}\ldots}\right)^2 \sigma^2_x +
+  \left(\pd{f}{y}{\hat{x}, \hat{y}, \hat{z}\ldots}\right)^2 \sigma^2_y +
+  \left(\pd{f}{z}{\hat{x}, \hat{y}, \hat{z}\ldots}\right)^2 \sigma^2_z + \cdots
+\end{align}
+
+Il lettore può verificare facilmente che la
+\eqref{eq:intro_err_stat_multidimensionale} permette di derivare le
+formule che abbiamo ricavato mediante calcolo diretto per la propagazione
+dell'errore massimo nelle quattro operazioni elementari.
+Così per la somma si ha, nel nostro linguaggio:
+\begin{align*}
+  f(x) = x + y
+  \quad
+  \pd{f}{x}{\hat{x}, \hat{y}} = 1
+  \quad
+  \pd{f}{y}{\hat{x}, \hat{y}} = 1
+  \quad
+  \sigma^2_f = \sigma_x^2 + \sigma_y^2
+  \quad \text{ovvero} \quad
+  \sigma_f = \sqrt{\sigma_x^2 + \sigma_y^2},
+\end{align*}
+che è il risultato che avevamo già derivato. (In questo caso il risultato
+è esatto perché la nostra funzione è lineare in entrambe le variabili, per
+cui tutti i termini successivi dello sviluppo in serie di Taylor si annullano.)
+
+La~\eqref{eq:intro_err_stat_multidimensionale} permette anche di ricavare una
+formula compatta per la propagazione dell'errore relativo
+su una grandezza del tipo $G(x, y, z\ldots) = x^\alpha y^\beta z^\gamma \cdots$
+In questo caso le derivate parziali sono banali, e.g.
+\begin{align*}
+  \pd{G}{x}{\hat{x}, \hat{y}, \hat{z}\ldots} =
+  \alpha \hat{x}^{\alpha - 1} \hat{y}^\beta \hat{z}^\gamma \cdots
+\end{align*}
+(ed espressioni equivalenti per le derivate rispetto alle altre grandezze), per
+cui mettendo tutto insieme:
+\begin{align}\label{eq:errore_relativo_generale}
+  \frac{\sigma_G}{\abs{\hat{G}}} = \sqrt{
+  \left(\alpha\frac{\sigma_x}{\abs{\hat{x}}}\right)^2 +
+  \left(\beta\frac{\sigma_y}{\abs{\hat{y}}}\right)^2 +
+  \left(\gamma\frac{\sigma_z}{\abs{\hat{z}}}\right)^2 + \cdots
+  }
+\end{align}
+\emph{Quando cioè si ha a che fare con prodotti e quozienti di grandezze
+  elevate ad un esponente generico, gli errori relativi si sommano pesati con
+  il modulo del proprio esponente}, come illustrato
+nell'esempio~\ref{exp:misura_g_pendolo}.
+
+\begin{examplebox}
+
+  \begin{example}\label{exp:misura_g_pendolo}
+    Vogliamo misurare l'accelerazione di gravità $g$ al livello del suolo
+    utilizzando un pendolo semplice e sfruttando la relazione che lega il
+    periodo alla lunghezza del pendolo stesso in approssimazione di piccole
+    oscillazioni
+    \begin{align}\label{eq:periodo_pendolo}
+      T = 2\pi\sqrt{\frac{l}{g}}.
+    \end{align}
+    Misuriamo dunque direttamente $l = 1.005 \pm 0.006$~m e
+    $T = 2.02 \pm 0.01$~s. La relazione scritta sopra si può invertire per
+    ottenere un'espressione per $g$ in funzione di $l$ e $T$
+    \begin{align*}
+      g(l, T) = 4\pi^2\frac{l}{T^2}
+    \end{align*}
+    da cui possiamo calcolare il valore centrale $\hat{g} = 9.72$~m~s$^{-2}$.
+    Non ci rimane che propagare l'errore su $g$ utilizzando
+    la~\eqref{eq:intro_err_stat_multidimensionale}---cosa che
+    facciamo pedissequamente, calcolando le derivate
+    \begin{align*}
+      \pd{g}{l}{l, T} = \frac{4\pi^2}{T^2} \quad\text{e}\quad
+      \pd{g}{T}{l, T} = -\frac{8\pi^2l}{T^3},
+    \end{align*}
+    e mettendo tutto insieme
+    \begin{align*}
+      \sigma_g = \frac{4\pi^2}{\hat{T}^2}\sqrt{
+        \left(\sigma_l^2 + \frac{4\hat{l}^2}{\hat{T}^2}\sigma_T^2\right)
+      } \approx 0.11~\text{m~s}^{-2}.
+    \end{align*}
+    Scriveremo dunque il risultato come $g = 9.72 \pm 0.11$~m~s$^{-2}$, che
+    è compatibile con il valore noto di $9.81$~m~s$^{-2}$.
+    Notiamo, per inciso, che saremmo arrivato allo stesso risultato più
+    facilmente propagando l'errore relativo---cosa che è lasciata al lettore
+    some esercizio.
+  \end{example}
+\end{examplebox}
+
+A proposito dell'esempio~\ref{exp:misura_g_pendolo}, il lettore più attento
+avrà notato che non abbiamo specificato le condizioni in cui il nostro modello
+è applicabile---cioè non ci siamo chiesti esplicitamente che cosa
+significhi lavorare in approssimazione di piccole oscillazioni. Ci torneremo
+nella sezione~\ref{sec:piccole_oscillazioni}, ma anticipiamo che i termini
+della questione dipendono dal contesto specifico in cui la misura è
+effettuata, per cui affermazioni del tipo "siamo in regime di piccole
+oscillazioni per $\theta_0 < 5^\circ$", che potete aver sentito alle scuole
+superiori, non hanno alcun senso.
+
+
+\section{Compatibilità e relazioni d'ordine tra misure sperimentali}
+\label{sec:compatibilita_err_max}
+
+Nel contesto dell'errore massimo due grandezze $x_1 = \hat{x_1} \pm \Delta x_1$
+e $x_2 = \hat{x_2} \pm \Delta x_2$ si dicono \emph{compatibili} se
+l'intersezione tra i rispettivi intervalli di incertezza è non nulla, come
+mostrato graficamente in figura~\ref{fig:compatibilita}.
+
+\begin{figure}[htb!]
+  \autohstack{\input{figures/compatibilita}}{
+    \caption{Illustrazione grafica del significato geometrico della
+      compatibilità (nel senso dell'errore massimo) tra due grandezze
+      misurate. Gli intervalli di incertezza sono convenzionalmente
+      rappresentati, come vedremo nel seguito, da barre d'errore. Due misure
+      sono compatibili quando i rispettivi intervalli di incertezza hanno
+      intersezione non nulla---ovvero, quando le barre d'errore
+      \emph{si toccano}---come appunto in questa figura.}
+    \label{fig:compatibilita}
+  }
+\end{figure}
+
+Equivalentemente possiamo dire che due misure sono compatibili tra loro se la
+loro differenza è compatibile con zero. Poiché l'incertezza su una
+differenza è pari alla somma delle incertezze, questo si traduce nella
+condizione
+\begin{align}\label{eq:compat_err_max}
+  \abs{\hat{x_2} - \hat{x_1}} \leq (\Delta x_1 + \Delta x_2)
+  \quad \text{(errore massimo, i.e., sbagliato)}.
+\end{align}
+
+Nel linguaggio dell'errore statistico i contorni della nozione di
+compatibilità sono in un certo senso più sfumati a causa della definizione
+probabilistica del concetto di incertezza di misura. Formalmente
+l'equivalente della~\eqref{eq:compat_err_max} è
+\begin{align}\label{eq:compat_err_stat}
+  \abs{\hat{x_2} - \hat{x_1}} \leq \sqrt{\sigma^2_{x_1} + \sigma^2_{x_2}}
+  \quad \text{(errore statistico, i.e., corretto)},
+\end{align}
+ma in pratica la definizione di compatibilità è solitamente meno stringente
+della~\eqref{eq:compat_err_stat}, e quando lavoriamo con l'errore statistico
+non è inusuale dire che due misure sono compatibili anche se distano due barre
+d'errore equivalenti. Avremo occasione di affrontare il discorso in modo
+organico a tempo debito. (Va da sé che se la~\eqref{eq:compat_err_stat} è
+verificata, allora due misure sono compatibili nel senso dell'errore
+statistico.)
+
+\begin{examplebox}
+  \begin{example}
+    Due gruppi sperimentali misurano l'accelerazione di gravità al livello del
+    suolo ottenendo i valori $g_1 = 9.8 \pm 0.1$~m~s$^{-2}$ e
+    $g_2 = 9.84 \pm 0.06$~m~s$^{-2}$. La differenza tra le due misure vale
+    $g_2 - g_1 = 0.04 \pm 0.12$~m~s$^{-2}$, per cui i due valori sono
+    compatibili.
+  \end{example}
+\end{examplebox}
+
+Prima di andare avanti, vale la pena fare una breve carrellata di espressioni
+da evitare accuratamente in quanto ambigue o, peggio ancora, prive di
+significato quantitativo. Non dite o scrivete mai per nessuna ragione che:
+\begin{itemize}
+\item \emph{due misure sono confrontabili}: se due grandezze sono omogenee si
+  possono sempre confrontare tra di loro, ma questo non ci dice niente sul fatto
+  che esse siano compatibili o meno;
+\item \emph{due misure sono vicine}: esattamente come non ha senso dire che
+  una grandezza è piccola o grande in assoluto, così non ha senso dire
+  che due grandezze misurate sono vicine o lontane in assoluto;
+\item \emph{due misure molto sono vicine}: qui l'avverbio non fa che
+  peggiorare le cose\ldots
+\item \emph{due misure sono congruenti}: il concetto di congruenza è
+  puramente geometrico e non ha nessun significato nel contesto dell'analisi
+  dei dati;
+\item \emph{due misure sono in buon accordo}: si tratta di un'espressione
+  generica che si presta a diverse interpretazioni.
+\end{itemize}
+Detto più concisamente: quando confrontate due grandezze limitatevi a dire
+che esse sono compatibili o incompatibili. Non è difficile da ricordare e non
+serve altro.
+
+Il concetto operativo di incertezza di misura che abbiamo sviluppato in questa
+sezione, ed il legame indissolubile che abbiamo stabilito tra misure ed
+incertezze, ci forniscono uno spunto di riflessione per inquadrare sotto una
+luce nuova alcuni aggettivi di uso comune. Adesso che siamo in grado di dire
+se due grandezze fisiche sono compatibili, possiamo anche stabilire una
+relazione d'ordine tra grandezze---dire, cioè, se una è più grande
+dell'altra. Ma la cosa fondamentale da sottolineare è che in Fisica non ha
+senso dire che il valore numerico di una generica grandezza è piccolo o grande
+\emph{in assoluto}. Ogni cosa può essere definita grande o piccola solo in
+relazione ad un'altra grandezza ad essa omogenea. Questo vale sia per i valori
+centrali che per le incertezze ad essi associate.
+
+Cogliamo infine l'occasione per notare che in Fisica si usa dire che una
+grandezza $x$ è \emph{molto più grande} o \emph{molto più piccola} di una
+grandezza (omogenea) $y$, e si scrive
+\begin{align}\label{eq:gg_ll}
+  x \gg y \quad \text{oppure} \quad x \ll y,
+\end{align}
+se $x$ ed $y$ differiscono tra loro in valore numerico di più di un ordine di
+grandezza, ovverosia che $x \geq 10y$ o $x \leq \nicefrac{y}{10}$.
+(Va da sé che c'è un certo grado di arbitrarietà nel numero $10$.)
+Ha sicuramente senso dire che $80 \gg 10$ anche se, a rigore,
+la~\eqref{eq:gg_ll} non è verificata, ma non che $15 \gg 10$.) Questa
+caratterizzazione ci sarà utile nella discussione che segue sulle
+approssimazioni in Fisica.
+
+
+\section{Il ruolo delle approssimazioni in Fisica}
+\label{sec:approssimazioni}
+
+Le approssimazioni sono onnipresenti in Fisica. Sono la chiave con cui problemi
+intrattabili o eccessivamente complicati nella loro formulazione completa
+possono essere semplificati per trovare soluzioni compatte sotto opportune
+condizioni. In Fisica sperimentale le approssimazioni, se utilizzate in
+modo opportuno, possono semplificare enormemente il processo di misura e
+di interpretazione dei dati in quanto:
+\begin{itemize}
+\item permettono, ove giustificato, di trascurare i termini non importanti
+  nella propagazione delle incertezze;
+\item permettono, ove giustificato, di evitare misure, dirette o indirette, di
+  una o più grandezze potenzialmente rilevanti per il problema, sulla base di
+  semplici considerazioni sugli ordini di grandezza;
+\item permettono, ove giustificato, di utilizzare modelli semplificati per
+  l'interpretazione dei dati sperimentali.
+\end{itemize}
+
+Armati del bagaglio di conoscenze che abbiamo accumulato in questo primo
+capitolo possiamo sviscerare la questione con alcuni esempi concreti. La cosa
+fondamentale, che è ovvia ancora prima di iniziare la discussione, è che
+\emph{qualsiasi approssimazione decidiamo di fare, sia essa nel processo di
+  misura o di analisi dei dati, deve essere opportunamente verificata---a
+  priori o a posteriori}.
+In altre parole: dobbiamo essere capaci di tradurre in una formula matematica
+le condizioni di validità dell'approssimazione stessa, e verificare
+quest'ultima nel contesto del problema che stiamo studiando.
+Aggiungiamo anche che, in generale, la validità o meno di un'approssimazione
+data non può prescindere dalla precisione dell'apparato sperimentale che
+utilizziamo per la misura. Il principio generale da cui ci faremo guidare
+è che \emph{un effetto è trascurabile se non si può misurare}.
+
+
+\subsection{Approssimazioni e propagazione delle incertezze}
+
+Sappiamo già che la formula generale (linearizzata) di propagazione delle
+incertezze~\eqref{eq:intro_err_stat_multidimensionale} è per sua natura
+approssimata. Quando propaghiamo gli errori capita sovente di trovarsi nella
+situazione in cui alcuni termini sono più piccoli di altri. Ove ciò accada
+è chiaramente conveniente trascurarli \emph{ab initio}, per snellire i
+calcoli.
+
+Supponiamo di voler stimare il volume $V = l^2h$ di una lastrina quadrata di
+lato~$l$ e spessore~$h$. Se l'errore relativo sullo spessore è molto più
+grande di quello sul lato (ad esempio se misuriamo i due con lo stesso strumento
+ma $h \ll l$), allora possiamo trascurare il secondo nella formula di
+propagazione
+\begin{align*}
+  \frac{\sigma_V}{V} =
+  \sqrt{4\frac{\sigma^2_l}{l^2} + \frac{\sigma^2_h}{h^2}} \approx
+  \frac{\sigma_h}{h}.
+\end{align*}
+
+\begin{examplebox}
+  \begin{example}
+    Se le dimensioni misurate della lastrina in questione sono
+    $l = 100.00 \pm 0.02$~mm e $h = 1.00 \pm 0.01$~mm, i.e., l'errore relativo
+    sullo spessore $\nicefrac{\sigma_h}{h} = 1\%$ è molto (50 volte) più
+    grande di quello sul lato $\nicefrac{\sigma_l}{l} = 0.02\%$. Possiamo
+    dunque trascurare il secondo nella propagazione delle incertezze, e
+    l'errore relativo sul volume sarà dell'$1\%$, i.e., scriveremo
+    $V = 10.0 \pm 0.1$~cm$^3$. (Provate a fare il conto senza trascurare il
+    primo termine e vi renderete conto che l'incertezza non cambia
+    apprezzabilmente.)
+  \end{example}
+\end{examplebox}
+
+Questa è una lezione importante:
+\emph{padroneggiare gli ordini di grandezza nella propagazione degli errori
+  ed essere capaci di trascurare i termini che possono essere trascurati
+  è un'abilità estremamente utile da coltivare, che nella pratica di
+  tutti i giorni semplifica enormemente la vita.}
+
+
+\subsection{Volume di un solido irregolare}
+
+Consideriamo di nuovo la lastrina della sezione precedente, ma supponiamo
+che essa abbia al centro un foro di raggio~$r$. Intuitivamente se il foro è
+\emph{abbastanza piccolo} possiamo pensare di poterlo trascurare nella
+determinazione del volume---e risparmiarci dunque una misura. Ma come possiamo
+scrivere rigorosamente la condizione che deve essere verificata perché la
+nostra approssimazione sia lecita?
+
+Potremmo essere tentati di dire che la condizione è che il volume del foro
+sia molto più piccolo del volume totale del parallelepipedo a base
+quadrata, ovvero
+\begin{align}
+  \pi r^2 h \ll l^2 h \quad \text{e quindi} \quad
+  r \ll \frac{l}{\sqrt{\pi}} \quad \text{(sbagliato)}
+\end{align}
+Questo non può essere corretto: non importa quanto piccolo sia il foro---se
+misuriamo il volume del parallelepipedo con una precisione abbastanza spinta
+prima o poi ne apprezzeremo l'effetto.
+
+\begin{examplebox}
+  \begin{example}
+    Se il raggio del foro centrale è $r \approx 10$~mm ed il lato della
+    lastrina è, come prima, $l = 100.00 \pm 0.02$~mm siamo nella situazione
+    in cui $r \ll l$ (o, per quel che conta, $r \ll \nicefrac{l}{\sqrt{\pi}}$),
+    ma se andiamo a calcolare il volume che andremmo a sottrarre ai
+    $10.0 \pm 0.1$~cm$^3$ calcolati prima, otterremo un valore di
+    $0.314$~cm$^3$, che sposterebbe il valore centrale significativamente
+    (più di $3$~volte la barra d'errore). \emph{Ergo}: il foro non è trascurabile.
+  \end{example}
+\end{examplebox}
+
+Quello che dobbiamo richiedere, invece, è che il volume del foro sia molto
+più piccolo dell'\emph{incertezza} sul volume del parallelepipedo, ovverosia
+\begin{align}
+  \pi r^2 h \ll l^2 h \sqrt{4\frac{\sigma^2_l}{l^2} + \frac{\sigma^2_h}{h^2}}
+  \quad \text{e cioè} \quad
+  r \ll \frac{l}{\sqrt{\pi}}
+  \left( 4\frac{\sigma^2_l}{l^2} + \frac{\sigma^2_h}{h^2} \right)^\frac{1}{4}
+  \approx \frac{l}{\sqrt{\pi}} \sqrt{\frac{\sigma_h}{h}}
+  \quad \text{(corretto)}.
+\end{align}
+(Se l'errore relativo su $h$ è, come nel nostro esempio, l'1\%, la condizione
+corretta è $10$ volte più stringente di quella sbagliata che abbiamo
+scritto sopra.) Se possiamo assicurarci che questa condizione è verificata
+sulla base di una stima, anche grossolana, degli ordini di grandezza, allora
+possiamo tranquillamente ignorare il foro nella stima del volume
+\emph{senza eseguire una misura diretta}. Il fatto che chiamiamo quest'ultima
+una stima e non vi associamo un'incertezza di misura non è in contraddizione
+con quanto abbiamo detto fino a questo momento perché, in questo contesto,
+siamo interessati solamente a distinguere $5$~mm da mezzo~mm o $5$~cm, e non
+ci interessano le sfumature intermedie.
+
+\begin{examplebox}
+  \begin{example}
+    Nel caso in questione la condizione per cui il foro può essere trascurato
+    ai fini della stima del volume si legge $r \ll 3$~mm (che è consistente
+    con il fatto che, come detto prima, un foro di raggio $10$~mm non è
+    trascurabile). Notiamo esplicitamente che la condizione non dipende solo da
+    $r$ ed $l$, ma anche dalle incertezze di misura sui termini non
+    trascurabili (in questo caso essenzialmente $h$).
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Misure di indice di rifrazione}
+
+Si vuole stimare l'indice di rifrazione $n$ di un materiale trasparente,
+immerso in aria, misurando l'angolo di incidenza e di rifrazione sulla
+superficie del materiale stesso e sfruttando la legge di Snell
+\begin{align*}
+  n = \frac{\sin\theta_i}{\sin\theta_r} \; n_\text{aria}.
+\end{align*}
+Ora, il valore tabulato dell'indice di rifrazione dell'aria in condizioni
+normali è $1,0002926$---ovvero, differisce da $1$ per circa $3 \times 10^{-4}$.
+Allora possiamo semplicemente assumere $n_\text{aria} = 1$?
+
+Prima ancora di rispondere ricordiamo, se ce ne fosse bisogno, che non c'è
+niente di speciale nel valore numerico $3 \times 10^{-4}$. In assoluto, esso non
+è né piccolo né grande, per cui la decisione di trascurarlo o meno può
+essere presa solo in relazione a qualcos'altro.
+In questo caso specifico la cosa è piuttosto semplice: l'errore relativo che
+introduciamo su $n$ ponendo $n_\text{aria} = 1$ è proprio $3 \times 10^{-4}$,
+per cui l'approssimazione è lecita se l'incertezza relativa su $n$
+(determinata dalle incertezze di misura sugli angoli di incidenza e di
+rifrazione) è molto più grande:
+\begin{align*}
+  n_\text{aria} - 1 \ll \frac{\sigma_n}{n}.
+\end{align*}
+
+
+\subsection{Focale di una lente convergente}
+
+Supponiamo di voler misurare la lunghezza focale $f$ di una lente convergente
+sfruttando la legge fondamentale delle lenti sottili
+\begin{align}\label{eq:lenti_sottili}
+  \frac{1}{p} + \frac{1}{q} = \frac{1}{f},
+\end{align}
+in cui $p$ è la distanza tra la sorgente e la lente, e $q$ è la distanza
+tra la lente e l'immagine. In generale la~\eqref{eq:lenti_sottili} indica
+che per stimare $f$ dobbiamo misurare sia $p$ che $q$, ma suggerisce anche
+immediatamente che se la sorgente fosse all'infinito, la lunghezza focale
+coinciderebbe con la distanza $q$ tra la lente e lo schermo, e noi potremmo
+cavarcela con una misura anziché due. Esattamente come nel caso delle piccole
+oscillazioni ci chiediamo allora quale sia la condizione che deve essere
+verificata perché possiamo trascurare $p$
+nella~\eqref{eq:lenti_sottili}.
+
+Se siete tentati di rispondere $p \gg q$, fate lo sforzo di trattenervi e
+rileggete con attenzione la sezione precedente: il fatto che $p$ sia molto
+più grande di $q$ non basta a dire che $\nicefrac{1}{p}$ può essere
+trascurato, se non diciamo niente sull'incertezza $\sigma_q$.
+
+Supponiamo allora di disporre di una misura $q = \hat{q} \pm \sigma_q$ della
+distanza lente-immagine e di una \emph{stima}, anche grossolana, $\hat{p}$
+della distanza sorgente-lente---per fissare le idee possiamo immaginare
+che la sorgente sia una plafoniera fissata al soffitto di una stanza e che noi
+siamo seduti alla scrivania con la nostra lente in mano: in questa situazione
+possiamo dire, e.g., che $p$ è circa $2$~m senza fare nessuna misura.
+Guardando più da vicino la~\eqref{eq:lenti_sottili} è chiaro che $p$ può
+essere trascurato se $\nicefrac{1}{p}$ è molto più piccolo dell'errore su
+$\nicefrac{1}{q}$, ovvero
+\begin{align}
+  \frac{1}{\hat{p}} \ll \frac{\sigma_q}{\hat{q}^2}
+  \quad \text{o, ancora} \quad
+  \hat{p} \gg \frac{\hat{q}^2}{\sigma_q}.
+\end{align}
+
+\begin{examplebox}
+  \begin{example}
+    Se $q = 10.0 \pm 0.2$~cm, la sorgente deve essere ad una distanza molto
+    maggiore di $5$~m dalla lente perché $p$ possa essere trascurato. Potete
+    verificare direttamente che, in caso contrario, il termine $\nicefrac{1}{p}$
+    dà un contributo alla stima della focale non trascurabile rispetto
+    all'incertezza sulla focale stessa.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Le piccole oscillazioni di un pendolo}
+\label{sec:piccole_oscillazioni}
+
+Consideriamo l'equazione del moto del pendolo semplice:
+\begin{align}\label{eq:moto_pendolo}
+  \ddot\theta(t) + \omega_0^2\sin\theta(t) = 0.
+\end{align}
+Vi sarà sicuramente capitato di sentir dire che per piccole oscillazioni è
+lecito utilizzare lo sviluppo in serie del seno al prim'ordine
+$\sin\theta \approx \theta$, col che l'equazione del moto viene linearizzata
+e le oscillazioni diventano \emph{armoniche}---cioè il periodo di oscillazione
+non dipende dall'ampiezza.  \`E probabile che abbiate anche sentito dire che
+la condizione di piccole oscillazioni si scrive come
+\begin{align*}
+  \theta \ll 1 \quad
+  \text{(condizione di piccole oscillazioni fisicamente insoddisfacente)}
+\end{align*}
+e, se siete stati particolarmente sfortunati, che in pratica sono \emph{piccoli}
+tutti gli angolo sotto i $5^\circ$ (o al sotto di qualche altro numero
+ugualmente arbitrario). Ora, le ultime due affermazioni sono ovviamente
+insoddisfacenti---non esiste un valore \emph{magico} al di sotto del quale le
+oscillazioni diventano improvvisamente piccole.
+
+Torniamo dunque al nostro pendolo. La~\eqref{eq:moto_pendolo} non si può
+risolvere in forma chiusa, ma è possibile ottenere una formula generale
+per il periodo in funzione dell'ampiezza di oscillazione $\theta_0$ nella forma
+di uno sviluppo di Taylor:
+\begin{align}\label{eq:periodo_pendolo_theta}
+  T(\theta_0) = T_0 \left( 1 + \frac{1}{16}\theta_0^2 +
+  \frac{11}{3072}\theta_0^4 + \frac{173}{737\,280}\theta_0^6 +
+  \frac{22\,931}{1\,321\,205\,760}\theta_0^8 +
+  \cdots \right) \quad \text{con} \quad
+  T_0 = 2\pi\sqrt{\frac{l}{g}}.
+\end{align}
+
+\pgffigone{piccole_oscillazioni}{
+  Andamento del periodo di oscillazione di un pendolo (o meglio, del rapporto
+  $T(\theta_0)/T$ tra il periodo ed il suo valore asintotico per piccole
+  oscillazioni) in funzione dell'ampiezza $\theta_0$. La linea continua
+  rappresenta la somma dei primi quattro termini dello
+  sviluppo~\eqref{eq:periodo_pendolo_theta}---fino a quello in $\theta_0^6$
+  incluso. Le tre linee tratteggiate indicano le somme parziali dei termini di
+  ordine inferiore---quello costante (approssimazione di piccole oscillazioni),
+  quello in $\theta_0^2$ e quello in $\theta_0^4$.
+}
+
+La domanda che ci facciamo è allora: dato un valore fissato di $\theta_0$,
+posso considerare le oscillazioni piccole e trascurare tutti i termini dello
+sviluppo di ordine superiore al primo? O, nel nostro nuovo linguaggio: dato
+un valore fissato di $\theta_0$ posso misurare la variazione di periodo indotta
+dal fatto che l'ampiezza di oscillazione non è nulla? (Ricordate: se non posso
+misurare l'effetto, allora posso trascurarlo.) Posta in questi termini la
+questione, la risposta è semplice: se voglio considerare le oscillazioni
+piccole devo assicurarmi che i termini di correzione al periodo che
+trascuro---ed in particolare il primo, che è il più grande---siano molto
+più piccoli dell'incertezza di misura sul periodo stesso, vale a dire:
+\begin{align}\label{eq:condizione_piccole_oscillazioni}
+  \frac{T_0\theta_0^2}{16} \ll \sigma_T
+  \quad \text{ovvero} \quad
+  \frac{\theta_0^2}{16} \ll \frac{\sigma_T}{T_0}
+  \quad \text{o, ancora} \quad
+  \theta_0 \ll 4 \sqrt{\frac{\sigma_T}{T_0}}.
+\end{align}
+L'ultima relazione che abbiamo scritto ci dà una definizione operativa di
+cosa significhi "piccole oscillazioni" nel contesto della nostra misura.
+Come avevamo anticipato, la condizione non si scrive in astratto, ma dipende
+dalla precisione dell'apparato sperimentale. L'angolo oltre il quale le
+oscillazioni cessano di essere piccole dipende dalla risoluzione dello
+strumento che uso. Se l'errore relativo di misura è dell'ordine dell'$1\%$
+(che è un valore tipico se si usa un cronometro manuale), si cominciano ad
+apprezzare i termini anarmonici per $\theta_0 \approx 20^\circ$; ma se è di
+$10^{-5}$ (che non è impossibile da ottenere con un microcontrollore
+relativamente poco sofisticato), allora $\theta_0 \approx 1^\circ$ non è
+affatto piccolo.
+
+
+\section{Errori sistematici}
+\label{sec:errori_sistematici}
+
+Nella sezione~\ref{sec:errore_max} abbiamo introdotto la distinzione tra le
+nozioni di precisione ed accuratezza. Torniamo adesso su una domanda che
+abbiamo toccato brevemente più volte, ovverosia: immaginando di poter
+migliorare a piacimento la precisione di una misura, possiamo affermare che
+siamo in grado di migliorare a piacimento anche la sua accuratezza? In altre
+parole, possiamo avvicinarci arbitrariamente al valore del misurando
+semplicemente facendo in modo di ridurre le fluttuazioni statistiche della
+misura (dove possibile) e migliorando la risoluzione dello strumento?
+La risposta, in generale, è no, ed il motivo di fondo è l'esistenza degli
+\emph{errori sistematici}.
+
+Gli errori sistematici possono essere causati da svariati fattori, tra cui:
+problemi di calibrazione degli strumenti di misura o utilizzo improprio degli
+strumenti stessi, condizioni ambientali o fattori esterni non completamente
+sotto controllo, errori ed incertezze di modellizzazione nelle misure indirette.
+Corrispondentemente, la zoologia degli errori sistematici è molto variegata e
+in questa sezione ci limiteremo a fare alcune considerazioni generali
+riesaminando criticamente alcuni degli esempi visti in precedenza.
+
+\pgffigone{errore_stat_sys}{
+  Illustrazione qualitativa dell'andamento asintotico delle incertezze
+  statistiche e sistematiche in funzione del numero di misure $n$ (cfr. la
+  sezione~\ref{sec:andamento_asintotico_stat}). Mentre l'incertezza statistica
+  diminuisce come $\nicefrac{1}{\sqrt{n}}$, quella sistematica è costante,
+  per cui esiste un regime in cui continuare ad eseguire misure non ha
+  alcun beneficio in termini di accuratezza della misura.
+  }
+
+L'aspetto fondamentale e caratterizzante della questione è il fatto che le
+incertezze sistematiche non si possono abbattere, come avviene invece per quelle
+statistiche, semplicemente continuando a prendere dati. Mentre l'errore
+statistico decresce in media come $\nicefrac{1}{\sqrt{n}}$, quello sistematico
+è per definizione indipendente da $n$ e, quando i due divengono dello stesso
+ordine di grandezza, è banalmente giunto il momento in cui continuare a
+prendere dati non porta più alcun beneficio per quel che riguarda
+l'accuratezza della misura.
+
+
+\subsection{Errori sistematici strumentali}
+
+Spesso gli errori sistematici hanno origine strumentale, ad esempio una non
+perfetta calibrazione dell'apparato di misura. Questo è particolarmente vero
+negli esperimenti di frontiera, in cui gli strumenti sono estremamente
+complessi e sono utilizzati al limite delle proprie possibilità.
+
+\pgffigone[!b]{risposta_strumento}{
+  Esempio illustrativo della funzione di risposta di uno strumento generico.
+  La diagonale indica la situazione in cui la lettura è identica al valore
+  (incognito) del misurando su tutto l'intervallo operativo (cioè lo
+  strumento è perfettamente calibrato). In pratica la risposta non è mai
+  ideale, e si possono dare errori di zero, errori di scala o, più in generale
+  deviazioni dalla diagonale di forma arbitraria. La funzione fondamentale
+  della calibrazione di uno strumento è di fare in modo che queste deviazioni
+  siano il più piccole possibili e sotto controllo.
+}
+
+Ogni strumento è caratterizzato da una \emph{funzione di risposta}, che
+rappresenta essenzialmente il valore di lettura dello strumento stesso in
+funzione del valore (incognito) del misurando
+(figura~\ref{fig:risposta_strumento}).
+Idealmente vorremmo che la risposta dello strumento fosse l'identità su tutto
+l'intervallo operativo. In pratica essa non può essere misurata con
+precisione infinita, ed il massimo che si può fare, attraverso la
+calibrazione, è cercare di avvicinarsi il più possibile alla condizione
+ideale e quantificare più o meno precisamente le deviazioni residue.
+Si parla allora di \emph{errore di zero} quando la lettura di uno strumento è
+traslata sistematicamente di una costante additiva (o \emph{offset}) rispetto
+al valore del misurando. Si parla viceversa di un \emph{errore di scala}
+quando il rapporto tra lettura e misurando è pari ad una costante
+moltiplicativa diversa da $1$. Nel caso più generale la risposta di uno
+strumento può essere affetta contemporaneamente da errori di zero ed errori
+di scala, e questi ultimi possono variare in grandezza all'interno
+dell'intervallo di misura dello strumento stesso.
+
+Queste semplici considerazioni cambiano radicalmente le regole del gioco:
+quando utilizziamo uno strumento non possiamo banalmente assumere che le
+letture della grandezza fisica che esso misura siano accurate entro i limiti
+della risoluzione strumentale. Uno dei compiti principali di un buon Fisico
+sperimentale è proprio quello di valutare la presenza di possibili errori
+sistematici nella misura e propagare l'effetto che essi hanno sulle conclusioni
+che si vogliono trarre dalla misura stessa. La natura estremamente variegata
+del problema rende complicata una discussione esaustiva in astratto, ma gli
+esempi~\ref{exp:termometro_digitale_2} e~\ref{exp:dilatazione_termica}
+dovrebbero servire da spunti di riflessione al proposito.
+
+\begin{examplebox}
+  \begin{example}\label{exp:termometro_digitale_2}
+    Riesaminiamo brevemente l'esempio~\ref{exp:termometro_digitale} del
+    nostro termometro digitale che, immerso in acqua, fornisce una lettura
+    $T_1 = 34.5~^\circ$C (cui associamo un errore di $0.1~^\circ$C). Acquistiamo
+    adesso un secondo termometro identico, lo immergiamo nello stesso
+    contenitore, e notiamo che quest'ultimo segna $T_2 = 33.2^\circ$C. (Se
+    l'esempio vi pare pretestuoso, comprate due termometri digitali a basso
+    prezzo e provate voi stessi: non mancherete di rimanere sorpresi.)
+    Aspettiamo qualche ora e notiamo che i due termometri segnano
+    $T_1 = 26.5~^\circ$C e $T_2 = 25.2~^\circ$C---notate che la differenza è
+    rimasta invariata ($1.3~^\circ$C), ed è molto più grande dell'incertezza
+    di misura nominale.
+    In queste condizioni è ragionevole concludere che i due termometri siano
+    in grado di apprezzare variazioni di $0.1~^\circ$C (nel senso della
+    risoluzione strumentale) ma che allo stesso tempo abbiano un errore di zero
+    (incognito, perché a questo livello non possiamo dire quale dei due sia
+    più vicino al misurando) dell'ordine $1.3~^\circ$C.
+    (Se avessimo più termometri a disposizione potremmo costringere meglio
+    l'entità di questo errore di zero.) Scriveremo allora l'ultima misura
+    fornita (ad esempio) dal primo termometro come
+    $T_1 = 26.5 \pm 0.1 \pm 1.3 (sys)~^\circ$C, indicando separatamente il
+    contributo dell'errore sistematico di zero.
+  \end{example}
+
+  \begin{example}\label{exp:dilatazione_termica}
+    Il coefficiente di dilatazione termica lineare dell'acciaio (materiale con
+    cui sono tipicamente realizzati i metri a nastro metallici) è dell'ordine
+    di $\lambda \approx 1.7 \times 10^{-5}~{}^\circ\text{C}^{-1}$. Questo significa
+    che, passando da $T_1 = 0~^\circ$C a $T_2 = 30~^\circ$C, la lunghezza
+    reale di un metro a nastro di lunghezza nominale $L = 2$~m aumenta
+    di un fattore $\lambda L (T_2 - T_1) \approx 1$~mm---che è pari alla
+    risoluzione del metro stesso. (Nel caso di un calibro cinquantesimale
+    l'effetto può essere, in termini relativi, significativamente più
+    importante.) Una contrazione o dilatazione di questo tipo introduce
+    chiaramente un errore di scala.
+
+    Questo dovrebbe darci alcuni spunti di riflessione: a che temperatura è
+    stato calibrato il metro (o il calibro)? Qual è il coefficiente di
+    dilatazione termica lineare dell'oggetto che stiamo misurando? E cosa
+    significa misurare la lunghezza di un oggetto se essa non è una grandezza
+    caratteristica dell'oggetto stesso, ma dipende dalla temperatura?
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Incertezze di modellizzazione}
+
+Abbiamo già avuto modo di dire che l'utilizzo di un \emph{modello} inadeguato
+può essere fonte di errori sistematici nella stima dei parametri del modello
+stesso. Riesaminiamo per un attimo l'esempio~\ref{exp:misura_g_pendolo}---ossia
+la stima del valore dell'accelerazione di gravità $g$ attraverso la misura
+del periodo di un pendolo semplice.
+
+Se misuriamo abbastanza accuratamente (nel senso dell'accuratezza, non solo
+della precisione) $l$ e $T$ possiamo dire che misureremo altrettanto
+accuratamente $g$? Sicuramente l'errore propagato secondo la prescrizione
+dell'esempio~\ref{exp:misura_g_pendolo} sarà piccolo se $\sigma_l$ e
+$\sigma_T$ sono piccoli, ma ad un certo punto entreremo nelle condizioni
+in cui non sarà più lecito utilizzare la~\eqref{eq:periodo_pendolo}
+per ricavare $g$ dalle misure di $l$ e $T$ (e, vale la pena ripeterlo ancora
+una volta, non perché queste ultime non siano accurate).
+Ci si aprono dunque due strade: (i) ci assicuriamo che il valore di
+$\theta_0$ che scegliamo per eseguire la misura sia abbastanza piccolo da
+garantire che i termini anarmonici dello sviluppo in serie del periodo siano
+molto più piccoli dell'errore di misura; oppure (ii) si utilizzano a
+posteriori tutti i termini della~\eqref{eq:periodo_pendolo_theta} che è
+necessario usare per evitare errori sistematici%
+\footnote{L'esempio appena fatto è in un certo senso fuorviante perché in
+  una situazione in cui si ha a disposizione un modello arbitrariamente
+  accurato~\eqref{eq:periodo_pendolo_theta}, utilizzare un modello inadeguato
+  non costituisce un errore sistematico, ma semplicemente un
+  \emph{errore}---non nel senso di incertezza, ma nel senso di sbaglio vero e
+  proprio. Vi sono casi, tuttavia, in cui tale modello non è disponibile;
+  ed in quei casi l'inadeguatezza del modello a disposizione costituisce il
+  limite ultimo all'accuratezza della misura.}.
+
+\begin{examplebox}
+  \begin{example}
+    Se misuriamo il periodo di un pendolo con una incertezza relativa
+    dell'$1$\% (ad esempio $\nicefrac{1}{100}$~s su un periodo di $\sim 1$~s),
+    allora seguendo la~\eqref{eq:condizione_piccole_oscillazioni}
+    dobbiamo assicurarci che l'ampiezza massima di oscillazione
+    soddisfi la condizione $\theta_0 \ll 0.4~\text{rad} \approx 23^\circ$
+    per poter stimare correttamente l'accelerazione di gravità $g$ lavorando
+    in approssimazione di piccole oscillazioni.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Identificazione degli effetti sistematici}
+
+Identificare e trattare opportunamente tutte le possibili sorgenti di errori
+sistematici in una misura, specialmente in esperimenti complessi, è spesso
+il compito più difficile con cui il Fisico sperimentale deve misurarsi.
+Una trattazione esaustiva del problema a partire dai principi primi è
+estremamente difficile, ma in linea generale alcune strategie possibili sono:
+ripetere la misura con uno o più strumenti indipendenti---possibilmente
+più accurati; verificare la calibrazione dello strumento utilizzato
+attraverso la misura di una o più grandezze di riferimento note;
+verificare la consistenza interna del proprio campione di dati (ad esempio
+suddividendolo in sotto-campioni o intervalli temporali); verificare possibili
+incongruenze con il modello utilizzato per interpretare i dati.
+
+\begin{examplebox}
+  \begin{example}
+    Supponiamo di prendere i due termometri
+    dell'esempio~\ref{exp:termometro_digitale_2} e di immergerli in un
+    (abbondante) misto di acqua e ghiaccio---cioè in un bagno termico a
+    $0^\circ$C. Il primo termometro segna $0.2^\circ$C ed il secondo $1.5^\circ$C.
+    Data questa nuova informazione potremmo essere tentati di assumere che il
+    primo termometro sia più accurato del secondo, in quanto si avvicina
+    di più al nostro valore di riferimento. Potremmo addirittura essere
+    tentati di usare questo procedimento per correggere lo zero
+    di entrambi.
+    (Prima di fare questo, dovremmo cercare di analizzare criticamente il
+    nostro procedimento di taratura, però. Se immergiamo il termometro in
+    un punto diverso del bagno termico, ad esempio, la lettura cambia? E in tal
+    caso quali sono le implicazioni?)
+  \end{example}
+
+  \begin{example}
+    Data una serie di oggetti dello stesso materiale, misuriamo il volume
+    $V$ e la massa $m$ per ciascuno di essi. Mettiamo poi i valori
+    ottenuti su di un grafico cartesiano (di $m$ in funzione di $V$) per
+    stimare la densità $\rho$ del materiale dalla retta che meglio li
+    approssima---secondo la relazione $m = \rho V$.
+    Se non vincoliamo la nostra retta a passare per l'origine ci accorgiamo
+    però che l'intercetta stimata è significativamente diversa da $0$.
+    In questo caso abbiamo ottime ragioni fisiche per credere che (come
+    previsto dal nostro modello) la massa tenda a $0$ quando il volume tende
+    a $0$. Il fatto che i nostri dati non si dispongano su una retta passante
+    per l'origine indica che, con ogni probabilità, siamo in presenza di
+    un errore sistematico sulla misura delle masse o dei volumi---o tutti e due.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Propagazione degli effetti sistematici}
+
+Una caratteristica peculiare degli errori sistematici è costituita dal
+fatto che, per loro natura, non seguono le regole di propagazione
+dell'errore massimo (o statistico). La differenza di base è che gli errori
+sistematici non sono indipendenti tra misura e misura: se un termometro, ad
+esempio, ha un problema di zero, tutte le misure saranno troppo grandi o troppo
+piccole della stessa quantità. Questo porta a situazioni interessanti---e a
+volte sorprendenti---nella propagazione delle incertezze di questo tipo.
+
+\begin{examplebox}
+  \begin{example}
+    Supponiamo di misurare le temperature $T_1$ e $T_2$ ai due estremi di una
+    sbarretta conduttrice e di essere interessati \emph{solo} alla loro
+    differenza---ad esempio per stimare la conducibilità termica del materiale
+    di cui la sbarretta è costituita. Questo è un caso tipico in cui
+    un possibile errore di zero del termometro (assumendo di utilizzare
+    lo stesso termometro per le due misure) è rigorosamente ininfluente.
+  \end{example}
+\end{examplebox}
+
+
+\summary
+
+\begin{itemize}
+\item Il risultato di una misura è composto da: (i) valore centrale; (ii)
+  incertezza ad esso associata; (iii) unità di misura. Mai omettere alcuna
+  delle tre per nessuna ragione.
+\item L'incertezza di misura si scrive con 1 o, al massimo, 2 cifre
+  significative. Il valore centrale si scrive, di conseguenza, con un numero di
+  cifre decimali consistente con quelle dell'incertezza.
+\item Controllate sempre le dimensioni fisiche delle equazioni che scrivete.
+  Se i due membri di un'equazione non hanno le stesse dimensioni fisiche, allora
+  l'equazione è sbagliata.
+\item La propagazione delle incertezze per misure indipendenti si esegue in
+  generale seguendo la~\eqref{eq:intro_err_stat_multidimensionale}:
+  \begin{align*}
+    \sigma^2_f \approx
+    \left(\pd{f}{x}{\hat{x}, \hat{y}, \hat{z}\ldots}\right)^2 \sigma^2_x +
+    \left(\pd{f}{y}{\hat{x}, \hat{y}, \hat{z}\ldots}\right)^2 \sigma^2_y +
+    \left(\pd{f}{z}{\hat{x}, \hat{y}, \hat{z}\ldots}\right)^2 \sigma^2_z + \cdots
+  \end{align*}
+  Questo non vuol dire che dobbiate necessariamente riscoprire la ruota ogni
+  volta che propagate l'errore su un'espressione: il fatto che nei prodotti e
+  nei quozienti si sommino (in quadratura) gli errori relativi si può
+  tenere a mente indipendentemente dalle derivate parziali.
+\item Quando, per comodità o necessità, si fa un'approssimazione è
+  strettamente necessario verificare che l'effetto che stiamo trascurando
+  non sia misurabile con il nostro apparato. In caso contrario l'approssimazione
+  non è lecita.
+\item L'identificazione e la trattazione degli errori sistematici sono una
+  parte fondamentale del processo di misura ed analisi dei dati.
+\item Ricordate: sbagliare le cifre significative e/o le unità di misura sono
+  gli \emph{errori di ortografia} del Laboratorio di Fisica!
+\end{itemize}

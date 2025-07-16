@@ -1,0 +1,22 @@
+\begin{tikzpicture}%
+  \pgfmathsetseed{1}
+  \pgfmathsetmacro{\scale}{0.6}
+  \pgfmathsetmacro{\x}{0.5*\scale}
+  \newcounter{count}\setcounter{count}{0}
+  \foreach \row in {2,...,15} {
+    \foreach \col in {1,...,\row} {
+      \coordinate (pos) at (-\row/2*\scale+\col*\scale,-\row*\scale);
+      \node[circle,draw,minimum size=1mm,inner sep=0,fill] at (pos) {};
+    }
+    \coordinate (a) at (0.5*\value{count}*\scale+0.5*\scale, -\row*\scale);
+    \pgfmathparse{rnd}
+    \ifdim\pgfmathresult pt > 0.5 pt
+    \addtocounter{count}{1}
+    \else
+    \addtocounter{count}{-1}
+    \fi;
+    \coordinate (b) at
+    (0.5*\value{count}*\scale+0.5*\scale, -\row*\scale-\scale);
+    \ifnum\row < 15\draw[color=gray,dotted,line width=1.25pt] (a)--(b)\else\fi;
+  }
+\end{tikzpicture}

@@ -1,0 +1,2668 @@
+\chapter{Metodi di fit}
+\label{sec:metodi_di_fit}
+
+In questo capitolo riprendiamo, alla luce di quanto imparato fino a questo
+momento, il problema del fit di dati sperimentali, che abbiamo già incontrato
+nella sua variante grafica, e per modelli lineari o linearizzabili, nel
+capitolo~\ref{sec:rappresentazione_dati}.
+
+
+\section{Descrizione generale del problema}
+
+Come abbiamo già detto, dato un insieme di dati sperimentali, il problema di
+\fit\ o \bestfit\ o \fitting\ consiste nel cercare una funzione (o \emph{modello}),
+possibilmente semplice, che descriva in modo soddisfacente i dati stessi.
+Vi sono due aspetti, diversi e ugualmente importanti, di questo problema.
+Il primo è---data una famiglia di modelli, ad esempio dipendente da uno o più
+parametri---trovare il modello specifico che meglio si adatta ai nostri dati
+secondo una qualche metrica ragionevole.
+Il secondo è valutare a posteriori il livello di accordo (o la bontà del
+fit) per capire se il nostro modello specifico è un buon modello oppure no.
+In questo capitolo cercheremo di sviscerare per quanto possibile entrambi
+questi aspetti.
+
+Cominciamo con l'inquadrare in modo un po' più rigoroso gli ingredienti del
+problema. Data una serie di $n$ coppie ordinate di misure di due generiche
+grandezze $x$ ed $y$, con le rispettive incertezze
+\begin{align*}
+  (x_i \pm \sigma_{x_i},~y_i \pm \sigma_{y_i}) \qquad i = 1 \ldots n
+\end{align*}
+ed una famiglia di funzioni, dipendente da un numero $m$~di parametri
+$\theta_1 \ldots \theta_m$, che pensiamo possa rappresentare la dipendenza di
+$y$ da $x$
+\begin{align*}
+  y = f(x; \theta_1 \ldots \theta_m)
+\end{align*}
+il nostro primo compito è dunque quello di trovare i valori
+$\hat{\theta}_1 \ldots \hat{\theta}_m$ dei parametri in modo da massimizzare
+(in un senso che preciseremo tra un attimo) l'accordo tra modello e dati.
+
+\begin{examplebox}
+  \begin{example}
+    La famiglia di funzioni $y = mx + q$ (che al variare di $m$ e $q$ genera
+    tutte le rette del piano) è un modello a due parametri---che si dice
+    \emph{modello lineare}. \`E uno dei più semplici ad avere rilevanza
+    pratica e ci torneremo in dettaglio nel seguito.
+  \end{example}
+\end{examplebox}
+
+Vale la pena sottolineare subito che la scelta del modello (cioè della
+funzione di fit) è un passo essenziale del processo. In generale, dati $n$
+punti sperimentali, è banalmente possibile trovare un polinomio di grado
+$n - 1$ che passi esattamente per tutti i punti, ma ciò non significa che
+questa sia una strategia di fit sensata. Anzi, esattamente il contrario. Per
+prima cosa, così facendo, ignoreremmo completamente le incertezze di misura,
+che sappiamo invece essere un ingrediente fondamentale di tutta la nostra
+costruzione. Inoltre il nostro fit ci restituirebbe un numero di valori pari a
+quello dei nostri punti sperimentali---senza riduzione di informazione e senza
+nessuna ovvia interpretazione fisica dei parametri. (In altre parole, è
+importante capire fin da subito che i problemi di fit sono concettualmente
+diversi dai problemi di interpolazione---qui stiamo cercando di fare qualcosa
+di leggermente più sofisticato che non il semplice far passare una curva da
+una serie di punti.) \`E chiaro allora che il modello va scelto in base a
+considerazioni di carattere fisico (ad esempio previsioni della teoria, o
+analogia con situazioni simili) che ci fanno preferire una famiglia di funzioni
+rispetto ad un'altra, e che per quanto possibile è bene che i parametri del
+modello siano riconducibili alla Fisica del sistema che stiamo studiando.
+
+\begin{examplebox}
+  \begin{example}
+    Supponiamo di aver misurato la posizione di un punto materiale vincolato a
+    muoversi su una retta in corrispondenza di un certo numero di istanti di
+    tempo fissati e di essere interessati a determinare la legge oraria del
+    punto stesso. Se abbiamo ragioni per pensare che il nostro oggetto si muova
+    di moto uniforme possiamo usare un modello lineare. E se il modello lineare
+    fornisce un buon fit, l'interpretazione fisica dei parametri di
+    \bestfit\ è immediata: l'intercetta corrisponde alla posizione
+    al tempo $t = 0$ ed il coefficiente angolare alla velocità.
+  \end{example}
+\end{examplebox}
+
+
+\section{Introduzione informale al fit dei minimi quadrati}
+\label{sec:fit_minimi_quadrati}
+
+Continuiamo la nostra discussione attaccando un problema leggermente più
+semplice di quello generale appena descritto, ma purtuttavia di grande
+rilevanza pratica. Faremo le tre ipotesi di lavoro seguenti:
+\begin{enumerate}
+\item le $n$ misure sono tra loro indipendenti;
+\item i valori $y_i$ sono misurati in corrispondenza di $x_i$ noti, ovverosia
+  le incertezze di misura sugli $x_i$ sono trascurabili;
+\item gli errori di misura sulla variabile dipendente sono Gaussiani---cioè
+  gli $y_i$ tendono a fluttuare attorno al misurando con una distribuzione
+  Gaussiana con deviazione standard $\sigma_{y_i}$ nota a priori.
+\end{enumerate}
+
+Prima ancora di cominciare la seconda delle assunzioni richiede un chiarimento.
+Che cosa vuol dire che gli errori sulla $x$ sono trascurabili e come possiamo
+scrivere questa condizione? Evidentemente \emph{non} come
+$\sigma_{x_i} \ll \sigma_{y_i}$---che in generale non è corretta nemmeno
+dimensionalmente, poiché $x$ ed $y$ non sono necessariamente grandezze
+omogenee. Ma nemmeno come $\sigma_{x_i}/x_i \ll \sigma_{y_i}/y_i$ poiché una
+differenza relativa piccola sulla $x$ può trasformarsi in una differenza
+sostanziale sulla $y$, se la derivata della funzione che lega tra loro la $x$ e
+la $y$ in un certo punto è abbastanza grande. Dobbiamo richiedere invece che
+per ciascuno dei punti misurati l'errore $\sigma_{x_i}$, propagato attraverso la
+funzione $f(x)$ sulla variabile dipendente $y$ sia molto più piccolo
+dell'errore di misura $\sigma_{y_i}$ corrispondente o, in formule,
+\begin{align}\label{eq:condizione_dxdy}
+  \abs{\td{f}{x}{x_i; \hat{\theta}_1 \ldots \hat{\theta}_m}}\,
+  \sigma_{x_i} \ll \sigma_{y_i}
+  \quad i = 1 \ldots n.
+\end{align}
+(Se siete incerti su questo punto, tornate di nuovo a leggere la
+sezione~\ref{sec:propagazione_errrore_max} ed osservate con attenzione la
+figura~\ref{fig:linearizzazione_errore_max}.)
+Vedremo tra un attimo che questa condizione semplifica significativamente le
+cose, poiché nel confronto tra dati e modello ci permette di calcolare
+quest'ultimo in una serie punti ben definiti senza preoccuparci dell'errore
+sulla variabile indipendente.
+
+\begin{figure}[htb!]
+  \autohstack{\input{figures/termine_chi2}}{
+    \caption{Significato geometrico dell'$i$-esimo termine della
+      somma~\eqref{eq:somma_chiquadro_fit}: il quadrato della distanza
+      tra dati e modello (per un insieme di valori dei parametri) misurate in
+      barre d'errore.}
+    \label{fig:termine_chi2}
+  }
+\end{figure}
+
+Cominciamo dunque con il costruire la somma, che per motivi che saranno chiari
+tra un attimo chiameremo \emph{chi quadro}
+\begin{align}\label{eq:somma_chiquadro_fit}
+  \chisquare{\theta_1,\ldots,\theta_m} = \sum_{i = 1}^{n}\left(
+  \frac{y_i - f(x_i; \theta_1,\ldots,\theta_m)}{\sigma_{y_i}}
+  \right)^2.
+\end{align}
+A questo livello il $\chisq$ non è altro che la \emph{somma dei quadrati
+  delle differenze tra dati e modello, misurate in unità di barre d'errore}.
+(Non sarete sorpresi del fatto che abbiamo elevato al quadrato le distanze---al
+solito è per evitare che fluttuazioni positive e fluttuazioni negative si
+cancellino a vicenda.) \`E chiaro allora che questa quantità misura, in un
+qualche senso, la distanza complessiva tra una serie di dati ed un modello, in
+funzione del valore dei parametri da cui il modello dipende: più piccolo è
+il $\chisq$, migliore l'accordo tra dati e modello---e viceversa.
+
+Ora che abbiamo una misura oggettiva dell'accordo tra dati e modello, possiamo
+trovare la funzione di \bestfit\ semplicemente minimizzando il nostro
+$\chisq$ rispetto agli $m$ parametri del modello:
+\begin{align}\label{eq:minimizzazione_chi_quadro}
+  \begin{cases}
+    \pd{\chisq}{\theta_1}{\hat{\theta}_1,\ldots,\hat{\theta}_m} = 0\\
+    \hspace*{30pt}\vdots \\
+    \pd{\chisq}{\theta_m}{\hat{\theta}_1,\ldots,\hat{\theta}_m} = 0.\\
+   \end{cases}
+\end{align}
+La~\eqref{eq:minimizzazione_chi_quadro} fornisce un insieme di $m$ equazioni
+che, almeno in linea di principio, ci permettono di ricavare gli $m$ valori
+di \bestfit\ $\hat{\theta}_1,\ldots,\hat{\theta}_m$ per i parametri.
+
+
+\subsection{Fit dei minimi quadrati nel caso costante: la media pesata}
+\label{sec:media_pesata}
+
+L'esempio più semplice di fit ad un parametro (che chiameremo, per fissare
+le idee, $q$) è quello con una funzione costante---cioè indipendente dalla
+variabile $x$:
+\begin{align*}
+  f(x; q) = q \quad \text{(costante)}.
+\end{align*}
+Illustreremo questo primo caso pedissequamente in ogni passaggio. Il $\chisq$
+si scrive come
+\begin{align*}
+  \chisquare{q} = \sum_{i = 1}^{n}\left(\frac{y_i - q}{\sigma_{y_i}}\right)^2.
+\end{align*}
+(Notiamo esplicitamente che in questo caso le nostre $n$ misure sperimentali non
+saranno coppie ordinate $(x_i$, $y_i$) ma singoli valori $y_i$, poiché nel
+modello la variabile indipendente non gioca alcun ruolo.) La condizione di
+minimo si scrive ponendo uguale a zero la derivata totale del $\chisq$ rispetto
+all'unico parametro
+\begin{align}\label{eq:min_chisq_const}
+  \td{\chisq}{q}{\hat{q}} =
+  -2 \sum_{i = 1}^{n} \left(\frac{y_i - \hat{q}}{\sigma^2_{y_i}}\right) = 0.
+\end{align}
+Si tratta di un'equazione lineare in $\hat{q}$ che si risolve banalmente, con
+poche manipolazioni algebriche, nella forma
+\begin{align}\label{eq:media_pesata}
+  \hat{q} = \frac{\sum_{i = 1}^{n}\frac{y_i}{\sigma^2_{y_i}}}%
+      {\sum_{i = 1}^{n}\frac{1}{\sigma^2_{y_i}}}.
+\end{align}
+L'espressione~\eqref{eq:media_pesata} si chiama \emph{media pesata} delle $y_i$
+e costituisce la procedura statisticamente corretta con cui si combinano misure
+indipendenti della stessa quantità---ad esempio risultati di esperimenti
+diversi che misurano la stessa grandezza. Il motivo del nome sta nel fatto che
+se introduciamo le quantità (che chiameremo \emph{pesi})
+\begin{align*}
+  w_i = \frac{1}{\sigma^2_{y_i}},
+\end{align*}
+allora la~\eqref{eq:media_pesata} può essere riscritta nella forma
+equivalente, ma più compatta
+\begin{align}\label{eq:media_pesata_2}
+  \hat{q} = \frac{\sum_{i = 1}^{n} w_iy_i}{\sum_{i = 1}^{n}w_i},
+\end{align}
+in cui la struttura della media pesata è più facilmente riconoscibile.
+Impariamo, come corollario, che i pesi statisticamente corretti da assegnare
+alle misure sono dunque gli inversi dei quadrati delle rispettive
+incertezze---che, almeno a livello qualitativo, ha senso in quanto le misure
+con le incertezze più grandi debbono contare meno nella media.
+
+A questo punto ci rimane da stimare l'incertezza da associare alla nostra stima
+$\hat{q}$ di $q$. Formalmente dobbiamo, cioè, calcolare la varianza di
+$\hat{q}$
+\begin{align}\label{eq:media_pesata_err}
+  \sigma^2_q & = \var{\frac{\sum_{i = 1}^{n} w_iy_i}{\sum_{i = 1}^{n}w_i}} =
+  \frac{\var{\sum_{i = 1}^{n} w_iy_i}}{\left(\sum_{i = 1}^{n}w_i\right)^2} =
+  \frac{\sum_{i = 1}^{n} \var{w_iy_i}}{\left(\sum_{i = 1}^{n}w_i\right)^2} =
+  \frac{\sum_{i = 1}^{n} w_i^2\var{y_i}}{\left(\sum_{i = 1}^{n}w_i\right)^2} =
+  \nonumber\\
+  & = \frac{\sum_{i = 1}^{n} w_i}{\left(\sum_{i = 1}^{n}w_i\right)^2} =
+  \frac{1}{\sum_{i = 1}^{n} w_i} =
+  \frac{1}{\sum_{i = 1}^n \frac{1}{\sigma^2_i}}.
+\end{align}
+Il calcolo non è esattamente banale, ma la cosa fondamentale da ricordare
+è che, in questo contesto, le $y_i$ sono le variabili casuali mentre
+i $\sigma_{y_i}$, e di conseguenza i $w_i$, sono per ipotesi costanti note a
+priori, per cui passano fuori (elevate al quadrato, naturalmente) dall'operatore
+varianza. Detto questo motiviamo brevemente (ed in ordine) ciascun singolo
+passaggio:
+\begin{enumerate}
+\item abbiamo sfruttato il fatto che $\var{cx} = c^2 \var{x}$,
+  cfr.~\eqref{eq:varianza_cost_molt};
+\item la varianza della somma è pari alla somma delle varianze
+  poiché le $y_i$ sono indipendenti, cfr.~\eqref{eq:media_varianza_somma_ind};
+\item abbiamo sfruttato di nuovo il fatto che $\var{cx} = c^2 \var{x}$,
+  cfr.~\eqref{eq:varianza_cost_molt};
+\item semplice sostituzione: $\var{y_i} = \sigma^2_{y_i} = \nicefrac{1}{w_i}$.
+\end{enumerate}
+In altre parole il quadrato dell'incertezza su $\hat{q}$ è l'inverso della
+somma degli inversi delle incertezze (al quadrato) sulle misure di partenza.
+Non è difficile convincersi che $\sigma_q$ è strettamente minore di ciascun
+$\sigma_{y_i}$---come è lecito aspettarsi sulla base del fatto che tutte le
+misure, più o meno a seconda dell'incertezza associata, contribuiscono
+all'informazione.
+
+\begin{examplebox}
+  \begin{example}\label{exp:media_pesata}
+    Cinque gruppi sperimentali (che chiameremo A\ldots E) misurano
+    indipendentemente l'indice di rifrazione dell'acqua ottenendo i valori:
+    $n_A = 1.325 \pm 0.012$,
+    $n_B = 1.36 \pm 0.05$,
+    $n_C = 1.32 \pm 0.01$,
+    $n_D = 1.338 \pm 0.005$,
+    $n_E = 1.335 \pm 0.006$.
+    Se si vogliono combinare le misure per fornire una stima $\hat{n}$ del
+    misurando che includa in modo consistente tutta l'informazione disponibile
+    il modo corretto di procedere è quello di eseguire una media pesata
+    \begin{align*}
+      \hat{n} = 1.3339 \pm 0.0034 \quad \text{oppure} \quad
+      \hat{n} = 1.334 \pm 0.003.
+    \end{align*}
+    Il calcolo è implementato nel frammento~\ref{snip:weighted_average} ed
+    il risultato è illustrato graficamente nella
+    figura~\ref{fig:media_pesata}.
+  \end{example}
+\end{examplebox}
+
+\pgffigone{media_pesata}{
+  Illustrazione del calcolo della media pesata dei valori dell'indice di
+  rifrazione nell'esempio~\ref{exp:media_pesata}. La linea continua rappresenta
+  il valore della media pesata in questione e le due linee tratteggiate indicano
+  l'incertezza (a $1\sigma$) associata. Notiamo esplicitamente che la larghezza
+  della banda di incertezza è più piccola della più piccola tra le
+  incertezze di misura (quella del gruppo D).
+}
+
+\snip{weighted_average}{%
+  Frammento di codice per il calcolo della media pesata delle misure dell'indice
+  di rifrazione dell'acqua dell'esempio~\ref{exp:media_pesata}. La funzione
+  prende in ingresso le liste dei valori delle misure e degli errori
+  associati e restituisce la media pesata e l'incertezza associata. Il
+  risultato è illustrato graficamente nella figura~\ref{fig:media_pesata}.
+  Notiamo, per completezza, che l'incertezza $\sigma_q$ sulla media pesata
+  è più piccola del più piccolo tra gli errori di misura.
+}
+
+
+\subsection{Fit dei minimi quadrati nel caso lineare}
+\label{sec:min_chisq_lineare}
+
+Il fit dei minimi quadrati nel caso lineare non è solo un esercizio di
+notevole importanza pratica; essendo uno degli esempi più semplici di fit a
+più di un parametro permette di discutere alcuni aspetti del problema
+generale della stima dei parametri che non emergono nella media pesata.
+Il nostro modello è in questo caso
+\begin{align*}
+  f(x; q, m) = mx + q
+\end{align*}
+da cui
+\begin{align*}
+  \chisquare{q, m} =
+  \sum_{i = 1}^{n}\left(\frac{y_i - mx_i - q}{\sigma_{y_i}}\right)^2.
+\end{align*}
+Come anticipato, questa volta abbiamo due condizioni di minimo per ricavare
+i valori dei due parametri
+\begin{align}\label{eq:min_chisq_lineare}
+  \begin{cases}
+    \displaystyle
+    \pd{\chisq}{q}{\hat{q}, \hat{m}} = - 2\sum_{i = 1}^{n}\left(
+    \frac{y_i - \hat{m}x_i - \hat{q}}{\sigma_{y_i}^2}\right) = 0\\
+    \displaystyle
+    \pd{\chisq}{m}{\hat{q}, \hat{m}} = - 2\sum_{i = 1}^{n}\left(
+    \frac{y_i - \hat{m}x_i - \hat{q}}{\sigma_{y_i}^2}\right)x_i = 0
+  \end{cases}
+\end{align}
+Allo scopo di semplificare la notazione per il calcolo esplicito della
+soluzione, introduciamo alcune quantità---che dipendono solamente dalle misure
+sperimentali e \emph{non} dai valori dei parametri del modello, ed i cui valori
+numerici possono essere calcolati banalmente una volta che abbiamo a
+disposizione le misure stesse:
+\begin{align}
+  S_x^0 = \sum_{i = 1}^{n} \frac{1}{\sigma_{y_i}^2} \quad
+  S_x^1 = \sum_{i = 1}^{n} \frac{x_i}{\sigma_{y_i}^2} \quad
+  S_x^2 = \sum_{i = 1}^{n} \frac{x_i^2}{\sigma_{y_i}^2} \quad
+  S_{xy}^0 = \sum_{i = 1}^{n} \frac{y_i}{\sigma_{y_i}^2} \quad
+  S_{xy}^1 = \sum_{i = 1}^{n} \frac{x_iy_i}{\sigma_{y_i}^2},
+\end{align}
+col che possiamo allora riscrivere le condizioni di minimo come
+\begin{align*}
+  \begin{cases}
+    \hat{q}S_x^0 + \hat{m}S_x^1 = S_{xy}^0\\
+    \hat{q}S_x^1  + \hat{m}S_x^2 = S_{xy}^1
+  \end{cases} \quad \text{ovvero, in forma matriciale} \quad
+  \begin{bmatrix}
+    S_x^0 & S_x^1\\
+    S_x^1 & S_x^2
+  \end{bmatrix}
+  \begin{bmatrix}
+    \hat{q}\\
+    \hat{m}
+  \end{bmatrix} =
+  \begin{bmatrix}
+    S_{xy}^0\\
+    S_{xy}^1
+  \end{bmatrix}.
+\end{align*}
+L'algebra è tediosa, ma concettualmente il calcolo procede esattamente come
+per la media pesata nella sezione precedente per cui forniamo direttamente i
+risultati. Detta $D$ la quantità
+\begin{align*}
+  D = S_x^0S_x^2 - (S_x^1)^2
+\end{align*}
+(che non è altro che il determinante della matrice $2 \times 2$
+corrispondente al nostro sistema lineare) si ha:
+\begin{align}\label{eq:fit_mq_lineare}
+  \begin{cases}
+    \displaystyle \hat{q} = \frac{S_{xy}^0 S_x^2 - S_{xy}^1 S_x^1}{D}\\
+    \displaystyle \hat{m} = \frac{S_{xy}^1 S_x^0 - S_{xy}^0 S_x^1}{D}
+  \end{cases}
+  \quad \text{con errori associati} \quad
+  \begin{cases}
+    \displaystyle \sigma_q^2 = \frac{S_x^2}{D}\\
+    \displaystyle \sigma_m^2 = \frac{S_x^0}{D}.
+  \end{cases}
+\end{align}
+Notiamo esplicitamente che, ai fini del calcolo delle incertezze, le uniche
+somme che dipendono dalle nostre variabili casuali $y_i$ sono $S_{xy}^0$ ed
+$S_{xy}^1$---le altre tre sono semplici \emph{costanti} e possono essere
+trattate come tali nel calcolo delle varianze. Per completezza le
+quantità rilevanti sono
+\begin{align}
+  \var{S_{xy}^0} & = \var{\sum_{i = 1}^{n} \frac{y_i}{\sigma_{y_i}^2}} =
+  \sum_{i = 1}^{n} \var{\frac{y_i}{\sigma_{y_i}^2}} =
+  \sum_{i = 1}^{n} \frac{\var{y_i}}{\sigma_{y_i}^4} =
+  \sum_{i = 1}^{n} \frac{1}{\sigma_{y_i}^2} = S_x^0\\
+  \var{S_{xy}^1} & =  \var{\sum_{i = 1}^{n} \frac{x_iy_i}{\sigma_{y_i}^2}} =
+  \sum_{i = 1}^{n} \var{\frac{x_iy_i}{\sigma_{y_i}^2}} =
+  \sum_{i = 1}^{n} \frac{x^2_i\var{y_i}}{\sigma_{y_i}^4} =
+  \sum_{i = 1}^{n} \frac{x^2_i}{\sigma_{y_i}^2} = S_x^2 \\
+  \cov{S_{xy}^0}{S_{xy}^1} & =
+  \cov{\sum_{i = 1}^{n}\frac{y_i}{\sigma_{y_i}^2}}%
+      {\sum_{j = 1}^{n}\frac{x_jy_j}{\sigma_{y_j}^2}} =
+  \sum_{i, j = 1}^n \frac{x_j}{\sigma^2_{y_i} \sigma^2_{y_j}}\,\cov{y_i}{y_j} =
+  \sum_{i = 1}^{n} \frac{x_i}{\sigma_{y_i}^2} = S_x^1,
+\end{align}
+(nell'ultima relazione abbiamo utilizzato il fatto che $\cov{y_i}{y_j}$ si
+annulla per $i \neq j$ ed è uguale a $\sigma^2_{y_i}$ per $i = j$.
+Per completezza calcoliamo esplicitamente l'incertezza su $\hat{q}$, lasciando
+quella su $\hat{m}$ per esercizio
+\begin{align*}
+  \sigma^2_q & = \frac{1}{D^2} \left[
+    (S_x^2)^2\var{S_{xy}^0} + (S_x^1)^2\var{S_{xy}^1} -
+    2S_x^2S_x^1\cov{S_{xy}^0}{S_{xy}^1}
+    \right] =\\
+  & = \frac{1}{D^2} \left[
+    (S_x^2)^2S_x^0 + (S_x^1)^2S_x^2 -
+    2S_x^2(S_x^1)^2
+    \right] =
+  \frac{1}{D^2} \left[ (S_x^2)^2S_x^0 - (S_x^1)^2S_x^2 \right] =
+  \frac{S_x^2}{D^2} \left[ S_x^2S_x^0 - (S_x^1)^2 \right] = \frac{S_x^2}{D}.
+\end{align*}
+(L'unica cosa da ricordare qui è che
+$\var{x_1 - x_2} = \var{x_1} + \var{x_2} - 2\cov{x_1}{x_2}$.)
+Il frammento di codice~\ref{snip:linear_least_squares} mostra una
+implementazione, elementare ma funzionante, dell'algoritmo.
+
+\snip{linear_least_squares}{%
+  Esempio di implementazione (funzionante) di un fit dei
+  minimi quadrati con un modello lineare. Per chiarezza, i nomi delle variabili
+  utilizzate ricalcano da vicino quelli usati nel testo.
+}
+
+
+\subsection{La covarianza tra i parametri nel fit lineare}
+
+A questo punto possiamo chiederci se le quantità $\hat{q}$ e $\hat{m}$ che
+abbiamo appena calcolato siano \emph{indipendenti} o meno---e la risposta è
+no: anche se le misure $y_i$ da cui partiamo sono, per ipotesi, indipendenti
+l'intercetta ed il coefficiente angolare di \bestfit\ sono (negativamente)
+correlati. (Non stupirà il fatto che questa non è una peculiarità del
+fit dei minimi quadrati lineare ma è una proprietà che vale in generale, a
+meno che non si utilizzino tecniche specifiche per evitare la correlazione tra
+i parametri di \bestfit.)
+
+In effetti abbiamo già in mano tutti gli ingredienti che ci servono per
+calcolare la covarianza cercata, ovverosia
+\begin{align}
+  \cov{\hat{q}}{\hat{m}} & =
+  \cov{\frac{S_{xy}^0 S_x^2 - S_{xy}^1 S_x^1}{D}}%
+      {\frac{S_{xy}^1 S_x^0 - S_{xy}^0 S_x^1}{D}} =
+      \frac{1}{D^2} \left[
+        S_x^0S_x^2\cov{S_{xy}^0}{S_{xy}^1} + \right.\nonumber\\
+       & \left. - S_x^1S_x^2\cov{S_{xy}^0}{S_{xy}^0} -
+        S_x^0S_x^1\cov{S_{xy}^1}{S_{xy}^1} +
+        (S_x^1)^2 \cov{S_{xy}^1}{S_{xy}^0}\right] = \nonumber\\
+      & = \frac{1}{D^2} \left[
+        S_x^0S_x^1S_x^2 - S_x^0S_x^1S_x^2 - S_x^0S_x^1S_x^2 + (S_x^1)^3
+        \right]
+      = -\frac{S_x^1\left(S_x^0S_x^2 - (S_x^1)^2 \right)}{D^2} =
+      -\frac{S_x^1}{D}.
+\end{align}
+Ne segue banalmente che le matrici di covarianza e di correlazione tra i
+parametri del fit si scrivono come
+\begin{align}
+  \Sigma = \frac{1}{D}
+  \begin{bmatrix}
+    S_x^2 & -S_x^1\\
+    -S_x^1 & S_x^0
+  \end{bmatrix}
+  \quad \text{e} \quad
+  R =
+  \begin{bmatrix}
+    1 & -\frac{S_x^1}{\sqrt{S_x^0S_x^2}}\\
+    -\frac{S_x^1}{\sqrt{S_x^0S_x^2}} & 1
+  \end{bmatrix}
+\end{align}
+
+Che la correlazione tra intercetta e coefficiente angolare in un fit sia
+diversa da zero (e di segno negativo) non dovrebbe stupire---lo abbiamo già
+visto implicitamente parlando della propagazione dell'errore massimo ed è
+illustrato nuovamente in figura~\ref{fig:correlazione_inter_coeff}. Il livello
+di correlazione tra i parametri aumenta all'aumentare del braccio di leva del
+fit e nel limite in cui la dispersione tra i valori $x_i$ è molto più
+piccola (in modulo) dei valori numerici degli $x_i$ stessi---cioè quando nella
+variabile indipendente i punti sono molto più distanti dall'origine di quanto
+non lo siano tra loro stessi---si ha la situazione interessante:
+\begin{align}
+  x_i \approx \tilde{x} \quad i=1 \ldots n
+  \quad \text{da cui} \quad
+  S_x^1 \approx \tilde{x} S_x^0, \quad
+  S_x^2 \approx \tilde{x}^2 S_x^0
+  \quad \text{e infine} \quad
+  \corr{\hat{q}}{\hat{m}} = -\frac{S_x^1}{\sqrt{S_x^0S_x^2}} \rightarrow -1.
+\end{align}
+
+\pgffigone{correlazione_inter_coeff}{
+  Illustrazione grafica della correlazione negativa tra intercetta e
+  coefficiente angolare in un fit dei minimi quadrati con un modello lineare.
+  La linea continua rappresenta la retta di \bestfit. Le linee
+  tratteggiate $r_1$ ed $r_2$ mostrano che se incrementiamo (diminuiamo) il
+  valore del coefficiente angolare, per far sì che la retta corrispondente
+  continui ad essere un fit accettabile, siamo costretti a diminuire
+  (incrementare) il valore dell'intercetta. La barra verticale al
+  centro rappresenta l'incertezza (chiaramente assurda) sul valore del modello
+  nel punto $x = 5.5$ ottenuta propagando gli errori senza considerare la
+  correlazione tra $\hat{q}$ ed $\hat{m}$.
+}
+
+Dal punto di vista pratico la cosa è rilevante. Se vogliamo semplicemente
+riportare gli errori sui parametri le~\eqref{eq:fit_mq_lineare} sono
+sufficienti, ma se vogliamo propagare l'errore su una funzione dei
+parametri (ad esempio sull'interpolazione o l'estrapolazione della retta di
+\bestfit), allora il fatto che gli elementi fuori dalla diagonale della
+matrice di covarianza siano non nulli ci dice che
+la~\eqref{eq:propagazione_errore_stat_ind} non vale e siamo costretti ad
+utilizzare la~\eqref{eq:propagazione_errore_stat}, come illustrato
+nell'esempio~\ref{exp:propagazione_errori_corr}.
+
+\begin{examplebox}
+  \begin{example}\label{exp:propagazione_errori_corr}
+    Con riferimento al fit lineare in figura~\ref{fig:correlazione_inter_coeff}
+    (che include i valori numerici dei parametri e delle incertezze associate)
+    supponiamo di voler utilizzare il nostro modello di \bestfit\ per
+    stimare l'incertezza di misura associata al valore della variabile
+    indipendente $f(x_0)$ in $x_0 = 5.5$. Se propagassimo banalmente gli errori
+    come se $\hat{q}$ ed $\hat{m}$ fossero scorrelate avremmo
+    \begin{align}
+      \sigma^2_f = x_0^2 \sigma_m^2 + \sigma_q^2 \quad \text{ovvero} \quad
+      \sigma_f = 0.90
+    \end{align}
+    che è chiaramente assurdo, come illustrato dalla barra di errore grigia
+    in corrispondenza di $x_0$ nella figura~\ref{fig:correlazione_inter_coeff}.
+    Il problema è che in questo caso il coefficiente di correlazione tra i
+    parametri è prossimo a~$-1$ ed il risultato corretto è
+    \begin{align}
+      \sigma^2_f = x_0^2 \sigma_m^2 + \sigma_q^2 -
+      2x_0\corr{\hat{q}}{\hat{m}}\sigma_q\sigma_m
+      \quad \text{ovvero} \quad
+      \sigma_f = 0.030
+    \end{align}
+    che è molto più ragionevole. La differenza tra i due numeri è un
+    fattore $20$---non stiamo parlando di una cosa da poco.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Fit dei minimi quadrati con un polinomio di grado arbitrario}
+
+\danger La discussione che abbiamo fatto nelle due sezioni precedenti può
+essere generalizzata senza enormi difficoltà (anche se i calcoli tendono a
+diventare complicati piuttosto rapidamente) al caso praticamente rilevante del
+fit dei minimi quadrati con un polinomio di grado $k$ arbitrario---cioè
+del modello
+\begin{align}
+  f(x; a_0, a_1 \ldots a_k) = a_0 + a_1 x + \cdots + a_k x^k.
+\end{align}
+L'espressione per il $\chisq$ da minimizzare si scrive in questo caso come
+\begin{align*}
+  \chisq(a_0, a_1 \ldots a_k) = \sum_{i = 1}^n
+  \left( \frac{y_i - (a_0 + a_1 x_i + \cdots + a_k x_i^k)}{\sigma_{y_i}} \right)^2
+\end{align*}
+e la sua derivata rispetto al generico parametro $a_l$ è banalmente
+\begin{align*}
+  \td{\chisq}{a_l}{a_0, a_1 \ldots a_k} = -2 \sum_{i = 1}^n
+  \left( \frac{y_i - (a_0 + a_1 x_i + \cdots + a_k x_i^k)}{\sigma^2_{y_i}} \right)
+  x_i^l.
+\end{align*}
+Le $k + 1$ condizioni di minimo~\eqref{eq:minimizzazione_chi_quadro} portano
+ad un sistema di $k + 1$ equazioni lineari nei parametri
+\begin{align}
+  \begin{cases}
+    \hat{a}_0 \sum_{i = 1}^n \frac{1}{\sigma^2_{y_i}} +
+    \hat{a}_1 \sum_{i = 1}^n \frac{x_i}{\sigma^2_{y_i}} + \cdots  +
+    \hat{a}_k \sum_{i = 1}^n \frac{x_i^k}{\sigma^2_{y_i}} =
+    \sum_{i = 1}^n \frac{y_i}{\sigma^2_{y_i}} \\[8pt]
+    \hat{a}_0 \sum_{i = 1}^n \frac{x_i}{\sigma^2_{y_i}} +
+    \hat{a}_1 \sum_{i = 1}^n \frac{x_i^2}{\sigma^2_{y_i}} + \cdots  +
+    \hat{a}_k \sum_{i = 1}^n \frac{x_i^{k + 1}}{\sigma^2_{y_i}} =
+    \sum_{i = 1}^n \frac{x_i y_i}{\sigma^2_{y_i}} \\
+    \hspace*{30pt}\vdots \\
+    \hat{a}_0 \sum_{i = 1}^n \frac{x_i^k}{\sigma^2_{y_i}} +
+    \hat{a}_1 \sum_{i = 1}^n \frac{x_i^{k + 1}}{\sigma^2_{y_i}} + \cdots  +
+    \hat{a}_k \sum_{i = 1}^n \frac{x_i^{2k}}{\sigma^2_{y_i}} =
+    \sum_{i = 1}^n \frac{x_i^k y_i}{\sigma^2_{y_i}}
+   \end{cases}
+\end{align}
+Definiamo allora, sul modello di ciò che abbiamo fatto nel caso del fit dei
+minimi quadrati lineare, le quantità
+\begin{align*}
+  S_x^l = \sum_{i = 1}^n \frac{x_i^l}{\sigma^2_{y_i}} \quad \text{e} \quad
+  S_{xy}^l = \sum_{i = 1}^n \frac{x_i^l y_i}{\sigma^2_{y_i}},
+\end{align*}
+che, come prima, dipendono solamente dai dati e non dal modello---in altre
+parole, una volta che abbiamo le nostre misure, sono delle semplici somme
+il cui valore numerico può essere banalmente calcolato.
+Il nostro sistema di equazioni può allora essere riscritto in forma matriciale
+come
+\begin{align}
+  \begin{bmatrix}
+    S_x^0 & S_x^1 & \cdots & S_x^k\\
+    S_x^1 & S_x^2 & \cdots & S_x^{k+1}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    S_x^k & S_x^{k+1} & \cdots & S_x^{2k}
+  \end{bmatrix}
+  \begin{bmatrix}
+    \hat{a}_0\\
+    \hat{a}_1\\
+    \vdots\\
+    \hat{a}_k
+  \end{bmatrix} =
+  \begin{bmatrix}
+    S_{xy}^0\\
+    S_{xy}^1\\
+    \vdots\\
+    S_{xy}^k
+  \end{bmatrix}
+\end{align}
+a la soluzione passa attraverso una inversione di matrice
+\begin{align}
+  \begin{bmatrix}
+    \hat{a}_0\\
+    \hat{a}_1\\
+    \vdots\\
+    \hat{a}_k
+  \end{bmatrix} =
+  \begin{bmatrix}
+    S_x^0 & S_x^1 & \cdots & S_x^k\\
+    S_x^1 & S_x^2 & \cdots & S_x^{k+1}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    S_x^k & S_x^{k+1} & \cdots & S_x^{2k}
+  \end{bmatrix}^{-1}
+  \begin{bmatrix}
+    S_{xy}^0\\
+    S_{xy}^1\\
+    \vdots\\
+    S_{xy}^k
+  \end{bmatrix}
+\end{align}
+che può essere eseguita utilizzando i metodi ordinari dell'algebra lineare.
+(Al di là della soluzione esplicita, la cosa essenziale da ricordare
+è che il fit dei minimi quadrati con un polinomio generico porta ad
+un insieme di equazioni lineari nei parametri che possono essere risolte
+in forma chiusa.)
+
+
+\subsection{Fit dei minimi quadrati non pesato}
+
+Quando le incertezze di misura $\sigma_{y_i}$ non dipendono dall'indice $i$
+(cioè hanno lo stesso valore $\sigma_y$ per tutti i punti sperimentali)
+possono passare fuori dal segno di sommatoria e si può utilizzare
+l'espressione
+\begin{align*}
+  \sum_{i = 1}^n (y_i - f(x_i; \theta_1, \ldots, \theta_m))^2
+\end{align*}
+come quantità da minimizzare nel fit. Va da sé che i $\sigma_{y_i}$ sono
+ancora necessari per stimare le incertezze da associare ai parametri e per
+calcolare il $\chisq$ del fit, ma le nostre formule si semplificano
+sensibilmente. In questo caso si parla di fit dei minimi quadrati
+\emph{non pesato}.
+
+Così, per fissare le idee, i risultati che abbiamo ricavato per la media
+pesata nella sezione~\ref{sec:media_pesata} divengono, nel caso non pesato
+\begin{align}
+  \hat{q} = \frac{1}{n}\sum_{i = 1}^n y_i \quad \text{e} \quad
+  \sigma_q = \frac{\sigma_y}{\sqrt{n}},
+\end{align}
+cioè la miglior stima della nostra costante di fit $q$ è data dalla media
+aritmetica delle misure $y_i$ (il che non è sorprendente) e per quanto
+riguarda l'incertezza associata non abbiamo fatto altro che riscoprire per una
+via diversa la formula~\eqref{eq:stdev_media} per la deviazione standard della
+media.
+
+
+\section{Il test del \texorpdfstring{$\chisq$}{chi2}}
+\label{sec:test_chi2}
+
+Ora che abbiamo inquadrato il problema generale di \bestfit, e lo abbiamo
+risolto nei casi più semplici, è tempo di tornare alla seconda domanda
+con cui abbiamo aperto questo capitolo, ovvero: come si fa a decidere se un
+fit è soddisfacente o meno? \`E chiaro che, mentre il processo di
+minimizzazione del $\chisq$ ci fornisce i valori ottimali dei parametri, la
+risposta a questa altra domanda deve essere in qualche modo contenuta nel
+valore numerico del $\chisq$ stesso
+\begin{align*}
+  \chisquare{\hat{\theta}_1,\ldots,\hat{\theta}_m} = \sum_{i = 1}^{n}\left(
+  \frac{y_i - f(x_i; \hat{\theta}_1,\ldots,\hat{\theta}_m)}{\sigma_{y_i}}
+  \right)^2
+\end{align*}
+che il fit restituisce in corrispondenza del minimo---ed in questa sezione
+cercheremo di capire come.
+
+
+\subsection{Il contenuto fisico del \texorpdfstring{$\chisq$}{chi2}:
+  quanti gradi di libertà?}
+
+Se assumiamo per un attimo che il nostro modello costituisca una descrizione
+accurata della realtà e che le incertezze di misura siano stimate
+correttamente, allora ogni singolo termine della somma (almeno nel caso in cui
+immaginiamo che esso sia calcolato in corrispondenza dei valori veri
+$\overline{\theta}_1 \ldots \overline{\theta}_m$ dei parametri)
+\begin{align*}
+  \zeta_i = \frac{y_i -
+    f(x_i; \overline{\theta}_1,\ldots,\overline{\theta}_m)}{\sigma_{y_i}},
+\end{align*}
+sarà distribuito per definizione come una variabile Gaussiana. Di più: come
+una Gaussiana in forma standard, nel senso che
+\begin{align*}
+  \expect{\zeta_i} &= \expect{\frac{y_i -
+      f(x_i; \overline{\theta}_1,\ldots,\overline{\theta}_m)}{\sigma_{y_i}}} =
+  \frac{1}{\sigma_{y_i}}\expect{y_i -
+    f(x_i; \overline{\theta}_1 \ldots \overline{\theta}_m)} = 0\\
+  \var{\zeta_i} &= \expect{\zeta^2} = \frac{1}{\sigma^2_{y_i}}\expect{\left(y_i -
+    f(x_i; \overline{\theta}_1 \ldots \overline{\theta}_m)\right)^2} = 1.
+\end{align*}
+Ora, dato che nella~\eqref{eq:somma_chiquadro_fit} ogni $\zeta_i$ è elevato
+al quadrato, la nostra somma è, formalmente, una somma di $n$ variabili
+Gaussiane in forma standard al quadrato, e noi abbiamo calcolato esplicitamente
+nella sezione~\ref{sec:pdf_chi2} la sua funzione di distribuzione: una
+distribuzione del $\chisq$ ad $n$ gradi di libertà. Sappiamo in particolare
+che
+\begin{align}
+  \expect{\chisq(\overline{\theta}_1 \ldots \overline{\theta}_m)} = n
+  \quad \text{e} \quad
+  \var{\chisq(\overline{\theta}_1 \ldots \overline{\theta}_m)} = 2n.
+\end{align}
+
+Possiamo chiederci se tutto questo valga anche se calcoliamo la nostra somma
+in corrispondenza dei valori di \bestfit\ dei parametri anziché nei
+valori (che peraltro non conosciamo) veri. Ebbene, sotto ipotesi relativamente
+deboli la quantità $\chisq(\hat{\theta}_1 \ldots \hat{\theta}_n)$ è
+ancora distribuita come un $\chisq$ (cosa che non dimostreremo), ma il numero
+rilevante di gradi di libertà non è, in generale, pari al numero $n$ di
+misure. Cerchiamo di capire perché.
+
+Supponiamo di fittare la stessa serie di dati con un modello costante $y = q$
+ed un modello lineare $y = mx + q$. Ora, è ovvio che, poiché il modello
+lineare contiene al suo interno quello costante come caso particolare, esso è
+in grado di generare, tra le altre, tutte le funzioni costanti che il primo
+modello è in grado di generare. In altre parole il minimo $\chisq$ restituito
+da un fit lineare sarà per definizione più piccolo (o al massimo uguale) a
+quello restituito da un fit con una costante. Si tratta di una prima
+realizzazione importante: il numero di gradi di libertà del nostro problema
+non può dipendere solo dal numero di punti che fittiamo---in qualche modo
+deve dipendere anche dal numero di parametri liberi che utilizziamo nel fit.
+D'altra parte, se torniamo per un attimo al caso limite del fit con un
+polinomio di grado $n - 1$, che per definizione passa per tutti i punti, è
+chiaro che in quel caso il $\chisq$ del fit è identicamente nullo ed
+il nostro numero di gradi di libertà deve essere $0$.
+
+Cambiamo per un attimo prospettiva. Da un punto di vista dei principi primi,
+il numero di gradi di libertà del nostro problema è, per definizione, pari
+al numero di termini indipendenti nella somma~\eqref{eq:somma_chiquadro_fit}.
+Allora è chiaro che per ogni parametro che fittiamo dai nostri dati
+introduciamo un vincolo---cioè una relazione tra i dati stessi---che porta
+alla diminuzione di un'unità nel numero di gradi di libertà%
+\footnote{Ad essere precisi, questo è tecnicamente vero solo nel caso in cui
+  il vincolo sia di tipo lineare, ma si tratta di un dettaglio che è
+  rilevante solo raramente, in pratica.}.
+(Se avete l'impressione che questo vi ricordi qualcosa che abbiamo già visto,
+è buon segno---rileggete con attenzione quello che abbiamo detto a proposito
+della stima imparziale della varianza campione nella
+sezione~\ref{sec:media_varianza_campione}, perché il parallelo con il fatto
+che la sostituzione di $\mu$ con $m$ nel numeratore della formula per la
+varianza stessa richiedesse la sostituzione di $n$ con $n-1$ al denominatore è
+perfettamente calzante).
+In definitiva \emph{il numero di gradi di libertà è pari al numero dei punti
+  sperimentali $n$ meno il numero di parametri $m$ che stimiamo dal fit}
+\begin{align}\label{eq:ndof_fit_punti}
+  \nu = n - m.
+\end{align}
+Vedremo nella sezione~\ref{sec:test_chi2_distribuzione} che nel caso del test
+del $\chisq$ per una distribuzione ci sarà un altro piccolo colpo di scena,
+ma per il momento questo ci basta.
+
+\begin{examplebox}
+  \begin{example}
+    Supponiamo di avere una serie di $n$ misure $y_i$, con relative incertezze,
+    e di voler verificare con un test del $\chisq$ l'ipotesi che esse siano
+    compatibili con una costante $q$. Se questa costante è nota a priori (ad
+    esempio dalla teoria), allora il numero di gradi di libertà del problema
+    è $\nu = n$. Se, viceversa, abbiamo stimato $q$ a partire dai dati,
+    ad esempio mediante un fit dei minimi quadrati, allora
+    la~\eqref{eq:media_pesata} ci permette di calcolare il valore di uno
+    qualsiasi degli $y_i$, una volta noti i valori di tutti gli altri (oltre
+    ovviamente a $\hat{q}$). A questo punto gli $n$ termini della
+    somma~\eqref{eq:somma_chiquadro_fit} non sono più tutti indipendenti
+    l'uno dall'altro, ed il numero di gradi di libertà è $\nu = n - 1$.
+  \end{example}
+\end{examplebox}
+
+In pratica, nel prosieguo, indicheremo semplicemente con $\chisq$ la quantità $\chisquare{\hat{\theta}_1,\ldots,\hat{\theta}_m}$, e ci riferiremo ad essa come
+\emph{il $\chisq$ del \fit}, con l'intendimento che
+\begin{align*}
+  \expect{\chisq} = \nu \quad \text{e} \quad \var{\chisq} = 2\nu.
+\end{align*}
+Ne approfittiamo per introdurre una quantità che si trova spesso usata in
+pratica, ovvero il $\chisq$~\emph{ridotto} o $\chisq$~\emph{per grado di libertà}
+\begin{align}
+  \chisq_\nu = \frac{\chisq}{\nu},
+\end{align}
+che, banalmente, gode delle proprietà
+\begin{align*}
+  \expect{\chisq_\nu} = 1 \quad \text{e} \quad \var{\chisq_\nu} = \frac{2}{\nu}.
+\end{align*}
+(La prima in particolare è semplice da ricordare: il $\chisq$ ridotto del
+fit è in media $1$.)
+
+
+
+\subsection{Il test del \texorpdfstring{$\chisq$}{chi2} per una serie di dati}
+\label{sec:test_chi2_serie}
+
+Siamo finalmente pronti per cominciare. In figura~\ref{fig:chi2_test_ok} è
+mostrato un fit ad una serie di $16$ punti sperimentali con un modello
+quadratico $f(x) = lx^2 + mx + q$. Il modello ha $3$ parametri per cui sappiamo
+che il numero di gradi di libertà del problema è $\nu = 16 - 3 = 13$.
+
+\pgffigone{chi2_test_ok}{
+  Esempio di fit ad una serie di dati con un modello quadratico
+  $f(x) = lx^2 + mx + q$. Il modello ha $3$ parametri e la serie $16$ punti
+  per cui il numero di gradi di libertà è $\nu = 16 - 3 = 13$.
+  Il valore del $\chisq$ restituito dal fit è $8.7$. Per completezza
+  i contributi di ciascun punto alla somma~\eqref{eq:somma_chiquadro_fit} sono
+  riportati sul grafico accanto ai punti stessi---e si tratta di un esercizio
+  che è bene abituarsi a fare "ad occhio", perché spesso è utile
+  saper stimare approssimativamente il $\chisq$ di un fit senza un calcolatore
+  a disposizione.
+}
+
+Se osserviamo attentamente la figura, non vi è niente che ci possa indurre a
+pensare che questo sia un cattivo fit: i punti sembrano oscillare attorno al
+modello di \bestfit\ con differenze dell'ordine delle barre d'errore;
+$7$~punti stanno sotto al modello e $9$ sopra, dove in media ce ne aspetteremmo
+$8$ e $8$, e non si notano regioni in cui il modello sovrastima o sottostima
+sistematicamente i dati; vi sono esattamente $3$ punti che distano
+più di una barra d'errore dal modello, quando in media ce ne aspettiamo il
+$32\%$ (ovverosia $1$ meno il $68\%$), cioè circa $5$. Insomma, niente che
+non vada. Ma cosa ci dice in questo caso il valore del $\chisq$ restituito dal
+fit---che, come indicato in figura, è $8.7$?
+
+Ricordiamo ancora una volta le regole del gioco: stiamo dicendo che se noi
+eseguissimo molte volte lo stesso esperimento in condizioni di ripetitività,
+i punti sperimentali sarebbero diversi ogni volta, così come i valori di
+\bestfit\ dei parametri del modello ed il valore del $\chisq$ riportato
+dal fit stesso. Se però (i) il modello è appropriato per il sistema fisico
+che stiamo studiando e (ii) le incertezze di misura sono stimate in modo
+statisticamente corretto (e sono Gaussiane), allora il $\chisq$ del fit
+è una variabile casuale distribuita come un chi quadro (appunto) con il numero
+appropriato di gradi di libertà.
+
+E nel nostro caso specifico? Beh, $\nu = 13$, per cui ci aspettiamo che il
+$\chisq$ valga in media $\mu = \nu = 13$, con una deviazione standard di
+$\sigma = \sqrt{2\nu} \approx 5.10$. Il valore $8.7$ che abbiamo ottenuto è
+entro una deviazione standard dalla media, per cui non abbiamo niente di cui
+preoccuparci. Possiamo fare di più: possiamo consultare le tavole in
+appendice~\ref{sec:tavola_chisq1}, da cui leggiamo che per un $\chisq$ a
+$13$ gradi di libertà
+\begin{align*}
+  \prob{\chisq_{13} \leq 8.7} \approx 20\%
+\end{align*}
+(abbiamo interpolato più o meno ad occhio tra i valori $7.04$ e $9.30$ che si
+trovano in tabella): se ripetessimo molte volte l'esperimento nel $20\%$ dei
+casi otterremo un $\chisq$ minore e nell'$80\%$ dei casi un $\chisq$ maggiore,
+ma il punto è che nessuno di questi due numeri è \emph{troppo vicino} a $0$,
+per cui possiamo concludere che il nostro fit è un buon fit. Ora, questa è
+materia scivolosa che si presta facilmente a fraintendimenti per cui è bene
+chiarire le cose via via che si presentano.
+\emph{Dire che un fit è un buon fit non equivale a dire che il modello è
+  corretto.} (Per inciso, non si può mai dire che un modello è
+corretto perché in futuro misure più precise potrebbero dimostrare che non
+lo è. Può sembrare triste, ma l'unica cosa che si può veramente concludere
+in Fisica è che un modello è sbagliato.)
+Invece: \emph{Dire che un fit è un buon fit equivale a dire che non abbiamo
+ragioni per rigettare il nostro modello.} Teniamolo ben in mente, perché non
+si tratta di semplice semantica, e ne parleremo più diffusamente nella
+sezione~\ref{sec:pvalue}.
+
+Abbiamo sviscerato in modo esaustivo il caso (relativamente semplice) in cui
+tutto va bene, ed è ora giunto il momento di esaminare in dettaglio l'ampia
+zoologia dei \emph{fit cattivi}. Iniziamo con i due casi in cui il $\chisq$ è
+troppo alto mostrati
+in figura~\ref{fig:chi2_test_modello_cattivo_chi2_test_errori_sottostimati},
+che rappresentano un fit lineare degli stessi dati di
+figura~\ref{fig:chi2_test_ok} ed un fit quadratico ove però le barre d'errore
+sono state deliberatamente rimpicciolite.
+
+\pgffigtwo{chi2_test_modello_cattivo}{chi2_test_errori_sottostimati}{
+  Esempi di fit lineare (a sinistra) e quadratico (a destra) degli stessi punti
+  sperimentali di figura~\ref{fig:chi2_test_ok}---nel secondo caso le barre
+  d'errore sono state volutamente ridotte. In entrambi i casi il valore del
+  $\chisq$ è troppo alto, ed indica un cattivo fit. (Notiamo
+  esplicitamente che il fit lineare ha $2$ parametri anziché $3$, per cui il
+  numero di gradi di libertà passa da $13$ a $14$.)
+}
+
+Per prima cosa: con $14$ gradi di libertà ci aspettiamo un $\chisq$ di
+$14$ con una deviazione standard di $\sqrt{28} \approx 5.29$, mentre con $13$
+gradi di libertà, come già sappiamo, ci aspettiamo un $\chisq$ di $13$
+con una deviazione standard di $\sqrt{26} \approx 5.10$. In entrambi i casi
+mostrati in
+figura~\ref{fig:chi2_test_modello_cattivo_chi2_test_errori_sottostimati} il
+valore del $\chisq$ restituito dal fit dista qualcosa dell'ordine di $7$--$8$
+deviazioni standard dalla media---cioè è troppo grande. (Ora, visto che
+abbiamo detto che il $\chisq$ è una sorta di misura della distanza
+complessiva del modello dai dati, il fatto che sia troppo grande deve essere
+male, non vi pare?) Possiamo di nuovo consultare le tavole in
+appendice~\ref{sec:tavola_chisq1}, che in questo caso ci dicono
+\begin{align*}
+  \prob{\chisq_{14} \leq 51.2} > 99.99\% \quad \text{e} \quad
+  \prob{\chisq_{13} \leq 54.2} > 99.99\%.
+\end{align*}
+Fermiamoci un secondo: stiamo dicendo che se ripetessimo l'esperimento e se (i)
+il modello fosse corretto e (ii) gli errori stimati correttamente, allora la
+probabilità di ottenere un $\chisq$ minore di quello che abbiamo ottenuto
+sarebbe maggiore del $99.99\%$. Cioè che, nelle nostre due ipotesi, otterremo
+un $\chisq$ pari o maggiore a quello che abbiamo ottenuto in meno (e
+probabilmente molto meno) di un caso su $10000$. A questo punto siamo costretti
+a scegliere tra due possibilità: o siamo stati incredibilmente sfortunati,
+oppure una delle nostre due assunzioni (o entrambe) non è verificata.
+Da Fisici, optiamo per la seconda---ed anticipiamo che la soglia per decidere
+in un verso o nell'altro è completamente arbitraria, ma ci torneremo più in
+dettaglio nella sezione~\ref{sec:pvalue}.
+
+Allora, se il $\chisq$ è troppo grande si hanno due casi, che sono legati uno
+ad uno alle nostre due ipotesi di lavoro: o il numeratore della
+somma~\eqref{eq:somma_chiquadro_fit} è troppo grande (cioè il nostro
+modello non è adeguato a fittare i dati) oppure il denominatore è troppo
+piccolo (cioè gli errori sono sottostimati). La differenza è, anche
+visualmente, ovvia nei due grafici in
+figura~\ref{fig:chi2_test_modello_cattivo_chi2_test_errori_sottostimati}: in
+quello a sinistra si vede chiaramente che i punti sperimentali hanno una certa
+concavità che il modello lineare non è in grado di catturare (nella parte
+centrale ci sono $8$ punti consecutivi che stanno sotto al modello); in quello
+a destra gli errori sono semplicemente troppo piccoli. Nella realtà le due
+cose possono presentarsi insieme in modo difficilmente fattorizzabile, ma è
+ugualmente importante allenare l'occhio ad identificare questo tipo di
+situazioni.
+
+Non abbiamo ancora finito. Ci rimane da trattare il caso in cui il $\chisq$
+è troppo piccolo. (Se siete tentati di dire che un $\chisq$ piccolo non è
+un problema perché implica che il modello è molto vicino ai dati, non
+smettete di leggere perché vi sbagliate---e di grosso).
+
+\pgffigtwo{chi2_test_overfitting}{chi2_test_errori_sovrastimati}{
+  Esempi di fit con un polinomio di grado $4$ (a sinistra) e quadratico (a
+  destra) degli stessi punti sperimentali in figura~\ref{fig:chi2_test_ok}---nel
+  secondo caso le barre d'errore sono state volutamente allargate. In entrambi
+  i casi il valore del $\chisq$ è troppo basso, ed indica un cattivo
+  fit.
+}
+
+La figura~\ref{fig:chi2_test_overfitting_chi2_test_errori_sovrastimati} mostra
+un esempio di fit dei dati in figura~\ref{fig:chi2_test_ok} con un
+polinomio di grado $4$ ed un fit quadratico in cui gli errori sono stati
+volutamente aumentati. Dalle tabelle in appendice~\ref{sec:tavola_chisq1}
+leggiamo
+\begin{align*}
+  \prob{\chisq_{11} \leq 4.1} \approx 2\% \quad \text{e} \quad
+  \prob{\chisq_{13} \leq 1.4} < 0.5\%.
+\end{align*}
+Cioè: se ripetessimo l'esperimento e se (i) il modello fosse corretto e (ii)
+gli errori stimati correttamente, la probabilità di ottenere un $\chisq$ pari
+a quello ottenuto o più piccolo sarebbe molto piccola---otterremmo quasi
+sempre un $\chisq$ più grande. Da Fisici, allora, dobbiamo accettare di nuovo
+che evidentemente una delle nostre ipotesi di lavoro (o entrambe) non è
+verificata. Il ragionamento procede esattamente come prima, e una delle
+possibilità è che abbiamo banalmente sovrastimato gli errori, come mostrato
+nel pannello di destra della
+figura~\ref{fig:chi2_test_overfitting_chi2_test_errori_sovrastimati}.
+Ma ce n'è un'altra, e cioè che il nostro modello sia troppo
+\emph{flessibile}; quando ciò accade, esso tende ad adattarsi alle
+fluttuazioni statistiche dei dati, ed il fit diviene artificialmente troppo
+buono, con un $\chisq$ corrispondentemente troppo piccolo---ma se ripetessimo
+l'esperimento su campione di dati diverso, il nostro modello di \bestfit\
+sarebbe con ogni probabilità pessimo. Per completezza, questo fenomeno è
+noto come \foreign{over-fitting}, e l'esempio estremo è di nuovo l'interpolazione
+con un polinomio di grado $n - 1$ che abbiamo tirato in ballo più volte
+dall'inizio del capitolo.
+
+
+\subsection{Il grafico dei residui}
+\label{sec:grafico_residui}
+
+Una rappresentazione utile del fit che si trova spesso usata in pratica
+è il cosiddetto \emph{grafico dei residui}, in cui si mostra, in funzione
+della variabile indipendente, la differenza tra i punti misurati ed il modello,
+calcolato in corrispondenza dei valori di \bestfit\ dei parametri (e
+dunque senza incertezze associate):
+\begin{align*}
+  r_i = y_i - f(x_i; \hat{\theta}_1, \ldots, \hat{\theta}_m)
+  \quad \text{e} \quad
+  \sigma_{r_i} = \sigma_{y_i}.
+\end{align*}
+Il modello di \bestfit\ coincide dunque con l'asse $y = 0$ e le
+differenze tra dati e modello sono visualizzate in modo più efficace che non
+in un grafico semplice in cui dati e modello sono banalmente sovrapposti.
+Spesso il grafico dei residui è combinato con il grafico ordinario nella
+forma di due pannelli sovrapposti, come mostrato in
+figura~\ref{fig:chi2_test_residui}.
+
+\pgffigone{chi2_test_residui}{
+  Esempio di grafico dei residui corrispondente al grafico di sinistra della
+  figura~\ref{fig:chi2_test_modello_cattivo_chi2_test_errori_sottostimati}
+  Il pannello inferiore (dei residui, appunto) mostra direttamente le
+  deviazioni dei punti misurati rispetto al modello, e rende più facile
+  valutare qualitativamente la bontà del fit. Notiamo esplicitamente che,
+  poiché il modello è calcolato in un punto fissato, i valori numerici delle
+  incertezze associate ai residui sono identiche alle incertezze di misura
+  di partenza $\sigma_{y_i}$.
+}
+
+
+\subsection{Fit dei minimi quadrati e test del \texorpdfstring{$\chisq$}{chi2}
+  per una distribuzione}
+\label{sec:test_chi2_distribuzione}
+
+Supponiamo adesso di voler fare un fit dei minimi quadrati o un test del
+$\chisq$ nel caso di una distribuzione---ad esempio, potremmo lanciare un dado
+a sei facce per $100$ volte e vedere se l'ipotesi che il dado sia equo può
+essere rigettata. Oppure potremmo voler confrontare in senso statistico un
+istogramma con una distribuzione di variabile continua (e.g., una Gaussiana).
+\`E chiaro che questo problema è legato a quanto abbiamo detto fino a questo
+momento nella prima parte del capitolo. Ma come possiamo costruire una grandezza
+che sia l'equivalente della~\eqref{eq:somma_chiquadro_fit} in questo nuovo
+contesto?
+
+La differenza fondamentale è che qui non abbiamo a che vedere con misure
+sperimentali, ma con \emph{conteggi}. Cominciamo con l'indicare con $o_i$ le
+occorrenze osservate in corrispondenza dell'$i$-esimo valore della nostra
+variabile discreta o dell'$i$-esimo canale del nostro istogramma. Il modello,
+d'altra parte, ci permetterà in generale (eventualmente in funzione dei
+suoi parametri) di calcolare le occorrenze attese $e_i$ nella forma
+\begin{align}
+  e_i(\theta_1, \ldots, \theta_m) =
+  \begin{cases}
+    \displaystyle N \prob{x_i; \theta_1, \ldots, \theta_m} &
+    \text{per una distribuzione di variabile discreta}\\
+    \displaystyle N \int_{x_i}^{x_{i+1}} p(x; \theta_1, \ldots, \theta_m)dx
+    & \text{per un istogramma}
+  \end{cases}
+\end{align}
+dove l'ultimo integrale è inteso tra gli estremi dell'$i$-esimo canale
+dell'istogramma ed $N$ è il numero totale $N = \sum_i o_i$ di occorrenze
+osservate.
+
+\begin{examplebox}
+  \begin{example}
+    Nel caso dei nostri $100$ lanci di un dado le occorrenze osservate $o_i$
+    sono banalmente il numero di volte in cui ogni faccia è uscita.
+    (Notiamo che si ha il vincolo $\sum_{i=1}^6 o_i = 100$.) Se ipotizziamo che
+    il dado sia equo, il nostro modello prevede che le occorrenze attese siano
+    identiche tra loro e pari a $e_i = \nicefrac{100}{6}$.
+  \end{example}
+\end{examplebox}
+
+Con questi ingredienti possiamo scrivere quella che anticipiamo essere la
+risposta corretta alla nostra domanda iniziale, ovvero:
+\begin{align}\label{eq:somma_chiquadro_dist}
+  \chisq = \sum_{i = 1}^n
+  \frac{(o_i - e_i(\theta_1, \ldots, \theta_m))^2}
+       {e_i(\theta_1, \ldots, \theta_m)}
+       \quad \text{o più semplicemente} \quad
+       \chisq = \sum_{i = 1}^n\frac{(o_i - e_i)^2}{e_i}.
+\end{align}
+Fermiamoci per un secondo. Non vi è dubbio che
+la~\eqref{eq:somma_chiquadro_dist} ricordi, almeno superficialmente,
+la~\eqref{eq:somma_chiquadro_fit}.
+Il numeratore $(o_i - e_i(\theta_1, \ldots, \theta_m))^2$ è banalmente la
+riscrittura di $(y_i - f(x_i; \theta_1, \ldots, \theta_m))^2$,
+a patto di identificare $o_i \rightarrow y_i$---ciò che abbiamo misurato---ed
+$e_i(\theta_1,\ldots,\theta_m) \rightarrow f(x_i;\theta_1,\ldots,\theta_m)$---%
+ovvero ciò che prevede il modello.
+Al denominatore abbiamo bisogno di una stima dell'errore di misura, che in
+questo caso coinciderà con la deviazione standard della distribuzione dei
+conteggi attesi $e_i$. Ma noi siamo abituati (lo abbiamo visto per le
+distribuzioni binomiale e Poissoniana) al fatto che gli errori sui conteggi
+scalano con la radice dei conteggi stessi $\sigma_{e_i} \approx \sqrt{e_i}$
+ovvero $\sigma^2_{e_i} \approx e_i$. La~\eqref{eq:somma_chiquadro_dist} è
+dunque perfettamente ragionevole, sulla base di tutto quello che abbiamo
+imparato fino a questo momento.
+
+C'è ancora un punto, sottile ma estremamente importante, da discutere.
+Nei casi in cui il numero totale $N$ di eventi (o conteggi) è
+\emph{fissato}---ad esempio perché abbiamo deciso a priori di lanciare la
+nostra moneta o il nostro dado $100$~volte---gli $n$ elementi della
+somma~\eqref{eq:somma_chiquadro_dist} non sono più tutti indipendenti tra di
+loro, perché non sono più indipendenti tra di loro le grandezze $o_i$.
+Se conosciamo il valore di $n-1$ occorrenze possiamo calcolare banalmente la
+rimanente attraverso
+\begin{align*}
+  o_k = N - \sum_{i \neq k} o_i, \quad \text{ad esempio} \quad
+  o_n = N - \sum_{i = 0}^{n - 1} o_i.
+\end{align*}
+Ma si tratta di una cosa cui siamo ormai avvezzi: abbiamo un vincolo ulteriore
+che riduce di una unità il numero di gradi di libertà, per cui nel contesto
+del test del $\chisq$ per una distribuzione la~\eqref{eq:ndof_fit_punti} diviene
+\begin{align}\label{eq:ndof_fit_dist}
+  \nu = n - m - 1.
+\end{align}
+Ovvero: quando si ha a che fare con una variabile casuale discreta o un
+istogramma ed il numero totale di conteggi è fissato, \emph{il numero di
+  gradi di libertà è pari al numero dei dati sperimentali $n$ meno il
+  numero di parametri $m$ che stimiamo dal fit meno $1$}.
+
+
+\subsection{Poissoniana o binomiale? Un semplice esempio}
+
+\`E arrivato il momento di osservare più da vicino
+la~\eqref{eq:somma_chiquadro_dist}. Molti di voi saranno saltati sulla sedia
+gridando: certo! La statistica dei conteggi è Poissoniana, e dato un numero
+di conteggi medio $e_i$ la deviazione standard corrispondente è $\sqrt{e_i}$,
+per cui il denominatore della~\eqref{eq:somma_chiquadro_dist} rappresenta
+esattamente l'equivalente del quadrato dell'errore di misura. Di più:
+poiché se gli $e_i$ sono abbastanza grandi la distribuzione di Poisson può
+essere approssimata con una Gaussiana, la~\eqref{eq:somma_chiquadro_dist} tende
+in questo limite alla somma di $n$ variabili Gaussiane in forma standard
+indipendenti, per cui ha proprio il significato di un $\chisq$.
+
+Tutto questo è vero quando il numero totale di conteggi non è fissato, ma
+nel caso tipico in cui decidiamo a priori quante volte vogliamo ripetere un
+esperimento (e.g., i nostri soliti $100$ lanci di un dado) le cose sono più
+complicate---anche se la~\eqref{eq:somma_chiquadro_dist}, come vedremo tra un
+attimo, costituisce ancora la risposta corretta. In questo caso, se consideriamo
+l'$i$-esimo valore della variabile casuale in questione (o l'$i$-esimo canale
+dell'istogramma) \emph{contro tutti gli altri}, non è difficile rendersi conto
+che il problema è in realtà binomiale. Per chiarire le idee con un
+esempio, se (con la consueta fantasia) lanciamo un dado a $6$ facce per $100$
+volte, il numero di volte $o_2$ in cui esce la faccia $2$ sarà una
+variabile casuale distribuita secondo una binomiale
+$\binomialpdf[100, \nicefrac{1}{6}]{o_2}$. In generale, detta $p_i = \prob{x_i}$
+la probabilità elementare che l'esito del nostro esperimento coincida con il
+valore $i$-esimo $x_i$ della variabile casuale in questione o cada nel canale
+$i$-esimo del nostro istogramma, le occorrenze corrispondenti $o_i$ saranno
+distribuite come una binomiale $\binomialpdf[N, p_i]{o_i}$, con
+\begin{align}
+  \expect{o_i} = N p_i = e_i \quad \text{e} \quad
+  \var{o_i} = N p_i(1 - p_i) \neq e_i.
+\end{align}
+Il problema sta proprio nel fatto che in questo caso la varianza delle
+occorrenze attese è diversa dal valore di aspettazione delle occorrenze
+stesse, ed uno può legittimamente chiedersi dove sia finito il fattore
+$(1 - p_i)$ che, ingenuamente, ci aspetteremmo di vedere al denominatore
+della~\eqref{eq:somma_chiquadro_dist}. Lo vediamo in pratica con un esempio
+elementare.
+
+Supponiamo dunque di lanciare una moneta $N$ volte e di ottenere un numero di
+teste $o_t$ ed un numero di croci $o_c$. A costo di essere pedanti ripetiamo che
+la somma $o_t + o_c = N$ è fissata per cui $o_c$ ed $o_t$ non sono
+indipendenti---e.g., il numero di croci è fissato dal numero di teste nella
+forma di $o_c = N - o_t$. Indichiamo con $p$ la probabilità che l'uscita sia
+testa, e fissiamo $p = \nicefrac{1}{2}$ a priori perché vogliamo verificare
+l'ipotesi che la moneta sia equa. In queste condizioni il modello, che è
+completamente specificato e non ha parametri liberi se non la normalizzazione,
+prevede
+\begin{align*}
+  e_t = N p \quad \text{e} \quad
+  e_c = N(1 - p),
+\end{align*}
+per cui il nostro conteggio del numero di gradi di libertà è
+$\nu = n - m - 1 = 2 - 0 - 1 = 1$. Proviamo a mettere tutto insieme e scrivere
+la~\eqref{eq:somma_chiquadro_dist} nel nostro caso specifico
+\begin{align*}
+  \chisq & = \frac{(o_t - e_t)^2}{e_t} + \frac{(o_c - e_c)^2}{e_c} =
+  \frac{(o_t - N p)^2}{N p} + \frac{(o_c - N(1 - p))^2}{N(1 - p)} = \\
+  & = \frac{(1 - p)(o_t - N p)^2 + p(o_c - N(1 - p))^2}{N p(1 - p)} =
+  \frac{(1 - p)(o_t - N p)^2 + p(o_t - N p)^2}{N p(1 - p)} =
+  \frac{(o_t - N p)^2}{N p(1 - p)} =\\
+  & = \frac{(o_t - e_t)^2}{e_t(1 - p)}.
+\end{align*}
+(Nel terzultimo passaggio abbiamo eliminato $o_c$ sfruttando la condizione di
+normalizzazione.) La nostra semplice manipolazione algebrica ha sortito due
+effetti distinti. Il primo è che, una volta scritta in funzione delle sole
+variabili indipendenti, la~\eqref{eq:somma_chiquadro_dist} ha un solo termine
+(e quindi, come avevamo anticipato) un solo grado di libertà anziché due.
+La seconda è che adesso al denominatore riconosciamo la varianza del numero
+atteso di teste $e_t$ nell'ipotesi (corretta) che essa sia distribuita come una
+binomiale.
+
+Il gioco funziona anche per $n > 2$ e, con un leggero abuso di
+termini, potremmo dire che la~\eqref{eq:somma_chiquadro_dist} è corretta
+perché \emph{maschera} da somma di $n$ variabili Poissoniane indipendenti---in
+una forma elegante e simmetrica---quella che in realtà è la somma di
+$n - 1$ variabili binomiali.
+
+Ora, quando i valori medi attesi $e_i$ sono abbastanza grandi%
+\footnote{Non esiste un limite netto a cosa significhi \emph{abbastanza grande},
+  anche se in alcuni testi si trova $e_i \geq 5$. Se il numero di occorrenze
+  per un determinato termine della somma è però inferiore ad $1$ o $2$
+  conviene sicuramente aggregare il termine stesso con uno (o più) dei vicini
+  prima di calcolare il $\chisq$.}
+la distribuzione (binomiale) di ciascun termine della somma tende ad una
+Gaussiana in forma standard ed il cerchio si chiude, poiché
+la~\eqref{eq:somma_chiquadro_dist} acquista, sia pure solo approssimativamente,
+il significato di una variabile $\chisq$ e tutto quello che abbiamo discusso
+nella sezione precedente, \emph{mutatis mutandis}, vale anche qui. (Per inciso,
+abbiamo discusso il caso di una distribuzione nel contesto del test del
+$\chisq$, ma va da sé che il tutto si applica anche alla stima di parametri
+mediante fit dei minimi quadrati.)
+
+\begin{examplebox}
+  \begin{example}\label{exp:chi2_dado_1}
+    Si lancia un dado a sei facce per $100$ volte, ottenendo per le facce
+    $1 \ldots 6$ le seguenti occorrenze: $13$, $12$, $14$, $20$, $22$, $19$.
+    Possiamo concludere che il dado non è equo?
+    \begin{minipage}{0.65\textwidth}
+      Si tratta di una semplice applicazione del test del $\chisq$, in cui
+      il numero atteso di occorrenze per ciascuna faccia è \nicefrac{100}{6}.
+      Possiamo usare la tabella qui di fianco per costruire la
+      somma~\eqref{eq:somma_chiquadro_dist}. Abbiamo $n = 6$ punti e, poiché
+      il modello è completamente specificato (non abbiamo stimato nessun
+      parametro dai dati) il numero di gradi di libertà del problema è
+      $\nu = 6 - 0 - 1 = 5$. Il valore del $\chisq$ che abbiamo ottenuto è
+      $5.24$, che è abbondantemente entro una deviazione standard dalla media
+      attesa per $5$ gradi di libertà, per cui non abbiamo ragione di pensare
+      che il dado sia truccato.
+    \end{minipage}\hfill\begin{minipage}[c]{0.3\textwidth}
+    \begin{tabular}{lll}
+        \hline
+        $o_i$ & $e_i$ & $\nicefrac{(o_i - e_i)^2}{e_i}$\\
+        \hline
+        \hline
+        $13$ & $16.67$ & $0.808$\\
+        $12$ & $16.67$ & $1.308$\\
+        $14$ & $16.67$ & $0.428$\\
+        $20$ & $16.67$ & $0.665$\\
+        $22$ & $16.67$ & $1.704$\\
+        $19$ & $16.67$ & $0.326$\\
+        \hline
+        $100$ & $100$ & $5.24$\\
+        \hline
+      \end{tabular}
+    \end{minipage}
+  \end{example}
+
+  \begin{example}\label{exp:chi2_dado_2}
+    Si lancia un dado a sei facce per $10000$ volte, ottenendo per le facce
+    $1 \ldots 6$ le seguenti occorrenze: $1300$, $1200$, $1400$, $2000$, $2200$,
+    $1900$ (si tratta dell'esempio precedente in cui abbiamo moltiplicato tutti
+    i numeri per un fattore $100$). Cambiano le conclusioni?
+    Anche senza costruire esplicitamente la tabella possiamo notare che in
+    questo caso stiamo moltiplicando tutti i numeratori della somma per $100^2$
+    ed i denominatori per $100$, per cui l'effetto netto sarà che il $\chisq$
+    in questo caso è $100$ volte più grande. Il numero di gradi di
+    libertà è ancora $5$ e con un $\chisq$ di $524$ per $5$ gradi di
+    libertà possiamo affermare senza ombra di dubbio che il dado è
+    truccato.
+  \end{example}
+\end{examplebox}
+
+
+\subsection{Il concetto di \emph{\texorpdfstring{$p$}{p}-value}}
+\label{sec:pvalue}
+
+Possiamo riassumere sommariamente quanto visto nelle sezioni precedenti dicendo
+che, quando facciamo un test del $\chisq$ per un fit con $\nu$ gradi di
+libertà, ci aspettiamo il valore numerico del $\chisq$ stesso sia in media
+$\nu$, con una deviazione standard di $\sqrt{2\nu}$. Se il risultato è entro
+$2$--$3$ deviazioni standard dalla media, non abbiamo ragione di rigettare il
+modello. Se il $\chisq$ è troppo grande, questo significa che il modello è
+inadeguato oppure gli errori sono sottostimati---o una combinazione delle due
+cose. Se il $\chisq$ è troppo piccolo, ciò significa che il modello ha
+troppi parametri oppure gli errori sono sovrastimati---o, di nuovo, una
+combinazione delle due. Ora, il test del $\chisq$ è il primo esempio di
+\emph{verifica delle ipotesi} che incontriamo nel nostro percorso. Fino a
+questo momento ci siamo concentrati sulla sua applicazione al problema della
+bontà di un fit, ma più in generale, il $\chisq$ è una \emph{statistica}
+(o \foreign{test statistics} in inglese) che può essere utilizzato anche quando
+non è esplicitamente in gioco un fit.
+
+In effetti gli esempi~\ref{exp:chi2_dado_1} e~\ref{exp:chi2_dado_2} sono
+rappresentativi della situazione in cui il modello che utilizziamo per il test
+è completamente specificato indipendentemente dalle osservazioni, e noi siamo
+semplicemente interessati a verificare la presenza o meno di un effetto fisico
+("il dado è truccato?"). Possiamo anche riformulare il problema ribaltando
+la logica e chiederci se abbiamo elementi per rigettare l'ipotesi che l'effetto
+fisico che cerchiamo \emph{non} sia all'opera ("il dado è equo?"").
+Quest'ultima si chiama tipicamente \emph{ipotesi nulla} e si denota con $H_0$,
+e nel contesto della verifica delle ipotesi si definisce \pvalue\ la
+\emph{probabilità di ottenere un risultato (e.g., un valore di $\chisq$)
+  uguale o più estremo di quello che abbiamo ottenuto, assumendo che
+  l'ipotesi nulla sia verificata}. Si tratta di una definizione piuttosto
+involuta, ma intuitivamente possiamo dire che il \pvalue\ misura il livello
+di incompatibilità di un particolare insieme di dati con un modello
+statistico---e più è piccolo il \pvalue, più è grande questa
+incompatibilità. Un valore troppo piccolo di \pvalue\ può allora essere
+interpretato come un'evidenza a sfavore dell'ipotesi nulla---sempre che tutte
+le assunzioni che vanno nel calcolo del \pvalue\ stesso siano verificate.
+
+Quello di \pvalue\ è uno dei concetti più controversi nella statistica
+moderna~\cite{dagostini_pvalues,asa_pvalues}, tanto che il suo uso è stato
+recentemente bandito, non senza che questo destasse scalpore, da una nota
+rivista scientifica Statunitense: \foreign{Basic and Applied Social Psychology}.
+E il motivo di fondo della controversia è il fatto che la letteratura---sia
+quella specialistica che quella divulgativa---è costellata di cattivi esempi
+in cui il concetto di \pvalue, usato in modo fondamentalmente scorretto, ha
+generato confusione e disinformazione (per non parlare dei casi in cui il
+\pvalue\ è stato usato in modo deliberatamente fraudolento per supportare
+conclusioni non corroborate dai dati). Questo è dunque un buon momento per
+chiarire cosa \emph{non è} il \pvalue.
+
+\begin{itemize}
+\item \emph{Il \pvalue\ non è la probabilità che l'ipotesi nulla sia
+  corretta}. La differenza può sembrare sottile, ma tornate per un attimo a
+  rileggere la nostra definizione iniziale: essa è un'affermazione
+  probabilistica a proposito dei dati (in relazione ad una certa ipotesi $H_0$)
+  e non a proposito dell'ipotesi. In altre parole, a questo punto dovremmo
+  avere gli strumenti per capire al volo che le probabilità condizionate
+  $\prob{\text{dati} \cond H_0}$ e $\prob{H_0 \cond \text{dati}}$ non sono la
+  stessa cosa. Così come non diremmo mai che la probabilità che un senatore
+  sia donna è uguale alla probabilità che una donna sia senatore, allo
+  stesso modo non dobbiamo farci ingannare da questo.
+\item A maggior ragione \emph{il \pvalue\ non è la probabilità che
+  l'ipotesi alternativa ad $H_0$ sia errata}---ovverosia $(1 - \text{\pvalue})$
+  non è la probabilità che l'ipotesi alternativa ad $H_0$ sia corretta.
+\item \emph{Il \pvalue\ non è la probabilità che quello che abbiamo
+  osservato sia semplicemente l'effetto di una fluttuazione statistica}.
+  Il calcolo del~\pvalue\ è basato esattamente sull'assunzione che
+  la nostra osservazione sia il prodotto del caso (sotto l'ipotesi nulla) per
+  cui è chiaro che non può essere utilizzato per stimare la probabilità
+  di questa assunzione.
+\item \emph{Il \pvalue\ non è la probabilità di rigettare per sbaglio
+  l'ipotesi nulla}. Di nuovo: la nostra definizione di \pvalue\ è
+  un'affermazione a proposito dei dati, non dell'ipotesi nulla.
+\end{itemize}
+
+\begin{examplebox}
+  \begin{example}
+    Supponiamo di aver lanciato un dado a sei facce per $100000$ volte e di
+    aver fatto un test del $\chisq$, come negli esempi~\ref{exp:chi2_dado_1}
+    e~\ref{exp:chi2_dado_2}, che ha fornito questa volta un valore di $35.5$.
+    La nostra ipotesi nulla $H_0$ è il fatto che il dado sia equo.
+    Si tratta di un'ipotesi completamente specificata, che costituisce una
+    descrizione completa del nostro problema e ci permette di calcolare le
+    occorrenze attese da utilizzare nel test del $\chisq$.
+    Il \pvalue\ coincide con la probabilità che un $\chisq$ a $5$ gradi di
+    libertà sia maggiore o uguale a $35.5$ e può essere calcolato facilmente
+    con un \foreign{computer}
+    \begin{align*}
+      \text{\pvalue} = \prob{\chisq_5 \geq 35.5} \approx 1.2 \times 10^{-6}.
+    \end{align*}
+    Ora, quello che in sostanza il \pvalue\ ci dice in questo caso è che
+    se il dado fosse equo e noi ripetessimo il nostro esperimento (cioè i
+    nostri $100000$ lanci) molte volte, allora otterremmo un $\chisq$ maggiore
+    o uguale a quello che abbiamo ottenuto in questo primo tentativo ($35.5$)
+    circa una volta su un milione.
+    In questo caso il valore basso di \pvalue\ può essere interpretato come
+    un'evidenza a sfavore dell'ipotesi nulla---cioè siamo costretti ad
+    accettare che il dado non sia equo. Detto questo:
+    \begin{itemize}
+    \item $1.2 \times 10^{-6}$ non è la probabilità che il dado sia equo;
+    \item $(1 - 1.2 \times 10^{-6})$ non è la probabilità che il dado non
+      sia equo;
+    \item $1.2 \times 10^{-6}$ non è la probabilità di aver osservato una
+      fluttuazione statistica;
+    \item $1.2 \times 10^{-6}$ non è la probabilità di commettere un errore
+      dicendo che il dado non è equo.
+    \end{itemize}
+  \end{example}
+
+    \begin{example}
+    Un test del $\chisq$ sui dati relativi ai decessi per incidenti nella
+    cavalleria Prussiana riportati nella tabella~\ref{tab:cavalleria_prussiana}
+    fornisce un valore di $0.60$ per $5 - 1 - 1 = 3$ gradi di libertà,
+    corrispondente ad un \pvalue\ di circa il $10\%$, per cui non abbiamo motivi
+    per rigettare l'ipotesi che la distribuzione che regola il fenomeno sia
+    Poissoniana.
+  \end{example}
+
+  \begin{example}
+    Un test del $\chisq$ sui dati relativi ai bombardamenti di Londra riportati
+    nella tabella~\ref{tab:bombe_su_londra} fornisce un valore di $1.17$ per
+    $6 - 1 - 1 = 4$ gradi di libertà, con un \pvalue\ del $12\%$, per cui, di
+    nuovo, non abbiamo motivi per rigettare l'ipotesi che la distribuzione
+    sottostante sia Poissoniana.
+  \end{example}
+\end{examplebox}
+
+Parte della confusione nasce in pratica dal fatto che tutte le cose che il
+\pvalue\ \emph{non è} che abbiamo appena elencato sono grandezze
+interessanti---per molti aspetti più del \pvalue\ stesso. Sarebbe bello avere
+una risposta generale alla domanda: "qual è la probabilità che l'ipotesi
+nulla sia corretta?" ma il fatto è che, purtroppo, questa è una domanda
+intrinsecamente più complicata di quella (purtroppo più involuta) cui il
+\pvalue\ risponde. Da un punto di vista operativo la situazione è aggravata
+dall'usanza inveterata (propria soprattutto delle Scienze \foreign{soft}) di
+utilizzare una soglia fissata (tipicamente $p = 0.05$) sul \pvalue\ per decidere
+se una determinata ipotesi può essere rigettata sulla base di una misura o un
+esperimento. Noi adotteremo il punto di vista (sobrio) che l'utilizzo
+appropriato del \pvalue\ può essere utile ricordando che esso non è, di
+per sé, una buona misura della correttezza di un modello o di un ipotesi.
+
+Concludiamo questa sezione menzionando il fatto che in Fisica la soglia
+standard che si usa per annunciare una scoperta è molto più stringente
+del $p = 0.05$ di cui sopra---si usa invece la regola delle $5\sigma$ di cui
+forse avere sentito parlare. In questo contesto $5\sigma$ si riferisce ad
+una distribuzione Gaussiana e si può tradurre facilmente nel \pvalue\
+corrispondente leggendo la tabella in appendice~\ref{sec:tavola_erf5}
+\begin{align*}
+  \text{\pvalue} = \prob{z \geq 5} \approx 2.87 \times 10^{-7}.
+\end{align*}
+Tanto per fissare le idee: la probabilità di ottenere $22$ teste di seguito
+lanciando una moneta equa è
+$p = \nicefrac{1}{2^{22}} \approx 2.38 \times 10^{-7}$, simile al \pvalue\
+corrispondente alle famose $5\sigma$---per cui in effetti stiamo dicendo che
+un Fisico ha bisogno di vedere con in suoi occhi $22$ teste di seguito prima
+di dichiarare che una moneta non è equa.
+
+\snip{p_value}{%
+  Frammento di codice per il calcolo del \pvalue\ corrispondente ad un test del
+  $\chi^2$ ad un numero arbitrario di gradi di libertà. (Il programma utilizza
+  la funzione cumulativa della distribuzione del $\chi^2$ fornita dal modulo
+  \scipymodule{stats}.) Si confrontino i valori stampati con la
+  quelli che si possono leggere nella tabella in appendice~\ref{sec:tavola_chisq1}.
+}
+
+
+
+\subsection{Fit dei minimi quadrati e  test del \texorpdfstring{$\chisq$}{chi2}
+  con errori non Gaussiani}
+
+Nonostante il formalismo che abbiamo sviluppato presupponga che le incertezze
+di misura siano Gaussiane, non tarderete ad accorgervi che in genere questo è
+un punto cui non viene prestata troppa attenzione, e sia il fit dei minimi
+quadrati che il test del $\chisq$ sono largamente utilizzati, in pratica,
+indipendentemente dal modello specifico di incertezze. Va da sé che il
+problema può essere risolto completamente caso per caso---analiticamente o
+con metodi Monte Carlo---ma in questa sezione ci limitiamo ad alcune
+considerazioni di carattere generale, rivisitando passo per passo quello che
+abbiamo detto e cercando di capire cosa resta valido e cosa cambia se lasciamo
+cadere l'assunzione che gli errori siano Gaussiani.
+
+Per prima cosa la~\eqref{eq:somma_chiquadro_fit} rimane una misura ragionevole
+della distanza complessiva tra dati e modello nella maggior parte dei casi, per
+cui i valori dei parametri che si ottengono dalla sua minimizzazione sono per lo
+più ragionevoli anche se le incertezze di misura non sono Gaussiane. Fanno
+potenzialmente eccezione i casi in cui gli errori di misura sono notevolmente
+asimmetrici---che è un caso che si presenta, ad esempio, quando si ha a che
+fare con una distribuzione con pochi conteggi.
+
+Il calcolo delle incertezze di misura, sul modello
+delle~\eqref{eq:media_pesata_err} e~\eqref{eq:fit_mq_lineare}, si basa
+essenzialmente sul fatto che per variabili casuali indipendenti la varianza
+della somma è uguale alla somma delle varianze---che è vero
+indifferentemente dalla distribuzione generatrice. Dunque se abbiamo stimato
+gli errori come la deviazione standard della distribuzione generatrice
+corrispondente, le incertezze sui valori di \bestfit\ dei parametri
+restituite dal fit saranno tendenzialmente ragionevoli
+anche nel caso non Gaussiano. (Avrete anche notato che, per lo meno nei casi
+più semplici, la stima dei parametri coinvolge delle somme quindi, per il
+teorema centrale del limite, è plausibile che la distribuzione a posteriori
+dei parametri sia Gaussiana anche se gli errori sulle grandezze misurate non lo
+sono.)
+
+Il test del $\chisq$ è il punto in cui sorgono i veri problemi---nel senso che
+se gli errori non sono Gaussiani, allora per definizione
+la~\eqref{eq:somma_chiquadro_fit} non è distribuita come una variabile
+$\chisq$ e la maggior parte delle cose che abbiamo detto non è più vera.
+In pratica, se abbiamo stimato gli errori come la deviazione standard della
+distribuzione generatrice, allora il singolo termine della somma è ancora
+il quadrato di una variabile casuale $\zeta$ con media $0$ e varianza $1$, per
+cui è ancora vero che
+\begin{align*}
+  \expect{\zeta^2} = 1 \quad \text{e} \quad
+  \expect{\chisq(\hat{\theta}_1, \ldots \hat{\theta}_m)} = \nu
+\end{align*}
+Se il numero di gradi di libertà del problema è abbastanza grande, il
+teorema centrale del limite ci viene di nuovo in aiuto garantendo che la
+distribuzione della nostra somma sia asintoticamente Gaussiana, ma la sua
+varianza non sarà più, in generale, $2\nu$.
+
+Di fatto noi sappiamo la risposta esatta almeno per un caso praticamente
+rilevante---ovvero quello di errori uniformi (per esempio se utilizziamo uno
+strumento digitale ed assumiamo come incertezza la risoluzione strumentale
+diviso la $\sqrt{12}$). Nella sezione~\ref{sec:pdf_quadrato_uniforme} abbiamo
+visto che la varianza del quadrato di una distribuzione uniforme con varianza
+$1$ è $\nicefrac{4}{5}$, per cui in questa situazione avremo
+\begin{align*}
+  \var{\chisq(\hat{\theta}_1, \ldots \hat{\theta}_m)} = \frac{4}{5}\nu.
+\end{align*}
+Meno della metà della varianza della corrispondente distribuzione del
+$\chisq$: se convertiamo in probabilità il valore del $\chisq$ ottenuto con
+errori non Gaussiani utilizzando le tavole in appendice~\ref{sec:tavola_chisq1}
+possiamo sbagliare di grosso. In questo caso se $\nu$ è abbastanza grande
+possiamo utilizzare l'approssimazione Gaussiana (con la deviazione standard
+opportuna). Nel caso generale è necessario calcolare la densità di
+probabilità rilevante---analiticamente oppure attraverso una simulazione
+Monte Carlo.
+
+
+\section{Il fit in pratica: metodi numerici}
+
+Riprendiamo il filo della discussione e torniamo a parlare del problema
+generale dei fit. Nel contesto dei minimi quadrati il sistema di
+equazioni~\eqref{eq:minimizzazione_chi_quadro} ci fornisce una strategia
+generale per ricavare i valori di \bestfit\ dei parametri del modello e
+le incertezze di misura associate, e abbiamo visto che
+le~\eqref{eq:minimizzazione_chi_quadro} si possono risolvere in forma chiusa
+per lo meno nei casi più semplici. Possiamo ritenerci soddisfatti?
+
+La risposta alla domanda è senza dubbio no, perché non è troppo difficile
+trovare un esempio di modello in cui le cose non vanno così lisce.
+Consideriamo ad esempio la famiglia di funzioni
+\begin{align}\label{eq:modello_seno}
+  f(x; \omega) = \sin(\omega x).
+\end{align}
+In questo caso se, come abbiamo fatto nel caso costante o lineare, scriviamo il
+$\chisq$ e minimizziamo rispetto ad $\omega$ otteniamo l'equazione
+\begin{align}\label{eq:min_chisq_sin}
+  \td{\chisq}{\omega}{\hat{\omega}} =
+  -2\sum_{i = 1}^n \left( \frac{y_i - \sin(\hat\omega x_i)}{\sigma^2_{y_i}} \right)
+  x_i \cos(\hat\omega x_i) = 0
+\end{align}
+che non c'è alcuna speranza di risolvere analiticamente in forma chiusa.
+Notiamo esplicitamente che si tratta di un problema ad un solo parametro, e
+nemmeno particolarmente esotico, per cui se non siamo in grado di risolvere
+questo tutta la teoria che abbiamo sviluppato non sarà di grande utilità
+pratica.
+
+La differenza fondamentale tra la~\eqref{eq:min_chisq_sin}
+la~\eqref{eq:min_chisq_const} e la~\eqref{eq:min_chisq_lineare} è che
+la prima equazione è non lineare nei parametri. Si parla in questo caso
+di fit dei minimi quadrati non lineare%
+\footnote{Vale la pena di sottolineare che il termine \emph{lineare} in questo
+  contesto, non si riferisce al modello, ma al sistema di
+  equazioni~\eqref{eq:minimizzazione_chi_quadro} che permettono di ricavare
+  i valori di \bestfit\ minimizzando il $\chisq$.}
+e, come vedremo tra un attimo,
+la tecnica standard per affrontare il problema è quello dell'utilizzo di
+metodi numerici iterativi.
+
+
+\subsection{Digressione: il metodo di Newton in una dimensione}
+
+Supponiamo di essere interessati a trovare il valore numerico della radice
+(o delle radici, nel caso ce ne fossero più di una) di una generica equazione
+$f(x) = 0$ e supponiamo che l'equazione non si possa risolvere analiticamente
+in forma chiusa. Tanto per fissare le idee, il problema in questione potrebbe
+essere
+\begin{align*}
+  \cos x - x = 0 \quad \text{ovvero} \quad \cos x = x
+\end{align*}
+(in questo caso la radice è unica e si trova nell'intervallo
+$\cinterval{0}{1}$). Il metodo di Newton è uno dei metodi numerici più
+semplici per attaccare questo tipo di problema e lo discutiamo brevemente a
+scopo esemplificativo.
+
+\pgffigone{metodo_newton}{
+  Illustrazione dei primi due passi del metodo di Newton per la stima delle
+  radici dell'equazione $\cos x - x = 0$ con la scelta del valore iniziale
+  $x_0 = 9$. I valori numerici per i primi $6$ passi dell'algoritmo sono
+  elencati nella tabella~\ref{tab:metodo_newton}.
+}
+
+Supponiamo dunque di partire da un generico punto $x_0$ e sviluppare la
+nostra funzione in serie di Taylor al prim'ordine attorno al punto stesso
+\begin{align*}
+  f(x) \approx f(x_0) + \td{f}{x}{x_0} (x - x_0).
+\end{align*}
+Ora, se vogliamo trovare i valori di $x$ per cui $f(x) = 0$, che è il nostro
+problema di partenza, la condizione precedente si può riscrivere come
+\begin{align*}
+  x \approx x_0 - \frac{f(x_0)}{\td{f}{x}{x_0}}.
+\end{align*}
+Apparentemente non siamo andati molto avanti, perché: (i) la nostra equazione
+è approssimata e (ii) non è più semplice di quella da cui siamo partiti.
+Eppure la relazione che abbiamo ricavato ci fornisce l'idea per una strategia
+iterativa che potrebbe funzionare in pratica: data una stima $x_n$ della
+soluzione, possiamo procedere per ricorrenza e ricavare una stima
+(sperabilmente) più accurata della nostra radice come
+\begin{align}\label{eq:metodo_newton}
+  x_{n+1} = x_n - \frac{f(x_n)}{\td{f}{x}{x_n}}.
+\end{align}
+Geometricamente $x_{n + 1}$ non è nient'altro che la coordinata di intersezione
+della retta tangente ad $f$ nel punto $x_n$ con l'asse delle $x$, e quello che
+stiamo dicendo è che questa intersezione è, sotto opportune condizioni, una
+stima più accurata della radice dell'equazione di quanto non fosse il punto di
+partenza. Una discussione dettagliata delle limitazioni del metodo di Newton
+esula dai nostri scopi---è ovvio, ad esempio, che se ad una data iterazione
+incontriamo un massimo di $f(x)$, la~\eqref{eq:metodo_newton} diverge poiché
+il denominatore della frazione si annulla. Purtuttavia si tratta di un buon
+esempio per illustrare i tratti salienti di un tipico metodo numerico iterativo,
+in cui si parte da una stima (anche grossolana) del parametro che vogliamo
+stimare e questa stima viene aggiornata mediante un algoritmo che converge (se
+tutto va bene) al valore cercato.
+
+Il procedimento è illustrato in figura~\ref{fig:metodo_newton} (per i primi
+due passi, ed una scelta del valore iniziale $x_0 = 9$) nel caso
+$f(x) = \cos x - x$ menzionato prima---in cui la nostra relazione per
+ricorrenza~\eqref{eq:metodo_newton} si legge
+\begin{align*}
+  x_{n+1} = x_n + \frac{(\cos x_n - x_n)}{(\sin x_n + 1)}.
+\end{align*}
+I valori numerici forniti dai primi $6$ passi dell'algoritmo sono elencati
+nella tabella~\ref{tab:metodo_newton} che, insieme alla figura, illustra
+chiaramente come il metodo di Newton possegga, almeno in questo caso, tutte le
+proprietà desiderabili di un algoritmo iterativo:
+\begin{enumerate}
+\item il valore fornito dal passo $n$ è più vicino alla soluzione
+  di quello fornito dal passo $n - 1$, cioè l'algoritmo converge alla
+  radice cercata in modo monotono;
+\item la convergenza è rapida, nel senso che sono necessari pochi passi
+  per ottenere una stima accurata della radice cercata;
+\item le differenze $\delta = x_n - x_{n-1}$ tra due valori forniti da passi
+  successivi dell'algoritmo tendono a decrescere rapidamente al crescere di
+  $n$---tipicamente dopo pochi passi una nuova iterazione non modifica
+  il valore restituito dal passo precedente.
+\end{enumerate}
+L'ultima proprietà è particolarmente significativa, poiché, in condizioni
+ordinarie, il cambiamento relativo nel valore numerico della stima della radice
+è un buon indice di quanto siamo vicini alla soluzione corretta e può essere
+utilizzato come criterio per interrompere il processo iterativo---in altre
+parole: ci fermiamo quando continuare non cambia più le cose in modo
+apprezzabile.
+
+\begin{table}[htbp]
+  \tablehstack{
+    \begin{tabular}{lll}
+      \hline
+      $n$ & $x_n$ & $\delta = x_n - x_{n - 1}$ \\
+      \hline
+      \hline
+      \input{tables/metodo_newton}\\
+      \hline
+  \end{tabular}}{
+    \caption{Valori numerici forniti dai primi $6$ passi del metodo di Newton
+      applicato alla ricerca della radice dell'equazione $\cos x - x = 0$,
+      partendo dal valore iniziale $x_0 = 9$
+      (vedi figura~\ref{fig:metodo_newton}). Si noti come già alla sesta
+      iterazione la stima della radice non cambia nelle prime $12$ cifre
+      significative.}
+    \label{tab:metodo_newton}
+  }
+\end{table}
+
+
+\subsection{Minimi quadrati non lineari e metodi iterativi}
+\label{sec:fit_numerici}
+
+Torniamo al nostro problema di partenza, ovvero ai fit.  Supponiamo di avere un
+punto materiale che si muove di moto circolare uniforme su di una circonferenza
+di raggio~$1$~m e di voler stimare la pulsazione angolare $\omega$ del moto dal
+fit di una serie di misure della proiezione della posizione del punto sull'asse
+$y$ ad istanti di tempo fissati---come mostrato in
+figura~\ref{fig:fit_numerico_seno}. Si tratta di un esempio puramente accademico
+che ci permette però di discutere in pratica il problema generale (non
+lineare) del fit dei minimi quadrati in uno dei casi più semplici tra quelli
+che non ammettono una soluzione analitica in forma chiusa, ovvero con il
+modello~\eqref{eq:modello_seno}.
+
+\pgffigone{fit_numerico_seno}{
+  Esempio di fit numerico iterativo di una serie di dati con il
+  modello~\eqref{eq:modello_seno}, realizzato con la funzione
+  \scipyfunc{optimize.curve_fit}. Il fit restituisce un valore
+  $\hat\omega = 1.2005 \pm 0.0011$~rad~s$^{-1}$, con un $\chisq$ pari a $11.6$
+  (per $19$ gradi di libertà). Il grafico dei residui mostra chiaramente che,
+  come indicato dal valore del $\chisq$, il fit è un buon fit, poiché i
+  punti misurati tendono ad oscillare attorno al modello in modo apparentemente
+  casuale e l'entità caratteristica delle fluttuazioni è dello stesso
+  ordine di grandezza delle incertezze di misura.
+}
+
+Qualsiasi programma di analisi dati che si rispetti fornisce almeno un
+\emph{motore} di fit che permette di eseguire un fit dei minimi quadrati
+(lineare o non lineare) di una serie di dati, utilizzando come modello
+una funzione arbitraria dipendente da uno o più parametri. Questi motori
+di fit, va da sé, non trovano il minimo del $\chisq$ risolvendo il
+problema analiticamente come abbiamo fatto noi nel caso costante e lineare
+(e, d'altra parte, sappiamo che ciò non è in generale possibile).
+Lo fanno invece iterativamente, partendo da una stima iniziale dei parametri,
+anche grossolana (tipicamente fornita dall'utente), e provando valori diversi
+per i parametri stessi fino ad arrivare ragionevolmente vicino al minimo
+globale (se tutto va bene, ovviamente). Per fissare le idee potete immaginare
+che il calcolatore campioni per voi il valore del $\chisq$ in una regione
+rappresentativa dello spazio dei parametri e vi restituisca le coordinate del
+punto in cui il $\chisq$ stesso assume il valore minimo. Esistono strategie
+computazionalmente efficienti per trovare questo minimo---ed il metodo di
+Netwon che abbiamo descritto sommariamente è un esempio che funziona nei
+casi più semplici---ma l'argomento va ben al di là dello scopo di queste
+dispense, per cui non ci dilunghiamo oltre.
+
+Il modulo \scipymodule{optimize} offre un'interfaccia al fit
+dei minimi quadrati non lineare attraverso la funzione \scipyfunc{optimize.curve_fit},
+che utilizzeremo in questa sezione per illustrare i tratti generali dei
+metodi iterativi di fit, ma resta inteso che esiste una varietà
+sconfinata di programmi di analisi dati che offrono alternative altrettanto
+buone o addirittura migliori. Per i nostri scopi, la \emph{segnatura} della
+funzione \scipyfunc{optimize.curve_fit} è
+\begin{align}
+  \text{\foreign{popt, pcov = scipy.optimize.curve\_fit(f, xdata, ydata, p$0$=None, sigma=None)}.}
+\end{align}
+(Ad essere onesti la cosa è significativamente più complicata, ma i
+parametri che abbiamo elencato sono sufficienti per una discussione iniziale.
+Torneremo sull'argomento nella sezione~\ref{sec:dettagli_curve_fit}, ed il
+lettore può trovare tutti i dettagli mancanti nella documentazione ufficiale
+disponibile su web%
+\footnote{\url{http://scipy.github.io/devdocs/generated/scipy.optimize.curve_fit.html}}).
+Passiamo dunque brevemente in rassegna, in ordine di
+apparizione, i parametri che il nostro motore di fit richiede.
+\begin{enumerate}
+\item \foreign{f}: il nostro modello, ovvero la funzione di fit. \`E definita
+  dall'utente nella forma di una funzione di \python\ che deve accettare
+  la variabile indipendente come primo argomento, ed i parametri del modello
+  come argomenti aggiuntivi (in ordine). Un punto importante da tenere a mente
+  è che questa funzione deve essere capace di operare su \nparray, per cui è
+  buona regola utilizzare le funzioni native di \numpy\ al suo interno.
+\item \foreign{xdata}: il vettore delle coordinate $x_i$ delle misure.
+  Può essere una lista di \python\ o un \nparray.
+\item \foreign{ydata}: il vettore delle coordinate $y_i$ delle misure.
+  Può essere una lista di \python\ o un \nparray, e la
+  sua lunghezza deve essere uguale a quella di \foreign{xdata}.
+\item \foreign{p$0$}: i valori iniziali dei parametri del modello, nella forma di
+  una lista o tupla di \python\ o un \nparray---in ogni caso di
+  lunghezza pari al numero di parametri. (Se il modello ha un solo parametro, un
+  numero in virgola mobile va bene.)
+\item \foreign{sigma}: le incertezze di misura $\sigma_{y_i}$ sui valori
+  $y_i$---tipicamente una lista di \python\ o un \nparray\ della
+  stessa lunghezza di \foreign{xdata} e \foreign{ydata}.
+\end{enumerate}
+Avrete notato che i due argomenti finali \foreign{p$0$} e \foreign{sigma} sono
+opzionali (si vede dal fatto che hanno valori di \foreign{default} assegnati nella
+segnatura della funzione). Nel caso in cui essi non siano specificati
+esplicitamente dall'utente, il programma li fissa a sequenze di $1$ della
+lunghezza opportuna---cioè i valori iniziali dei parametri sono fissati tutti
+ad $1$ e le incertezze di misura sulla $y$ sono pure fissate tutte ad $1$.
+
+Bene: sappiamo tutto sugli argomenti che possiamo passare al nostro motore
+di fit. Ci rimane da discutere qual è il significato della coppia di oggetti
+che la funzione ci restituisce.
+\begin{enumerate}
+\item \foreign{popt}: un \nparray\ di lunghezza $m$
+  contenente i valori ottimali dei parametri del modello. In altre parole
+  queste sono proprio le stime dei parametri che cerchiamo.
+\item \foreign{pcov}: la matrice di covarianza $m \times m$ tra i parametri del
+  modello. Ricordiamo che le incertezze sui parametri sono le radici quadrate
+  degli elementi diagonali della matrice stessa.
+\end{enumerate}
+
+\snip[0.64]{fit_sin}{
+  Frammento di codice per il fit della serie di dati in
+  figura~\ref{fig:fit_numerico_seno} con il modello~\eqref{eq:modello_seno}.
+  Per operare su \nparray, nella definizione del modello alla
+  linea~7 abbiamo utilizzato la funzione $\sin$ di \numpy, piuttosto che quella
+  del modulo \pymodule{math} della libreria standard di \python. I dati sono
+  generati aggiungendo al modello in ingresso \emph{rumore} Gaussiano con media
+  nulla e deviazione standard pari all'incertezza di misura su $y$. Il fit vero
+  e proprio è eseguito alla linea~17. L'utilizzo di \code{*popt} anziché
+  \code{popt} nel calcolo del $\chisq$ alla riga~18 è un dettaglio tecnico
+  interno a \python\ che consente di passare l'intero vettore dei valori di
+  \bestfit\ dei parametri alla funzione---potete leggere
+  \href{https://docs.python.org/3/tutorial/controlflow.html\#more-on-defining-functions}{qui}
+  tutti i dettagli. Notate che la stima finale di $\omega$ è compatibile,
+  con il valore utilizzato per generare i dati.
+}
+
+A questo punto siamo pronti per analizzare in dettaglio il frammento di
+codice~\ref{snip:fit_sin}. Guardatelo attentamente, leggete la didascalia, e
+cercate di collegare i singoli pezzi con quanto abbiamo detto fino ad ora.
+
+
+\subsection{Il problema dei valori iniziali}
+
+La peculiarità fondamentale dei minimi quadrati lineari è che, per
+definizione, tutte le derivate parziali del $\chisq$ rispetto ai parametri sono
+lineari nei parametri stessi. Questo vuol dire che, se guardiamo il $\chisq$
+come una funzione del parametri, la dipendenza sarà di tipo quadratico per
+ciascuno di essi. In un problema semplice ad un parametro come la media pesata
+il $\chisq$ in funzione del valore di \bestfit\ sarà una parabola e,
+più in generale, un paraboloide in dimensione $m$ (dove $m$ è, al solito,
+il numero di parametri). Una conseguenza immediata di questa semplice
+osservazione è che in generale un problema di minimi quadrati lineare ha un
+solo minimo globale---che è il motivo per cui, nei casi di modelli costante
+e lineare, è stato possibile scrivere in forma chiusa la soluzione.
+
+Ora, tutto questo non è vero in generale. In un fit dei minimi quadrati
+non lineare non vi è nessuna garanzia che il $\chisq$ abbia un solo
+minimo---tutt'altro: esso può avere un numero arbitrariamente grande di minimi
+locali che rendono non banale, come vedremo tra un attimo, il problema di
+trovare la soluzione iterativamente. E non si tratta, è importante
+sottolinearlo, di una questione puramente accademica---nel senso che non è
+necessario andare a cercare esempi \foreign{ad hoc} particolarmente esotici
+perché questo tipo di difficoltà si manifesti.
+
+\pgffigtwo{media_pesata_chisq}{fit_numerico_seno_chisq}{
+  Esempi di andamenti del valore del $\chisq$ in funzione del parametro del
+  modello di fit per la media pesata dell'esempio~\ref{exp:media_pesata}
+  (a sinistra) per il fit con il modello~\eqref{eq:modello_seno} dei
+  dati in figura~\ref{fig:fit_numerico_seno} (a destra). Il primo è un
+  problema dei minimi quadrati lineare, il secondo non lineare.
+}
+
+Tutto questo è illustrato per due semplici problemi uni-dimensionali in
+figura~\ref{fig:media_pesata_chisq_fit_numerico_seno_chisq} ove il $\chisq$ è
+mostrato in funzione del parametro di fit per la media pesata
+dell'esempio~\ref{exp:media_pesata} e per il fit con il
+modello~\eqref{eq:modello_seno} dei dati in figura~\ref{fig:fit_numerico_seno}.
+I due grafici sono interessanti almeno per due motivi. Il primo è che essi ci
+permettono di visualizzare il processo di fit, almeno nel caso semplice di un
+solo parametro, come il moto di un punto materiale lungo un profilo rigido sotto
+l'azione delle forza di gravità. L'analogia non è esatta, ma il paragone è
+calzante. Nel nostro caso abbiamo costruito il profilo del $\chisq$ in funzione
+del valore del parametro con la forza bruta---campionandolo su una griglia
+regolare di punti. E la forza bruta è un possibile, anche se inefficiente,
+algoritmo di fit. Un buon metodo iterativo di fit non è altro che un
+algoritmo efficiente per far arrivare il nostro punto sul minimo del $\chisq$
+il più velocemente possibile.
+
+La seconda cosa interessante è il diverso ruolo che i valori iniziali dei
+parametri rivestono nel caso lineare ed in quello non lineare. Nel primo
+la convergenza è garantita dal fatto che il $\chisq$ ha un solo minimo, e
+partire da un punto molto lontano dal minimo stesso influisce solo sul numero di
+passi (e quindi sul tempo) necessari per arrivare alla convergenza. Nel caso non
+lineare la situazione è completamente differente, perché in generale
+il fit convergerà al minimo più vicino al punto corrispondente ai
+valori iniziali dei parametri (ricordate l'analogia con la pallina che rotola
+sul profilo del $\chisq$) e se questo è solamente un minimo locale,
+allora i valori di \bestfit\ che otteniamo sono semplicemente errati.
+La cosa è estremamente rilevante dal punto di vista pratico. Il fit
+mostrato in figura~\ref{fig:fit_numerico_seno} corrisponde al minimo globale
+attorno a $\omega \approx 1.2$ nel grafico di destra di
+figura~\ref{fig:media_pesata_chisq_fit_numerico_seno_chisq}---questo perché,
+come mostrato nel frammento~\ref{snip:fit_sin} abbiamo scelto $\omega = 1$
+come valore iniziale del nostro parametro. Se fossimo partiti da un valore
+iniziale diverso, il fit ci avrebbe restituito un valore diverso---ed
+errato---per il parametro, come mostrato in
+figura~\ref{fig:fit_numerico_errato}.
+
+\pgffigone{fit_numerico_errato}{
+  Esempio di mancata convergenza di un fit dei minimi quadrati non
+  lineare in cui il valore iniziale del parametro non era abbastanza vicino al
+  minimo globale. Il codice utilizzato per il fit è identico a quello
+  mostrato nel frammento~\ref{snip:fit_sin}, con l'unica differenza che questa
+  volta abbiamo scelto $\omega = 3.2$ come valore iniziale. Il valore finale
+  del parametro restituito dal fit è
+  $\hat\omega = 3.299 \pm 0.014$~s$^{-1}$, con un $\chisq$ (orribile) di
+  $4068$ per $19$ gradi di libertà. (Il grafico dei residui è altrettanto
+  orribile.) Notiamo, per completezza, che il valore a cui converge il
+  fit in questo caso particolare corrisponde al minimo locale più
+  prominente alla destra del minimo globale nel grafico di destra di
+  figura~\ref{fig:media_pesata_chisq_fit_numerico_seno_chisq}.
+}
+
+Abbiamo capito che in pratica i fit di tipo numerico sono sensibili ai
+valori iniziali dei parametri che scegliamo. Lo abbiamo visto chiaramente in
+un caso relativamente semplice con un solo parametro ed è naturale aspettarsi
+che le cose non possano che peggiorare quando i parametri in gioco sono molti.
+A questo punto uno può chiedersi legittimamente: come facciamo ad accorgerci
+quando il fit non è andato a buon fine? La risposta è semplice: il
+valore del $\chisq$ ed il grafico dei residui sono due indicatori chiari che
+dovremmo essere perfettamente in grado di interpretare (vedi
+figura~\ref{fig:fit_numerico_errato}). La seconda domanda ovvia è: cosa
+facciamo nei casi in cui il fit non converge alla soluzione corretta?
+Anche qui la risposta è semplice: ci lasciamo guidare dai dati e cerchiamo
+per quanto possibile di assegnare valori iniziali ragionevoli (cioè vicini
+alla soluzione) ai parametri prima di ripetere il fit, come illustrato
+con un esempio concreto nella prossima sezione.
+
+
+\subsection{Un esempio di fit complesso}
+
+In questa sezione ci soffermiamo brevemente, a scopo illustrativo, su un
+problema di fit a molti parametri che descrive un sistema fisico
+relativamente semplice---un oscillatore armonico smorzato--- e lo facciamo non
+tanto perché il problema sia particolarmente instabile da un punto di vista
+numerico, quanto perché si tratta di una buona palestra per imparare a
+ragionare su come si scelgono in modo sensato i valori iniziali dei parametri.
+
+Supponiamo dunque di aver campionato a tempi fissati la posizione $y$ del nostro
+oscillatore in funzione del tempo. Il modello è in questo caso
+\begin{align}\label{eq:fit_pendolo_smorzato}
+  f(t; A, \omega, \phi, \lambda, C) =
+  A e^{-\lambda t}\sin(\omega t + \phi) + C.
+\end{align}
+Abbiamo in totale $5$ parametri: $A$ rappresenta la semi-ampiezza iniziale di
+oscillazione, $e^{-\lambda t}$ è il termine di smorzamento (che è esponenziale
+se assumiamo che la forza di attrito dipenda linearmente dalla velocità),
+$\sin(\omega x + \phi)$ è il termine oscillatorio (in cui sia la pulsazione
+angolare che la fase sono incognite) e $C$ rappresenta una costante di
+\foreign{offset} che tiene conto del fatto che l'oscillazione non è
+necessariamente centrata in $0$.
+
+\begin{figure}[htbp]
+  \input{figures/fit_pendolo_smorzato.pgf}
+  \caption{Esempio di fit dei minimi quadrati della posizione di
+    un oscillatore smorzato in funzione del tempo con un modello a $5$
+    parametri. Nei problemi non lineari a molti parametri la scelta dei
+    valori iniziali per il fit è cruciale per garantire la
+    convergenza---e le tre linee orizzontali in figura corrispondono ai
+    riferimenti utilizzati per la stima dei parametri stessi.}
+  \label{fig:fit_pendolo_smorzato}
+\end{figure}
+
+Osserviamo dunque i punti in figura~\ref{fig:fit_pendolo_smorzato} e
+cerchiamo di capire come si possano stimare, uno per uno, i valori iniziali
+dei parametri.
+\begin{enumerate}
+\item $A$: come abbiamo detto $A$ rappresenta la semi-ampiezza iniziale.
+  Per $t \approx 0$ i valori di $y$ variano da circa $380$ a circa $500$
+  per cui una stima iniziale ragionevole è
+  \begin{align*}
+    A \approx \frac{(500 - 380)}{2} = 60.
+  \end{align*}
+\item $\omega$: se contiamo il numero di massimi (o di minimi) nei dati,
+  possiamo dire che si hanno circa $28$ oscillazioni complete in $40$~s
+  per cui il periodo di oscillazione e la pulsazione angolare saranno
+  \begin{align*}
+    T \approx \frac{40}{28} \approx 1.43~\text{s}
+    \quad \text{e} \quad
+    \omega = \frac{2\pi}{T} \approx 4.39~\text{s}^{-1}.
+  \end{align*}
+\item $\phi$: per $t = 0$ l'oscillazione è prossima al suo punto più basso,
+  per cui, all'ordine $0$ possiamo assumere che
+  $\phi \approx -\nicefrac{\pi}{2}$ o, equivalentemente,
+  $\phi \approx \nicefrac{3\pi}{2}$.
+\item $\lambda$: questo è interessante. Sappiamo che quando
+  $t = \nicefrac{1}{\lambda}$ la nostra ampiezza di oscillazione si è ridotta
+  di un fattore $\nicefrac{1}{e}$, ovverosia a circa un terzo di quella.
+  Possiamo rovesciare l'argomento e dire che, dato che per $t \approx 40$~s
+  l'ampiezza si è ridotta a circa un terzo di quella iniziale, possiamo
+  stimare
+  \begin{align*}
+    \lambda \approx \frac{1}{40} = 0.025~\text{s}^{-1}.
+  \end{align*}
+\item $C$: ragionando come al punto relativo ad $A$ possiamo stimare il
+  valore medio (ovverosia il centro) della nostra oscillazione come
+  \begin{align*}
+    C \approx \frac{(500 + 380)}{2} = 440.
+  \end{align*}
+\end{enumerate}
+
+\begin{table}[htbp]
+  \tablehstack{
+    \begin{tabular}{lll}
+      \hline
+      Parametro & Valore iniziale & Valore di \bestfit\\
+      \hline
+      \hline
+      $A$       & $60$    & $57.78 \pm 0.06$\\
+      $\omega$  & $4.39$  & $4.43477 \pm 0.00006$\\
+      $\phi$    & $4.71$  & $3.895 \pm 0.001$\\
+      $\lambda$ & $0.025$ & $0.02469 \pm 0.00006$\\
+      $C$       & $440$   & $438.66 \pm 0.02$\\
+      \hline
+  \end{tabular}}{
+    \caption{Valori iniziali dei parametri (vedi il testo per i dettagli della
+      scelta) e valori finali di \bestfit\ per il fit con il
+      modello~\eqref{eq:fit_pendolo_smorzato} ai dati mostrati in
+      figura~\ref{fig:fit_pendolo_smorzato}.}
+    \label{tab:fit_pendolo_smorzato}
+  }
+\end{table}
+
+A questo punto abbiamo tutto ciò che ci serve per eseguire il fit
+vero e proprio---il cui risultato è mostrato in
+figura~\ref{fig:fit_pendolo_smorzato} insieme ai punti.
+La tabella~\ref{tab:fit_pendolo_smorzato} contiene un sommario dei valori
+iniziali dei parametri che abbiamo scelto e dei valori finali di
+\bestfit, con le incertezze associate. \`E degno di nota il fatto che
+4 su 5 delle nostre stime iniziali sono entro il $10\%$ dai valori finali.
+
+
+\subsection{Di nuovo su \texttt{curve\_fit()}: cosa significa \texttt{absolute\_sigma}?}
+\label{sec:dettagli_curve_fit}
+
+C'è una cosa che abbiamo volontariamente omesso nella sezione~\ref{sec:fit_numerici}
+e che è giunto il momento di discutere: il significato dell'opzione
+\code{absolute_sigma} nella funzione \scipyfunc{optimize.curve_fit}, e la
+mutua interazione con le incertezze sulla variabile dipendente che passiamo al
+fit. Si tratta di un dettaglio tecnico (per altro non specifico di \scipy,
+ma comune in una qualche forma alla maggior parte dei programmi di fit) che è
+necessario comprendere a fondo per non incorrere in situazioni che a prima vista
+possono apparire paradossali.
+
+Cominciamo dalla documentazione di \scipy. La funzione \scipyfunc{optimize.curve_fit}
+prevede un argomento \emph{booleano} (ovvero che può assumere uno dei due valori
+\code{True} o \code{False}) denominato \code{absolute_sigma}, che controlla il
+modo in cui le incertezze di misura sono utilizzate nel fit.
+Traducendo liberamente dall'inglese:
+\begin{quote}
+  Se \code{True}, le incertezze sulla variabile dipendente sono usate in senso
+  assoluto, e la stima della matrice di covarianza riflette propriamente i loro
+  valori.
+
+  Se \code{False} (che è la scelta di \foreign{default}) solo il valore relativo
+  delle incertezze è importante. La stima della matrice di covarianza dei
+  parametri restituita dal fit è ottenuta riscalando i valori delle incertezze
+  di un fattore costante. Questo valore è determinato richiedendo che il
+  $\chisq$ ridotto (ovverosia $\chisq / v$) valga esattamente $1$:
+  \begin{align*}
+    \frac{\chisq}{\nu} = 1 \quad \text{ovvero} \quad \chisq = \nu.
+  \end{align*}
+  In altre parole, le incertezze sulla variabile dipendente sono riscalate per
+  corrispondere alla varianza campione dei residui dopo il fit.
+\end{quote}
+
+In questa sezione cercheremo di capire due cose: (i) cosa significa esattamente
+questo passo della documentazione di \scipy; e (ii): perché \scipy\
+si prende la libertà di manipolare le nostre incertezze a meno che non gli
+diciamo esplicitamente di non farlo---cioè perché \code{absolute_sigma}
+è \code{False} di \foreign{default}.
+
+\pgffigone{absolute_sigma}{
+  Semplice esempio di fit ad un serie di dati con un semplice modello ad
+  un parametro---una retta passante per l'origine.
+  Notate che le incertezze sulla variabile dipendente sono tutte uguali
+  (i.e., il fit è effettivamente non pesato).
+}
+
+Partiamo da un esempio semplicissimo, ovvero il fit della serie di dati mostrata
+in figura~\ref{fig:absolute_sigma} con una retta passante per l'origine.
+Il frammento~\ref{snip:absolute_sigma} mostra un possibile esempio di
+codice in \python\ per l'esecuzione del fit usando le quattro possibili
+combinazioni degli argomenti \code{sigma} e \code{absolute_sigma}: con o senza
+errori sulla variabile dipendente e per i due diversi valori dell'argomento
+\code{absolute_sigma}. Come vedremo tra un attimo, l'analisi dei risultati del
+fit nei quattro casi è altamente istruttivo.
+
+\snip[0.64]{absolute_sigma}{%
+  Frammento di codice per il fit con una retta passante per l'origine ai
+  dati di figura~\ref{fig:absolute_sigma}, usando le quattro possibili
+  combinazioni degli argomenti \code{sigma} e \code{absolute_sigma}:
+  (i) senza passare gli errori sulla $y$ e permettendo (implicitamente)
+  a \scipy\ di riscalare la matrice di covarianza; (ii) passando gli errori
+  sulla $y$ e permettendo a \scipy\ di riscalare la matrice di covarianza;
+  (iii) senza passare gli errori sulla $y$ e disabilitando il riscalamento
+  della matrice di covarianza (\code{absolute_sigma = True}; (iv) passando gli
+  errori sulla $y$ e disabilitando il riscalamento della matrice di covarianza.
+}
+
+I primi due casi (quelli in cui \code{absolute_sigma} mantiene il suo valore di
+\foreign{default}, per cui \scipy\ riscala automaticamente la matrice di
+covarianza) sono identici. Il fatto che il valore di \bestfit\ dell'unico
+parametro sia invariato non sorprende poiché, essendo le incertezze sulla
+variabile indipendente tutte uguali, il fit è sostanzialmente non pesato ed il
+minimo del $\chisq$~\eqref{eq:somma_chiquadro_fit} non dipende dal particolare
+valore di $\sigma_y$. Inoltre, dato che le incertezze sono ulteriormente
+riscalate da \scipy\ con la prescrizione indicata sopra, anche l'incertezza
+sul parametro rimane invariata. Abbiamo dunque imparato una prima cosa:
+\emph{se lasciamo \code{absolute_sigma} al suo valore di default in un fit non
+pesato, passare o meno le incertezze alla funzione di fit non fa nessuna differenza}.
+
+Il caso (iii) è particolarmente interessante. Se non passiamo al fit le incertezze
+sulla variabile e, contestualmente, chiediamo a \scipy\ di prendere queste
+incertezze alla lettera (e, detto così, capite immediatamente che stiamo
+facendo una cosa assurda) il valore di \bestfit\ del parametro non cambia,
+ma l'errore associato è completamente senza senso---più del 100\% in termini
+relativi. Per capire cosa sta succedendo dobbiamo ricordare che, come abbiamo
+detto nella sezione~\ref{sec:fit_numerici}, se non passiamo esplicitamente le
+incertezze di misura, \scipyfunc{optimize.curve_fit} assume che siano tutte pari ad $1$.
+Allora quello che \emph{vede} la funzione che fa il fit è più simile alla
+figura~\ref{fig:absolute_sigma_noerr} che non alla~\ref{fig:absolute_sigma}.
+Basta uno sguardo veloce per capire il motivo per cui il coefficiente angolare
+della retta di \bestfit\ risulta sostanzialmente indeterminato.
+(Tra l'altro la situazione è ancora più complessa di così, perché, se
+cambiassimo le unità di misura sull'asse delle $y$, potremmo rendere
+l'incertezza sul parametro di fit grande o piccola a piacere!)
+Siamo quindi alle seconda lezione fondamentale: \emph{se non passiamo alla
+funzione di fit le incertezze sulla variabile dipendente, allora è cruciale
+non cambiare il valore di default dell'argomento \code{absolute_sigma}}.
+
+\pgffigone{absolute_sigma_noerr}{
+  Grafico dei dispersione dei dati mostrati in figura~\ref{fig:absolute_sigma_noerr},
+  cui sono stati assegnate incertezze (tutte uguali e) pari ad $1$ (che è
+  sostanzialmente quello su cui opera \scipyfunc{optimize.curve_fit} quando non passiamo
+  esplicitamente gli errori). In questa situazione, se prendiamo \emph{seriamente}
+  le barre d'errore, è chiaro come il valore del coefficiente angolare del
+  fit risulti essenzialmente indeterminato.
+}
+
+Il caso (iv) è, per molti aspetti, quello che dovrebbe succedere nella vita reale,
+ovvero: passiamo esplicitamente le incertezze sulla variabile dipendente alla
+nostra funzione di fit, e chiediamo cortesemente che queste incertezze siano
+prese alla lettera, visto che, sperabilmente, le abbiamo stimate in modo
+ragionevole. Sotto queste ipotesi la macchineria procede nel modo in
+cui abbiamo imparato nella sezione sui fit dei minimi quadrati (a parte il fatto
+ovvio che la minimizzazione del $\chisq$ è eseguita in modo numerico e non
+analitico), e le incertezze sui parametri del fit in uscita sono determinate da
+quelle in ingresso sui nostri dati. Due cose che possono sembrare dettagli ma
+sono importanti per mettere la nostra discussione nel contesto. L'incertezza sul
+parametro di fit nel caso (iii) è esattamente $100$~volte più grande di
+quella del caso (iv); la cosa non sorprende, perché gli errori $\sigma_y$ di
+partenza sono $0.01$, ovvero $100$~volte più piccoli di quello che assume
+\scipy\ se non passiamo niente.
+Notiamo inoltre che l'incertezza sul parametro nel caso (iii) è leggermente
+diversa (ma non troppo) da quelle dei casi (i) e (ii). Anche questo non
+sorprende: se abbiamo stimato bene gli errori, e se il modello è adeguato,
+il valore del $\chisq$ del fit sarà in media pari al numero di gradi di
+libertà $\nu$ del problema, il $\chisq$~ridotto $\chisq / \nu$ sarà in media
+$1$, ed il fattore moltiplicativo di scala applicato alla matrice di covarianza
+sarà pure, in media, vicino ad $1$ (e quindi avrà poco effetto).
+Questo ci porta alla terza lezione: \emph{ogni qual volta abbiamo una stima
+accurata delle incertezze di misura sui nostri dati, la cosa giusta da fare è
+passarle alla funzione di fit e usare l'opzione \code{absolute_sigma = True}}.
+Se lasciamo l'argomento \code{absolute_sigma} al suo valore di default probabilmente
+non sbagliamo di molto, ma tecnicamente stiamo introducendo un potenziale
+\foreign{bias} nelle incertezze sui parametri del fit.
+
+Detto tutto questo, rimane una domanda ovvia: se la cosa giusta è passare le
+incertezze alla funzione di fit ed utilizzare l'opzione \code{absolute_sigma = True},
+come mai \scipy\ utilizza \code{absolute_sigma = False} come valore di
+\foreign{default}? La risposta (probabilmente) è che non ci si può aspettare che
+tutti gli utenti di \scipy\ siano esperti delle tecniche di fit e, mentre
+utilizzare \code{absolute_sigma = False} quando non dovremmo è nella maggior
+parte dei casi relativamente innocuo, il contrario è, come abbiamo visto,
+potenzialmente disastroso. Va da sé che questo non è il vostro caso: da questo
+momento non avete più alcuna scusa per fare confusione sull'argomento.
+
+
+\section{Fit di tipo generale}
+
+Ci rimane un ultimo punto importante da discutere: cosa succede quando
+l'assunzione di base~\eqref{eq:condizione_dxdy} che abbiamo fatto all'inizio
+del capitolo, ovverosia che le incertezze di misura sulla variabile indipendente
+siano trascurabili, non è valida? La risposta è semplice: formalmente il
+metodo dei minimi quadrati nella forma in cui lo abbiamo discusso non può
+essere utilizzato---e non è un caso che la segnatura della funzione
+\scipyfunc{optimize.curve_fit} non preveda un argomento per gli errori sulla $x$,
+poiché, in termini semplici, essi non sono un ingrediente del fit dei minimi
+quadrati. In pratica ignorare brutalmente gli errori sulla $x$ ed eseguire
+ugualmente un fit dei minimi quadrati può avere in generale tre conseguenze
+distinte:
+\begin{enumerate}
+\item i valori dei parametri restituiti dal fit possono essere
+  sistematicamente diversi dai valori corretti;
+\item le incertezze sui parametri sono in generale sistematicamente
+  sottostimate;
+\item il valore del $\chisq$ che otteniamo è in generale sovrastimato e,
+  dunque, non ha più il significato che gli abbiamo attribuito in tutta la
+  discussione di questo capitolo.
+\end{enumerate}
+Intendiamoci: gli effetti non sono sempre disastrosi, ma non è necessario
+andare a cercare esempi troppo esotici per far s\'i che essi siano apprezzabili.
+Al solito discuteremo l'argomento sulla base di un esempio concreto.
+
+Supponiamo dunque di voler stimare il potere diottrico $\nicefrac{1}{f}$ di
+una lente convergente sfruttando la relazione per le lenti sottili tra la
+distanza oggetto-lente $p$ e la distanza lente-immagine $q$
+\begin{align}\label{eq:legge_lenti_sottili}
+  \frac{1}{p} + \frac{1}{q} = \frac{1}{f}.
+\end{align}
+A questo scopo possiamo misurare una serie di $n$ coppie di valori $(p_i, q_i)$
+con le rispettive incertezze di misura $\sigma_{p_i}$ e $\sigma_{q_i}$. Con il
+cambiamento di variabile%
+\footnote{C'è un'ulteriore piccola complicazione connessa a questo cambiamento
+  di variabile: se assumiamo che gli errori su $p$ e $q$ siano Gaussiani,
+  quelli sugli inversi in generale non lo saranno, ma a questo livello si tratta
+  di un dettaglio tecnico che ignoriamo felicemente.}
+\begin{align}
+  x_i = \frac{1}{p_i} \quad \sigma_{x_i} = \frac{\sigma_{p_i}}{p_i^2} \quad
+  y_i = \frac{1}{q_i} \quad \sigma_{y_i} = \frac{\sigma_{q_i}}{q_i^2}
+\end{align}
+il nostro modello~\eqref{eq:legge_lenti_sottili} diviene un modello
+lineare---e anzi un caso particolare di modello lineare poiché, se la teoria
+è corretta, il coefficiente angolare è previsto essere $m = -1$:
+\begin{align*}
+  y = -x + \frac{1}{f}.
+\end{align*}
+Possiamo dunque fare un fit dei nostri dati e stimare il potere diottrico
+cercato come l'intercetta della retta di \bestfit. Nella discussione che
+segue lasceremo il coefficiente della retta libero di variare nel fit sulla
+base del fatto che, in casi come questo, il valore del parametro restituito dal
+fit (o meglio, il suo livello di accordo con il valore atteso) costituisce un
+controllo utile di consistenza interna della misura.
+
+\pgffigone{fit_generale_ls}{
+  Esempio di fit dei minimi quadrati con un modello lineare eseguito
+  ignorando brutalmente gli errori sulla variabile indipendente in una
+  situazione in cui la~\eqref{eq:condizione_dxdy} non è verificata.
+  I valori dei parametri restituiti dal fit sono $m = -0.845 \pm 0.030$
+  e $\nicefrac{1}{f} = 9.27 \pm 0.22$. Notiamo esplicitamente che il
+  coefficiente angolare è inconsistente con il valore atteso $-1$.
+  Il $\chisq$ del fit è pari a $26.5$, che per $8$ gradi di libertà
+  corrisponde ad un \pvalue~al di sotto di $10^{-3}$.
+}
+
+Osserviamo con attenzione i punti sperimentali in
+figura~\ref{fig:fit_generale_ls}. La prima domanda cui dobbiamo rispondere è:
+in questo caso specifico la condizione~\eqref{eq:condizione_dxdy} è verificata
+oppure no? \`E chiaro che la risposta è no, poiché la derivata del modello
+rispetto alla variabile indipendente è pari al coefficiente angolare della
+retta di \bestfit, cioè dell'ordine di $-1$, per cui di fatto possiamo
+confrontare direttamente gli errori su $x$ e quelli su $y$, e vediamo
+chiaramente che per i punti più a destra si ha $\sigma_{x_i} \gg \sigma_{y_i}$.
+Esattamente il contrario di quello che vorremmo.
+
+Proviamo per un attimo a chiudere gli occhi e procedere ugualmente. La linea
+continua in figura~\ref{fig:fit_generale_ls} rappresenta il risultato di un
+fit dei minimi quadrati (ignorando banalmente gli errori sulla $x$) con un
+modello lineare, in cui abbiamo lasciato liberi di variare, come abbiamo detto,
+sia l'intercetta che il coefficiente angolare. Il primo problema che ci troviamo
+a dover affrontare è che il coefficiente angolare restituito dal fit,
+$m = -0.845 \pm 0.030$ non è compatibile con il valore atteso dalla teoria
+($-1$). Faremo l'ipotesi di lavoro (che verificheremo a posteriori) che le
+misure siano corrette e che il problema sia nel modo in cui abbiamo effettuato
+il fit. Ed in effetti non è difficile rendersi conto che qualcosa non
+va: la retta di \bestfit, per come abbiamo formulato il problema, è
+costretta a passare per il punto in basso a destra, che ha un errore sulla
+$y$ relativamente piccolo. Eppure l'errore corrispondente sulla $x$ (che, lo
+ricordiamo, abbiamo ignorato) è molto grande, ed è naturale pensare che
+se trovassimo il modo di metterlo in gioco, il risultato del fit potrebbe
+essere significativamente diverso.
+
+Il secondo problema è che il $\chisq$ del fit è troppo alto: $26.5$ per
+$8$~gradi di libertà, che corrisponde ad un \pvalue~inferiore a $10^{-3}$.
+Ma in fondo questo non dovrebbe stupire, visto che di fatto a abbiamo
+deliberatamente ignorato una parte consistente delle incertezze di misura.
+
+
+\subsection{L'algoritmo di \foreign{orthogonal distance regression (ODR)}}
+
+Abbiamo capito che il fit dei minimi quadrati nel caso in cui gli errori
+sulla variabile indipendente non sono trascurabili è, come ci aspettavamo,
+problematico. La domanda ovvia, a questo punto, è: esistono algoritmi
+alternativi che ci permettono di attaccare il problema generale? E quali
+caratteristiche dovrebbe avere un algoritmo di questo tipo?
+
+\pgffigtwo{chisq_delta_x}{chisq_delta_xy}{
+  Rappresentazione grafica delle differenze che vanno al numeratore dei
+  singoli termini del $\chisq$, nel caso in cui gli errori sulla $x$ siano
+  trascurabili (sinistra) e nel caso dell'algoritmo di
+  \foreign{orthogonal distance regression}. Per chiarezza di illustrazione le
+  barre d'errore sui punti misurati non sono rappresentate.
+}
+
+La risposta, chiaramente, è si. E possiamo dire di più: intuitivamente ci
+aspettiamo di dover modificare la metrica che abbiamo usato fino a questo
+momento per valutare l'accordo fra dati e modello, vale a dire il $\chisq$
+della~\eqref{eq:somma_chiquadro_fit}, sotto due aspetti differenti:
+\begin{enumerate}
+\item al numeratore non possiamo più valutare semplicemente il modello
+  nei punti misurati $x_i$, che non sono più fissati---il che equivale a dire
+  che dobbiamo calcolare la distanza tra dati e modello non  verticalmente, ma
+  diagonalmente, come mostrato in figura~\ref{fig:chisq_delta_x_chisq_delta_xy};
+\item al denominatore dobbiamo pesare opportunamente le due componenti
+  ortogonali (sulla $x$ e sulla $y$) delle distanze di cui sopra, con le
+  rispettive incertezze di misura.
+\end{enumerate}
+\`E chiaro che questo problema è significativamente più complesso di quello
+dei minimi quadrati: non solo non vi è alcuna speranza di risolverlo
+analiticamente, ma anche implementare un algoritmo iterativo per la soluzione
+è cosa tutt'altro che banale.
+
+\pgffigone{fit_generale_odr}{
+  Esempio di fit ai dati di figura~\ref{fig:fit_generale_ls} con
+  l'algoritmo di \foreign{orthogonal distance regression} della libreria
+  \pymodule{odr} di \scipy. I valori dei parametri restituiti dal fit sono
+  $m = -0.979 \pm 0.051$ (questa volta compatibile con $-1$) e
+  $\nicefrac{1}{f} = 9.89 \pm 0.23$. L'equivalente del $\chisq$ del fit
+  è $6.52$ per $8$ gradi di libertà---cioè il fit è un buon fit.
+  Per confronto la linea tratteggiata corrisponde al fit dei minimi quadrati
+  mostrato in figura~\ref{fig:fit_generale_ls}.
+}
+
+Per fortuna \scipy\ ci viene incontro con il pacchetto \pymodule{odr}
+(per \foreign{orthogonal distance regression})~\cite{odr} che fa esattamente
+ciò che abbiamo appena detto. Il risultato, mostrato in
+figura~\ref{fig:fit_generale_odr} per gli stessi dati
+di figura~\ref{fig:fit_generale_ls} è più che incoraggiante. L'utilizzo
+delle incertezze di misura sulla variabile indipendente fa sì che la retta
+di \bestfit\ non sia più costretta a passare per l'ultimo punto (quello
+in basso a destra) e la nostra miglior stima per il coefficiente angolare è
+adesso $m = -0.979 \pm 0.051$---compatibile con il valore atteso $-1$. Il
+valore del parametro fisico che vogliamo stimare, ossia il potere diottrico
+della lente, è significativamente diverso dal caso precedente---e senza
+dubbio più corretto. E il $\chisq$ del fit è adesso $6.52$ per $8$ gradi di
+libertà, che indica che il fit è un buon fit.
+
+\snip{odr}{%
+  Frammento di codice per il fit dei dati in figura~\ref{fig:fit_generale_odr}
+  con l'algoritmo di \foreign{orthogonal distance regression} implementato nel
+  modulo \scipymodule{odr}. Tra le differenze in termini di
+  interfacce rispetto alla funzione \scipyfunc{optimize.curve_fit} notiamo
+  che l'ordine degli argomenti della funzione che esprime il modello è
+  invertito: prima i parametri (nella forma di una tupla e non separatamente)
+  e poi la variabile indipendente. Il fit in sé, inoltre, non si
+  risolve in una semplice chiamata di una funzione, ma richiede la preparazione
+  di un certo numero di oggetti dedicati: il modello, i dati e l'algoritmo vero
+  e proprio. L'argomento \emph{beta}$0$ del costruttore di \pymodule{odrpack}
+  rappresenta i valori iniziali dei parametri di fit.
+}
+
+L'unica notizia negativa, se così vogliamo dire, relativa a tutta la
+questione è che, per motivi storici, l'interfaccia di \scipymodule{odr}
+è completamente diversa da quella di \scipyfunc{optimize.curve_fit}, per
+cui di fatto dobbiamo imparare una cosa nuova praticamente da zero. Persino
+l'ordine degli argomenti nella definizione del modello è invertita---prima
+i parametri e poi la variabile indipendente. Il codice utilizzato per eseguire
+il fit mostrato in figura~\ref{fig:fit_generale_odr} è riportato nel
+frammento~\ref{snip:odr} e commentato ampiamente nella didascalia
+corrispondente.
+
+
+
+\subsection{Una possibile modifica al metodo dei minimi quadrati}
+\label{sec:fit_errori_efficaci}
+
+L'algoritmo di \foreign{orthogonal distance regression} che abbiamo visto nella
+sezione precedente costituisce una soluzione completa del problema generale
+di fit nel caso in cui gli errori sulla variabile indipendente
+non siano trascurabili, per cui possiamo chiederci se il metodo dei minimi
+quadrati in fondo non sia da buttare via.
+
+La risposta è no. Una strategia alternativa è quella di considerare i
+punti $x_i$ fissati e di propagare le incertezze corrispondenti $\sigma_{x_i}$
+sulla variabile indipendente, sommandole in quadratura (come si fa per errori
+indipendenti) alle incertezze di partenza $\sigma_{y_i}$. In altre parole,
+possiamo definire delle nuove incertezze \emph{efficaci} $\sigma_i$ come
+\begin{align}\label{eq:somma_errori_dxdy}
+  \sigma^2_i = \sigma^2_{y_i} +
+  \left(\td{f}{x}{x_i; \hat{\theta}_1 \ldots \hat{\theta}_m}\right)^2\,
+  \sigma^2_{x_i}
+\end{align}
+ed utilizzare queste ultime in un fit dei minimi quadrati, minimizzando la
+quantità
+\begin{align}
+ \chisquare{\theta_1,\ldots,\theta_m} = \sum_{i = 1}^{n}\left(
+  \frac{y_i - f(x_i; \theta_1,\ldots,\theta_m)}{\sigma_i}
+  \right)^2 =
+  \sum_{i = 1}^{n}\frac{\left(y_i - f(x_i; \theta_1,\ldots,\theta_m)\right)^2}%
+      {\sigma^2_{y_i} +
+        \left(\td{f}{x}{x_i; \theta_1 \ldots \theta_m}\right)^2\,
+        \sigma^2_{x_i}}
+\end{align}
+Questo problema è, di nuovo, significativamente più complicato di quello
+di partenza, poiché il modello entra non solo al numeratore, ma anche,
+attraverso la sua derivata rispetto alla variabile indipendente, al
+denominatore. (Per inciso, non è difficile convincersi che, nelle ipotesi
+iniziali dei minimi quadrati~\eqref{eq:condizione_dxdy}, il secondo termine
+della~\eqref{eq:somma_errori_dxdy} è per definizione trascurabile e torniamo
+esattamente nelle condizioni del minimo $\chisq$.)
+
+\snip[0.66]{least_squares_modified}{%
+  Frammento di codice per illustrare l'algoritmo dei minimi quadrati, modificato
+  come spiegato nel testo per tenere in considerazione le incertezze di misura
+  sulla variabile indipendente. Il fit iniziale è eseguito alla linea~13, e
+  ci fornisce una prima stima del coefficiente angolare e dell'intercetta. I
+  passi~2 e~3 descritti nel testo sono inclusi in un ciclo \code{for}, che ci
+  permette di ripeterli per il numero di volte desiderato (nel nostro caso $3$).
+  Ad ogni passo la variabile \code{popt} contiene i valori di \bestfit\
+  dei due parametri, e l'elemento $0$ dell'\foreign{array} è proprio la derivata
+  di cui abbiamo bisogno per combinare gli errori secondo
+  la~\eqref{eq:somma_errori_dxdy}---il che avviene alla linea 16. (Il resto
+  dovrebbe essere auto-esplicativo.) Il processo converge in pochi passi, e
+  già alla prima iterazione il risultato è molto più vicino a quello
+  corretto che non nel caso del fit dei minimi quadrati originale.
+}
+
+L'idea di base, a questo punto, è che possiamo procedere in tre passi:
+\begin{enumerate}
+\item eseguiamo un primo fit dei minimi quadrati ignorando brutalmente
+  le incertezze sulla $x$ (sappiamo che il risultato non sarà ottimale, ma
+  sappiamo anche che, in condizioni ordinarie, non sarà nemmeno lontanissimo
+  dalla soluzione);
+\item utilizziamo i valori di \bestfit\ dei parametri che abbiamo ottenuto
+  al passo 1 per stimare la derivata del modello in corrispondenza dei punti
+  misurati
+  \begin{align*}
+    \td{f}{x}{x_i; \hat{\theta}_1 \ldots \hat{\theta}_m}
+  \end{align*}
+  e la utilizziamo per combinare le incertezze di misura sulle due
+  coordinate, come indicato nella~\eqref{eq:somma_errori_dxdy};
+\item eseguiamo un nuovo fit dei minimi quadrati utilizzando le nuove
+  stime delle incertezze.
+\end{enumerate}
+In pratica può essere necessario ripetere i passi 2 e 3 un certo numero di
+volte per evitare che una stima non sufficientemente accurata dei parametri del
+modello al primo passo si rifletta in un valore inaccurato della derivata---e
+quindi dell'errore finale. Tipicamente, a meno di casi patologici, poche
+iterazioni sono sufficienti a raggiungere la convergenza.
+
+Il frammento di codice~\ref{snip:least_squares_modified} illustra il concetto
+nel caso del fit lineare mostrato in figura~\ref{fig:fit_generale_odr}.
+I modelli lineari si prestano particolarmente bene a questo tipo di approccio
+poiché il coefficiente angolare di \bestfit\ costituisce direttamente
+una stima della derivata necessaria per combinare gli errori sulla $x$ e sulla
+$y$. Nel caso specifico il nostro fit dei minimi quadrati modificato converge
+in tre o quattro passi ad una soluzione relativamente vicina a quella fornita
+dal pacchetto \scipymodule{odr}---sia in termini di valori dei parametri,
+che in termini di incertezze sui parametri stessi e valori del $\chisq$. Un
+confronto completo è riportato in tabella~\ref{tab:confronto_fit_generale}.
+
+\begin{table}[htbp]
+  \tablehstack{
+    \begin{tabular}{llll}
+      \hline
+      Parametro & MQ & ODR & MQ modificati \\
+      \hline
+      \hline
+      $m$ & $-0.845 \pm 0.030$ & $-0.978 \pm 0.051$ & $-0.971 \pm 0.045$ \\
+      $q$ & $9.27 \pm 0.22$ & $9.89 \pm 0.23$ & $9.85 \pm 0.20$ \\
+      $\chisq$ & $26.5$ & $6.51$ & $6.54$ \\
+      \hline
+  \end{tabular}}{
+    \caption{Confronto tra i valori di \bestfit\ restituiti dai tre
+      diversi algoritmi nel caso di un fit lineare ai dati mostrati
+      nelle figure~\ref{fig:fit_generale_ls} e~\ref{fig:fit_generale_odr}.}
+    \label{tab:confronto_fit_generale}
+  }
+\end{table}
+
+
+\section{Fit in presenza di errori sistematici}
+
+C'è una cosa che non abbiamo ancora discusso, e che pure si presenta di frequente
+in laboratorio: il caso in cui le incertezze sulle nostre misure non abbiano
+natura puramente statistica.
+
+I dati mostrati in figura~\ref{fig:fit_catenaria} rappresentano il profilo di una
+corda vincolata ai due estremi sotto l'azione della forza di gravità, e sono
+stati estratti manualmente da una fotografia digitale scattata con uno
+\foreign{smartphone}. (Le coordinate lungo i due assi ortogonali sono espresse
+in termini di \foreign{pixel}, in un sistema di coordinate che ha origine nell'angolo
+in basso a sinistra dell'immagine.) La linea continua nel pannello superiore
+rappresenta la catenaria di \bestfit
+\begin{align*}
+  y(x; c, x_0, a) = c \cosh\left( \frac{x - x_0}{a} \right).
+\end{align*}
+Per completezza, si è considerata un'incertezza di misura sul singolo punto di
+$1$~\foreign{pixel} sia sulla $x$ che sulla $y$ e, siccome le incertezze sulla
+variabile indipendente non sono trascurabili, si è utilizzato l'approccio degli
+errori efficaci descritto nella sezione~\ref{sec:fit_errori_efficaci}.
+
+\pgffigone{fit_catenaria}{%
+  Esempio di \fit\ con una catenaria del profilo di una corda vincolata ai
+  due estremi sotto l'azione della forza di gravità. I punti sono stati
+  estratti manualmente a partire da una foto e le coordinate sono espresse in
+  pixel. Nonostante, almeno qualitativamente, il \fit\ non sia irragionevole,
+  il valore del $\chi^2$ ed il grafico dei residui mostrano chiaramente come
+  l'incertezza statistica sulla misura delle due coordinate, dovuta alla
+  risoluzione finita dell'immagine ed al procedimento manuale di estrazione dei
+  valori, sia largamente sottodominante. L'andamento oscillatorio dei residui, in
+  questo caso, è dovuto al fatto che probabilmente la fotocamera utilizzata non
+  era perfettamente parallela al piano della corda, con una conseguente
+  distorsione dell'immagine.
+}
+
+Il $\chisq$ restituto dal \fit\ è di $783.1$ su $54$ gradi di libertà
+($57$ punti e $3$ parametri)---non occorre controllare le tavole per concludere
+che è troppo grande. Sulla base di quello che abbiamo detto fino a questo momento
+saremmo tentati di concludere che;
+\begin{enumerate}
+  \item abbiamo sottostimato le incertezze di misura; oppure
+  \item il modello non descrive adeguatamente il nostro sistema.
+\end{enumerate}
+
+Il primo scenario è altamente improbabile: il $\chisq$ ridotto è $\sim 14$,
+e dovremmo aumentare gli errori quasi di un fattore $4$ ($\sqrt{14}$, per la
+precisione) per avere un buon \fit\ nel senso del test del $\chisq$.
+Se potessimo considerare la misura come puramente digitale, i.e., se fossimo
+sicuri di poter lavorare al limite della risoluzione della fotografia, l'incertezza
+di misura sarebbe addirittura più piccola ($1/\sqrt{12}$~\foreign{pixel}); ora,
+siccome la larghezza della corda non è infinitamente piccola, la questione non
+è banale, ma non vi è dubbio che $4$~\foreign{pixel} sono troppi e che
+l'origine del problema è da ricercare da un'altra parte.
+
+La risposta è contenuta nel grafico dei residui, che è lontano dall'andamento
+atteso in cui i punti dovrebbero oscillare in modo più o meno casuale attorno
+allo zero con deviazioni tipiche di una barra d'errore. Qui, invece, le differenze
+tipiche tra punti successivi sono molto più piccole dell'escursione totale dei
+residui, il che è una chiara indicazione che le misure non sono indipendenti tra
+di loro---al contrario: i residui sono altamente correlati punto a punto.
+
+La chiara asimmetria destra-sinistra, inoltre, suggerisce che il problema sia
+dovuto al fatto che probabilmente, al momento della foto, la fotocamera non era
+perfettamente parallela al piano della corda, per cui l'immagine risultante è
+distorta. Siamo, cioè, in un caso in cui, oltre alla componente statistica,
+le misure sono affette da un'incertezza sistematica (che tra l'altro è largamente
+dominante). Nella vita reale, a questo punto, torneremmo indietro e cercheremmo
+di scattare una foto migliore (magari aiutandosi con una griglia sullo sfondo),
+oppure tenteremmo di correggere a posteriori la distorsione con un programma di
+\foreign{editing} fotografico (o, meglio ancora, entrambe le cose). Ma questo è
+argomento per un'altra storia e, stando così le cose quello che possiamo
+concludere, a livello largamente qualitativo, è:
+\begin{itemize}
+  \item a causa della non indipendenza delle misure il test del $\chisq$ non
+  si può applicare---meglio non riportare nemmeno il valore ottenuto, se non
+  a supporto del fatto che il \fit\ è dominato dagli effetti sistematici;
+  \item il fit non è necessariamente da gettare e, in particolare, i valori
+  centrali dei parametri potrebbero essere ragionevoli;
+  \item le incertezze sui parametri, assumendo che la stima della matrice di
+  covarianza sia riscalata opportunamente (i.e., usando \code{absolute_sigma = True})
+  potrebbero pure non essere irragionevoli, ma questo va giudicato caso per caso.
+\end{itemize}
+
+
+\section{Un esempio non convenzionale: fit di una circonferenza}
+
+\danger Supponiamo di avere una serie di punti (misurati) nel piano $x_i \pm \sigma_{x_i}$
+e $y_i \pm \sigma_{y_i}$ ($i = 1\ldots n$), e di voler fittare questi
+punti con una circonferenza, ovverosia trovare i valori $x_c$, $y_c$ ed $r$
+tali che la circonferenza di centro $(x_c, y_c)$ e raggio $r$ sia quella che
+meglio si adatta (in un qualche senso) ai nostri punti di partenza.
+\`E chiaro che questo problema assomiglia in qualche modo ai problemi di \fit\
+che abbiamo studiato in questo capitolo, con $x_c$, $y_c$ ed $r$ che rappresentano
+i parametri del nostro modello, ma è altresì chiaro che non è banale
+esprimerlo nella forma cui siamo familiari, per il semplice motivo che una
+circonferenza non è una funzione ad un valore. (Forse saremmo capaci di
+fittare un arco di circonferenza di ampiezza più piccola di $180^\circ$,
+ma questo è un altro discorso\ldots)
+
+Proviamo dunque a formalizzare il nostro problema in una forma semplificata---tralasciando
+per un attimo le incertezze di misura. (Questo va contro tutto ciò che ci siamo
+detti fino ad ora, ma ci torneremo tra un attimo, e l'esercizio sarà fruttuoso ugualmente.)
+Dati un insieme arbitrario di valori dei nostri parametri, la distanza dal centro
+del nostro generico punto si scrive come
+\begin{align*}
+    d_i = \sqrt{(x_i - x_c)^2 + (y_i - y_c)^2}
+\end{align*}
+Ora, la cosa più naturale da fare sarebbe scrivere la somma
+\begin{align}\label{eq:circle_fit_sum1}
+    S(x_c, y_c, r) = \sum_{i=1}^n (d_i - r)^2 =
+    \sum_{i=1}^n \left( \sqrt{(x_i - x_c)^2 + (y_i - y_c)^2} - r \right)^2
+\end{align}
+e minimizzarla rispetto ai tre parametri come se fosse una sorta di $\chi^2$.
+In fondo la~\eqref{eq:circle_fit_sum1} rappresenta la somma in quadratura degli
+scarti tra la lunghezza del raggio definito da ciascuno dei nostri punti ed
+il raggio della circonferenza che vogliamo trovare, per cui è ovvio che
+vogliamo sia la più piccola possibile. Se seguissimo questa strada
+ci accorgeremmo immediatamente che ci porterebbe ad un sistema non lineare di
+tre equazioni che non avremmo speranza di risolvere analiticamente.
+(Intendiamoci: il problema si può risolvere numericamente senza alcuna difficoltà,
+e la referenza~\cite{scipy_circular_fit} fornisce una descrizione sintetica di
+alcuni approcci possibili, ma in questo momento siamo più interessati ai
+termini generali della questione.)
+
+
+\subsection{Il metodo di K\r{a}sa}
+
+In questa sezione discutiamo con un certo livello di dettaglio un algoritmo di
+\fit\ ad una circonferenza la cui peculiarità è quella di fornire una
+ soluzione in forma chiusa~\cite{Kasa1976ACF}.
+L'idea di base è considerare la differenza tra i \emph{quadrati} del raggio
+definito da ciascun punto e quello della circonferenza cercata:
+\begin{align}\label{eq:circle_fit_sum2}
+    S(x_c, y_c, r) = \sum_{i=1}^n (d_i^2 - r^2)^2 =
+    \sum_{i=1}^n \left( (x_i - x_c)^2 + (y_i - y_c)^2 - r^2 \right)^2 =
+    \sum_{i=1}^n \zeta^2(x_i, y_i; x_c, y_c, r)
+\end{align}
+Può non sembrare, ma abbiamo fatto un enorme passo in avanti: ci siamo liberati
+della radice quadrata! (Notate che abbiamo definito implicitamente la variabile
+$\zeta(x_i, y_i; x_c, y_c, r) = (x_i - x_c)^2 + (y_i - y_c)^2 - r^2$.)
+Non ci rimane altro, dunque, che risolvere il sistema
+\begin{align*}
+  \begin{cases}
+    \displaystyle \pd{S}{x_c}{\hat{x_c}, \hat{y_c}, \hat{r}} = 0\\
+    \displaystyle \pd{S}{y_c}{\hat{x_c}, \hat{y_c}, \hat{r}} = 0\\
+    \displaystyle \pd{S}{r}{\hat{x_c}, \hat{y_c}, \hat{r}} = 0\\
+  \end{cases}
+\end{align*}
+
+Partiamo dalla terza equazione
+\begin{align*}
+  \pd{S}{r}{x_c, y_c, r} &= \pd{\sum_{i=1}^n \zeta^2(x_i, y_i; x_c, y_c, r)}{r}{} =
+  2 \sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r) \pd{\zeta(x_i, y_i; x_c, y_c, r)}{r}{} =\\
+  & = -4r \sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r),
+\end{align*}
+da cui ricaviamo banalmente la condizione
+\begin{align}\label{eq:circle_fit_cond3}
+  \sum_{i=1}^n \zeta(x_i, y_i; \hat{x_c}, \hat{y_c}, \hat{r}) = 0.
+\end{align}
+
+Questa ci serve per semplificare il calcolo delle prime due equazioni del sistema,
+che si possono riscrivere come
+\begin{align*}
+  \pd{S}{x_c}{x_c, y_c, r} &= \pd{\sum_{i=1}^n \zeta^2(x_i, y_i; x_c, y_c, r)}{x_c}{} =
+  2 \sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r) \pd{\zeta(x_i, y_i; x_c, y_c, r)}{x_c}{} =\\
+  & = -4 \sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r) (x_i - x_c) =
+  4x_c \underbrace{\sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r)}_{
+    \text{si annulla in virtù della~\eqref{eq:circle_fit_cond3}}
+    } - 4\sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r)x_i =\\
+  &= - 4\sum_{i=1}^n \zeta(x_i, y_i; x_c, y_c, r)x_i,
+\end{align*}
+e, analogamente
+\begin{align*}
+  \pd{S}{y_c}{x_c, y_c, r} = - 4\sum_{i=1}^N \zeta(x_i, y_i; x_c, y_c, r)y_i
+\end{align*}
+
+Siamo riusciti a formulare il nostro problema (non standard) di \bestfit\
+nella forma del sistema di tre equazioni (lineare nelle tre incognite
+$x_c$, $y_c$ and $r^2$):
+\begin{align*}
+  \begin{cases}
+    \displaystyle \sum_{i=1}^n \zeta(x_i, y_i; \hat{x_c}, \hat{y_c}, \hat{r}) =
+      \sum_{i=1}^n \left[ (x_i - x_c)^2 + (y_i - y_c)^2 - r^2 \right] = 0\\
+    \displaystyle \sum_{i=1}^n \zeta(x_i, y_i; \hat{x_c}, \hat{y_c}, \hat{r})x_i =
+     \sum_{i=1}^n \left[ (x_i - x_c)^2 + (y_i - y_c)^2 - r^2 \right] x_i = 0\\
+    \displaystyle \sum_{i=1}^n \zeta(x_i, y_i; \hat{x_c}, \hat{y_c}, \hat{r})y_i =
+     \sum_{i=1}^n \left[ (x_i - x_c)^2 + (y_i - y_c)^2 - r^2 \right] y_i = 0.
+  \end{cases}
+\end{align*}
+
+A questo punto il modo standard di risolvere il sistema, è quello di passare ad
+una sorta di variabili ridotte, sottraendo alle nostre misure i rispettivi valori medi
+\begin{align*}
+  u_i = x_i - \frac{1}{n} \sum_{i=1}^n x_i
+  \quad \text{e} \quad
+  v_i = y_i - \frac{1}{n} \sum_{i=1}^n y_i,
+\end{align*}
+e, una volta definite le variabili ausiliarie
+\begin{align*}
+  s_u &= \sum_{i=1}^n u_i \quad s_{uu} = \sum_{i=1}^n u_i^2 \quad s_{uuu} = \sum_{i=1}^n u_i^3\quad
+  s_v = \sum_{i=1}^n v_i \quad s_{vv} = \sum_{i=1}^n v_i^2 \quad s_{vvv} = \sum_{i=1}^n v_i^3\\
+  s_{uv} &= \sum_{i=1}^n u_i v_i \quad s_{uuv} = \sum_{i=1}^n u_i^2 v_i \quad
+  s_{uvv} = \sum_{i=1}^n u_i v_i^2 \quad D = 2 (s_{uu} s_{vv} - s_{uv}^2)
+\end{align*}
+la soluzione in forma chiusa, come mostrato in dettaglio in~\cite{kasawriteup},
+di può scrivere come
+\begin{align}\label{eq:circle_fit_params}
+  \begin{cases}
+    \hat{u_c} &= \displaystyle\frac{s_{vv} (s_{uuu} + s_{uvv}) - s_{uv} (s_{vvv} + s_{uuv})}{D}
+    \quad \text{e} \quad \hat{x_c} = \hat{u_c} + \frac{1}{N} \sum_{i=1}^n x_i\\
+    \hat{v_c} &= \displaystyle\frac{s_{uu} (s_{vvv} + s_{uuv}) - s_{uv} (s_{uuu} + s_{uvv})}{D}
+    \quad \text{e} \quad \hat{y_c} = \hat{v_c} + \frac{1}{N} \sum_{i=1}^n y_i\\
+    \hat{r} &= \displaystyle \sqrt{\hat{u_c^2} + \hat{v_c^2} + \frac{(s_{uu} + s_{vv})}{N}}
+  \end{cases}
+\end{align}
+
+\snip[0.68]{fit_circle}{%
+  Frammento di codice per il fit di una serie di punti nel piano con una
+  circonferenza utilizzando il metodo di K\r{a}sa. Il programma contiene due
+  funzioni: la prima per generare i punti con il metodo Monte Carlo sulla circonferenza
+  di raggio unitario, e la seconda per fittare i punti appena generati.
+  I valori di \bestfit\ dei parametri restituiti si possono confrontare
+  con i valori di \foreign{input} $x_c=0$, $y_c=0$, $r=1$.
+}
+
+La figura~\ref{fig:fit_circonferenza} illustra in pratica quanto abbiamo detto
+fino a questo momento---si tratta di una serie di punti generati casualmente sulla
+circonferenza di raggio unitario e del \fit\ corrispondente secondo
+la~\ref{eq:circle_fit_params}.
+
+\pgffigone{fit_circonferenza}{
+  Esempio di fit di una serie di punti nel piano con una circonferenza
+  utilizzando il metodo di K\r{a}sa. I punti sono stati generati casualmente
+  con un programma simile al frammento~\ref{snip:fit_circle} e il contro ed
+  il raggio della circonferenza di \bestfit\ sono stati calcolati
+  utilizzando la~~\ref{eq:circle_fit_params}.
+}
+
+Come detto all'inizio, in tutto questo abbiamo trascurato esplicitamente le
+incertezze di misura. Ora, è naturale aspettarsi che se gli errori di misura
+sono tutti uguali
+\begin{align*}
+  \sigma_{x_i} = \sigma_{y_i} = \sigma \quad i = 1\ldots n
+\end{align*}
+il valore centrale che abbiamo ottenuto rimanga valido: stiamo sostanzialmente
+facendo un fit dei minimi quadrati non pesato e le incertezze di misura si elidono
+nelle condizioni di minimizzazione. (Notiamo che non si tratta di un caso puramente
+accademico, perché è la situazione tipica, e.g, quando fittiamo punti estratti
+\emph{a mano} da un'immagine.) Eppure, anche in questo semplice caso,
+il calcolo delle incertezze sui valori di \bestfit\ dei parametri, che
+procederebbe al solito con la stima della varianza delle espressioni appena
+ottenuta, è in generale troppo complicato per poter essere scritto in forma
+compatta. \`E interessante notare che se i punti misurati sono rigorosamente
+equispaziati sull'intera circonferenza, le incertezze sui parametri
+si possono scrivere in forma chiusa~\cite{Kasa1976ACF} come:
+\begin{align}\label{eq:circle_fit_errors}
+  \sigma_{x_c} = \sigma_{y_c} = \sigma \sqrt{\frac{2}{n}}
+  \quad \text{e} \quad
+  \sigma_r = \sigma \sqrt{\frac{1}{n}}.
+\end{align}
+Le~\eqref{eq:circle_fit_errors} hanno la dipendenza corretta ($\propto 1/\sqrt{n}$) dal
+numero $n$ di punti e possono essere utilizzate in pratica nei casi in cui
+la circonferenza è campionata in modo ragionevolmente uniforme.
+
+
+\summary
+
+\begin{itemize}
+  \item Il metodo dei minimi quadrati costituisce un ambiente semplice e naturale
+  in cui discutere le proprietà generali dei problemi di \fitting.
+  \item Nei casi più semplici la soluzione si può scrivere analiticamente in
+  forma chiusa, ma più spesso è necessario ricorrere a metodi numerici
+  (e.g., le funzioni offerte dal modulo \scipymodule{optimize}).
+  \item Quando si esegue un \fit\ di tipo numerico, e specialmente con modelli
+  complessi, il problema della stima iniziale dei parametri è di
+  fondamentale importanza.
+  \item Prima di eseguire un \fit\ ad una serie di dati è necessario
+  sincerarsi che le incertezze sulla variabile indipendente siano trascurabili
+  nel senso della~\eqref{eq:condizione_dxdy}, oppure si deve utilizzare un
+  metodo che permetta di incorporarli nel calcolo, e.g., quello degli errori
+  efficaci oppure l'algoritmo ODR. (Non si tratta di una questione puramente
+  accademica: nella maggior parte dei \fit\ che vi troverete ad eseguire
+  nella vita reale le incertezze sulla $x$ non saranno trascurabili!)
+  \item Il test del $\chi^2$ costituisce un metodo semplice e generalmente
+  applicabile per valutare la bontà di un fit.
+  \item Il grafico dei residui è uno strumento fondamentale, a corredo del
+  test del $\chi^2$, per verificare la correttezza di un \fit.
+\end{itemize}

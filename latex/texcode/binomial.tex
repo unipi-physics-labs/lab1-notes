@@ -1,0 +1,16 @@
+\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/binomial.py}{https://bitbucket.org/.../binomial.py}},commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{math} \PY{k+kn}{import} \PY{n}{factorial}
+
+\PY{k}{def} \PY{n+nf}{binomial}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{p}{:}
+    \PY{n}{binom} \PY{o}{=} \PY{n}{factorial}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{n}{factorial}\PY{p}{(}\PY{n}{k}\PY{p}{)} \PY{o}{*} \PY{n}{factorial}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{k}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{binom} \PY{o}{*} \PY{p}{(}\PY{n}{p}\PY{o}{*}\PY{o}{*}\PY{n}{k}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{p}{(}\PY{l+m+mf}{1.0} \PY{o}{\PYZhy{}} \PY{n}{p}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{n}{k}\PY{p}{)}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{binomial}\PY{p}{(}\PY{n}{k}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mf}{1.0} \PY{o}{/} \PY{l+m+mf}{6.0}\PY{p}{)}\PY{p}{)}
+
+[Output]
+0.4822530864197532
+0.3858024691358025
+0.11574074074074076
+0.015432098765432096
+\end{Verbatim}
