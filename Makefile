@@ -8,8 +8,11 @@ pdf:
 	pdflatex statnotes
 
 
-htmldocs:
+docshtml:
 	cd docs; make html; cd -
+
+docsclean:
+	cd docs; make clean; cd -
 
 clean:
 	rm -f *.aux *.log *~ *.mtc* *.idx *.out *.toc *.maf *.fls *.fdb_latexmk *.ilg *.ind *.synctex*
