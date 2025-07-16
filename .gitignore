@@ -12,7 +12,8 @@ statnotes.pdf
 *.maf
 *.out
 
-# pdf
+# compiled docs
+docs/_build
 
 # emacs temporary files
 macro/*.pyc

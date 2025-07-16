@@ -7,6 +7,10 @@ all:
 pdf:
 	pdflatex statnotes
 
+
+htmldocs:
+	cd docs; make html; cd -
+
 clean:
 	rm -f *.aux *.log *~ *.mtc* *.idx *.out *.toc *.maf *.fls *.fdb_latexmk *.ilg *.ind *.synctex*
 	cd chapters; rm -f *~ *.aux *.log *.bbl *.blg; cd -
