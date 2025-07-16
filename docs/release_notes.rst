@@ -1,3 +1,7 @@
+.. _relrelease_notes:
+
+Release notes
+=============
 
 
 statnotes 5.2.0
