@@ -10,6 +10,7 @@ project = 'statnotes'
 copyright = '2025, Luca Baldini'
 author = 'Luca Baldini'
 release = '5.2.0'
+language = 'it'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
