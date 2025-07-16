@@ -1,0 +1,5 @@
+.. _compile:
+
+Compilation
+===========
+
