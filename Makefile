@@ -14,6 +14,15 @@ docshtml:
 docsclean:
 	cd docs; make clean; cd -
 
+flake:
+	flake8 tools --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+
+ruff:
+	ruff check tools
+
+lint:
+	pylint tools
+
 clean:
 	rm -f *.aux *.log *~ *.mtc* *.idx *.out *.toc *.maf *.fls *.fdb_latexmk *.ilg *.ind *.synctex*
 	cd chapters; rm -f *~ *.aux *.log *.bbl *.blg; cd -
