@@ -16,6 +16,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+"""Small script to pygmentize Python scripts and generate the corresponding
+LaTeX output.
+"""
 
 import argparse
 import pathlib
@@ -30,13 +33,14 @@ STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
 STATNOTES_TEXCODE = STATNOTES_ROOT / 'texcode'
 STATNOTES_SNIPPETS = STATNOTES_ROOT / 'snippets'
 
-
+_ENCODING = 'utf-8'
 NO_OUTPUT_SCRIPTS = []
 
 
-def pygmentize(snippet_path: str = STATNOTES_SNIPPETS, label: bool = True):
+def pygmentize(snippet_path: str = STATNOTES_SNIPPETS):
     """Run pygments on a python script and generate the corresponding LaTeX output.
     """
+    # pylint: disable=use-dict-literal
     # First thing first, if the path to the snippet(s) is not a pathlib.Path
     # instance, we turn it into one.
     if not isinstance(snippet_path, pathlib.Path):
@@ -52,7 +56,7 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS, label: bool = True):
             if _path.is_file() and _path.suffix == '.py':
                 pygmentize(_path)
         return
-    elif snippet_path.is_file() and snippet_path.suffix != '.py':
+    if snippet_path.is_file() and snippet_path.suffix != '.py':
         raise RuntimeError(f'{snippet_path} is not a python file')
 
     # Now we are good to go with a single, good Python file!
@@ -61,7 +65,8 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS, label: bool = True):
     # Pygmentize the script.
     cmd = f'pygmentize -f latex -O full -l python {file_path}'
     kwargs = dict(stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    snippet_tex = subprocess.Popen(cmd, **kwargs).stdout.read().decode()
+    with subprocess.Popen(cmd, **kwargs) as process:
+        snippet_tex = process.stdout.read().decode()
     # Note at this point the LaTeX source is complete document with a long preamble,
     # and all we really care is whatever lies in the Verbatim block.
     snippet_tex = snippet_tex.split(r'\begin{Verbatim}[commandchars=\\\{\}]')[1]
@@ -72,11 +77,11 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS, label: bool = True):
         cmd = f'python {file_path}'
         # Note in this case we run the process in the parent folder of the target
         # script, in case the latter has relative paths to data files.
-        process = subprocess.Popen(cmd, cwd=file_path.parent, **kwargs)
-        errors = process.stderr.read().decode()
-        if errors:
-            logger.error(errors)
-        snippet_output = process.stdout.read().decode()
+        with subprocess.Popen(cmd, cwd=file_path.parent, **kwargs) as process:
+            errors = process.stderr.read().decode()
+            if errors:
+                logger.error(errors)
+            snippet_output = process.stdout.read().decode()
         if len(snippet_output):
             logger.debug(f'Command output:\n{snippet_output}')
             snippet_tex = f'{snippet_tex}\n[Output]\n{snippet_output}'
@@ -89,9 +94,9 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS, label: bool = True):
     # We are ready to write the output file.
     full_text = r'\begin{Verbatim}[label=%s,commandchars=\\\{\}]' % label
     full_text = f'{full_text}{snippet_tex}'
-    full_text = '%s\end{Verbatim}\n' % full_text
+    full_text = '%s\\end{Verbatim}\n' % full_text
     output_file_path = STATNOTES_TEXCODE / f'{file_path.stem}.tex'
-    with open(output_file_path, 'w') as output_file:
+    with open(output_file_path, 'w', encoding=_ENCODING) as output_file:
         output_file.write(full_text)
     logger.info('Done!')
 

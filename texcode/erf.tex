@@ -1,13 +1,13 @@
-\begin{Verbatim}[label=\makebox{\href{https://bitbucket.org/lbaldini/statnotes/src/master/snippets/erf.py}{https://bitbucket.org/.../erf.py}},commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippets/erf.py}{https://github.com/.../erf.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
 
-\PY{k}{def} \PY{n+nf}{Phi}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{:}
-    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Gaussian cumulative function.}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{Phi}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Gaussian cumulative function.}
 \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
     \PY{k}{return} \PY{l+m+mf}{0.5} \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{math}\PY{o}{.}\PY{n}{erf}\PY{p}{(}\PY{n}{z} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}
 
-\PY{k}{def} \PY{n+nf}{integrate\PYZus{}gauss}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{:}
-    \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Integrate a generic gaussian between x1 and x2.}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{integrate\PYZus{}gauss}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Integrate a generic gaussian between x1 and x2.}
 \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
     \PY{n}{z1} \PY{o}{=} \PY{p}{(}\PY{n}{x1} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)} \PY{o}{/} \PY{n}{sigma}
     \PY{n}{z2} \PY{o}{=} \PY{p}{(}\PY{n}{x2} \PY{o}{\PYZhy{}} \PY{n}{mu}\PY{p}{)} \PY{o}{/} \PY{n}{sigma}
