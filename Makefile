@@ -1,10 +1,14 @@
-all:
+all: pdf
+
+armageddon: snippets pdf
+
+pdf:
 	pdflatex statnotes
 	bibtex statnotes
 	pdflatex statnotes
 	pdflatex statnotes
 
-pdf:
+fast:
 	pdflatex statnotes
 
 snippets:
