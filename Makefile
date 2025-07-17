@@ -14,6 +14,9 @@ fast:
 snippets:
 	python tools/py2tex.py snippy
 
+figures:
+	python macros/plot_all.py
+
 sanitize:
 	python tools/sanitize.py chapters
 	python tools/sanitize.py misc/colophon.tex
