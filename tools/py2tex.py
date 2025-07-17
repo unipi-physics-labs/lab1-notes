@@ -17,8 +17,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-import glob
-import os
+import argparse
 import pathlib
 import subprocess
 
@@ -98,11 +97,7 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS, label: bool = True):
 
 
 if __name__ == '__main__':
-    from optparse import OptionParser
-    parser = OptionParser(usage = 'usage: %prog files')
-    (opts, args) = parser.parse_args()
-    if len(args) == 0:
-        import glob
-        args = glob.glob(os.path.join(STATNOTES_SNIPPETS, '*.py'))
-    for file_path in args:
-        pygmentize(file_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('target')
+    args = parser.parse_args()
+    pygmentize(args.target)
