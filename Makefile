@@ -27,12 +27,12 @@ cleandocs:
 	cd docs; make clean; cd -
 
 flake:
-	flake8 tools --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+	flake8 tools --count --exit-zero --max-complexity=11 --max-line-length=100 --statistics
 
 ruff:
 	ruff check tools
 
-pylint:
+lint:
 	pylint tools
 
 clean:

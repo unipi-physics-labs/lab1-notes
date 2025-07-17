@@ -45,7 +45,7 @@ _FMT_SWAP_DICT = {
 _ENCODING = 'utf-8'
 
 
-def sanitize(file_path : str):
+def sanitize(file_path: str):
     """Format a single LaTeX file.
 
     This is a basic preprocessing of the LaTeX source file intended to ensure

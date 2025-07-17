@@ -47,11 +47,13 @@ def execute_shell_command(arguments):
     logger.info(f'About to execute "{" ".join(arguments)}"...')
     return subprocess.run(arguments, check=True)
 
+
 def copy_file(src, dest):
     """ Copy a file in another location.
     """
     logger.info('Copying {src} to {dest}...')
     shutil.copy(src, dest)
+
 
 def _read_version():
     """ Read the version straight from the appropriate file.
@@ -62,12 +64,14 @@ def _read_version():
     logger.debug(f'Current version is {version}')
     return version
 
+
 def _write_version(version: str):
     """ Write the version to the appropriate file.
     """
     logger.info(f'Writing version {version} to {VERSION_FILE_PATH}...')
     with open(VERSION_FILE_PATH, 'w', encoding=_ENCODING) as version_file:
         version_file.write(f'{version}\n')
+
 
 def increment_version_file(mode: str) -> str:
     """Update the version.tex file.
@@ -91,10 +95,12 @@ def increment_version_file(mode: str) -> str:
     _write_version(new_version)
     return new_version
 
+
 def compile_latex():
     """ Recompile the damned thing.
     """
     execute_shell_command(['make'])
+
 
 def release(mode: str):
     """ Tag the package and create a release.
