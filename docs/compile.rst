@@ -43,6 +43,13 @@ il contenuto dei file Python nella cartella ``snippy``. La traduzione è fatta c
 lo script :file:`tools/py2tex.py`, che utilizza il pacchetto Pygments per generare
 il codice LaTeX da includere nel documento.
 
+.. code-block:: shell
+
+    $ ./tools/py2tex.py ./snippy # Generate all snippets
+    $ ./tools/py2tex.py ./snippy/erf.py # Process a single file
+
+
+
 
 Makefile
 --------
