@@ -7,6 +7,8 @@ all:
 pdf:
 	pdflatex statnotes
 
+snip:
+	python tools/py2tex.py snippets
 
 docshtml:
 	cd docs; make html; cd -
