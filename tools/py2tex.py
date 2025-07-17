@@ -88,7 +88,8 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS):
 
     # Complete the information with the url to the snippet on github.
     url = f'{STATNOTES_GITHUB_URL}{str(file_path).replace(str(STATNOTES_ROOT), "")}'
-    title = f'https://github.com/.../{file_path.name}'
+    file_name = file_path.name.replace('_', r'\_')
+    title = f'https://github.com/.../{file_name}'
     label = r'\makebox{\href{%s}{%s}}' % (url, title)
 
     # We are ready to write the output file.
