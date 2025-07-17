@@ -23,11 +23,11 @@ una serie di sottocartelle:
 * ``macro``: contiene tutte le macro in Python per generare le figure;
 * ``misc``: misto di file LaTeX con tutti i comandi e gli ambienti utilizzati nell
   documento;
-* ``snippets``: contiene tutti i frammenti di codice in Python usati a scopo illistrativo
+* ``snippy``: contiene tutti i frammenti di codice in Python usati a scopo illistrativo
   nel documento;
-* ``tables``: contiene (alcune del)le tabelle in formato .tex;
-* ``texcode``: contiene tutti i frammenti di codice tradotti da Python in LaTeX
+* ``sniptex``: contiene tutti i frammenti di codice tradotti da Python in LaTeX
   per essere inclusi nel documento;
+* ``tables``: contiene (alcune del)le tabelle in formato .tex;
 * ``tools``: collezione di script in Python per il mantenimento del repositorio.
 
 

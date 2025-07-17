@@ -34,7 +34,7 @@
 \newcommand{\freebsd}{FreeBSD}
 \newcommand{\unix}{UNIX}
 
-\newcommand{\texcode}[1]{\medskip\input{texcode/#1}}
+\newcommand{\sniptex}[1]{\medskip\input{sniptex/#1}}
 \newcommand{\texdata}[1]{\medskip\input{texdata/#1}}
 
 \newcommand{\emacs}{emacs}
@@ -45,7 +45,7 @@
 \newcommand{\snip}[3][0.62]{%
   \begin{snippet}[htb!]
     \bigskip
-    \hstack[#1]{\input{texcode/#2}}{
+    \hstack[#1]{\input{sniptex/#2}}{
       \caption{#3}
       \label{snip:#2}
     }
@@ -58,7 +58,7 @@
   \npfunc{#2}: #3
   \end{minipage}\hfill%
   \begin{minipage}[t][][b]{\cw\textwidth}
-  \input{texcode/np.#2.tex}
+  \input{sniptex/np.#2.tex}
   \end{minipage}\\[8pt]
 }
 
@@ -68,6 +68,6 @@
   \scipyfunc{#2}: #3
   \end{minipage}\hfill%
   \begin{minipage}[t][][b]{\cw\textwidth}
-  \input{texcode/scipy.#2.tex}
+  \input{sniptex/scipy.#2.tex}
   \end{minipage}\\[8pt]
 }

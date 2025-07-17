@@ -1,0 +1,14 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/scipy.stats.chi2.py}{https://github.com/.../scipy.stats.chi2.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}
+
+\PY{n}{dof} \PY{o}{=} \PY{l+m+mi}{12}
+\PY{n}{value} \PY{o}{=} \PY{l+m+mf}{5.0}
+\PY{n}{chi2} \PY{o}{=} \PY{n}{scipy}\PY{o}{.}\PY{n}{stats}\PY{o}{.}\PY{n}{chi2}\PY{p}{(}\PY{n}{dof}\PY{p}{)}
+\PY{n}{p\PYZus{}value} \PY{o}{=} \PY{n}{chi2}\PY{o}{.}\PY{n}{cdf}\PY{p}{(}\PY{n}{value}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p\PYZus{}value}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{chi2}\PY{o}{.}\PY{n}{ppf}\PY{p}{(}\PY{n}{p\PYZus{}value}\PY{p}{)}\PY{p}{)}
+
+[Output]
+0.04202103819530614
+5.0
+\end{Verbatim}

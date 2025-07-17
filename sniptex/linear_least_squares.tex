@@ -1,0 +1,28 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/linear_least_squares.py}{https://github.com/.../linear\_least\_squares.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{lls}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma\PYZus{}y}\PY{p}{)}\PY{p}{:}
+    \PY{n}{w} \PY{o}{=} \PY{l+m+mf}{1.0} \PY{o}{/} \PY{n}{sigma\PYZus{}y}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}
+    \PY{n}{Sx0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{w}\PY{p}{)}
+    \PY{n}{Sx1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{w} \PY{o}{*} \PY{n}{x}\PY{p}{)}
+    \PY{n}{Sx2} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{w} \PY{o}{*} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}\PY{p}{)}
+    \PY{n}{Sxy0} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{w} \PY{o}{*} \PY{n}{y}\PY{p}{)}
+    \PY{n}{Sxy1} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{w} \PY{o}{*} \PY{n}{x} \PY{o}{*} \PY{n}{y}\PY{p}{)}
+    \PY{n}{D} \PY{o}{=} \PY{n}{Sx0} \PY{o}{*} \PY{n}{Sx2} \PY{o}{\PYZhy{}} \PY{n}{Sx1}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}
+    \PY{n}{q\PYZus{}hat} \PY{o}{=} \PY{p}{(}\PY{n}{Sxy0} \PY{o}{*} \PY{n}{Sx2} \PY{o}{\PYZhy{}} \PY{n}{Sxy1} \PY{o}{*} \PY{n}{Sx1}\PY{p}{)} \PY{o}{/} \PY{n}{D}
+    \PY{n}{sigma\PYZus{}q} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{Sx2} \PY{o}{/} \PY{n}{D}\PY{p}{)}
+    \PY{n}{m\PYZus{}hat} \PY{o}{=} \PY{p}{(}\PY{n}{Sxy1} \PY{o}{*} \PY{n}{Sx0} \PY{o}{\PYZhy{}} \PY{n}{Sxy0} \PY{o}{*} \PY{n}{Sx1}\PY{p}{)} \PY{o}{/} \PY{n}{D}
+    \PY{n}{sigma\PYZus{}m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{Sx0} \PY{o}{/} \PY{n}{D}\PY{p}{)}
+    \PY{k}{return} \PY{n}{q\PYZus{}hat}\PY{p}{,} \PY{n}{sigma\PYZus{}q}\PY{p}{,} \PY{n}{m\PYZus{}hat}\PY{p}{,} \PY{n}{sigma\PYZus{}m}
+
+\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{4.0}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{]}\PY{p}{)}
+\PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{10.42}\PY{p}{,} \PY{l+m+mf}{10.96}\PY{p}{,} \PY{l+m+mf}{14.50}\PY{p}{,} \PY{l+m+mf}{16.58}\PY{p}{,} \PY{l+m+mf}{19.41}\PY{p}{]}\PY{p}{)}
+\PY{n}{sigma\PYZus{}y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{full}\PY{p}{(}\PY{n}{y}\PY{o}{.}\PY{n}{shape}\PY{p}{,} \PY{l+m+mf}{0.50}\PY{p}{)}
+\PY{n}{q\PYZus{}hat}\PY{p}{,} \PY{n}{sigma\PYZus{}q}\PY{p}{,} \PY{n}{m\PYZus{}hat}\PY{p}{,} \PY{n}{sigma\PYZus{}m} \PY{o}{=} \PY{n}{lls}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma\PYZus{}y}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{q = }\PY{l+s+si}{\PYZob{}}\PY{n}{q\PYZus{}hat}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}q}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{m = }\PY{l+s+si}{\PYZob{}}\PY{n}{m\PYZus{}hat}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}m}\PY{l+s+si}{:}\PY{l+s+s1}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+[Output]
+q = 7.29 +/- 0.52
+m = 2.36 +/- 0.16
+\end{Verbatim}

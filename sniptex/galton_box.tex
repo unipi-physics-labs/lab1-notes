@@ -1,0 +1,22 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/galton_box.py}{https://github.com/.../galton\_box.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{random}
+\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Setup the simulation.}
+\PY{n}{pos} \PY{o}{=} \PY{l+m+mf}{0.0}
+\PY{n}{step} \PY{o}{=} \PY{l+m+mf}{1.0}
+\PY{n}{path} \PY{o}{=} \PY{p}{[}\PY{n}{pos}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} Loop through the Galton box.}
+\PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+    \PY{n}{r} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{)}
+    \PY{k}{if} \PY{n}{r} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{l+m+mf}{0.5}\PY{p}{:}
+        \PY{n}{pos} \PY{o}{=} \PY{n}{pos} \PY{o}{\PYZhy{}} \PY{n}{step}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n}{pos} \PY{o}{=} \PY{n}{pos} \PY{o}{+} \PY{n}{step}
+    \PY{n}{path}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pos}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Print the actual path.}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{path}\PY{p}{)}
+
+[Output]
+[0.0, -1.0, 0.0, 1.0, 0.0, -1.0, -2.0, -1.0, 0.0, -1.0, -2.0]
+\end{Verbatim}

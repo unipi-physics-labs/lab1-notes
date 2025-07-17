@@ -31,7 +31,7 @@ STATNOTES_LATEX = os.path.join(STATNOTES_ROOT, 'latex')
 STATNOTES_LATEX_MISC = os.path.join(STATNOTES_LATEX, 'misc')
 STATNOTES_LATEX_CHAPTERS = os.path.join(STATNOTES_LATEX, 'chapters')
 STATNOTES_MACRO = os.path.join(STATNOTES_ROOT, 'macro')
-STATNOTES_SNIPPETS = os.path.join(STATNOTES_ROOT, 'snippets')
+STATNOTES_SNIPPETS = os.path.join(STATNOTES_ROOT, 'snippy')
 STATNOTES_SPELLING = os.path.join(STATNOTES_ROOT, 'spelling')
 
 

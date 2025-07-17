@@ -25,19 +25,20 @@ import pathlib
 import subprocess
 
 from loguru import logger
+import numpy as np
 
 
 STATNOTES_GITHUB_URL = 'https://github.com/unipi-physics-labs/statnotes/tree/main'
 
 STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
-STATNOTES_TEXCODE = STATNOTES_ROOT / 'texcode'
-STATNOTES_SNIPPETS = STATNOTES_ROOT / 'snippets'
+STATNOTES_PY = STATNOTES_ROOT / 'snippy'
+STATNOTES_TEX = STATNOTES_ROOT / 'sniptex'
 
 _ENCODING = 'utf-8'
 NO_OUTPUT_SCRIPTS = []
 
 
-def pygmentize(snippet_path: str = STATNOTES_SNIPPETS):
+def pygmentize(snippet_path: str = STATNOTES_PY):
     """Run pygments on a python script and generate the corresponding LaTeX output.
     """
     # pylint: disable=use-dict-literal
@@ -96,7 +97,7 @@ def pygmentize(snippet_path: str = STATNOTES_SNIPPETS):
     full_text = r'\begin{Verbatim}[label=%s,commandchars=\\\{\}]' % label
     full_text = f'{full_text}{snippet_tex}'
     full_text = '%s\\end{Verbatim}\n' % full_text
-    output_file_path = STATNOTES_TEXCODE / f'{file_path.stem}.tex'
+    output_file_path = STATNOTES_TEX / f'{file_path.stem}.tex'
     with open(output_file_path, 'w', encoding=_ENCODING) as output_file:
         output_file.write(full_text)
     logger.info('Done!')

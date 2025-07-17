@@ -40,7 +40,7 @@ STATNOTES_MACRO_DATA = os.path.join(STATNOTES_MACRO, 'data')
 LATEX_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir, 'latex')
 FIGURE_FOLDER = os.path.join(LATEX_FOLDER, 'figures')
 TABLE_FOLDER = os.path.join(LATEX_FOLDER, 'tables')
-SNIPPETS_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir, 'snippets')
+SNIPPETS_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir, 'snippy')
 SNIPPETS_DATA_FOLDER = os.path.join(SNIPPETS_FOLDER, 'data')
 
 DEFAULT_FIG_WIDTH = 3.19
