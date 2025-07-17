@@ -16,10 +16,10 @@ sanitize:
 	python tools/sanitize.py misc/credits.tex
 	python tools/sanitize.py misc/prefazione.tex
 
-docshtml:
+docs:
 	cd docs; make html; cd -
 
-docsclean:
+cleandocs:
 	cd docs; make clean; cd -
 
 flake:
@@ -28,7 +28,7 @@ flake:
 ruff:
 	ruff check tools
 
-lint:
+pylint:
 	pylint tools
 
 clean:
@@ -37,5 +37,5 @@ clean:
 	rm -f misc/*~ misc/*.aux
 	rm -f statnotes.bbl statnotes.blg
 
-cleanall:
-	make clean; rm -f statnotes.pdf
+cleanall: clean cleandocs
+	rm -f statnotes.pdf
