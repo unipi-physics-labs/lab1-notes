@@ -38,7 +38,7 @@ _ENCODING = 'utf-8'
 NO_OUTPUT_SCRIPTS = []
 
 
-def pygmentize(snippet_path: str = STATNOTES_PY):
+def pygmentize(snippet_path: str = STATNOTES_PY, random_seed: int = 1):
     """Run pygments on a python script and generate the corresponding LaTeX output.
     """
     # pylint: disable=use-dict-literal
@@ -75,7 +75,21 @@ def pygmentize(snippet_path: str = STATNOTES_PY):
 
     # If necessary, run the script to capture the output and append it to the tex.
     if file_path.name not in NO_OUTPUT_SCRIPTS:
-        cmd = f'python {file_path}'
+        # Note the logic is quite convoluted, here, as one of the things we want to
+        # achieve is to ensure that the output is reproducible, when random numbers
+        # are involved, and that is less than trivial to achieve, as spawning a
+        # subprocess implies that the snippets are running in a different Python
+        # interpreter, and we don't want to explicitly set the seeds in the snippets,
+        # as that would encourage bad practices. A (quite frankly, hacky) solution
+        # is to do python -c "exec(open('file.py').read())" instead of the more
+        # natural python file.py, so that we can prepend arbitrary code to the
+        # script at runtime.
+        cmd_string = f'exec(open(\'{file_path}\').read())'
+        if 'random' in snippet_tex:
+            # If the script uses random, we set the seed to ensure reproducibility.
+            logger.debug(f'Setting the random seed to {random_seed}...')
+            cmd_string = f'import numpy as np; np.random.seed({random_seed}); {cmd_string}'
+        cmd = f'python -c "{cmd_string}"'
         # Note in this case we run the process in the parent folder of the target
         # script, in case the latter has relative paths to data files.
         with subprocess.Popen(cmd, cwd=file_path.parent, **kwargs) as process:
