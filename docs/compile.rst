@@ -23,7 +23,7 @@ una serie di sottocartelle:
 * ``macro``: contiene tutte le macro in Python per generare le figure;
 * ``misc``: misto di file LaTeX con tutti i comandi e gli ambienti utilizzati nell
   documento;
-* ``snippy``: contiene tutti i frammenti di codice in Python usati a scopo illistrativo
+* ``snippy``: contiene tutti i frammenti di codice in Python usati a scopo illustrativo
   nel documento;
 * ``sniptex``: contiene tutti i frammenti di codice tradotti da Python in LaTeX
   per essere inclusi nel documento;
@@ -37,6 +37,11 @@ Figure
 
 Frammenti
 ---------
+
+I frammenti di codice embedded nel documento sono realizzati traducendo automaticamente
+il contenuto dei file Python nella cartella ``snippy``. La traduzione è fatta con
+lo script :file:`tools/py2tex.py`, che utilizza il pacchetto Pygments per generare
+il codice LaTeX da includere nel documento.
 
 
 Makefile
