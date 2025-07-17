@@ -10,6 +10,12 @@ pdf:
 snippets:
 	python tools/py2tex.py snippy
 
+sanitize:
+	python tools/sanitize.py chapters
+	python tools/sanitize.py misc/colophon.tex
+	python tools/sanitize.py misc/credits.tex
+	python tools/sanitize.py misc/prefazione.tex
+
 docshtml:
 	cd docs; make html; cd -
 

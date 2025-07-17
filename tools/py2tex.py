@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #
-# Copyright (C) 2025, Luca Baldini (luca.baldini@pi.infn.it).
+# Copyright (C) 2012--2025, Luca Baldini (luca.baldini@pi.infn.it).
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU GengReral Public License as published by
+# it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
@@ -23,9 +23,13 @@ LaTeX output.
 import argparse
 import pathlib
 import subprocess
+import sys
 
 from loguru import logger
-import numpy as np
+
+# Configure the logger.
+logger.remove()
+logger.add(sink=sys.stderr, colorize=True, format='>>> <level>{message}</level>')
 
 
 STATNOTES_GITHUB_URL = 'https://github.com/unipi-physics-labs/statnotes/tree/main'
@@ -41,7 +45,7 @@ NO_OUTPUT_SCRIPTS = []
 def pygmentize(snippet_path: str = STATNOTES_PY, random_seed: int = 1):
     """Run pygments on a python script and generate the corresponding LaTeX output.
     """
-    # pylint: disable=use-dict-literal
+    # pylint: disable=use-dict-literal, too-many-locals
     # First thing first, if the path to the snippet(s) is not a pathlib.Path
     # instance, we turn it into one.
     if not isinstance(snippet_path, pathlib.Path):

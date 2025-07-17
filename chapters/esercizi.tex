@@ -467,8 +467,8 @@ e si forniscano esplicitamente i risultati numerici per $x = 100 \pm 4$ e
 $y = 50 \pm 3$ (per cui $\hat{A} = \nicefrac{1}{3}$).
 }
 
-Il modo pi\`u semplice (\emph{e, purtroppo, incorretto!}) di ragionare \`e di
-definire numeratore e denominatore come due nuove quantit\`a
+Il modo più semplice (\emph{e, purtroppo, incorretto!}) di ragionare è di
+definire numeratore e denominatore come due nuove quantità
 \begin{align*}
   N = (x - y) \quad \text{e} \quad D = (x + y),
 \end{align*}
@@ -492,10 +492,10 @@ da cui
   \frac{2\left(\hat{x}^2 + \hat{y}^2\right) \left(\sigma^2_x + \sigma^2_y\right)}{(\hat{x} + \hat{y})^4}
   \quad \text{e} \quad \sigma_A = 0.024 \quad \text{(errato)}.
 \end{align*}
-Quest'ultimo passaggio \`e sbagliato perché $N$ e $D$ non sono indipendenti---sono
-due combinazioni lineari delle stesse quantit\`a $x$ e $y$.
+Quest'ultimo passaggio è sbagliato perché $N$ e $D$ non sono indipendenti---sono
+due combinazioni lineari delle stesse quantità $x$ e $y$.
 
-Il modo corretto di propagare le incertezze \`e, invece, la formula generale
+Il modo corretto di propagare le incertezze è, invece, la formula generale
 (linearizzata al prim'ordine), ovverosia
 \begin{align*}
   \sigma^2_A = \left( \pd{A}{x}{\hat{x}, \hat{y}} \right)^2 \sigma^2_x +
@@ -503,5 +503,5 @@ Il modo corretto di propagare le incertezze \`e, invece, la formula generale
   4 \frac{\hat{y}^2\sigma^2_x + \hat{x}^2\sigma^2_y}{(\hat{x} + \hat{y})^4}
   \quad \text{e} \quad \sigma_A = 0.032 \quad \text{(corretto)}.
 \end{align*}
-Notiamo esplicitamente che vi \`e una differenza del 50\% tra la risposta corretta
+Notiamo esplicitamente che vi è una differenza del 50\% tra la risposta corretta
 e quella sbagliata.
