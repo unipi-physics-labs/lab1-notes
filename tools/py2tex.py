@@ -38,8 +38,9 @@ STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
 STATNOTES_PY = STATNOTES_ROOT / 'snippy'
 STATNOTES_TEX = STATNOTES_ROOT / 'sniptex'
 
-_ENCODING = 'utf-8'
 NO_OUTPUT_SCRIPTS = []
+
+_ENCODING = 'utf-8'
 
 
 def pygmentize(snippet_path: str = STATNOTES_PY, random_seed: int = 1):
