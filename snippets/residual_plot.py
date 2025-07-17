@@ -2,6 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
+# Set matplotlib in interactive mode, so that plots are
+# displayed on the screen as they are created.
+plt.ion()
+
 # Sample input data for the plot and the fit---use your data points and errors :-)
 x = np.array([0.5, 1.1, 1.7, 2.3, 2.9, 3.5, 4.1, 4.7, 5.3, 5.9, 6.5, 7.1, 7.7, 8.3, 8.9, 9.5])
 y = np.array([35, 61, 76, 70, 92, 100, 111, 113, 140, 163, 177, 209, 223, 264, 290, 312])
@@ -48,5 +52,3 @@ ax2.grid(color='lightgray', ls='dashed')
 # The final touch to main canvas :-)
 plt.xlim(0.0, 10.0)
 fig.align_ylabels((ax1, ax2))
-
-plt.show()
