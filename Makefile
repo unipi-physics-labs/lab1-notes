@@ -1,6 +1,6 @@
 all: pdf
 
-armageddon: snippets pdf
+armageddon: snippets figures pdf
 
 pdf:
 	pdflatex statnotes
@@ -15,7 +15,7 @@ snippets:
 	python tools/py2tex.py snippy
 
 figures:
-	python macros/plot_all.py
+	python figpy/plot_all.py
 
 sanitize:
 	python tools/sanitize.py chapters
