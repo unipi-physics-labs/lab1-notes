@@ -1,0 +1,13 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/scipy.special.erf.py}{https://github.com/.../scipy.special.erf.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special}
+
+\PY{k}{for} \PY{n}{z0} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{]}\PY{p}{:}
+    \PY{n}{P} \PY{o}{=} \PY{n}{scipy}\PY{o}{.}\PY{n}{special}\PY{o}{.}\PY{n}{erf}\PY{p}{(}\PY{n}{z0} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{z0}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n}{P}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+[Output]
+1.0 -> 0.6826894921370859
+2.0 -> 0.9544997361036416
+3.0 -> 0.9973002039367398
+\end{Verbatim}

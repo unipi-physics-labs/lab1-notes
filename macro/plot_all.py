@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# Copyright (C) 2015, Luca Baldini (luca.baldini@pi.infn.it).
+# Copyright (C) 2015--2025, Luca Baldini (luca.baldini@pi.infn.it).
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

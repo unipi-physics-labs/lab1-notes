@@ -1,0 +1,63 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/fit_circle.py}{https://github.com/.../fit\_circle.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{generate\PYZus{}points}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{sigma}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Generate a series of random points uniformly on a circle.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{c+c1}{\PYZsh{} Extract the data points.}
+    \PY{n}{phi} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+    \PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{phi}\PY{p}{)}
+    \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{cos}\PY{p}{(}\PY{n}{phi}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Add the measurement errors.}
+    \PY{n}{x} \PY{o}{=} \PY{n}{x} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+    \PY{n}{y} \PY{o}{=} \PY{n}{y} \PY{o}{+} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{p}{,} \PY{n}{n}\PY{p}{)}
+    \PY{k}{return} \PY{n}{x}\PY{p}{,} \PY{n}{y}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{fit\PYZus{}circle}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Fit a series of data points to a circle.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Refer coordinates to the mean values of x and y.}
+    \PY{n}{x\PYZus{}m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+    \PY{n}{y\PYZus{}m} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+    \PY{n}{u} \PY{o}{=} \PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{x\PYZus{}m}
+    \PY{n}{v} \PY{o}{=} \PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}m}
+    \PY{c+c1}{\PYZsh{} Calculate all the necessary sums.}
+    \PY{n}{s\PYZus{}u} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{u}\PY{p}{)}
+    \PY{n}{s\PYZus{}uu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{u}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}\PY{p}{)}
+    \PY{n}{s\PYZus{}uuu} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{u}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{3.0}\PY{p}{)}
+    \PY{n}{s\PYZus{}v} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+    \PY{n}{s\PYZus{}vv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{v}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}\PY{p}{)}
+    \PY{n}{s\PYZus{}vvv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{v}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{3.0}\PY{p}{)}
+    \PY{n}{s\PYZus{}uv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{u} \PY{o}{*} \PY{n}{v}\PY{p}{)}
+    \PY{n}{s\PYZus{}uuv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{u} \PY{o}{*} \PY{n}{u} \PY{o}{*} \PY{n}{v}\PY{p}{)}
+    \PY{n}{s\PYZus{}uvv} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{u} \PY{o}{*} \PY{n}{v} \PY{o}{*} \PY{n}{v}\PY{p}{)}
+    \PY{n}{D} \PY{o}{=} \PY{l+m+mf}{2.0} \PY{o}{*} \PY{p}{(}\PY{n}{s\PYZus{}uu} \PY{o}{*} \PY{n}{s\PYZus{}vv} \PY{o}{\PYZhy{}} \PY{n}{s\PYZus{}uv}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Calculate the best\PYZhy{}fit values.}
+    \PY{n}{u\PYZus{}c} \PY{o}{=} \PY{p}{(}\PY{n}{s\PYZus{}vv} \PY{o}{*} \PY{p}{(}\PY{n}{s\PYZus{}uuu} \PY{o}{+} \PY{n}{s\PYZus{}uvv}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{s\PYZus{}uv} \PY{o}{*} \PY{p}{(}\PY{n}{s\PYZus{}vvv} \PY{o}{+} \PY{n}{s\PYZus{}uuv}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{D}
+    \PY{n}{v\PYZus{}c} \PY{o}{=} \PY{p}{(}\PY{n}{s\PYZus{}uu} \PY{o}{*} \PY{p}{(}\PY{n}{s\PYZus{}vvv} \PY{o}{+} \PY{n}{s\PYZus{}uuv}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{s\PYZus{}uv} \PY{o}{*} \PY{p}{(}\PY{n}{s\PYZus{}uuu} \PY{o}{+} \PY{n}{s\PYZus{}uvv}\PY{p}{)}\PY{p}{)} \PY{o}{/} \PY{n}{D}
+    \PY{n}{x\PYZus{}c} \PY{o}{=} \PY{n}{u\PYZus{}c} \PY{o}{+} \PY{n}{x\PYZus{}m}
+    \PY{n}{y\PYZus{}c} \PY{o}{=} \PY{n}{v\PYZus{}c} \PY{o}{+} \PY{n}{y\PYZus{}m}
+    \PY{n}{r} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{u\PYZus{}c}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{n}{v\PYZus{}c}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.0} \PY{o}{+} \PY{p}{(}\PY{n}{s\PYZus{}uu} \PY{o}{+} \PY{n}{s\PYZus{}vv}\PY{p}{)} \PY{o}{/} \PY{n}{n}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} Calculate the errors\PYZhy{}\PYZhy{}\PYZhy{}mind this is only rigorously valid}
+    \PY{c+c1}{\PYZsh{} if the data points are equi\PYZhy{}spaced on the circumference.}
+    \PY{n}{sigma\PYZus{}xy} \PY{o}{=} \PY{n}{sigma} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0} \PY{o}{/} \PY{n}{n}\PY{p}{)}
+    \PY{n}{sigma\PYZus{}r} \PY{o}{=} \PY{n}{sigma} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{1.0} \PY{o}{/} \PY{n}{n}\PY{p}{)}
+    \PY{k}{return}  \PY{n}{x\PYZus{}c}\PY{p}{,} \PY{n}{y\PYZus{}c}\PY{p}{,} \PY{n}{r}\PY{p}{,} \PY{n}{sigma\PYZus{}xy}\PY{p}{,} \PY{n}{sigma\PYZus{}r}
+
+\PY{c+c1}{\PYZsh{} Uncertainty on x and y, assumed to be the same for all the}
+\PY{c+c1}{\PYZsh{} data points, in both coordinates.}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{sigma} \PY{o}{=} \PY{l+m+mf}{0.05}
+\PY{n}{x}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{n}{generate\PYZus{}points}\PY{p}{(}\PY{l+m+mi}{25}\PY{p}{,} \PY{n}{sigma}\PY{p}{)}
+\PY{n}{x\PYZus{}c}\PY{p}{,} \PY{n}{y\PYZus{}c}\PY{p}{,} \PY{n}{r}\PY{p}{,} \PY{n}{sigma\PYZus{}xy}\PY{p}{,} \PY{n}{sigma\PYZus{}r} \PY{o}{=} \PY{n}{fit\PYZus{}circle}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{sigma}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x\PYZus{}c = }\PY{l+s+si}{\PYZob{}}\PY{n}{x\PYZus{}c}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}xy}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{y\PYZus{}c = }\PY{l+s+si}{\PYZob{}}\PY{n}{y\PYZus{}c}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}xy}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r = }\PY{l+s+si}{\PYZob{}}\PY{n}{r}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ +/\PYZhy{} }\PY{l+s+si}{\PYZob{}}\PY{n}{sigma\PYZus{}r}\PY{l+s+si}{:}\PY{l+s+s1}{.3f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+[Output]
+x_c = -0.005 +/- 0.014
+y_c = -0.005 +/- 0.014
+r = 1.003 +/- 0.010
+\end{Verbatim}

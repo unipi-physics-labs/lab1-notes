@@ -1,0 +1,21 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/rounding.py}{https://github.com/.../rounding.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{math}
+
+\PY{n}{a} \PY{o}{=} \PY{l+m+mf}{2.34}
+\PY{c+c1}{\PYZsh{} Various roundings...}
+\PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{floor}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{ceil}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{trunc}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} ...and a bit of trigonometry.}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{pi} \PY{o}{/} \PY{l+m+mf}{4.0}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+m+mf}{1.0} \PY{o}{/} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}
+
+[Output]
+2
+2
+3
+2
+0.7071067811865475
+0.7071067811865475
+\end{Verbatim}

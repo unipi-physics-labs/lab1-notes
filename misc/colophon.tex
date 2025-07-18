@@ -1,0 +1,48 @@
+\chapter*{Colophon}
+
+Queste dispense sono state realizzate utilizzando esclusivamente \foreign{software}
+libero (se non sai cosa significa, è il momento di dare un'occhiata alla
+pagina web della \href{http://www.fsf.org/}{Free Software Foundation}).
+
+Il testo è stato battuto interamente con
+\href{https://www.gnu.org/software/emacs/}{emacs} e/o \href{https://atom.io/}{atom},
+ed impaginato utilizzando \href{https://www.latex-project.org/}{\LaTeX}---un programma
+per la realizzazione di documenti che utilizza \TeX, di Donald Knuth, come motore
+tipografico. La classe di stile utilizzata è una versione altamente
+personalizzata (che sono certo l'autore disapproverebbe, ma mira essenzialmente
+a risparmiare carta) del superbo pacchetto
+\href{http://www.ctan.org/tex-archive/macros/latex/contrib/classicthesis/}{\texttt{classicthesis}} di André Miede.
+
+Le figure che non contengono grafici sono state realizzate direttamente in
+\LaTeX\ utilizzando il (niente meno che impressionante) pacchetto di grafica
+vettoriale \href{https://www.ctan.org/pkg/pgf}{\texttt{pgf}}, insieme al suo
+\foreign{layer} sintattico di alto livello
+\href{http://www.texample.net/tikz/}{\texttt{tikz}}, di Till Tantau.
+I grafici, invece, sono stati realizzati utilizzando il \foreign{backend}
+\code{pgf} di \href{http://matplotlib.org/}{matplotlib}, insieme ad alcune
+delle altre componenti dell'ecosistema di calcolo scientifico di
+\python---in particolare \numpy\ e \scipy.
+Il \foreign{word cloud} sulla pagina di copertina è stato realizzato con il pacchetto
+\href{https://github.com/amueller/word_cloud}{\pymodule{wordcloud}} di \python,
+utilizzando il testo delle dispense come input.
+
+I frammenti di codice sono eseguiti automaticamente durante la compilazione
+del documento da un semplice \emph{script} in \python\ che appende l'\foreign{output}
+al frammento corrispondente. (In altre parole: sono garantiti funzionare,
+almeno sul computer dell'autore.) I colori sono aggiunti utilizzando
+l'ottimo evidenziatore di sintassi \href{http://pygments.org/}{Pygments}.
+
+Le dispense sono state, per la maggior parte, sviluppate su macchine che
+utilizzano la distribuzione \href{https://getfedora.org/}{Fedora} di GNU/Linux
+come sistema operativo. Tutte le componenti del progetto sono sotto controllo
+di configurazione ed il repositorio \href{https://git-scm.com/}{git} è
+ospitato su \href{https://github.com}{github} a
+\begin{center}
+  \url{https://github.com/unipi-physics-labs/statnotes}
+\end{center}
+
+
+\vfill
+
+\noindent\foreign{``Shut up, we know you can play! Jesus\ldots''}\\
+---Steve Vai, \foreign{Juice} (1995)

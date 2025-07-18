@@ -1,0 +1,20 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/scatter_plot.py}{https://github.com/.../scatter\_plot.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+
+\PY{c+c1}{\PYZsh{} Set matplotlib in interactive mode, so that plots are}
+\PY{c+c1}{\PYZsh{} displayed on the screen as they are created.}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ion}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Definition of the data points.}
+\PY{n}{t} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{1.0}\PY{p}{,} \PY{l+m+mf}{2.0}\PY{p}{,} \PY{l+m+mf}{3.0}\PY{p}{,} \PY{l+m+mf}{4.0}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{,} \PY{l+m+mf}{6.0}\PY{p}{,} \PY{l+m+mf}{7.0}\PY{p}{,} \PY{l+m+mf}{8.0}\PY{p}{,} \PY{l+m+mf}{9.0}\PY{p}{]}
+\PY{n}{s} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{20.5}\PY{p}{,} \PY{l+m+mf}{28.7}\PY{p}{,} \PY{l+m+mf}{35.4}\PY{p}{,} \PY{l+m+mf}{43.1}\PY{p}{,} \PY{l+m+mf}{51.8}\PY{p}{,} \PY{l+m+mf}{54.6}\PY{p}{,} \PY{l+m+mf}{64.1}\PY{p}{,} \PY{l+m+mf}{69.7}\PY{p}{,} \PY{l+m+mf}{77.5}\PY{p}{]}
+\PY{n}{sigma\PYZus{}s} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{,} \PY{l+m+mf}{2.5}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} Make the actual plot.}
+\PY{n}{plt}\PY{o}{.}\PY{n}{errorbar}\PY{p}{(}\PY{n}{t}\PY{p}{,} \PY{n}{s}\PY{p}{,} \PY{n}{sigma\PYZus{}s}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Setup the axes labels.}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Tempo [s]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Posizione [cm]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} Adjust the axis ranges (None means autoscale).}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axis}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{10.0}\PY{p}{,} \PY{l+m+mf}{0.0}\PY{p}{,} \PY{k+kc}{None}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}

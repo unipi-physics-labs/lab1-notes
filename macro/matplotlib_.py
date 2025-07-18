@@ -19,7 +19,7 @@
 
 """matplotlib configuration module.
 
-Note this underwent a major rwfactoring after version 4.3.0 of the book.
+Note this underwent a major refactoring after version 4.3.0 of the book.
 """
 
 import matplotlib
@@ -27,9 +27,14 @@ import numpy as np
 import os
 import sys
 
+from loguru import logger
 from matplotlib import pyplot as plt
 from matplotlib.ticker import NullFormatter
 from cycler import cycler
+
+# Configure the logger.
+logger.remove()
+logger.add(sink=sys.stderr, colorize=True, format='>>> <level>{message}</level>')
 
 if sys.flags.interactive:
     plt.ion()
@@ -37,10 +42,10 @@ if sys.flags.interactive:
 
 STATNOTES_MACRO = os.path.dirname(__file__)
 STATNOTES_MACRO_DATA = os.path.join(STATNOTES_MACRO, 'data')
-LATEX_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir, 'latex')
+LATEX_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir)
 FIGURE_FOLDER = os.path.join(LATEX_FOLDER, 'figures')
 TABLE_FOLDER = os.path.join(LATEX_FOLDER, 'tables')
-SNIPPETS_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir, 'snippets')
+SNIPPETS_FOLDER = os.path.join(STATNOTES_MACRO, os.pardir, 'snippy')
 SNIPPETS_DATA_FOLDER = os.path.join(SNIPPETS_FOLDER, 'data')
 
 DEFAULT_FIG_WIDTH = 3.19

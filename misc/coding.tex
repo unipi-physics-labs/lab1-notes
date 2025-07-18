@@ -1,0 +1,73 @@
+% Basic stuff.
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\ckey}[1]{{\texttt<\hbox{#1}>}}
+\newcommand{\cchar}[1]{``{\texttt{\hbox{#1}}}''}
+\newcommand{\ccmd}[1]{{\texttt{\hbox{#1}}}}
+
+% Python and python modules.
+\newcommand{\python}{\href{https://www.python.org/}{Python}}
+\newcommand{\pymodule}[1]{\code{#1}}
+\newcommand{\pyfunc}[1]{\code{#1()}}
+\newcommand{\pyclass}[1]{\code{#1}}
+
+\newcommand{\numpy}{\href{https://numpy.org/}{\pymodule{numpy}}}
+\newcommand{\npmoduleurl}[1]{https://numpy.org/doc/stable/reference/#1}
+\newcommand{\npfuncurl}[1]{https://numpy.org/doc/stable/reference/generated/numpy.#1.html}
+\newcommand{\npmodule}[1]{\href{\npmoduleurl{#1}}{np.#1}}
+\newcommand{\npfunc}[1]{\href{\npfuncurl{#1}}{np.\pyfunc{#1}}}
+\newcommand{\nparray}{\emph{array} di \numpy}
+
+\newcommand{\scipy}{\href{https://www.scipy.org/}{\pymodule{scipy}}}
+\newcommand{\scipymoduleurl}[1]{https://docs.scipy.org/doc/scipy/reference/#1.html}
+\newcommand{\scipyfuncurl}[1]{https://docs.scipy.org/doc/scipy/reference/generated/scipy.#1.html}
+\newcommand{\scipymodule}[1]{\href{\scipymoduleurl{#1}}{scipy.\pymodule{#1}}}
+\newcommand{\scipyfunc}[1]{\href{\scipyfuncurl{#1}}{scipy.\pyfunc{#1}}}
+
+\newcommand{\matplotlib}{\href{https://matplotlib.org/}{\pymodule{matplotlib}}}
+
+% Operating systems.
+\newcommand{\windows}{Windows}
+\newcommand{\dos}{DOS}
+\newcommand{\linux}{GNU/Linux}
+\newcommand{\macos}{Mac~OS}
+\newcommand{\osx}{OS~X}
+\newcommand{\freebsd}{FreeBSD}
+\newcommand{\unix}{UNIX}
+
+\newcommand{\sniptex}[1]{\medskip\input{sniptex/#1}}
+\newcommand{\texdata}[1]{\medskip\input{texdata/#1}}
+
+\newcommand{\emacs}{emacs}
+\newcommand{\gedit}{gedit}
+
+\DeclareFloatingEnvironment[name=Frammento]{snippet}
+
+\newcommand{\snip}[3][0.62]{%
+  \begin{snippet}[htb!]
+    \bigskip
+    \hstack[#1]{\input{sniptex/#2}}{
+      \caption{#3}
+      \label{snip:#2}
+    }
+  \end{snippet}
+}
+
+\newcommand{\npcmd}[3][0.4]{%
+  \FPeval{\cw}{0.95 - #1}
+  \noindent\begin{minipage}[t][][b]{#1\textwidth}
+  \npfunc{#2}: #3
+  \end{minipage}\hfill%
+  \begin{minipage}[t][][b]{\cw\textwidth}
+  \input{sniptex/np.#2.tex}
+  \end{minipage}\\[8pt]
+}
+
+\newcommand{\scipycmd}[3][0.4]{%
+  \FPeval{\cw}{0.95 - #1}
+  \noindent\begin{minipage}[t][][b]{#1\textwidth}
+  \scipyfunc{#2}: #3
+  \end{minipage}\hfill%
+  \begin{minipage}[t][][b]{\cw\textwidth}
+  \input{sniptex/scipy.#2.tex}
+  \end{minipage}\\[8pt]
+}

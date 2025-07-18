@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #
-# Copyright (C) 2016, Luca Baldini (luca.baldini@pi.infn.it).
+# Copyright (C) 2016--2025, Luca Baldini (luca.baldini@pi.infn.it).
 #
 # This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU GengReral Public License as published by
+# it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
@@ -16,143 +16,114 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
-import os
-import time
-import os
-import sys
-import subprocess
-import zipfile
-import glob
-import shutil
-
-""" Rudimental release manager.
+""" Rudimentary release manager.
 """
 
-TAG_MODES = ['major', 'minor', 'patch']
 
-STATNOTES_BIN = os.path.abspath(os.path.dirname(__file__))
-STATNOTES_ROOT = os.path.abspath(os.path.join(STATNOTES_BIN, os.pardir))
-STATNOTES_LATEX = os.path.join(STATNOTES_ROOT, 'latex')
-STATNOTES_PDF = os.path.join(STATNOTES_ROOT, 'pdf')
-TAG_FILE_PATH = os.path.join(STATNOTES_LATEX, 'version.tex')
+import argparse
+import pathlib
+import subprocess
+import shutil
+import sys
+
+from loguru import logger
+
+# Configure the logger.
+logger.remove()
+logger.add(sink=sys.stderr, colorize=True, format='>>> <level>{message}</level>')
 
 
+STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
+VERSION_FILE_PATH = STATNOTES_ROOT / 'version.tex'
 
-def cmd(cmd, verbose=False, dry_run=False):
-    """ Exec a command.
+INCREMENT_MODES = ('major', 'minor', 'patch')
 
-    This uses subprocess internally and returns the subprocess status code
-    (if the dry_run option is true the function will just print the command out
-    through the logger and returns happily).
+_ENCODING = 'utf-8'
+
+
+def execute_shell_command(arguments):
+    """Execute a shell command.
     """
-    print('About to execute "%s"...' % cmd)
-    if dry_run:
-        print('Just kidding (dry run).')
-        return 0
-    err = subprocess.PIPE
-    out = subprocess.PIPE
-    process = subprocess.Popen(cmd, stdout=out, stderr=err, shell=True)
-    errorCode = process.wait()
-    if verbose:
-        output = process.stdout.read().strip(b'\n')
-        for line in output.split(b'\n'):
-            print(line)
-    if not errorCode:
-        print('Command executed with status code %d.' % errorCode)
-    else:
-        print('Command returned status code %d.' % errorCode)
-    errorMessages = process.stderr.read().strip(b'\n')
-    if errorMessages:
-        print('stderr not empty, error/warning message(s) following...')
-        print(errorMessages)
-    return errorCode
+    logger.info(f'About to execute "{" ".join(arguments)}"...')
+    return subprocess.run(arguments, check=True)
 
 
-def cp(src, dest):
+def copy_file(src, dest):
     """ Copy a file in another location.
     """
-    print('Copying %s to %s...' % (src, dest))
+    logger.info('Copying {src} to {dest}...')
     shutil.copy(src, dest)
 
-def read_tag():
-    """ Read the tag and build date straight from the appropriate file.
-    """
-    return open(TAG_FILE_PATH).readline().strip('\n')
 
-def update_version_file(mode, dry_run=False):
-    """ Update the __tag__.py module with the new tag and build date.
+def _read_version():
+    """ Read the version straight from the appropriate file.
     """
-    prev_tag = read_tag()
-    print('Previous tag was %s...' % prev_tag)
-    version, release, patch = [int(item) for item in prev_tag.split('.')]
+    logger.info(f'Reading version from {VERSION_FILE_PATH}...')
+    with open(VERSION_FILE_PATH, encoding=_ENCODING) as version_file:
+        version = version_file.readline().strip('\n')
+    logger.debug(f'Current version is {version}')
+    return version
+
+
+def _write_version(version: str):
+    """ Write the version to the appropriate file.
+    """
+    logger.info(f'Writing version {version} to {VERSION_FILE_PATH}...')
+    with open(VERSION_FILE_PATH, 'w', encoding=_ENCODING) as version_file:
+        version_file.write(f'{version}\n')
+
+
+def increment_version_file(mode: str) -> str:
+    """Update the version.tex file.
+    """
+    logger.info(f'Bumping version file (mode = {mode})...')
+    if mode not in INCREMENT_MODES:
+        raise RuntimeError(f'Invalid increment mode "{mode}"---valid modes are {INCREMENT_MODES}')
+    old_version = _read_version()
+    major, minor, patch = (int(item) for item in old_version.split('.'))
     if mode == 'major':
-        version += 1
-        release = 0
+        major += 1
+        minor = 0
         patch = 0
     elif mode == 'minor':
-        release += 1
+        minor += 1
         patch = 0
     elif mode == 'patch':
         patch += 1
-    else:
-        abort('Unknown release mode %s.' % mode)
-    next_tag = '%s.%s.%s' % (version, release, patch)
-    print('Writing new tag (%s) to %s...' % (next_tag, TAG_FILE_PATH))
-    if not dry_run:
-        outputFile = open(TAG_FILE_PATH, 'w')
-        outputFile.writelines('%s\n' % next_tag)
-        outputFile.close()
-    print('Done.')
-    return next_tag
+    new_version = f'{major}.{minor}.{patch}'
+    logger.info(f'Target version is {new_version}')
+    _write_version(new_version)
+    return new_version
+
 
 def compile_latex():
     """ Recompile the damned thing.
     """
-    os.system('cd %s; make' % STATNOTES_LATEX)
+    execute_shell_command(['make'])
 
-def release(mode, dry_run=False):
+
+def release(mode: str):
     """ Tag the package and create a release.
     """
-    cmd('git pull', verbose=True, dry_run=dry_run)
-    cmd('git status', verbose=True, dry_run=dry_run)
-    tag = update_version_file(mode, dry_run)
-    compile_latex()
-    src = os.path.join(STATNOTES_LATEX, 'statnotes.pdf')
-    dest = os.path.join(STATNOTES_PDF, 'statnotes_%s.pdf' % tag)
-    pwd = os.getcwd()
-    cp(src, dest)
-    dest = dest.replace(pwd, '').rstrip('/')
-    #cmd('git add %s' % dest)
-    #cmd('git commit -m "Initial import" %s' % dest)
-    dest = os.path.join(STATNOTES_PDF, 'statnotes_head.pdf')
-    cp(src, dest)
-    dest = dest.replace(pwd, '').rstrip('/')
-    cmd('git commit -m "Initial import" %s' % dest)    
-    msg = 'Prepare for tag %s.' % tag
-    cmd('git commit -a -m "%s"' % msg, verbose=True, dry_run=dry_run)
-    cmd('git push', verbose=True, dry_run=dry_run)
-    msg = 'tagging version %s' % tag
-    cmd('git tag -a %s -m "%s"' % (tag, msg), verbose=True, dry_run=dry_run)
-    cmd('git push --tags', verbose=True, dry_run=dry_run)
-    cmd('git status', verbose=True, dry_run=dry_run)
-    return tag
+    execute_shell_command(['git', 'pull'])
+    version = increment_version_file(mode)
 
+    # compile_latex()
+    # Do stuff, e.g., copy pdf files around for archival purposes...
+    # If you create new stuff, do not forget to push it on the repository!
+    # msg = f'Prepare for tag {version}.'
+    # execute_shell_command(['git', 'commit', '-a', '-m', msg])
+    # execute_shell_command(['git', 'push'])
+
+    msg = f'Tagging version {version}...'
+    execute_shell_command(['git', 'tag', '-a', version, '-m', msg])
+    execute_shell_command(['git', 'push', '--tags'])
+    execute_shell_command(['git', 'status'])
+    logger.info(f'Release {version} completed successfully.')
 
 
 if __name__ == '__main__':
-    from optparse import OptionParser
-    parser = OptionParser()
-    parser.add_option('-t', dest='tagmode', type=str, default=None,
-                      help='The release tag mode %s.' % TAG_MODES)
-    parser.add_option('-n', action='store_true', dest='dryrun',
-                      help='Dry run (i.e. do not actually do anything).')
-    (opts, args) = parser.parse_args()
-    if opts.tagmode not in TAG_MODES:
-        parser.error('Invalid tag mode %s (allowed: %s)' %\
-                     (opts.tagmode, TAG_MODES))
-    release(opts.tagmode, opts.dryrun)
-
-
-
-
+    parser = argparse.ArgumentParser()
+    parser.add_argument('mode', type=str, choices=INCREMENT_MODES, help='Version increment mode')
+    args = parser.parse_args()
+    release(args.mode)

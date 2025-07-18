@@ -1,0 +1,25 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/sample_stat1.py}{https://github.com/.../sample\_stat1.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{sample\PYZus{}statistics}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{:}
+    \PY{n}{n} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{values}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{} First loop to calculate the mean.}
+    \PY{n}{mean} \PY{o}{=} \PY{l+m+mf}{0.0}
+    \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{values}\PY{p}{:}
+        \PY{n}{mean} \PY{o}{=} \PY{n}{mean} \PY{o}{+} \PY{n}{x}
+    \PY{n}{mean} \PY{o}{/}\PY{o}{=} \PY{n}{n}
+    \PY{c+c1}{\PYZsh{} Second loop to calculate the variance.}
+    \PY{n}{stdev} \PY{o}{=} \PY{l+m+mf}{0.0}
+    \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{values}\PY{p}{:}
+        \PY{n}{stdev} \PY{o}{=} \PY{n}{stdev} \PY{o}{+} \PY{p}{(}\PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{mean}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mf}{2.}
+    \PY{n}{stdev} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{stdev} \PY{o}{/} \PY{p}{(}\PY{n}{n} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{mean}\PY{p}{,} \PY{n}{stdev}
+
+\PY{c+c1}{\PYZsh{} Quick test with normally\PYZhy{}distributed random numbers.}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\PY{n}{values} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{normal}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{l+m+mf}{1.0}\PY{p}{,} \PY{n}{size}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{sample\PYZus{}statistics}\PY{p}{(}\PY{n}{values}\PY{p}{)}\PY{p}{)}
+
+[Output]
+(0.009772656699104992, 0.9988357867259957)
+\end{Verbatim}

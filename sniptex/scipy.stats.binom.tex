@@ -1,0 +1,14 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/scipy.stats.binom.py}{https://github.com/.../scipy.stats.binom.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats}
+
+\PY{n}{n} \PY{o}{=} \PY{l+m+mi}{4}
+\PY{n}{p} \PY{o}{=} \PY{l+m+mf}{0.1}
+\PY{n}{k} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{n}\PY{p}{,} \PY{n}{n} \PY{o}{+} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n+nb}{int}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{k}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{scipy}\PY{o}{.}\PY{n}{stats}\PY{o}{.}\PY{n}{binom}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{p}\PY{p}{)}\PY{o}{.}\PY{n}{pmf}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{)}
+
+[Output]
+[0 1 2 3 4]
+[6.561e-01 2.916e-01 4.860e-02 3.600e-03 1.000e-04]
+\end{Verbatim}
