@@ -8,6 +8,7 @@ Release notes
 * Makefile aggiornato ed espanso.
 * Impostazione del random seed negli snippet per garantire riproducibilità.
 * Tutti i riferimenti a bitbucket aggiornati per puntare a github.
+* Aggiunto il testo della licenza CC BY-SA 4.0.
 
 
 statnotes 5.2.0
