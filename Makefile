@@ -10,7 +10,7 @@ statnotes:
 
 compnotes:
 	pdflatex compnotes
-	bibtex statnotes
+	bibtex compnotes
 	pdflatex compnotes
 	pdflatex compnotes
 
