@@ -1,0 +1,2294 @@
+% MISC
+
+% AT 18-08-23
+% Linear functions are not good for taking action (?)
+% -> Non linear devices
+% www.electronics-tutorials.ws cute, AND and OR
+% Moore's law (wikipedia)
+% Free software
+
+
+
+\chapter{Cosa \`e e come funziona un computer?}
+\label{sec:computazione}
+
+Ok, il titolo di questa appendice \`e senza dubbio ambizioso, ed \`e chiaro che
+una risposta esaustiva a questa domanda esula dallo scopo di un'appendice in una
+dispensa. Eppure, nello spirito di fornire un riferimento per quanto possibile
+autocontenuto, questo capitolo\ldots
+
+Diversi tipi di computer che vanno dai microcontrollori che gestiscono i piccoli
+elettrodomestici di casa\footnote{Riferimento all'IOT e anno in cui le cose hanno
+superato gli umani in rete}, fino ai grandi \emph{mainframe} specializzati,
+passando per \emph{smartphone}, \emph{tablet}, \emph{laptop} e
+\emph{workstation}---incluse le reti di computer nei grandi \emph{data center}
+che costituisce l'ossatura dell'ecosistema del \emph{web}. A seconda della
+particolare applicazione, l'enfasi \`e posta su un aspetto particolare, e.g.,
+l'affidabilit\`a nel pilota automatico di un aereo o nel sistema elettronico di
+controllo di un'autovettura\ldots
+
+Non \`e un manuale di \python, ma un breve glossario, non esaustivo e non particolarmente
+profondo, che utilizza la sintassi di \python\ per illustrare alcuni concetti fondamentali
+che \`e necessario saper maneggiare per poter affrontare in modo consapevole
+l'analisi dei dati. Non metteremo le cose in prospettiva storica.
+
+Eseguire un programma significa calcolare un risultato a partire da un insieme
+dato di dati in ingresso, seguendo un algoritmo preciso. Per fare questo abbiamo
+bisogno di un calcolatore, per cui alla fine si tratta di un interplay tra
+\emph{hardware} e \emph{software}. Nel seguito utilizzeremo l'analogia con la cucina
+in cui, a partire dagli ingredienti (dati in ingresso) seguiamo una ricetta (programma)
+per ottenere la pietanza desiderata, pronta per essere consumata. Per fare questo
+abbiamo bisogno di hardware (e.g., pentole e fornelli). Non si tratta di un'analogia
+veramente stringente---e cercheremo di mettere via via in evidenza i punti in cui
+la corrispondenza letterale viene meno---ma \`e tuttavia utile per comprendere
+alcuni concetti non banali in un ambito che tutti conosciamo.
+
+L'inglese \`e la lingua universale dell'informatica per cui in questo capitolo,
+contrariamente al resto delle dispense, eviteremo di scrivere in corsivo i termini
+non italiani.
+
+
+\section{Preludio: la logica binaria}
+
+Anche se in linea di principio questo non è l'unico approccio possibile, praticamente
+tutti i calcolatori moderni funzionano in logica binaria---cioè manipolano e conservano
+i dati al loro interno sotto forma di \foreign{bit}, o celle elementari di memoria
+che possono assumere uno due valori possibili (convenzionalmente $0$ o $1$). Questo
+deriva essenzialmente dal fatto che i dispositivi di memorizzazione più diffusi si
+basano, a livello elementare, sul \foreign{flip-flop}, che è un circuito elettronico a due stati.
+Il punti di partenza di questo breve excursus \`e dunque proprio la logica binaria.
+
+
+\subsection{Il flip-flop come base della logica sequenziale}
+
+Noi tutti, da Fisici, siamo educati---e per buoni motivi---ad apprezzare l'importanza
+del principio di sovrapposizione caratteristico dei sistemi lineari: la forza totale
+agente su un punto materiale \`e la somma (vettoriale) delle forze agenti, ed il
+campo elettrico creato da un sistema di cariche \`e la somma (vettoriale) dei campi
+generati dalle singole cariche. L'elettronica digitale alla base del funzionamento
+di un calcolatore \`e un esempio archetipico di un tipo di sistema il cui funzionamento
+\`e dovuto alle caratteristiche intrinsecamente non lineari dei componenti---diodi
+triodi e transistor sono gli elementi circuitali che rendono possibile la computazione
+come lo conosciamo, e non andremmo molto lontano sfruttando solo la legge di Ohm
+che regola le reti lineari di resistenze.
+
+Sotto molti punti di vista il mattone costitutivo fondamentale dei moderni calcolatori
+elettronici \`e il \emph{flip-flop}, un elemento circuitale con due stati stabili
+(e.g., due livelli distinti di tensione in uscita) che si mantengono indefinitamente
+nel tempo se non si interviene sul dispositivo, e con la possibilit\`a di
+cambiare lo stato attraverso uno o pi\`u opportuni segnali di controllo, tipicamente
+in modo sincronizzato con un segnale di \emph{clock} esterno.
+
+Ora: che un oggetto con due stati si presti ad essere usato come una sorta di alfabeto
+di due lettere per implementare una memoria digitale \`e abbastanza intuitivo;
+che i cambiamenti di stato si possano controllare dall'esterno \`e essenziale per
+poter fare operazioni sui dati in memoria; ed il fatto che il tutto sia controllato
+da una sorta di \emph{orologio} esterno (il clock) lascia intravedere la possibilit\`a
+che un numero arbitrario di flip-flop possano lavorare insieme, sincronizzati, per
+implementare operazioni complesse. Ma qual \`e il motivo per cui le architetture
+basate su flip-flop hanno resistito al test del tempo e non sono state soppiantate
+da approcci pi\`u complessi, basati su elementi circuitali a pi\`u stati---ad esempio
+un ipotetico flip-flop-flap a $3$ stati? La risposta, in una parola, \`e la semplicit\`a
+di realizzazione. Ideato negli anni '$10$ del 900 come sistema composto da due valvole,
+il flip-flop \`e evoluto dopo l'invezione del transistor in uno degli elementi circuitali
+con la pi\`u alta impacchettabilit\`a in chip. Una conseguenza fondamentale, ed il
+motivo per cui abbiamo cominciato la nostra discussione da questo aspetto apparentemente
+mondano dell'hardware, \`e il fatto che \emph{la totalit\`a dei calcolatori moderni
+lavora in logica binaria, sia per quanto riguarda la rappresentazione dei dati che
+nella manipolazione dei dati stessi}. Nelle prossima sezione, dunque, cercheremo
+di formalizzare il sistema di numerazione binario.
+
+
+\subsection{Il sistema di numerazione binario (e quello esadecimale)}
+
+Quando scriviamo il numero $127$ (nella consueta notazione posizionale in base
+$10$) quello che in effetti intendiamo è:
+\begin{align*}
+  (127)_{10} = 1 \times 10^2 + 2 \times 10^1 + 7 \times 10^0.
+\end{align*}
+(Notate che abbiamo indicato esplicitamente la base per evitare ambiguità, ma
+ove essa dovesse essere omessa intenderemo sempre che il numero è scritto in
+base $10$). Più in generale possiamo \emph{contare} in una base arbitraria
+$n$, con il comune intendimento che
+\begin{align}\label{eq:numero_base_arbitraria}
+  (c_m\ldots c_2c_1c_0)_n = c_m \times n^m + \cdots + c_2 \times n^2 +
+  c_1 \times n + c_0.
+\end{align}
+Tipicamente $n$ è un numero intero più grande di $1$, ma in generale questa
+restrizione non è necessaria---e i sistemi di numerazione in base negativa, o
+addirittura immaginaria o complessa, possono avere proprietà interessanti.
+\`E facile convincersi che con $m$~cifre si possono esprimere (in base $n$)
+$n^m$ numeri diversi---ad esempio tutti quelli compresi tra $0$ e $n^m - 1$.
+Così con $3$ cifre decimali si possono esprimere i $1000$ numeri tra $0$ e
+$999$, mentre con $8$ cifre binarie si possono esprimere solo i $2^8 = 256$
+numeri tra $0$ e $255$.
+
+Per $n = 2$, $8$, $16$ e $60$ si hanno i sistemi di numerazione binario, ottale,
+esadecimale e sessagesimale, che sono largamente usati in alcuni contesti.
+Così, ad esempio, nel sistema binario possiamo scrivere
+\begin{align*}
+  (1101)_2 \triangleq 0b1101 =
+  1 \times 2^3 + 1 \times 2^2 + 1 \times 1 = 13,
+\end{align*}
+ed in quello esadecimale
+\begin{align*}
+  (24)_{16} \triangleq 0x24 =
+  2 \times 16 + 4 = 36.
+\end{align*}
+
+Come abbiamo detto in avvio di sezione il sistema binario riveste un ruolo
+peculiare perché è il \emph{linguaggio} parlato dai calcolatori. Convertire
+un numero intero dal sistema decimale a quello binario (e viceversa) è
+banale, seguendo la~\eqref{eq:numero_base_arbitraria}. Qualsiasi linguaggio
+di programmazione degno di questo nome, inoltre, fornisce funzioni di
+conversione, come mostrato nel frammento~\ref{snip:bin_dec}.
+
+\snip{bin_dec}{
+Esempi di conversione tra il sistema decimale e quello binario,
+e viceversa, utilizzando il linguaggio di programmazione \python.
+}
+
+Visto che $16 = 2^4$ \`e una potenza di $2$, passare da sistema binario ad esadecimale
+(e viceversa) \`e particolarmente semplice: si raggruppano i bit $4$ a $4$ iniziando
+dal meno significativo (quello pi\`u a sinistra) e si converte da binario ad esadecimale
+ciascun gruppo
+\begin{align*}
+  99 = 0b\overbrace{110}^6\overbrace{0011}^3 = 0x63.
+\end{align*}
+Il sistema esadecimale, dunque, \`e una sorta di version \emph{compatta} del
+sistema binario, ed \`e utilizzato spesso nella programmazione vicina all'hardware,
+e.g., per indirizzare registri di dispositivi elettronici.
+L'autore di questa appendice, nel momento in cui scrive, ha quasi $0x30$~anni,
+pesa circa $0x61$~kg, ed è da lungo tempo convinto fautore dell'introduzione
+della bilancia pesapersone esadecimale. Per inciso, i sistemi binario ed
+esadecimale sono così utilizzati in pratica, che è comune trovarli indicati
+con i prefissi $0b$ e $0x$, rispettivamente (come indicato negli esempi
+sovrastanti); nel seguito utilizzeremo anche noi questa notazione.
+
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{lll}
+      \hline
+      Decimale & Binario & Esadecimale\\
+      \hline
+      \hline
+      $0$  & $0b0000$ & $0x0$ \\
+      $1$  & $0b0001$ & $0x1$ \\
+      $2$  & $0b0010$ & $0x2$ \\
+      $3$  & $0b0011$ & $0x3$ \\
+      $4$  & $0b0100$ & $0x4$ \\
+      $5$  & $0b0101$ & $0x5$ \\
+      $6$  & $0b0110$ & $0x6$ \\
+      $7$  & $0b0111$ & $0x7$ \\
+      $8$  & $0b1000$ & $0x8$ \\
+      $9$  & $0b1001$ & $0x9$ \\
+      $10$ & $0b1010$ & $0xA$ \\
+      $11$ & $0b1011$ & $0xB$ \\
+      $12$ & $0b1100$ & $0xC$ \\
+      $13$ & $0b1101$ & $0xD$ \\
+      $14$ & $0b1110$ & $0xE$ \\
+      $15$ & $0b1111$ & $0xF$ \\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Caption.}
+    \label{tab:dec_bin_hex}
+  }
+\end{table}
+
+
+\subsection{Bit e bytes}
+
+Ad un livello microscopico, l'informazione dentro un computer \`e immagazzinata in
+una serie di \emph{bit} (b). Per usare un'analogia con la meccanica quantistica, il bit
+\`e il \emph{quanto} di memoria, e ad ogni istante si trova in uno di due stati
+possibili: $0$ o $1$\footnote{Strettamente parlando, non c'\`e niente di speciale nella
+scelta di utilizzare $0$ e $1$ come denominazione per i due possibili valori del contenuto
+di un bit---potremmo anche utilizzare vero e falso, bianco e nero, testa e croce---ma
+al solito non c'\`e ragione di non uniformarsi all'uso comune, che per di pi\`u, in
+questo caso, si sposa naturalmente con l'aritmetica in base $2$.}. All'interno di un
+calcolatore qualsiasi cosa \`e una serie di $0$ ed $1$. Programmi, dati, numeri,
+testo, immagini, video sono rappresentati internamente con l'opportuna alternanza di
+zero ed uno, come vedremo pi\`u in dettaglio nel seguito in alcuni casi rilevanti.
+
+Ora, come abbiamo detto un bit ha due soli stati, e non c'\`e molto di utile che\
+si possa fare con cos\`i poco. Le cose cambiano per\`o drasticamente quando mettiamo
+insieme pi\`u bit---con $2$ bit, ad esempio, possiamo comporre esattamente $4$
+\emph{bit pattern}
+\begin{align*}
+  \byte{00} \quad \byte{01} \quad \byte{10} \quad \byte{11}.
+\end{align*}
+La cosa \`e sostanzialmente identica al modo in cui, quando parliamo o scriviamo,
+componiamo le parole con le lettere dell'alfabeto. Non \`e difficile convincersi che,
+utilizzando $n$ bit, il numero di \emph{bit pattern} distinti che si possono rappresentare
+\`e $2^n$. Con $8$ bit, allora, possiamo rappresentare esattamente $2^8 = 256$ confgurazioni
+distinte---ad esempio i numeri interi da $0$ a $255$. Questo comincia ad essere un
+numero potenzialmente interessante: \`e pi\`u grande, ad esempio del numero di tasti
+di un pianoforte standard ($88$), e del numero di tasti di una moderna tastiera
+da calcolatore ($104$ o $105$), e non \`e un caso che il protocollo MIDI e la codifica
+\texttt{ASCII} utilizzino entrambi $8$ bit. I personal computer con processori a $8$
+bit sono stati estremamente popolari negli anni '80, ed l'architettura a $8$ si trova
+ancora usata in alcuni micro-controllori disponibili sul mercato. Un gruppo di 8
+bit \`e un concetto cos\`i importante in informatica da meritare un nome dedicato:
+il \emph{byte} (B). Se \`e vero che il bit \`e il quanto di memoria, in pratica il
+byte \`e l'unit\`a di misura della capacit\`a dei dispositivi di memorizzazione sul
+mercato.
+
+Per inciso, gli informatici amano a tal punto le potenze di $2$ che, sfruttando la coincidenza
+notevole che
+\begin{align*}
+  2^{10} = 1024 \approx 1000 = 10^2
+\end{align*}
+hanno fornito una loro re-interpretazione in chiave binaria dei prefissi del sistema
+metrico internazionale. Cos\`i, tradizionalmente, il termine kB \`e stato usato per
+indicare $1024$~B (anzich\'e $1000$~B), il termine MB per indicare $10124^2 = 1,048,576$~B,
+e cos\`i via. (La cosa non \`e cos\`i bislacca come potrebbe sembrare: lo schema di
+indirizzamento tipico della memoria ad accesso casuale fa s\`i che, in pratica,
+la capicit\`a di quest'ultima espressa in B sia per definizione pari ad una potenza
+di $2$. L'interpretazione binaria dei prefissi del sistema metrico \`e stata, storicamente,
+sorgente di ambiguit\`a, ma insistere oltre sulla questione va al di l\`a dei nostri
+scopi.)
+
+\begin{table}[!htb]
+  \tablehstack{
+    \begin{tabular}{ll}
+      \hline
+      Elemento & Capacit\`a\\
+      \hline
+      \hline
+      La Divina Commedia in formato testo & $\sim 500$~kB or $5 \times 10^5$~B\\
+      Una canzone pop in formato mp3 & $\sim 1$~MB or $10^6$~B\\
+      Memoria cache tipica di una CPU & $\sim 1$~MB or $10^6$~B\\
+      Compact disk (CD) & $\sim 1$~GB or $10^9$~B\\
+      RAM tipica di un PC & $\sim 10$~GB or $10^{10}$~B\\
+      Disco rigido tipico di un PC & $\sim 1$~TB or $10^{12}$~B\\
+      Dati di LHC immagazzinati al CERN nel 2024 & $\sim 1$~EB or $10^{18}$~B\\
+      Dati nel World Wide Web nel 2021 & $\sim 100$~$ZB$ or $10^{23}$~B\\
+      \hline
+    \end{tabular}
+  }{
+    \caption{Caption.}
+    \label{tab:storage}
+  }
+\end{table}
+
+Giusto per avere in mente gli ordini di grandezza, la tabella~\ref{tab:storage}
+illustra le capacit\`a tipiche di alcuni elementi di memorizzazione rilevanti per la
+nostra discussione. Non preoccupatevi se non avete mai sentito parlare di
+\emph{compact disk} (lo studierete nel corso di archeologia) o se non sapete ancora
+cosa \`e la memoria \emph{cache} di un processore (lo vedremo brevemente nella
+sezione~\ref{}) e ricordatevi che si tratta di ordini di grandezza e non di numeri
+accurati al $10$\%; il messaggio fondamentale \`e: \emph{quando lavorate con un calcolatore
+digitale la memoria che avete a disposizione non \`e infinita!} Il fatto che il
+web abbia una capacit\`a di immagazzinamento globale dell'ordine di un numero di
+Avogadro di byte ci sorprende da una parte per la grandezza del numero stesso, ma
+ci dice allo stesso tempo che una simulazione microscopica che dovesse seguire, molecola
+per molecola, una mole di gas (ovvero $20$~miseri litri) sarebbe completamente
+fouri questione---oltre che inutile, come la meccanica statistica ci ha insegnato
+molto prima che esistessero i computer.
+
+
+\subsection{Operazioni logiche}
+
+Chiara dice di evitare.
+
+
+
+\section{Struttura di massima di un calcolatore}
+
+Se aprite la pagina web del vostro sito di e-commerce preferito in cerca di un
+laptop, oppure andate in un negozio di elettronica, nella scheda tecnica del prodotto
+troverete invariabilmente una serie di parole chiave: processore (o CPU), cache,
+RAM, disco rigido, complementate da una serie di caratteristiche (e.g., la frequenza
+di clock) ed eventualmente da riferimenti alle tecnologie costruttive (e.g., DDR e SSD).
+Questa sezione costituisce una panoramica succinta sulla struttura di base di un
+calcolatore, in cui cercheremo di inquadrare queste parole, e capire le implicazioni
+pratiche.
+
+
+\subsection{L'architettura di Von Neumann}
+
+Sebbene siano sempre pi\`u comuni architetture diverse (e.g., GPU) o eterogenee,
+l'architettura di Von Neumann continua ad essere rilevante, e costituisce ancora
+un \emph{framework} utile in cui discutere le cose che ci interessano.
+
+\subsection{CPU}
+
+Mettere il plot del numero di transistor nelle CPU in funzione del tempo, da
+\url{https://github.com/karlrupp/microprocessor-trend-data}, con un tempo di duplicazione
+di circa 2~anni. Siamo a circa $10^{11}$ transistor impacchettati in una CPU di
+$\sim 1$~cm$^2$, ovverosia un transistor ha un footprint planare di $10^{-11}$~cm$^2$,
+corrispondenti ad un quadrato di $30$~nm di lato. Se il trend prosegue tra
+$10$--$15$~anni avremo abbattuto le dimensioni lineari di un fattore $10$, ed aumentato
+la densit\`a di transistor di un fattore $100$.
+
+% Mettere un riferimento ai processi, e.g., https://en.wikipedia.org/wiki/2_nm_process
+
+% altezza $\sim 500$~$\mu$m
+
+
+Notare come, mentre in numero di transistor continua a crescere esponenzialmente,
+la frequenza di clock \`e stabile attorno a $\sim 5$~GHz, a causa dei problemi di
+dissipazione termica.
+
+% https://en.wikipedia.org/wiki/ENIAC
+Definizione del FLOP. ENIAC, tradizionalmente considerato il primo computer digitale
+moderno, ed entrato in funzione nel~1945, operava a circa $500$~FLOP. $100$~GFLOP
+($10^{11}$~FLOP) \`e un numero non irragionevole per un processore moderno.
+
+
+\subsection{Memoria}
+
+
+Ci sono diversi tipi di memoria, con diverse capacit\`a e velocit\`a: RAM, cache,
+disco.
+
+La memoria non \`e infinita. Esempio di allocazione di una lista lunghissima.
+
+
+\subsection{Linguaggi di programmazione}
+
+
+
+\subsection{\python\ come linguaggio interpretato}
+
+Bytecode come primo passo dell'esecuzione di un programma e cartella pycache.
+Il file intermedio costituisce una serie di istruzioni per la Python Virtual Machine (PVM).
+Il bytecode \`e ottimizzato per l'esecuzione, ed il risultato \`e pi\`u veloce che
+non interpretare il codice sorgente direttamente.
+
+Vogliamo mettere un accenno a \url{https://docs.python.org/3/library/dis.html}?
+
+Confrontato con un tipico linguaggio compilato, come ad esempio il C, un linguaggio
+interpretato come \python\ fornisce indubbiamente, dal punto di vista del programmatore,
+una serie di vantaggi da non sottovalutare. In C il tipo delle variabili deve essere
+esplicitamente dichiarato, e durante l'esecuzione di un programma si pu\`o cambiare
+il valore di una variabile ma non il tipo; in \python\ non \`e necessario dichiarare
+le variabili, e non ci sono vincoli di sorta sui tipi. In Python \`e estremamente
+pi\`u semplice create container (e.g., liste) eterogenei---cio\`e contenenti oggetti
+di tipo diverso. In C la gestione della memoria \`e manuale, mentre in \python\
+\`e automatica attraverso un meccanismo di garbage collection. In generale la sintassi
+di \python\ \`e considerata dalla maggior parte dei programmatori come chiara, espressiva
+e concisa. Ma se tutto questo \`e vero, perch\'e esistono ancora i linguaggi compilati?
+
+Beh, tutte queste caratteristiche desiderabili di \python\ come linguaggio interpretato,
+come del resto tutto nella vita, non vengono a costo zero. Il fatto che non dobbiamo
+dichiarare le variabili, che possiamo cambiare il tipo a runtime, e che non dobbiamo
+preoccuparci di liberare la memoria quando non ci serve pi\`u fa s\`i che anche
+gli oggetti pi\`u semplici (e. g., un numero intero) in \python\ debbano tener traccia
+autonomamente di un certo numero di cose, e. g., di che tipo sono e quante referenze
+hanno; la conseguenza \`e che il footprint in memoria di un programma \`e tipicamente
+molto pi\`u grande in \python\ che in C. (Vedremo questo pi\`u in dettaglio nella
+sezione~\ref{sec:rappresentazione_interi}.) Il fatto che una lista in \python\ sia
+intrinsecamente un contenitore eterogeneo rende l'iterazione lenta---ed a volte
+\emph{estremamente} lenta. (Anche se, come vedremo nella sezione~\ref{sec:numpy}
+ci sono espedienti per ovviare a questo.)
+
+In un mondo in cui i computer sono veloci e la memoria a disposizione \`e copiosa,
+in molti casi queste non sono limitazioni rilevanti, ed \`e spesso vantaggioso rendere
+le cose pi\`u facili per la persona che sviluppa il codice piuttosto che per il
+computer che lo esegue. Ma \`e bene avere chiaro fin da subito che vi sono innumerevoli
+situazioni in cui questo trade-off si inverte, ed allora \`e necessario fare compromessi.
+
+
+\section{Il sistema operativo}
+
+Prima di andare oltre nella descrizione di cosa \`e e come si scrive un programma
+\`e utile spendere qualche parola sul \emph{sistema operativo} (o Operating System, OS)
+che per alcuni versi \`e il programma pi\`u importante di tutti---quello che gestisce
+tutte le risorse all'interno del computer in modo che gli utenti e le loro applicazioni
+possano utilizzarle.
+
+Tra le altre cose, il sistema operativo: (i) alloca le risorse della macchina decidendo
+quando una data applicazione deve avere accesso alla CPU ed alla memoria; (ii) fornisce
+un livello di astrazione alle risorse hardware ed alle perriferiche; (iii) implementa
+i servizi di utilit\`a generali che sono alla base del funzionamento del computer.
+
+La variet\`a di sistemi operativi presenti sul mercato \`e enorme. Con ogni probabilit\`a
+avrete sentito parlare (o gi\`a utilizzate) \windows, \macos\ e \linux, oltre ad
+Android, che \`e uno spin-off di quest'ultimo, ed iOS---questi ultimi sono destinati
+ai dispositivi mobili. In questa sezione cercheremo di illustrare brevemente alcuni
+degli aspetti generali dei sistemi operativi, mettendo in evidenza, ove necessario,
+le differenze tra quelli pi\`u usati.
+
+
+\subsection{La shell}
+
+Il programma che in un computer espone all'utente i servizi forniti dal sistema operativo
+(e.g., gestione di file e processi, esecuzione di programmi, controllo e configurazione
+della macchina) prende generalmente il nome di \emph{shell} o, a seconda del contesto,
+terminale o prompt dei comandi. La shell \`e un interprete testuale da linea di comando
+deputata al processamento e all'esecuzione dei comandi inseriti dall'utente.
+In un mondo dominato da smartphone e tablet la shell pu\`o apparire come una curiosit\`a
+storica pi\`u adatta ad un corso di archeologia che altro, ma in realt\`a si tratta
+di una risorsa essenziale che risponde ad una necessit\`a che, come Fisici, abbiamo
+spesso---quella di \emph{automatizzare task ripetitivi}. \`E per questo che cominciamo
+il nostro breve percorso proprio da qui.
+
+Fino alla met\`a degli anni '80 del 900 la shell ha costituito il meccanismo di gran
+lunga pi\`u comune per interagire con il computer, sia nei grandi sistemi in time-sharing
+(da cui il nome tetminale) che nei personal computer che in quegli anni iniziavano a
+trovare il loro spazio sul mercato. Lo sviluppo di interfacce grafiche (Graphical User
+Interface, o GUI) sempre pi\`u  sofisticate e di dispositivi hardware totalmente nuovi di
+interazione (mouse e touch screen) il nostro modo di interagire con il computer \`e
+cambiato totalmente negli ultimi $30$~anni. Eppure, ancora adesso, potete essere sicuri
+che, indipendente dal sistema operativo istallato, la vostra workstation (assumendo che
+esisteno ancora) ed il vostro  portatile hanno un qualche tipo di shell (e, anzi, molto
+probabilmente pi\`u di un tipo) disponibile e pronta all'uso. Persino sul vostro smartphone
+non \`e troppo complicato istallare un emulatore di shell---anche se, in questo caso,
+l'uso \`e pi\`u ludico che altro.
+
+Come primo esercizio di esplorazione di questo mondo complesso che \`e il calcolatore,
+aprite una shell e cercate di recuperare le informazioni di base del vostro sistema.
+
+\begin{Verbatim}
+[lbaldini@nblbaldini latex]$ uname -a
+Linux nblbaldini 6.2.15-100.fc36.x86_64 #1 SMP PREEMPT_DYNAMIC Thu May 11 16:51:
+53 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+\end{Verbatim}
+
+Ok, questo non \`e sicuramente la cosa pi\`u entusiasmante che si possa fare con
+la shell, ma una volta iniziato la strada \`e in discesa. La possibilit\`a di combinare
+comandi semplici in task arbitrariamente complicati che la shell offre permette di
+fare cose che divengono immediatamente pi\`u complicate e tediose nell'ecosistema
+prevalentemente grafico in cui la maggior parte di noi \`e abituata ad operare.
+Supponiamo di voler rinominare una serie di file secondo un pattern preciso (ad esempio
+aggiungendo la data di creazione nel nome del file) e di volerli suddividere in
+cartelle sulla base della loro dimensione su disco: questo \`e il tipo di task che
+\`e estremamente facile da fare dalla shell e, pontenzialmente, incredibilimente
+sconveniente con il mouse. Nel seguito di questa appendice non utilizzaremo molto
+il terminale---non perch\`e non sia importante ma perch\'e, come vedremo meglio nella
+sezione~\ref{sec:python_usage}, \python\ permette di fare tutto quello che potremmo
+fare con il terminale (e molto altro) per di pi\`u in modo \emph{cross-platform}
+(nascondendo, cio\`e, dietro un ulteriore layer di astrazione molte delle differenze
+tra i diversi sistemi operativi).
+
+
+\subsection{Il filesystem}
+
+Nato come termine per indicare i sistemi di archiviazione di documenti cartacei,
+dopo l'avvento dei calcolatori elettronici la parola filesystem \`e stata estesa
+anche a questi ultimi. Il filesystem \`e una delle astrazioni fondamentali che il
+sistema operativo mette a disposizione dell'utente. (Provate per un attimo a immaginare
+come sarebbe la vita se, per leggere da/scrivere su disco una foto dovessimo fisicamente
+indirizzare ogni bit di memoria scrivendo il contenuto di ciascun pixel, e dovessimo
+oltretutto farlo tenendo esplicitamente in conto le differenze hardware tra i vari
+modelli di disco presenti sul mercato\ldots)
+
+Cominciamo da un po' di nomenclatura. Un \emph{file} \`e l'unit\`a fondamentale
+di archiviazione dei dati, identificato univocamente da un \emph{percorso}, o \emph{path}.
+Da un punto di vista strettamente funzionale il filesystem fornisce accesso ai file
+presenti su un dispositivo di archiviazione di massa.
+(Per fissare le idee in questa sezione faremo riferimento alla situazione tipica
+di un disco rigido \emph{locale}, cio\`e fisicamente presente all'interno del computer,
+anche se il discorso sarebbe potenzialmente pi\`u generale.)
+La quasi totalit\`a dei filesystem moderni supporta l'organizzazione di file all'interno
+di cartelle (anche note come directory, o folder) ed ha una natura \emph{gerarchica},
+nel senso che prevede la possibilit\`a per ciascuna cartella di contenere altre
+cartelle.
+Oltre ai dati, il filesystem \`e tipicamente responsabile della gestione dei metadati
+ad essi associati, e.g., la dimensione su disco, le date di creazione e/o ultimo
+accesso, i permessi.
+
+
+\begin{figure}[htbp!]
+  % https://tex.stackexchange.com/questions/5073/making-a-simple-directory-tree
+  \begin{forest}
+    for tree={
+      font=\sffamily,
+      minimum height=0.75cm,
+      rounded corners=4pt,
+      grow'=0,
+      inner ysep=8pt,
+      child anchor=west,
+      parent anchor=south,
+      anchor=west,
+      calign=first,
+      edge={rounded corners},
+      edge path={
+        \noexpand\path [draw, \forestoption{edge}]
+        (!u.south west) +(12.5pt,0) |- (.child anchor)\forestoption{edge label};
+      },
+      before typesetting nodes={
+        if n=1
+          {insert before={[,phantom,minimum height=18pt]}}
+          {}
+      },
+      fit=band,
+      s sep=12pt,
+      before computing xy={l=25pt},
+    }
+  [\myfolder{}
+    [\myfolder{bin}]
+    [{\myfolder{home}}
+      [{\myfolder{anna}}
+        [dance.py]
+        [look.pdf]
+      ]
+      [{\myfolder{marco}}
+        [horse.txt]
+      ]
+    ]
+    [\myfolder{usr}]
+  ]
+  \end{forest}
+  \caption{Rappresentazione schematica di un filesystem.}
+\end{figure}
+
+
+\subsection{Denominare i file: insidie e buone norme}
+
+Ai vecchi tempi di \dos\ la convenzione "8.3" (fino a $8$ caratteri per il nome del
+file, pi\`u un'estensione opzionale lunga al massimo $3$ caratteri, separata dal
+nome con un punto) era molto usata. Se da una parte questo aveva un senso in sistemi
+con memorial limitata (come vedremo nella sezione~\ref{sec:rappresentazione_testo}
+questo assicurava di poter contenere il nome in $3$ parole da $32$~bit), rendeva
+estremamente difficile assegnare nomi espressivi ai file ed evitare conflitti.
+
+La maggior parte sei sistemi moderni permette di usare un'ampia gamma di caratteri
+dalla tabella Unicode nei nomi dei file. Questo, va da s\'e, non implica che in generale
+sia una buona regola essere particolarmente spregiudicati. Lo spazio \`e un buon
+esempio di carattere che, essendo usato come separatore nei comandi sul terminale,
+sarebbe buona abitudine non utilizzare nei nomi dei file---magarri sostituendolo con
+un underscore (\cchar{\_}).
+
+
+\subsection{Le variabili d'ambiente}
+
+
+\subsection{Processi e thread}
+
+Necessario oppure no?
+
+
+\subsection{File di testo ed editor di testo}
+
+
+
+\section{Algoritmi}
+
+Non vi \`e dubbio che la parola \emph{algoritmo} sia salita alla ribalta delle scene
+come una delle parole pi\`u (ab) usate del periodo storico in cui viviamo. In questa
+sezione cerchiamo di chiarire il concetto, liberandolo da alcuni miti che lo hanno
+via via avvolto.
+
+Un algoritmo \`e banalmente una procedura per ricavare un risultato (output)
+a partire da un determinato insieme di dati in ingresso (input) che possegga due
+propriet\`a importanti: (i) deve arrivare a conclusione in un numero finito di passi;
+(ii) ogni passo deve essere completamente specificato, senza che vi siano ambiguit\`a.
+Senza perdere troppo tempo nella semantica delle parole, diciamo subito che un algoritmo
+inteso come un metodo generale per risolvere un problema \`e una cosa concettualmente
+diversa da un \emph{programma}, che, come chiariremo meglio nella sezione~\ref{sec:programmi}
+pu\`o essere visto semmai come un'implementazione specifica, in un linguaggio di
+programmazione specifico, di un algoritmo.
+
+Ogni volta che si parla di algoritmi a livello introduttivo \`e difficile resistere
+alla tentazione di fare l'analogia con una ricetta di cucina. Un ricetta sembra avere
+tutti gli elementi che abbiamo appena elencato: si tratta di una descizione passo
+per passo di come ottenere un output (in questo caso il nostro piatto pronto da
+consumare) a partire da una serie di input (in questo caso gli ingredienti). Ogni
+libro di ricette che si rispetti indica una stima del tempo necessario per portare
+a termine una ricetta, che pare sposarsi bene con l'idea che il tempo di esecuzione
+di un algoritmo debba essere finito. Certo, \`e indubbio che le ricette contengano
+spesso elementi di ambiguit\`a (cosa vuol dire esattamente "aggiungere un pizzico di
+sale"?), che nella vita reale vengono risolti dall'intelligenza (o dal senso comune)
+di chi cucina. Eppure quella della ricetta \`e una buona analogia, e ci torneremo in
+sequito pi\`u volte per cercare di chiarire il discorso.
+
+
+\subsection{Un esempio archetipico: l'algoritmo di Euclide}
+\label{sec:euclid_algorithm}
+
+Analizziamo in dettaglio quello che probabilmente \`e il pi\`u celebre tra gli algoritmi
+classici, ovverosia l'algoritmo di Euclide per il calcolo del massimo comun divisore,
+seguendo fedelmente le presentazione in~\cite{taocp1}. Dati due numeri interi positivi
+$m$ ed $n$ il massimo comun divisore (MCD) si pu\`o trovare attraverso la seguente
+procedura:
+\begin{itemize}
+  \item[] A1. calcoliamo il resto $r$ della divisione tra $m$ e~$n$, ovverosia $r = m \mod n$;
+  \item[] A2. se $r = 0$, allora il MCD tra i due numeri \`e $n$, e l'algoritmo termina;
+  \item[] A3. poniamo $m \leftarrow n$, $n \leftarrow r$ e ritorniamo a A1.
+\end{itemize}
+Questi tre passi, ripetuti opportunamente, costituiscono una prescrizione non ambigua
+per il nostro problema, e dovrebbero essere autoesplicativi, modulo l'operatore di
+assegnazione $m \leftarrow n$ che significa essenzialmente \emph{rimpiazziamo il valore
+di $m$ con il valore corrente di $n$}. Rappresentazioni alternative del flusso di
+un algoritmo sono i diagrammi a blocchi e lo pseudocodice, ma per i nostri scopi
+non \`e necessario andare pi\`u a fondo di cos\`i.
+
+Non \`e difficile convincersi della correttezza della nostra procedura. Dopo il
+primo passo $m = qn + r$ per qualche valore intero di $q$, e si danno due casi:
+se $r = 0$, allora $m$ \`e multiplo di $n$, ed $n$ \`e proprio il MCD tra i due;
+in caso contrario, qualsiasi numero che divida sia $m$ che $n$ deve dividere anche
+$r = m - qn$, e qualsiasi numero che divida sia $n$ che $r$ deve dividere anche
+$m = qn + r$---in altre parole, i divisori comuni di $m$ ed~$n$ sono anche i divisori
+comuni di $n$ ed $r$, il che ci autorizza a fare la sostituzione descritta in P3
+senza cambiare la risposta al quesito originario. Il nocciolo della questione \`e
+che ad ogni passo abbiamo coppie di numeri pi\`u piccole, ed il processo converge
+fino a che il resto della divisione non \`e zero.
+
+Ora, nella maggior parte delle situazioni che vi troverete ad affrontare nella vita,
+dimostrare la correttezza formale di un algoritmo pu\`o essere significativamente
+pi\`u complicato, e spesso non \`e semplice capire cosa sta succedendo semplicemente
+leggendo i passi dal primo all'ultimo. Vedere un algoritmo in opera in un caso concreto,
+viceversa, \`e di solito un aiuto enorme alla comprensione, per cui proviamo
+senz'altro a calcolare il MCD, e.g., tra $49$ e $21$. (Sappiamo gi\`a la risposta:
+$49 = 7 \times 7$ e $21 = 7 \times 3$, per cui il MCD \`e $7$.) I nostri dati iniziali
+sono $m = 49$ e $n = 21$; dopo A1 si ha $r = 49 \mod 21 = 7$ che, essendo diverso da
+zero, ci costringe ad applicare A3, ponendo $m - 21$ e $n = 7$. A questo punto vediamo
+subito che $m$ \`e divisibile per $n$, e quest'ultimo \`e il MCD cercato. Pi\`u
+sinteticamente potremmo scrivere
+\begin{center}
+  \begin{tabular}{llll}
+    Iterazione & $m$ & $n$ & $r$ \\
+    1 & $49$ & $21$ & $7$\\
+    2 & $21$ & $7$ & $0$\\
+  \end{tabular}
+\end{center}
+e, in questo caso l'algoritmo converge al valore corretto in due passi. Per inciso,
+\`e anche interessante notare come l'algoritmo avrebbe funzionato anche scambiando
+$m$ ed~$n$, ovverosia partendo da $m = 21$ e $n = 49$: in questo caso il primo ciclo
+A1~A3 avrebbe semplicemente scambiato tra di loro i due input, e da l\`i in poi
+niente sarebbe cambiato.
+
+Vedremo tra un attimo come questo algoritmo si pu\`o implementare in \python, ma
+per il momento rimaniamo per un attimo sulla questione della velocit\`a di convergenza.
+
+
+\subsection{Algoritmi e complessità}
+
+Nel caso particolare che abbiamo considerato ($m = 49$ e $n = 21$) abbiamo visto
+che il passo A1 dell'algoritmo di Euclide viene eseguito esattamente $2$~volte prima
+che l'algoritmo stesso arrivi al termine. E, se fissiamo due valori arbitrari in
+ingresso possiamo semplicemente eseguire l'algoritmo per calcolare quante iterazioni
+richiede per convergere. Se ci chiediamo adesso come varia il numero
+di iterazione al variare di $m$ ed~$n$, \`e chiaro che questa domanda \`e
+interessante---\`e legata in modo ovvio al tempo che l'algoritmo impiega a
+convergere---ma \`e alrtes\`i chiaro che la risposta non \`e ovvia. Ci possiamo
+aspettare intuitivamente che al crescere di $m$ ed~$n$ il numero di iterazioni
+necessarie cresca, ma ovviamente questo dipende in modo cruciale dalla scelta dei
+numeri: il MCD tra $m$ e $2$, ad esempio, \`e banale da calcolare indipendentemente
+da quanto \`e grande $m$. Se vogliamo caratterizzare la \emph{complessit\`a} dell'algoritmo
+al crescere di $n$ dobbiamo prima trovare una domanda ben posta.
+
+La prima cosa da notare (di nuovo) \`e che se $n > m$ il passo A1 dell'algoritmo di
+Euclide consiste semplicemente nello scambio tra $n$ ed $m$. Allora una domanda ben posta
+che potremmo farci \`e: se fissiamo $n$ qual \`e il valor medio di volte in cui
+il pass A1 \`e eseguito, quando $0 \leq m \leq n$? Potremmo anche chiederci qual
+\`e il valore minimo di iterazioni che possono servire (best case). Oppure il numero
+massimo (worst case).
+
+La prima domanda costituisce un problema estremamente complicato che non ha ancora
+una soluzione completa, ma si pu\`o dimostrare che per $n$ grandi vale lo sviluppo
+asintotico
+\begin{align*}
+  T_n \approx \frac{12 \ln 2}{\pi^2} \ln n;
+\end{align*}
+la risposta alla seconda domanda \`e banale perch\'e nel caso migliore (quando
+$n$ \`e divisibile per $m$) un passaggio \`e sufficiente; la terza domanda ha una
+difficolt\`a intermedia, e si pu\`o dimostrare che il caso peggiore \`e quello in
+cui $n$ ed $m$ sono due numeri di Fibonacci consecutivi---caso in cui il numero
+di iterazione \`e di nuovo proporzionale a $\log n$.
+
+Quanto appena detto va generalmente sotto il nome di \emph{analisi degli algoritmi}.
+La legge di scala con la grandezza dell'input del numero medio di iterazioni necessarie
+perch\'e l'algoritmo termini prende il nome di \emph{complessit\`a}, e corrisponde
+con il termine dominante dello sviluppo in $n$. Cos\`i diciamo che l'algoritmo di
+Euclide ha una complessit\`a $O(\log n)$ o "ordine $\log n$".
+
+
+\subsection{La ricerca binaria}
+
+Inquadriamo il problema da un punto di vista differente. Supponiamo di avere
+un elenco telefonico con $N$ elementi ordinati alfabeticamente e di essere
+interessati al numero di telefono di una persona specifica---quale strategia
+useremmo?
+
+Potremmo partire dall'inizio, scorrere nome per nome l'elenco e fermarci quando
+arriviamo alla persona desiderata---operare, cioè, una
+\emph{ricerca sequenziale}. Così facendo dovremo controllare in media
+$N/2$ numeri, ed $N$ nel caso più sfavorevole (quello cioè in cui la
+persona cercata è l'ultima nell'elenco).
+
+Oppure possiamo partire da metà dell'elenco e vedere se il nome cercato
+è prima o dopo nella lista: in un passo eliminiamo metà dell'elenco, e
+possiamo ripetere la procedura bisecando ogni volta la parte rimanente, che in
+questo modo si dimezza ad ogni passo. Non è difficile convincersi che il
+processo converge in un numero di passi minore o uguale a $\llog[2] N$.
+(E per $N$ grande, $\llog[2] N$ o $N$ fa un'enorme differenza.) L'algoritmo
+che abbiamo appena delineato si dice \emph{ricerca binaria} ed è ottimale
+per la ricerca di un elemento in una lista ordinata.
+
+\begin{figure}[htb!]
+  \autohstack{
+    \input{figures/ricerca_binaria}
+  }{
+    \caption{Illustrazione di due strategie di ricerca delle iniziali
+      "MA" in una lista di 11 iniziali (fittizie) ordinate alfabeticamente.
+      La ricerca sequenziale termina in 8 passi, quella binaria in 4 (o
+      3, a seconda di come definiamo l'algoritmo di bisezione). I cerchi
+      neri indicano i punti di inizio e fine della ricerca.}
+    \label{fig:ricerca_binaria}
+  }
+\end{figure}
+
+\begin{examplebox}
+  \begin{example}
+    In un elenco telefonico con $11$ persone una ricerca sequenziale richiede
+    al massimo $11$ passi ed una ricerca binaria $4$. (Un esempio specifico
+    è mostrato in figura~\ref{fig:ricerca_binaria}, in cui per brevità
+    si è usato iniziali fittizie al posto dei nomi completi.) In questo caso
+    la differenza non è impressionante, ma con un elenco di $10\,000\,000$
+    di persone una ricerca sequenziale richiede al massimo $10\,000\,000$ di
+    passi, mentre una ricerca binaria ne richiede al massimo
+    $\llog[2]{10\,000\,000} < 24$.
+  \end{example}
+\end{examplebox}
+
+
+\section{Programmi}
+\label{sec:programmi}
+
+L'algoritmo di Euclide per il calcolo del MCD descritto in dettaglio nella
+sezione~\ref{sec:euclid_algorithm} pu\`o essere implementato in \python\ come mostrato
+nel frammento~\ref{snip:euclid_algorithm}---e probabilmente in infiniti altri modi.
+
+\snip{euclid_algorithm}{
+  Notare l'overload della variabile $n$.
+}
+
+Nel resto di questa sezione cercheremo di analizzare in dettaglio le poche righe di
+codice in questo frammento e di mettere in luce alcune tecniche di programmazione
+che sono rilevanti in generale---non solo nel nostro ambito limitato.
+Ma, prima di cominciare, vale la pena di andare attraverso le diverse modalit\`a
+con cui \`e possibile usare \python.
+
+
+\subsection{Tre modi di utilizzare \python}
+\label{sec:python_usage}
+
+Se digitate \code{python} nel vostro teminale, e assumendo che tutto sia istallato
+correttamente, vi trovate immediatamente catapultati nell'interprete, e dovreste
+vedere qualcosa di vagamente rassomigliante a
+\begin{verbatim}
+[lbaldini@pclbaldini latex]$ python
+Python 3.10.11 (main, Apr  5 2023, 00:00:00) [GCC 12.2.1 20221121 (Red Hat 12.2.1-4)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+\end{verbatim}
+I tre simboli \cchar{>>>} nell'ultima riga stanno ad indicare che l'interprete \`e
+pronto ad accettare comandi: potete cominciare a scrivere, e l'inteprete vi \emph{risponder\`a}
+con il valore dell'ultima espressione ogni volta che premete invio, in quello che
+in gergo tecnico prende il nome di REPL (Read-Eval-Print Loop). Questo modo di
+utilizzare l'inteprete si dice \emph{interattivo}; \`e utile se volte usare \python\
+come una sorta di calcolatore tascabile, se volete provare velocemente un costrutto o,
+pi\`u in generale, se quello che dovete fare \`e molto semplice.
+
+Non passer\`a molto tempo prima che vi rendiate conto che l'uso interattivo di \python\
+\`e limitante. Quando uscite dall'interprete ripetere una serie di operazioni
+una seconda volta richiede banalmente di dover digitare tutto da capo, che diventa
+estremamente tedioso molto velocemente. Per tutti i task di complessit\`a non nulla
+\`e molto pi\`u conveniente scrivere tutti i comandi, uno dopo l'altro, in un file
+di testo (convenzionalmente con estensione \cchar{.py}), ed invocare l'interprete
+passando il percorso al file come argomento. Questo richiede un minimo di padronanza
+della shell e del filesystem, ma dopo il primo successo avete ufficialmente aggiunto
+un nuovo strumento (ed uno molto potente) alla vostra scatola degli attrezzi: avete
+appena scritto il vostro primo \emph{programma}.
+
+Esistono infine sul mercato vari Intregrated Development Environment (IDE) che uniscono
+in un'unica interfaccia grafica l'editor di testo, l'inteprete \python\ e tutta una
+serie di altre cose (e.g., un browser del filesystem), e che sono una scelta praticabile,
+specialmente all'inizio. Vale la pena di prendere nota, ma con ogni probabilit\`a
+se dovrete mai fare qualcosa di mediamente strutturato, la combinazione della shell
+con un buon editor di testo \`e la via maestra.
+
+
+\subsection{Assegnazione: variabili e tipi}
+
+Partiamo dunque dalle prime due righe del frammento~\ref{snip:euclid_algorithm}:
+il simbolo \cchar{=} in \python\ (e nella maggior parte dei linguaggi di programmazione)
+costituisce l'operatore di assegnazione---ovverosia assegna il valore della porzione a
+destra dell'espressione all'operando che sta a sinistra.
+
+\snip{variables}{
+  Caption.
+}
+
+Guardiamo per un attimo il frammento~\ref{snip:variables}: senza addentrarci troppo
+nella semantica, illustra efficacemente, oltre all'operatore di assegnazione, due
+cose fondamentale che vanno ben al di l\`a di un breve corso introduttivo di \python:
+\begin{itemize}
+  \item ad ogni istante di tempo ogni variabile ha un tipo ben preciso, che si pu\`o
+    verificare in \python\ utilizzando la funzione built-in \pybuiltin{type};
+  \item ad ogni istante di tempo ogni variabile ha un indirizzo in memoria, a cui
+    si risale con la funzione built-in \pybuiltin{id}. (Se i numeri enormi vi stupiscono,
+    non dimenticate che ormai la maggior parte dei computer lavorano con uno spazio
+    di indirizzi a $64$~bit, con cui si possono indirizzare $2^{64} \approx 1.85 \times 10^{19}$
+    celle distinte.)
+\end{itemize}
+Cos\`i la variabile \cchar{n}, nel nostro esempio, \`e un numero intero, \cchar{x}
+\`e un numero in virgola mobile, e \cchar{t} \`e una stringa di testo. Al momento
+dell'assegnazione \python\ alloca automaticamente in memoria un oggetto del tipo
+opportuno (a seconda del valore a cui inizializziamo la variabile), e l'operando
+a sinistra dell'operatore di assegnazione costituisce una \emph{referenza} all'oggetto
+stesso.
+
+Una caratteristica interessante dell'operatore di assegnazione, che peraltro \`e
+comune a moltissimi linguaggi di programmazione, \`e l'ordine in cui le operazioni
+sono eseguite, ed \`e importante sottolineare la cosa fin dall'inizio, perch\'e
+si tratta di un tratto potenzialmente controintuitivo per chi ha gi\`a un'educazione
+di tipo matematico. Quando in un libro di aritmetica vediamo scritto
+\begin{align*}
+  x = x + 1
+\end{align*}
+interpretiamo questa scrittura come un'equazione di primo grado che non ha soluzione.
+\snip{assignment}{
+  Notare anche la forma \code{x += 1}, del tutto equivalente a \code{x = x + 1}.
+}
+La differenza \`e notevole con il frammento~\ref{snip:assignment}, in cui viceversa
+la linea~$2$ ha perfettamente senso: prima si calcola il valore sulla destra dell'operatore
+di assegnamento, assumendo i valori che tutte le variabili rilevanti hanno fino a
+quel momento, e poi si assegna il risultato alla variabile opportuna, che \`e in
+effetti sovrascritta.
+
+
+\snip{integer_string}{
+  Caption.
+}
+
+Il fatto che in una stringa di testo si possano inserire cifre numeriche \`e a
+volta sorgente di confusione, ma non dobbiamo mai dimenticare che una stringa
+numerica non \`e un numero!
+
+
+\subsection{Aritmetica: \python\ come calcolatore tascabile}
+
+La nostra implementazione dell'algoritmo di Euclide fa uso dell'aritmetica intera,
+e la tabella~\ref{tab:arithmetics} elenca tutti gli operatori che \python\
+fornisce per l'aritmetica tra tipi numerici.
+
+\begin{table}[!htbp]
+  \tablehstack{
+  \begin{tabular}{lll}
+    \hline
+    Operatore & Nome & Esempio\\
+    \hline
+    \hline
+    \texttt{+} & Addizione &	\texttt{3 + 4 = 7}\\
+    \texttt{-} & Sottrazione & \texttt{4 - 3 = 1}\\
+    \texttt{*} & Moltiplicazione & \texttt{2 * 3 = 6}\\
+    \texttt{/} & Divisione & \texttt{3 / 2 = 1.5}\\
+    \texttt{\%} & Modulo & \texttt{7 \% 3 = 1}\\
+    \texttt{**} & Elevamento a potenza & \texttt{2 ** 8 = 256}\\
+    \texttt{//} & Divisione intera & \texttt{3 // 2 = 1}\\
+    \hline
+  \end{tabular}
+  }{
+  \caption{Caption.}
+  \label{tab:arithmetics}
+  }
+\end{table}
+
+
+
+\subsection{Contenitori}
+
+Tutte le variabili che abbiamo utilizzato nella nostra prima implementazione dell'algoritmo
+di Euclide~\ref{snip:euclid_algorithm} sono numeri interi, cos\`i come due delle
+tre variabili nel frammento~\ref{snip:variables}---un numero intero ed un numero
+in virgola mobile. Tutti questi sono esempi di oggetti privi di una struttura interna
+modificabile direttamente che, con una parola che dovrebbe essere suggestiva per un Fisico,
+sono anche detti tipi \emph{scalari}.
+
+\snip{containers}{
+  Caption.
+}
+
+La maggior parte dei linguaggi di programmazione, e \python\ non fa eccezione, fornisce
+anche tipi che agiscono da collezioni, sequenze, o contenitori (container), di oggetti pi\`u
+semplici. Ne vediamo sommariamente due---liste e dizionari. (Per completezza, in
+\python\ una stringa \`e una sequenza immutabile, anche quando \`e composta da un solo
+carattere, ma su questo non andremo oltre.)
+
+Nella sezione~\ref{sec:numpy} vedremo un altro tipo di container utilissimo per il
+calcolo scientifico (gli array di \numpy) e discuteremo brevemente le differenze
+rispetto alle liste.
+
+
+\subsection{Controllo del flusso}
+
+"Ripetete il tutto per altre tre volte."; "lasciate cuocere fino a che le patate
+non saranno dorate"; "se il sugo \`e troppo secco aggiungere un po' di acqua di
+cottura". Se avete letto anche distrattamente un libro di ricette in vita vostra
+vi sar\`a capitato di imbattervi in frasi di questo tipo. Per noi le parole chiave
+sono \emph{tre volte}, \emph{fino a che}, e \emph{se}.
+
+Una delle cose che capita pi\`u di frequente quando programmiamo \`e quella di
+\emph{ripetere}, o \emph{iterare} un'operazione. Sommare i numeri interi da $0$ a
+$100$, per esempio, significa in pratica partire da $0$ e poi sommare ripetutamente
+$1$, $2$\ldots e cos\`i via. \python, cos\`i come del resto la maggior parte dei
+linguaggi di programmazione offre due costrutti: \code{for} e \code{while}.
+
+
+
+\subsection{Funzioni}
+
+Ricetta della crema pasticcera.
+
+\snip{euclid_algorithm_func}{
+  Caption.
+}
+
+
+\section{La rappresentazione del testo}
+\label{sec:rappresentazione_testo}
+
+Abbiamo detto che all'interno di un calcolatore digitale qualsiasi cosa \`e rappresentata
+come una sequenza di zeri ed uni; benissmo, come \`e rappresentata, allora, la lettera
+\cchar{a} all'interno di un file di testo? Ed il numero \cchar{7}? Ed una stringa
+arbitraria di testo?
+
+
+\subsection{La tabella ASCII}
+
+Nei giorni eroici dei primi calcolatori digitali la codifica dei dati era implementata
+in modo custom ed incompatibile da sistema a sistema. Lo standard ASCII (American
+Standard Code for Information Interchange), inizialmente pubblicata nel 1963, \`e stato
+il primo tentativo organico di mettere ordine nella questione. In linea di principio
+la decisione di come rappresentare i dati \`e totalmente arbitaria, ma uno standard
+comune \`e fondamentale per lo scambio di informazioni. (Con le dovute differenze,
+una cosa simile succede anche noi tutti i giorni: la Fisica \`e indipendente dal
+nome che diamo alle variabili, ma c'\`e un vantaggio indubbio nell'usare, ove possibile,
+convenzioni comuni, e.g., indicare l'energia con $E$ e la massa con $m$.)
+
+Nel progettare uno standard di codifica, la prima cosa che dobbiamo chiederci \`e:
+quanti, e quali caratteri vogliamo rappresentare? La codifica ASCII originale prevedeva
+$128$~caratteri (corrispondenti quindi a $7$~bit), cui hanno fatto seguito un certo
+numero di proposte di estensione, parzialmente incompatibili tra loro, a $8$~bit
+($256$) caratteri. (La scelta non \`e irragionevole, perch\`e $128$ \`e paragonabile
+al numero di tasti di una tastiera tipica da terminale.) Questi $128$~caratteri includono
+le $26$ lettere (maiuscole e minuscole) dell'alfabeto inglese, le cifre da $0$ a~$9$,
+segni di punteggiatura, parentesi ed operatori, pi\`u un certo numero di cose pi\`u
+esotiche che non abbiamo tempo di analizzare in dettaglio. La codifica ASCII, dunque,
+\`e essenzialmente una tabella di $128$ righe nella quale, a ciascuno dei $128$ caratteri
+scelti, corrisponde un numero intero da $0$ a $127$, che prende il nome di \emph{code point}.
+I primi $32$~code point sono riservati a caratteri di controllo (non stampabili) che,
+senza andare troppo a fondo nella questione, includono lo spazio, l'andata a capo.
+Ogni carattere \`e rappresentato in memoria (e, eventualmente, in un file) come il
+suo code point, ed ogni code point pu\`o essere convertito nel carattere corrispondente.
+Tanto per fare un esempio, il code point del carattere \cchar(a) (lettera a minusicola)
+\`e $97$, come illustrato nel frammento~\ref{snip:ascii}.
+
+
+\begin{table}[htbp!]
+  \input{tables/ascii_table.tex}
+  \caption{Caption.}
+\end{table}
+
+\snip{ascii}{
+Caption.
+}
+
+Se supponiamo, ad esempio, di avere un file contenente la stringa "Ciao!" (pi\`u
+un'andata a capo alla fine della prima linea), ed assumiamo di avere un qualche tipo
+di utility per visualizzato il contenuto su disco del file (ad esempio \ccmd{xxd} su
+GNU-Linux), il file avrebbe una dimensione di esattamente $6$~byte ed apparirebbe
+come
+\begin{align*}
+  \overbrace{\byte{01000011}}^{67~\text{(C)}}
+  \overbrace{\byte{01101001}}^{105~\text{(i)}}
+  \overbrace{\byte{01100001}}^{97~\text{(a)}}
+  \overbrace{\byte{01101111}}^{111~\text{(o)}}
+  \overbrace{\byte{00100001}}^{33~\text{(!)}}
+  \overbrace{\byte{00001010}}^{10~\text{(Line feed)}}.
+\end{align*}
+Un risultato analogo si pu\`o ottenere in \python\ con qualcosa di simile al
+frammento~\ref{snip:iotest}
+
+\snip{iotest}{
+Caption.
+}
+
+
+\subsection{Imparare ad amare il \emph{backslash}}
+
+%https://lerner.co.il/2018/07/24/avoiding-windows-backslash-problems-with-pythons-raw-strings/
+Invariabilmente il neofita che inizia ad usare \python\ sotto \windows\ per leggere un
+file (diciamo, per fissare le idee, che il percorso a quest'ultimo \`e
+\texttt{C:$\backslash$abc$\backslash$def$\backslash$ghi.txt}) si trova a dover affrontare
+la situazione, apparentemente inspiegabile, per cui \python\ si ostina a dire che
+il file non esiste. Eppure abbiamo controllato innumerevoli volte, ed il file \`e l\`i.
+Cerchiamo di capire che cosa sta succedendo, iniziando dal frammento~\ref{snip:dos_path_escape}.
+
+\snip{dos_path_escape}{
+Caption.
+}
+
+Qualcosa chiaramente non va: abbiamo una \cchar{a} ed un backslash mancanti all'appello
+dopo i due punti, nella stringa di testo in uscita. La questione \`e che il carattere
+\cchar{\textbackslash} (ovvero il backslash) ha un significato particolare in molti
+linguaggi di programmazione, incluso \python: conferisce un significato differente
+dal solito al carattere (o alla serie di caratteri) che lo segue, in quello che
+tecnicamente si chiama una sequenza di escape, e che tipicamente si usa per rappresentare
+i caratteri di controllo della tabella ASCII (codici $0$--$31$). L'esempio forse
+pi\`u noto \`e quello dell'andata a capo, o line feed, che corrisponde al codice di
+controllo $10$ della tabella ASCII, e che nella quasi totalit\`a dei linguaggi di
+programmazione si rappresenta come \cchar{\textbackslash{}n}, ma \python, con una
+scelta mutuata dal C, riconosce, tra le altre, le sequenze di escape nella
+tabella~\ref{tab:sequenze_escape}.
+
+\begin{table}[!htb]
+  \tablehstack{
+    \centering\begin{tabular}{lll}
+        \hline
+        Sequenza di escape & Significato & Codice ASCII\\
+        \hline
+        \hline
+        \textbackslash{}\textbackslash & Backslash (\cchar{\textbackslash}) & \\
+        \textbackslash{}' & Single quote (\cchar{'}) & \\
+        \textbackslash{}" & Double quote (\cchar{"}) & \\
+        \textbackslash{}a & ASCII Bell (BEL) & \\
+        \textbackslash{}b & ASCII Backspace (BS) & \\
+        \textbackslash{}f & ASCII Formfeed (FF) & \\
+        \textbackslash{}n & ASCII Linefeed (LF) & $10$\\
+        \textbackslash{}r & ASCII Carriage Return (CR) & \\
+        \textbackslash{}t & ASCII Horizontal Tab (TAB) & \\
+        \textbackslash{}v & ASCII Vertical Tab (VT) & \\
+        \hline
+      \end{tabular}
+  }{
+    \caption{Tabella delle sequenze di escape riconosciute da \python, come illustrato nella
+      \href{https://docs.python.org/3/reference/lexical_analysis.html\#escape-sequences}{documentazione}.
+      Sebbene le sequenze di escape non siano esattamente la cosa che incontrerete
+      pi\`u spesso nella vita (\cchar{\textbackslash{}n} a parte per andare a capo),
+      il TAB (\cchar{\textbackslash{}t}) \`e occasionalmente utile per allineare
+      colonne di numeri all'interno di file di testo.}
+    \label{tab:sequenze_escape}
+  }
+\end{table}
+
+Cominciamo lentamente a capire cosa sta succedendo. Nel frammento~\ref{snip:dos_path_escape}
+i due caratteri \cchar{\textbackslash{}a} sono interpretati (correttamente) come la
+sequenza di escape corrispondente al codice di controllo $7$ nella tabella ASCII,
+vale a dire BEL, ovverosia la campanella del terminale---se eseguite il frammento
+interattivamente nel prompt di \python\ e non avete disabilitato la campanella del
+terminale, dovreste sentire un suono!
+
+Tornando al problema del percorso al nostro file di dati, l'altro aspetto rilevante
+della questione \`e la scelta degli sviluppatori della versione 2.0 del DOS di scegliere
+il backslash come separatore delle directory nel filesystem~\cite{dos_backslash},
+scelta che si \`e propagata a \windows\ ed \`e arrivata fino ai nostri giorni\footnote{
+I sistemi Unix e Unix-like, incluso GNU-Linux e Mac-OS, utilizzano uno \cchar{/}
+(slash) come carattere per la separazione delle directory nel filesystem, e questo
+problema, molto semplicemente, non si pone.}.
+Solo che in una stringa di \python (e, per quel che conta, lo stesso vale per la
+maggior parte dei linguaggi di programmazione e dei terminali) il backslash ha un
+significato speciale, e non \`e trattato come tutti gli altri caratteri. Allora la
+domanda \`e: come faccio a scrivere un backslash in una stringa? Una prima risposta
+corretta ce la fornisce la prima riga della tabella~\ref{tab:sequenze_escape}: possiamo
+usare un backslash per fare l'escape di se stesso, il che vuol dire che la sequenza
+di escape \cchar{\textbackslash{}\textbackslash} si traduce in un \cchar{\textbackslash{}}
+semplice. Questo funziona come uno si aspetta nella maggior parte delle situazioni.
+In alternativa, \python\ fornisce la possibilit\`a di aggiungere una lettera \cchar{r}
+o \cchar{R} prima della virgoletta iniziale della stringa: cos\`i facendo si crea
+quella che si chiama una stringa grezza (raw string), in cui il backslash \`e trattato
+alla pari di un qualsiasi altro carattere. Il frammento~\ref{snip:dos_path_escape_fix}
+illustra le due possibilit\`a.
+
+\snip{dos_path_escape_fix}{
+Caption.
+}
+
+C\`e un ultimo, piccolo colpo di scena nella storia, ovvero il fatto che, come vederemo
+nella sezione~\ref{sec:latex}, il backslash \`e utilizzato in \LaTeX\ per identificare
+i comandi all'interno di un documento. (Questo crea tutta una serie di sottili difficolt\`a
+quando si cerca di scrivere un backslash in un documento \LaTeX, e non vi nascondo
+che la battitura di questa sezione \`e stata meno triviale di quanto mi sarei aspettato).
+
+
+\subsection{Unicode: encoding e decoding}
+
+I pi\`u attenti avranno notato che la tabella ASCII non comprende le lettere accentate,
+che pure sono, per ovvi motivi, rilevanti per chi parla (e scrive in) italiano.
+
+Mettere un accenno allo standard unicode, ed esempio su come stampare le emoji su
+terminale.
+
+\snip{emoji}{
+Caption.
+}
+
+
+\subsection{Formattare il testo in \python}
+
+
+\section{La rappresentazione dei numeri}
+
+
+\subsection{Numeri interi}
+\label{sec:rappresentazione_interi}
+
+% https://www3.ntu.edu.sg/home/ehchua/programming/java/datarepresentation.html
+Adesso che abbiamo una buona familiarit\`a con i bit e la numerazione in base~$2$,
+la rappresentazione dei numeri interi risulta tutto sommato naturale---sicuramente
+pi\`u naturale e meno ambigua della rappresentazione di una stringa. Sappiamo gi\`a
+che con $n$~bit possiamo rappresentare $2^n$ configurazioni diverse, ad esempio tutti
+i numeri interi positivi tra $0$ e $2^n - 1$, ed in effetti se ci limitiamo agli
+interi positivi (senza segno, o unsigned) questo \`e proprio ci\`o che accade.
+Allora con $8$~bit possiamo rappresentare gli interi tra $0$ e $2^8 - 1 = 255$,
+con $16$~bit quelli da $0$ a $2^{16} - 1 = 65536$, e cos\`i via; il valore di un
+intero senza segno \`e semplicemente il valore numerico del pattern binario che lo
+rappresenta in memoria.
+
+Il segno complica leggermente le cose. La generalizzazione pi\`u semplice di quanto
+abbiamo appena detto \`e probabilmente quella che generalmente va sotto il nome di
+\emph{sign-magnitude representation}: utilizziamo il bit pi\`u significativo per
+codificare il segno (con lo $0$ che rappresenta numeri positivi e l'$1$ che rappresenta
+numeri negativi), e gli altri $n - 1$ per rappresentare il valore numerico. Questa
+rappresentazione non \`e utilizzata in pratica perch\'e ha due limitazioni importanti:
+ci sono due rappresentazioni possibili dello zero (se volete, $+0$ e $-0$), il che
+\`e suscettibile a confusione e, cosa pi\`u importante, interi positivi ed interi
+negativi debbono essere processati indipendentemente nelle operazioni aritmetiche.
+
+La strategia che invece si utilizza nei calcolatori \`e la cosiddetta
+\emph{2's complement representation} in cui: il bit pi\`u significativo rappresenta
+ancora il segno (con la solita convenzione), mentre i restanti $n - 1$~bit rappresentano
+il valore numerico con le seguenti regole:
+\begin{itemize}
+  \item per gli interi positivi (ovverosia quando il bit pi\`u significativo \`e $0$)
+    il valore assoluto del numero \`e uguale al valore numerico del pattern binario
+    degli $n - 1$~bit meno significativi;
+  \item per gli interi negativi si prende il complemento (ovvero la negazione bit a bit)
+    degli $n - 1$~bit meno significativi, aumentata di $1$.
+\end{itemize}
+Non \`e difficile convincersi che in questo modo si possono rappresentare tutti gli
+interi tra $-2^{n - 1}$ e $2^{n - 1} - 1$, con un'unica rappresentazione (e quindi non
+ambigua) dello zero. Ad esempio con $8$~bit si possono rappresentare tutti i numeri
+da un minimo di $-128$
+\begin{align*}
+  \byte{10000000} = \!\!\!\!\!
+  \underbrace{1}_\text{segno}\!\!\!\!\!\!\overbrace{0000000}^\text{valore}
+  \rightarrow -(0b1111111 + 0b1) = -0b10000000 = -0x80 = -128
+\end{align*}
+ad un massimo di $127$
+\begin{align*}
+  \byte{11111111} = \!\!\!\!\!
+  \underbrace{0}_\text{segno}\!\!\!\!\!\!\overbrace{1111111}^\text{valore}
+  \rightarrow +0b1111111 = +0x7F = +127,
+\end{align*}
+passando per lo zero, che \`e ovviamente rappresentato dal pattern $000000000$.
+% Note that
+% (-128).to_bytes(1, 'big', signed=True) = b'\x80'
+% and
+% (127).to_bytes(1, 'big', signed=True) = b'\x7f'
+
+\begin{table}[!htb]
+  \tablehstack{
+    \centering\begin{tabular}{lllll}
+        \hline
+        & \multicolumn{2}{l}{Unsigned} & \multicolumn{2}{l}{Signed}\\
+        Bit & Min. & Max. & Min. & Max.\\
+        \hline
+        \hline
+        $8$  & $0$ & $255$ & $-128$ & $127$ \\
+        $16$ & $0$ & $65535$ & $-32768$ & $32768$ \\
+        $32$ & $0$ & $\approx 4.294 \times 10^9$ &
+          $\approx -2.147 \times 10^9$ & $\approx 2.147 \times 10^9$ \\
+        $64$ & $0$ & $\approx 1.845 \times 10^{19}$ &
+          $\approx -9.223 \times 10^{18}$ & $\approx 9.223 \times 10^{18}$ \\
+        \hline
+      \end{tabular}
+  }{
+    \caption{Caption.}
+    \label{tab:integer_range}
+  }
+\end{table}
+
+La maggior parte dei linguaggi di programmazioni mette a disposizione dell'utente
+tipi distinti per interi unsigned e signed, con diverse profondit\`a---tipicamente
+$8$, $16$, $32$ o $64$ bit, ovverosia $1$, $2$, $3$ o $4$ byte. I corrispondenti
+intervalli utili sono indicato in tabella~\ref{tab:integer_range}.
+\python\ fa eccezione, in quanto fornisce l'implementazione del tipo intero ha precisione
+arbitraria, e la memoria utilizzata per la rappresentazione \`e allocata automaticamente
+a seconda del valore che vogliamo rappresentare. (Ma, come vederemo pi\`u avanti,
+la denominazione caratterstica dei tipi a precisione fissata riemerge come per magia
+in \numpy.)
+
+% https://jakevdp.github.io/PythonDataScienceHandbook/02.01-understanding-data-types.html
+Questo \`e probabilmente un buon momento per notare che, al contrario della maggior
+parte dei linguaggi compilati, dove quando allochiamo un intero in memoria stiamo
+operando pi\`u o meno nel modo descritto in questa sezione, in \python\ un oggetto
+di tipo intero \`e una struttura complessa che, come ogni oggetto in \python, si
+porta dietro come minimo il numero di referenze che puntano all'oggetto stesso
+(per il garbage collector) ed una referenza alla classe a cui esso appartiene.
+Questa informazione aggiuntiva \`e quello che convenzionalmente va sotto il nome di
+\emph{overhead}, come mostrato nel frammento~\ref{integer_size}.
+
+\snip{integer_size}{
+Caption.
+}
+
+
+\subsection{Digressione: stringhe, numeri e modalit\`a di IO}
+
+Arrivati a questo punto, se avete letto con attenzione, non potrete fare a meno di
+chiedervi: se io scrivo su disco un singolo byte, ad esempio \byte{10101001},
+che cosa ho fatto realmente? Dato che
+\begin{align*}
+  0b10101001 = 0xA9 = 169
+\end{align*}
+abbiamo almento tre risposte potenzialmente corrette a disposizione! Il $169$ \`e
+al di fuori della tabella ASCII ristretta, ma se lo interpretiamo come code point
+di una tipica estensione ad $8$ bit della codifica ASCII, abbiamo scritto un bel
+simbolo di copyright. Se assumiamo che il nostro byte di storage rappresenti un
+intero unsigned, allora abbiamo scritto $169$. Se invece assumiamo che sia un intero
+con segno, siccome il bit pi\`u significativo \`e $1$, si tratta di un numero negativo,
+e per la precisione $-87$. Complicato, eh?
+
+La risposta corretta \`e: dipende. Quando rileggiamo dal disco il nostro byte di
+informazione possiamo intepretarlo come vogliamo. Ed il corollario \`e che sar\`a
+bene assicurarci prima dell'intento con cui il file \`e stato scritto per evitare
+di prendere cantonate. Se il file in questione \`e un file di testo, allora dovremo
+leggerlo come tale, e con l'encoding corretto (quello con cui \`e stato scritto).
+Se invece il file \`e un file binario, allora dovremo leggerlo con la modalit\`a
+opportuna, e dobbiamo sapere esattamente qual \`e il layout dei dati all'interno
+per poterli spacchettare nel modo opportuno.
+
+\snip{byte}{
+Caption.
+}
+
+Abbiamo imparato una lezione fondamentale, ovvero la distinzione tra il contenuto
+di una porzione di memoria (sia essa volatile o su disco) ed il significato che
+noi diamo a quella particolare sequenza di $0$ ed $1$ all'interno del nostro programma.
+Ed abbiamo capito che lo stesso bit pattern in memoria pu\`o essere interpretato
+in pi\`u modi, che che dobbiamo fare attenzione ad essere consistenti nelle fasi di
+lettura e di scrittura.
+
+Prima di chiudere vale la pena di parlare un attimo della scrittura su disco. Senza
+entrare in discorsi troppo complicati, il caso d'uso tipico per il corso di laboratorio
+\`e quello in cui scriviamo, manualmente o programmaticamente, un numero (limitato)
+di valori in un file di testo, e poi rileggiamo questi valori con \numpy\ per
+analizzarli, come spiegato sommariamente nella sezione~\ref{sec:numpy_loadtxt}.
+Questo va benissmo, e funziona come uno si aspetterebbe, ma non dobbiamo dimenticare
+che, mentre un numero in virgola mobile (lo vedremo nella sezione~\ref{sec:virgola_mobile})
+costa su disco $32$ o $64$~bit, un numero scritto in un file di testo costa $8$
+bit per ciascun carattere---incluse le cifre numeriche, il separatore decimale se
+presenti, e la potenza di $10$ se scriviamo in notazione ingegneristica. Tanto per
+fissare le idee, scrivere \texttt{9.1093837139e-31} (la massa dell'elettrone in kg)
+in un file di testo costa esattamente $128$~bit, mentre con la met\`a dello spazio
+potremmo confortevolmente raggiungere lo stesso risultato se scrivessimo un file
+binario. \`E probabile che non abbiate l'occasione di apprezzare l'importanza della
+cosa quest'anno, ma tenetelo a mento, perch\'e prima o poi succeder\`a.
+
+
+\subsection{Numeri in virgola mobile}
+\label{sec:virgola_mobile}
+
+Guardiamo per un attimo il frammento di codice~\ref{snip:floating_point}:
+sorprendente, vero? L'aritmetica in virgola mobile è sempre una sorgente copiosa di
+sorprese per chi si avvicina per la prima volta alla
+programmazione~\cite{python_floating_point, bush_floating_point}, e lo scopo
+principale di questa appendice è di affrontare il problema nei termini più
+semplici possibili.
+
+\snip[0.55]{floating_point}{%
+Semplici esempi di aritmetica in virgola mobile che mettono in luce alcuni
+dei problemi tipici che si presentano nel calcolo scientifico.
+Vale la pena sottolineare che l'inesattezza dell'aritmetica in virgola mobile
+è una proprietà intrinseca dei calcolatori digitali (i.e., non è una
+caratteristica di \python, anche se linguaggi diversi hanno possono avere
+idiosincrasie diverse).
+}
+
+La questione fondamentale è tutto sommato ovvia: la maggior parte dei numeri
+reali non ha uno sviluppo decimale (o uno sviluppo in qualsiasi base) finito,
+e i calcolatori non hanno memoria (sia essa volatile o persistente) infinita,
+per cui in generale non è possibile rappresentare esattamente un numero reale
+in un calcolatore digitale. In altre parole:
+\emph{l'aritmetica in virgola mobile su un calcolatore digitale è, per sua
+natura, inesatta, e non garantisce le proprietà elementari che diamo spesso
+per scontate (e.g., la proprietà associativa della somma o la proprietà
+distributiva della moltiplicazione rispetto alla somma).}
+Ma per capire \emph{esattamente} cosa succede nel frammento~\ref{snip:floating_point}
+dobbiamo prima imparare a contare in base $2$\ldots
+
+La situazione diventa più interessante non appena introduciamo nel \foreign{mix}
+il separatore decimale. Che cosa significa, ad esempio, la scrittura $2.25$?
+Evidentemente
+\begin{align*}
+  2.25 = 2 + 2 \times 10^{-1} + 5 \times 10^{-2},
+\end{align*}
+il che vuol dire che, se non siamo interessati solamente ai numeri interi,
+dobbiamo generalizzare la nostra definizione~\eqref{eq:numero_base_arbitraria}
+come
+\begin{align}
+  (c_m\ldots c_2c_1c_0.c_{-1}c_{-2}\ldots)_n =
+  c_m \times n^m + \cdots + c_2 \times n^2 +  c_1 \times n + c_0 +
+  c_{-1} n^{-1} +   c_{-2} n^{-2} \ldots
+\end{align}
+In questo nuovo schema possiamo scrivere il nostro $2.25$ nel sistema di
+numerazione binario semplicemente come
+\begin{align*}
+  0b10.01 = 1 \times 2 + 0 + 0 \times 2^{-1} + 1 \times 2^{-2} =
+  2 + \frac{1}{4} = 2.25.
+\end{align*}
+
+Fino a qui nessuna sorpresa, ma cosa succede se proviamo a fare la stessa cosa
+con il numero (apparentemente innocuo) $0.1$? Per rispondere possiamo provare
+ad approssimare (da sopra e da sotto) con un numero fissato di cifre
+binarie dopo il punto fino a che non otteniamo il risultato esatto:
+
+\begin{center}
+  \begin{tabular}{lllcrrr}
+  $0.$ & $\nicefrac{0}{2}$ & $0b0.0$ & $0.1$ & $0b0.1$ & $\nicefrac{1}{2}$ & $0.5$\\
+  $0.$ & $\nicefrac{0}{4}$ & $0b0.00$ & $0.1$ & $0b0.01$ & $\nicefrac{1}{4}$ & $0.25$\\
+  $0.$ & $\nicefrac{0}{8}$ & $0b0.000$ & $0.1$ & $0b0.001$ & $\nicefrac{1}{8}$ & $0.125$\\
+  $0.0625$ & $\nicefrac{1}{16}$ & $0b0.0001$ & $0.1$ & $0b0.0010$ & $\nicefrac{2}{16}$ & $0.125$\\
+  $0.09375$ & $\nicefrac{3}{32}$ & $0b0.00011$ & $0.1$ & $0b0.00100$ & $\nicefrac{4}{32}$ & $0.125$\\
+  $0.09375$ & $\nicefrac{6}{64}$ & $0b0.000110$ & $0.1$ & $0b0.000111$ & $\nicefrac{7}{64}$ & $0.109375$\\
+  $0.09375$ & $\nicefrac{12}{128}$ & $0b0.0001100$ & $0.1$ & $0b0.0001101$ & $\nicefrac{13}{128}$ & $0.1015625$\\
+  $0.09765625$ & $\nicefrac{25}{256}$ & $0b0.00011001$ & $0.1$ & $0b0.00011010$ & $\nicefrac{26}{256}$ & $0.1015625$\\
+  $0.099609375$ & $\nicefrac{51}{512}$ & $0b0.000110011$ & $0.1$ & $0b0.000110100$ & $\nicefrac{52}{512}$ & $0.1015625$\\
+  \end{tabular}
+\end{center}
+Possiamo andare avanti quanto vogliamo, ma non è difficile convincersi che
+il numero decimale $0.1$ \emph{non ha uno sviluppo binario finito}---esattamente
+come la frazione \nicefrac{1}{3}, che si può scrivere come $(0.1)_3$ in base
+$3$ non ha uno sviluppo decimale finito. Possiamo approssimare il valore con un
+numero arbitrario $n$ di cifre (binarie)
+\begin{align*}
+  \frac{(2^n~\text{div}~10)}{2^n} < 0.1 <   \frac{(2^n~\text{div}~10) + 1}{2^n},
+\end{align*}
+ma lo sviluppo binario di $0.1$ è periodico:
+\begin{align*}
+  0.1 = 0b0.0001100110011001100110011001100110011001100110011001100110011001100
+  \ldots = 0b0.000\overline{1100}.
+\end{align*}
+
+\snip[0.69]{integer_ratio}{%
+Il metodo \pyfunc{as_integer_ratio} di \python~restituisce una coppia di interi
+il cui rapporto è \emph{esattamente} uguale al valore con cui viene
+immagazzinato (in generale in modo inesatto) un dato numero in virgola mobile.}
+
+A questo punto è lecito chiedersi: quando scriviamo $0.1$ nel \foreign{prompt} di
+\python, come viene immagazzinato internamente il nostro valore? La risposta
+è semplice, ed è illustrata nel frammento di codice~\ref{snip:integer_ratio}:
+\begin{align*}
+  0.1 \rightarrow \frac{3602879701896397}{36028797018963968} =
+  \frac{3602879701896397}{2^{55}} \sim 0.100000000000000005551115123126.
+\end{align*}
+La cosa è illuminante: non solo l'aritmetica in virgola mobile è, per sua
+natura, inesatta; \emph{i numeri in virgola mobile sono sempre rappresentati,
+all'interno di un calcolatore digitale, come rapporto di numeri interi, ovvero
+come il numero razionale (dato un denominatore massimo) che più si avvicina al
+valore di partenza.}
+Il fatto che in questo caso il denominatore sia una potenza di $2$ (e per
+l'esattezza $2^{55}$) non è un caso---ma per capire la cosa fino in fondo
+dobbiamo scendere nei dettagli della rappresentazione dei numeri in virgola mobile.
+
+Siamo finalmente arrivati alla parte interessante. Lo standard IEEE 754~\cite{ieee_754},
+che è ormai adottato pressoché universalmente, fornisce una prescrizione
+per la rappresentazione dei numeri in virgola mobile in logica binaria, e
+due specifiche di formato: a 32~bit (in precisione singola) e 64~bit (in
+precisione doppia), come mostrato in figura~\ref{fig:rappresentazione_float}.
+Più precisamente, ogni volta che scriviamo un numero in virgola mobile, dobbiamo
+pensare che, all'interno del calcolatore, esso è rappresentato come
+\begin{align}\label{eq:ieee_754}
+  x = (-1)^s \times m \times 2^{e - b} \quad \text{dove} \quad 1 \leq m < 2,
+\end{align}
+in cui, spostandosi da sinistra a destra nella rappresentazione---ovverosia dal
+bit più significativo a quello meno significativo:
+\begin{itemize}
+  \item $s$ rappresenta il \emph{segno} del numero, e corrisponde al bit
+    più significativo ($0$ se il numero è positivo, $1$ se è negativo);
+  \item $e$ è l'esponente, che ha a disposizione 8~bit in precisione singola
+    e 11~bit in precisione doppia; $b$, che prende il nome di \foreign{bias},
+    è una costante additiva (positiva) che permette di rappresentare numeri
+    $< 1$ senza bisogno di aggiungere un segno all'esponente, e vale $127$ in
+    precisione singola e $1023$ in precisione doppia;
+  \item $m$ prende il nome di \emph{mantissa} e rappresenta (utilizzando 23~bit in
+    precisione singola e 52~bit in precisione doppia) la sequenza di cifre dopo
+    la virgola, \emph{assumendo che la parte intera sia $1$} (cioè la mantissa
+    è convenzionalmente compresa tra $1$ e $2$ ed il bit più significativo,
+    che è garantito essere $1$, può essere omesso).
+\end{itemize}
+
+\begin{figure}[!htbp]
+  \center\input{figures/rappresentazione_float}
+  \vspace*{-10pt}
+  \caption{\foreign{Layout} dei due formati per la rappresentazione binaria dei
+  numeri in virgola mobile definiti dallo standard IEEE~754: in precisione
+  doppia (11~bit per l'esponente e 53 per la mantissa) ed in precisione singola
+  (8~bit per l'esponente e 23 per la mantissa). Il \foreign{bias} per l'esponente
+  è $1023$ nel primo caso e $127$ nel secondo.}
+  \label{fig:rappresentazione_float}
+\end{figure}
+
+
+Cominciamo allora da un numero semplice (i.e., con uno sviluppo binario finito,
+come quello che abbiamo considerato all'inizio di questa sezione):
+\begin{align*}
+  x = 2.25 = 0b10.01 = \frac{9}{4} = 1.125 \times 2.
+\end{align*}
+I passaggi sono tutti rilevanti (e.g., $\nicefrac{9}{4}$ costituisce la
+rappresentazione di $x$ come il rapporto tra i due interi più piccoli possibile,
+come potete verificare direttamente utilizzando \pyfunc{as_integer_ratio} in \python)
+ma l'ultimo è quello più importante, perché rappresenta $x$ esattamente
+nella forma~\eqref{eq:ieee_754}, ovverosia come il prodotto di una mantissa
+$1 \leq m < 2$ per una potenza di $2$.
+Nel formato in doppia precisione avremo dunque
+\begin{align*}
+  s & = 0\\
+  e & - b = 1 \implies e = 1024 =  0b10000000000\\
+  m & = 1.125 = 0b(1).0010000000000000000000000000000000000000000000000000
+\end{align*}
+(notate che abbiamo indicato tutti gli 11~bit per l'esponente ed i 52~per la
+mantissa, con il bit più significativo di normalizzazione tra parentesi) e,
+in definitiva
+\begin{align*}
+  x \rightarrow 0b0\overbrace{0010000000}^{e-b}
+  \overbrace{0010000000000000000000000000000000000000000000000000}^{m~\text{(bit più significativo omesso)}}
+  = 0x4002000000000000 .
+\end{align*}
+Wow! Abbiamo scritto il nostro primo numero in virgola mobile nella forma in
+cui lo troveremmo nel disco rigido del nostro calcolatore! Adesso possiamo
+chiudere il cerchio e provare a fare la stessa cosa con il famigerato
+\begin{align*}
+  x = 0.1 = 0.1 \times 16 \times 2^{-4} = 1.6 \times 2^{-4}.
+\end{align*}
+Procedendo esattamente come prima si ha
+\begin{align*}
+  s & = 0 \\
+  e & - b = - 4 \implies e = 1019 = 0b01111111011\\
+  m & = 1.6 \approx 0b(1).1001100110011001100110011001100110011001100110011010
+\end{align*}
+(notate che questa volta la mantissa non può rappresentare esattamente il numero di
+partenza con un numero finito di bit) e dunque
+\begin{align*}
+  x \rightarrow 0b0\overbrace{01111111011}^{e-b}
+  \overbrace{1001100110011001100110011001100110011001100110011010}^{m~\text{(bit più significativo omesso)}}
+  = 0x3FB999999999999A.
+\end{align*}
+La cosa interessante, a questo punto, è che se moltiplichiamo la mantissa per
+$2^{52}$ (il che equivale a considerare la mantissa stessa, incluso il bit più
+significativo \emph{nascosto}, come un numero intero espresso in base $2$), si ha
+\begin{align*}
+  x = \frac{m \times 2^{52}}{2^{52 - (e  - b)}} =
+  \frac{7205759403792794}{2^{56}} = \frac{3602879701896397}{2^{55}}
+\end{align*}
+(l'ultimo passaggio è possibile grazie al fatto che il numeratore è divisibile
+per $2$, in quanto la cifra meno significativa del suo sviluppo binario è zero).
+Ricorda qualcosa? Il frammento~\ref{snip:integer_ratio}?
+
+
+\section{Buone e cattive proprietà dell'aritmetica in virgola mobile}
+
+Adesso che abbiamo gli strumenti di base per una discussione più informata sulle
+proprietà dell'aritmetica in virgola mobile su un calcolatore digitale,
+facciamo un passo indietro e riesaminiamo criticamente alcune delle cose che
+abbiamo detto all'inizio di questa sezione.
+
+Il modello di rappresentazione dei numeri codificato nello standard IEEE~754
+ha una serie di buone proprietà che lo rendono estremamente versatile e
+riducono, per quanto possibile, il potenziale impatto della precisione finita
+sui risultati finali: permette di rappresentare numeri su un intervallo dinamico
+di molti ordini di grandezza e fornisce la stessa accuratezza \emph{relativa}
+su tutto l'intervallo. In particolare: il massimo numero rappresentabile è dettato
+da numero di bit $n_e$ dell'esponente
+\begin{align*}
+  x_\text{max} \approx 2^{2^{n_e - 1}} =
+  \begin{cases}
+    2^{128} \approx 10^{38} \quad & \text{in precisione singola}\\
+    2^{1024} \approx 10^{308} \quad & \text{in precisione doppia}.
+  \end{cases}
+\end{align*}
+Se si considera che il numero stimato di protoni nell'universo è dell'ordine di
+$10^{80}$ e la lunghezza di Planck è $1.6 \times 10^{-35}$~m, capiamo
+immediatamente che non c'è di che preoccuparsi.
+
+Di converso, la \emph{precisione} è dettata dal numero $n_m$ di bit a disposizione
+per la mantissa, e si può esprimere in termini di cifre decimali equivalenti
+come
+\begin{align*}
+  \frac{x}{\varepsilon_x} \approx \log_{10} \left( 2^{n_s + 1}\right) =
+  \begin{cases}
+    7 \quad & \text{in precisione singola}\\
+    16 \quad & \text{in precisione doppia}.
+  \end{cases}
+\end{align*}
+Anche qui, almeno apparentemente, non abbiamo niente da temere---il momento magnetico
+dell'elettrone è misurato in circa una parte su $10^{12}$, e questo
+rappresenta più o meno lo stato dell'arte.
+
+\snip{floating_point2}{%
+Semplice illustrazione di come la proprietà commutativa dell'addizione non
+valga quando applicata all'aritmetica in virgola mobile su un calcolatore
+digitale.}
+
+Eppure non possiamo chiudere gli occhi e riposare tranquilli, perché l'aritmetica in
+virgola mobile è prodiga di sorprese, come mostrato nel frammento di
+codice~\ref{snip:floating_point2}. La referenza~\cite{bush_floating_point}
+contiene una discussione più approfondita della questione ed una serie di consigli
+pratici per evitare i problemi più comuni (e.g., sottrazione di numeri molto grandi
+vicini tra loro, operazioni con numeri che differiscono di molti ordini di grandezza,
+confronto tra numeri in virgola mobile nel controllo del flusso logico del programma),
+ma adesso è veramente giunto il momento di chiudere.
+
+
+\section{La libreria standard di \python}
+
+\subsection{Il meccanismo di \code{import}}
+
+\section{L'ecosistema scientifico di \python}
+
+\subsection{\numpy}
+\label{sec:numpy}
+
+\subsection{Array}
+
+\subsection{Funzioni matematiche e vettorizzazione}
+
+\subsection{Leggere file di testo con tabelle di numeri}
+\label{sec:numpy_loadtxt}
+
+
+\section{Scrivere documenti scientifici: \LaTeX}
+\label{sec:LaTeX}
+
+\LaTeX\ \`e un programma estremamente potente per la formattazione di
+documenti di testo, fortemente orientato alla matematica, che gode di
+una notevole popolarit\`a nella comunit\`a scientifica e tra i fisici in
+particolare.
+In questo capitolo il nostro approccio sar\`a, in un certo senso, minimale:
+impareremo come si scrive e compila un documento \LaTeX\ e come si introducono,
+all'interno del testo, liste tabelle, equazioni e figure. \`E tutto ci\`o che
+verosimilmente pu\`o risultare utile nella redazione di una breve relazione
+didattica. Per il resto rimandiamo alla documentazione specifica, che \`e
+sconfinata, ed in particolare ai riferimenti bibliografici.
+
+Prima di entrare nel vivo della discussione, cerchiamo di chiarire alcuni
+punti fondamentali che spesso confondono il neofita e che distinguono
+\LaTeX\ dai \emph{word processor} pi\`u comunemente usati, come
+OpenOffice o Microsoft~Word.
+\LaTeX\ \emph{non} fa parte dei programmi di formattazione di tipo WYSIWYG%
+\footnote{
+Questo orrendo acronimo, che pure si trova piuttosto diffusamente nei manuali
+e nella documentazione, sta per l'espressione inglese \emph{What You See Is
+What You Get} che, tradotta alla lettera, significa: ci\`o che vedi \`e ci\`o
+che ottieni.}%
+. L'idea fondamentale che, consapevolmente o meno, sta alla base di questo tipo
+di programmi (quelli \emph{a la} Microsoft Word, tanto per intenderci) \`e la
+seguente: quello che appare sullo schermo \emph{mentre} scriviamo \`e
+sostanzialmente identico al documento finale, come apparir\`a \emph{dopo}
+la stampa. Questa idea, che pure sembra cos\`i naturale, tende purtroppo a
+nascondere il fatto che la stesura (cio\`e la scrittura vera e propria del
+documento, l'organizzazione concettuale del materiale e la scelta delle parole)
+e la formattazione (cio\`e la scelta dei caratteri, l'organizzazione della
+veste grafica e l'impaginazione) costituiscono due fasi distinte e
+concettualmente diverse nella produzione di un documento scritto.
+\`E pure evidente che la stesura e la formattazione di un testo richiedono
+capacit\`a e competenze diverse e che un ottimo scrittore pu\`o essere un
+pessimo tipografo e viceversa.
+
+Facciamo un esempio concreto, tanto per chiarire le idee. Se volessimo dare
+inizio ad un nuovo capitolo di un nostro ipotetico documento, quel che la
+maggior parte di noi farebbe con un \emph{word processor} di tipo WYSIWYG
+sarebbe con ogni probabilit\`a scrivere il titolo, poi selezionarlo, metterlo
+in grassetto, aumentare un po' la dimensione del carattere e magari, a seconda
+dei gusti, centrarlo nella pagina. Si tratta di una tipica situazione in cui
+si rischia, per cos\`i dire, di \emph{mischiare} il lavoro dello scrittore e
+quello del tipografo. Ma vi \`e un'altra cosa importante: nonostante
+tutti nostri sforzi e le operazioni di formattazione che abbiamo compiuto,
+non vi \`e ancora niente nel nostro titolo che lo qualifichi come tale,
+nel senso della struttura del documento, e che lo distingua dal resto del
+testo.
+
+In \LaTeX\ l'approccio \`e radicalmente diverso. Un \emph{file} \LaTeX\ \`e
+un misto di testo e comandi che sostanzialmente \emph{non} contiene
+informazioni riguardanti la formattazione (e dunque, per definizione, non ha
+nemmeno la vaga pretesa di apparire simile all'esito finale della stampa).
+La formattazione vera e propria avviene invece in un secondo momento, quando
+il \emph{file} stesso viene processato con un apposito programma. Tanto per
+tornare all'esempio di prima, il titolo del nostro capitolo in un documento
+\LaTeX\ verr\`a racchiuso, come vedremo, entro un apposito comando che lo
+qualifica effettivamente come titolo di un capitolo e che il programma di
+formattazione \`e in grado di riconoscere ed interpretare correttamente a
+seconda delle impostazioni definite dall'utente.
+
+Intendiamoci: in alcuni casi (una lettera di poche righe, ad esempio) vi \`e
+talmente poco lavoro di tipografia che probabilmente si pu\`o sopravvivere
+senza \LaTeX\ (anche se \LaTeX\ ha un bellissimo \emph{template} per le
+lettere). D'altra parte anche i programmi di formattazione WYSIWYG, se usati
+\emph{propriamente}, consentono di soddisfare la maggior parte delle esigenze.
+Ma quando si deve affrontare la redazione di un documento complesso e
+voluminoso, \LaTeX\ ha, tra gli altri, l'indubbio vantaggio di
+rendere difficile il realizzarlo in modo tipograficamente mal strutturato.
+Un motivo sufficiente, quanto meno, per provarlo%
+\footnote{
+\LaTeX\ \`e un programma \emph{freeware} (cio\`e pu\`o essere scaricato da
+web, installato e addirittura redistribuito in modo assolutamente
+libero) ed \emph{open source} (cio\`e il codice sorgente \`e aperto,
+consultabile e modificabile da tutti).}.
+
+
+\subsection{Dalla stesura alla stampa}
+
+Come abbiamo gi\`a detto, un documento \LaTeX\ \`e composto sostanzialmente da
+un misto di testo e di comandi \LaTeX\ validi; ne vedremo numerosi esempi
+nelle prossime sezioni.
+In ogni caso la realizzazione del prodotto finale, pronto per la stampa,
+passa attraverso le operazioni fondamentali (cfr. figura \ref{fig:LaTeX})
+elencate di seguito:
+% \panelfig
+% {\input{./ps_LaTeX/figure/workflow.tex}}
+% {Schema concettuale della preparazione di un documento con \LaTeX.
+% La prima \`e costituita dalla stesura del documento stesso, che avviene
+% utilizzando un qualsiasi editor di testo.
+% Il programma di compilazione permette di creare un'anteprima di come il
+% documento finale apparir\`a al momento della stampa. In questa prima fase il
+% documento \LaTeX\ viene tipicamente compilato un numero cospicuo di volte,
+% fino a che l'autore non \`e soddisfatto del prodotto finale. A questo punto
+% l'anteprima pu\`o essere convertita nei formati pdf o ps per l'archiviazione,
+% la condivisione e la stampa.}
+% {fig:LaTeX}
+
+\begin{enumerate}
+\item{
+Stesura del documento \LaTeX. Qualsiasi editor di testo%
+\footnote{
+Possiamo citare emacs sotto \linux\ e notepad (blocco note) sotto \windows.
+\`E importante notare che i word processor pi\`u avanzati non sono editor di
+testo e non servono quindi allo scopo (provare per credere!).
+}
+va bene allo scopo, ovviamente, anche se vale la pena di notare che alcuni
+(sia sotto \linux\ che sotto \windows) possiedono funzionalit\`a specifiche
+molto utili%
+\footnote{
+Tra questi ricordiamo Kile sotto \linux\ e TeXniCenter sotto \windows.
+}%
+.
+Per fissare le idee, se vogliamo creare un nuovo \emph{file} \LaTeX\ chiamato
+\cchar{Relazione.tex} usando emacs sotto \linux, digiteremo nella \emph{shell}:
+\begin{verbatim}
+>emacs Relazione.tex &
+\end{verbatim}
+}
+\item{
+Compilazione. Si esegue dal terminale%
+\footnote{
+Per terminale intendiamo qui sia la \emph{shell} di \linux\ che il
+\emph{prompt} di \dos\ nel caso in cui si lavori sotto \windows. Notiamo anche
+esplicitamente che, nel caso in cui si utilizzino editor orientati a \LaTeX\
+come quelli citati prima, vi sono in generale appositi pulsanti nelle
+rispettive interfacce grafiche per l'utente che permettono di eseguire questa
+operazione automaticamente.
+}
+attraverso il comando \ccmd{latex}. Ad esempio per compilare il \emph{file}
+\cchar{Relazione.tex} digiteremo:
+\begin{verbatim}
+>latex Relazione.tex
+\end{verbatim}
+In questo modo, a meno che non vi siano errori di sintassi all'interno del
+documento \LaTeX\ (nel qual caso il compilatore si lamenter\`a e potrete
+tornare al terminale premendo \ckey{CTRL + C}), verr\`a prodotto un certo
+numero di \emph{file} con diverse estensioni (dvi, log, aux).
+Il pi\`u importante \`e senza dubbio il \emph{file} con estensione dvi%
+\footnote{
+L'estensione .dvi \`e l'acronimo dell'espressione inglese \emph{DeVice
+Independent} che, tradotta letteralmente, significa: indipendente dal
+dispositivo.
+}
+che, come vedremo tra un attimo, rappresenta una sorta di \emph{anteprima di
+stampa}.
+}
+\item{
+Visualizzazione dell'anteprima. \`E necessario utilizzare un programma in
+grado di leggere correttamente il \emph{file} dvi. Sotto \linux%
+\footnote{
+Sotto \windows\ si usa tipicamente un programma che si chiama yap e che viene
+installato automaticamente al momento dell'installazione di \LaTeX.
+Se si usano editor di testo con funzionalit\`a specifiche, essi includono
+spesso dei bottoni per compiere l'operazione automaticamente.
+}
+si utilizza tipicamente il comando \ccmd{xdvi}:
+\begin{verbatim}
+>xdvi Relazione.dvi &
+\end{verbatim}
+}
+\item{
+Conversione in un formato adatto per la stampa. Quando siamo soddisfatti del
+nostro documento, come appare nel formato dvi, possiamo convertirlo in un
+formato adatto per essere archiviato, condiviso o stampato. Tipicamente questo
+formato pu\`o essere il postscript:
+\begin{verbatim}
+>dvips Relazione.dvi -o Relazione.ps
+\end{verbatim}
+oppure il pdf:
+\begin{verbatim}
+>dvipdfm Relazione.dvi Relazione.pdf
+\end{verbatim}
+Nel primo caso creiamo il \emph{file} postscript \cchar{Relazione.ps}, nel
+secondo il \emph{file} pdf \cchar{Relazione.pdf}, che possono essere
+visualizzati con GhostView ed Acrobat Reader, rispettivamente, oltre che
+essere stampati con il comando usuale.
+}
+\end{enumerate}
+
+
+\subsection{Il primo documento \LaTeX}
+\label{sec:Documento1}
+
+Tanto abbiamo detto sulla compilazione e la stampa che probabilmente \`e
+giunto il momento di cercare di capire come effettivamente questo documento
+\LaTeX\ vada scritto.
+
+Cominciamo dunque con il pi\`u semplice documento che si possa immaginare
+e scriviamo un \emph{file} di testo contente le $4$ linee seguenti:
+\begin{verbatim}
+\documentclass[11pt, a4paper]{article}
+\begin{document}
+Il mio primo documento\ldots
+\end{document}
+\end{verbatim}
+Il risultato della compilazione, essenzialmente pronto per essere stampato,
+\`e mostrato in figura~\ref{fig:Documento1}.
+% \panelfig
+% {\framebox{\includegraphics[width=14cm]{./ps_LaTeX/figure/documento1}}}
+% {Risultato della compilazione del documento \LaTeX\ riportato nel
+% paragrafo \ref{sec:Documento1}.}
+% {fig:Documento1}
+Non \`e niente di esaltante, bisogna ammetterlo\ldots Ma prima di andare
+avanti e familiarizzare con funzionalit\`a pi\`u potenti ed avanzate,
+cerchiamo di capire il significato di ciascuna delle quattro righe del nostro
+documento. Una per una.
+
+\begin{verbatim}
+\documentclass[11pt, a4paper]{article}
+\end{verbatim}
+Qui dichiariamo sostanzialmente il tipo di documento. Diciamo che si tratta di
+un documento del tipo \emph{article}%
+\footnote{
+Esistono moltissimi tipi diversi di documenti predefiniti in \LaTeX\, tra cui
+\emph{book}, \emph{report}, \emph{letter} e \emph{slides}; altri possono essere
+aggiunti, anche se non si tratta esattamente della cosa pi\`u semplice del
+mondo. Il tipo \emph{article} si presta piuttosto bene alla stesura di una
+relazione di media lunghezza su una esperienza didattica ed \`e questo il
+motivo per cui lo abbiamo scelto per i nostri esempi.
+}%
+, che la dimensione dei caratteri del testo ordinario \`e $11$ punti%
+\footnote{
+Esistono anche le varianti 10 e 12 punti.
+}%
+, e che la dimensione della pagina \`e quella di un foglio A4%
+\footnote{
+Altri formati validi, solo per citarne un paio, sono \emph{a5paper}
+e \emph{letterpaper}.
+}
+(che \`e la scelta tipica).
+
+\begin{verbatim}
+\begin{document}
+\end{verbatim}
+Segna l'inizio del documento vero e proprio. In generale questo comando separa
+quello che \`e chiamato \emph{preambolo} (nel nostro caso \`e sostanzialmente
+la linea precedente) dal \emph{corpo} vero e proprio del documento, che \`e
+\emph{sempre} contenuto tra un comando di inizio ed un comando di fine
+documento.
+
+\begin{verbatim}
+Il mio primo documento\ldots
+\end{verbatim}
+Si tratta del corpo del nostro documento, ed in effetti \`e la parte che
+compare nella versione pronta per la stampa, come si pu\`o vedere in figura
+\ref{fig:Documento1}.
+
+\begin{verbatim}
+\end{document}
+\end{verbatim}
+Questa linea chiude il documento ed \`e sempre richiesta alla fine di un
+\emph{file} \LaTeX\ valido.
+
+Nel prossimo paragrafo vedremo un esempio di documento pi\`u realistico e
+cominceremo ad apprezzare alcune funzionalit\`a pi\`u utili ed avanzate.
+
+
+\subsection{Un documento realistico}
+\label{sec:Documento2}
+
+Consideriamo attentamente il documento \LaTeX\ (valido) che segue\ldots
+
+\begin{verbatim}
+\documentclass[11pt, a4paper]{article}
+\title{Il mio primo documento}
+\author{Luca Baldini}
+\date{20 Giugno 2006}
+
+\begin{document}
+\maketitle
+
+\subsection{Introduzione}
+Questo vuole essere un esempio di documento realistico, con lo scopo
+di mostrare alcune tra le funzionali\`a di base di \LaTeX.
+
+\subsection{Un nuovo capitolo}
+Una prima cosa da notare \`e che, una volta dichiarate le sezioni del
+documento, \LaTeX\ si occupa automaticamente della numerazione. Questo
+pu\`o risultare estremamente utile nel caso in cui si voglia aggiungere
+una nuova sezione in mezzo ad un documento in stato avanzato di stesura
+(non \`e necessario rinumerare ci\`o che viene dopo, \LaTeX\ fa
+tutto da solo).
+
+\subsubsection{Una sotto-sezione}
+Come vedete esiste anche un livello pi\`u \emph{basso} di sezionamento
+del documento.
+
+\subsubsection{Ancora una sottosezione}
+Anche a questo livello la numerazione \`e automatica. Questo consente
+anche, in documenti pi\`u complessi, la generazione automatica dell'indice.
+
+\subsection{Conclusioni}
+Per il momento ci fermiamo qui, abbiamo abbastanza di cui discutere\ldots
+
+\end{document}
+\end{verbatim}
+
+\noindent \ldots e vediamo come appare l'uscita del compilatore, pronta per
+la stampa, che \`e riportata in figura \ref{fig:Documento2}.
+% \panelfig
+% {\framebox{\includegraphics[width=14cm]{./ps_LaTeX/figure/documento2}}}
+% {Risultato della compilazione del documento \LaTeX\ riportato nel
+% paragrafo \ref{sec:Documento2}.}
+% {fig:Documento2}
+Cominciamo con alcuni commenti di carattere generale per poi passare
+all'analisi di alcuni tra i nuovi comandi che abbiamo appena incontrato.
+
+Tutti i comandi \LaTeX\ cominciano con il carattere ``\verb|\|''
+(\emph{backslash}). Alcuni di essi accettano (o richiedono, a seconda del
+caso) \emph{opzioni} (che sono sempre contenute tra parentesi quadre) e
+\emph{argomenti} (racchiusi tra parentesi graffe).
+I comandi ed il testo sono, come \`e evidente, mischiati insieme all'interno
+del documento. \`E importante notare come gli spazi multipli siano trattati
+come  spazi singoli e come i ritorni a capo siano semplicemente ignorati,
+se non che una linea vuota segna l'inizio di un nuovo paragrafo.
+Esiste ovviamente un comando per andare a capo ed \`e ``\verb|\\|''
+(doppio \emph{backslash}).
+
+Tra i comandi rivestono particolare importanza quelli di sezionamento, che sono
+utilizzati molto frequentemente. I documenti di tipo \emph{article} ammettono
+i due comandi di sezionamento:
+\begin{verbatim}
+\section{}
+\subsection{}
+\end{verbatim}
+che accettano come argomento il titolo della sezione o della sotto-sezione,
+rispettivamente.
+
+Una volta definito il tipo di documento, \LaTeX\ si occupa automaticamente sia
+di numerare le sezioni e le sotto-sezioni che di fissare le dimensioni e
+le altre caratteristiche dei caratteri per il testo ordinario e per i titoli.
+Si tratta di un punto qualificante della filosofia di \LaTeX: il documento non
+contiene, al suo interno, alcuna informazione riguardante la formattazione.
+Ovviamente \`e possibile fare ogni genere di cambiamento, ma questo avviene
+ordinariamente nel preambolo attraverso comandi specifici. Rimandiamo ai
+riferimenti bibliografici per questi argomenti, che sono, in un certo senso,
+pi\`u avanzati.
+
+Veniamo adesso alla descrizione (sintetica, per necessit\`a) di alcuni dei
+nuovi comandi che abbiamo introdotto.
+
+\begin{verbatim}
+\title{Il mio primo documento}
+\author{Luca Baldini}
+\date{20 Giugno 2006}
+\end{verbatim}
+Questo blocco definisce, come \`e naturale aspettarsi, il titolo, l'autore e
+la data di composizione del documento, rispettivamente.
+Se il comando date non viene dato esplicitamente, \LaTeX\ scrive
+automaticamente la data del giorno, mutuata dal tempo di sistema del
+calcolatore. Di \emph{default} questa data viene scritta in lingua inglese,
+ma si pu\`o ovviare a questo inconveniente mettendo nel preambolo il comando
+``\verb|\usepackage[italian]{babel}|''. Se non si vuole la data \`e
+sufficiente scrivere ``\verb|\date{}|''.
+
+Vale la pena notare che, di per s\'e,  questi comandi non hanno alcun effetto
+(provare per credere!), a meno che non siano seguiti, nel corpo del documento,
+dal comando:
+\begin{verbatim}
+\maketitle
+\end{verbatim}
+
+I pi\`u attenti avranno notato come sono state \emph{prodotte} le lettere
+accentate. Ad esempio i due comandi ``\verb|\`e|'' e ``\verb|\'e|'' generano,
+dopo la compilazione, i due caratteri ``\`e'' ed ``\'e'' (cogliamo l'occasione
+per ricordare che la lingua Italiana possiede due accenti distinti: quello
+grave e quello acuto).
+Si tratta di un altro tratto distintivo della filosofia di \LaTeX, per cui si
+tende a costruire esplicitamente gli oggetti complicati (ad esempio una
+lettera accentata) a partire da oggetti pi\`u semplici (la lettera e
+l'accento), anzich\'e avere un numero divergente di oggetti (e di tasti,
+in questo caso\ldots) fin dall'inizio%
+\footnote{
+Ad essere onesti \LaTeX\ offre supporto completo, previa dichiarazione di un
+apposito pacchetto nel preambolo, per la tastiera Italiana e, quindi, per le
+ordinarie lettere accentate. Il lettore interessato pu\`o trovare le
+informazioni relative nella documentazione specifica.
+}%
+.
+Non serve aggiungere che il gioco funziona non solo con la a, ma con tutte le
+vocali (ed anche con le consonanti, sebbene il risultato non sia in genere
+particolarmente utile).
+
+
+\subsection{Elenchi}
+
+Molte delle esigenze pi\`u avanzate del semplice testo vengono gestite
+in \LaTeX\ attraverso specifici \emph{ambienti} predefiniti.
+Tecnicamente un ambiente \`e una porzione di documento inclusa tra un comando
+``\verb|\begin{nome_ambiente}|'' ed un comando ``\verb|\end{nome_ambiente}|''.
+
+Esistono \emph{ambienti}, ad esempio, per la creazione di elenchi puntati e
+numerati. Le seguenti linee:
+\begin{verbatim}
+\begin{itemize}
+\item{Punto primo.}
+\item{Punto secondo.}
+\end{itemize}
+\end{verbatim}
+producono, dopo la compilazione:
+\begin{itemize}
+\item{Punto primo.}
+\item{Punto secondo.}
+\end{itemize}
+D'altra parte questo frammento:
+\begin{verbatim}
+\begin{enumerate}
+\item{Punto primo.}
+\item{Punto secondo.}
+\end{enumerate}
+\end{verbatim}
+genera:
+\begin{enumerate}
+\item{Punto primo.}
+\item{Punto secondo.}
+\end{enumerate}
+
+
+\subsection{Tabelle}
+
+Le tabelle si costruiscono, secondo la filosofia di \LaTeX, a partire da
+elementi \emph{semplici}: essenzialmente linee e caratteri come
+mostrato nel frammento di codice che segue:
+\begin{verbatim}
+\begin{tabular}{cc}
+\hline
+Colonna 1 & Colonna 2 \\
+\hline
+\hline
+a & b \\
+c & d \\
+\hline
+\end{tabular}
+\end{verbatim}
+e che, compilato, genera:
+
+\vspace{0.5 cm}
+\begin{tabular}{cc}
+\hline
+Colonna 1 & Colonna 2 \\
+\hline
+\hline
+a & b \\
+c & d \\
+\hline
+\end{tabular}
+\vspace{0.5 cm}
+
+\noindent Analizziamo in dettaglio queste poche righe una alla volta. La prima:
+\begin{verbatim}
+\begin{tabular}{cc}
+\end{verbatim}
+\`e piuttosto densa di significato. Sostanzialmente segna l'inizio
+dell'ambiente \cchar{tabular} e dichiara una tabella di due colonne.
+Ognuna delle due \cchar{c} sta qui per \emph{center} e sta ad indicare
+che il contenuto della colonna corrispondente sar\`a centrato.
+Il lettore non sar\`a stupito di sentire che \`e possibile allineare
+a destra o a sinistra il contenuto delle colonne usando \cchar{r}
+(\emph{right}) o \cchar{l} (\emph{left}), rispettivamente%
+\footnote{Per completezza ricordiamo che in \LaTeX\ \`e possibile utilizzare
+il delimitatore \cchar{|} per separare le colonne di una tabella con linee
+verticali---in questo caso particolare potremmo scrivere, ad esempio,
+\cchar{|c|c|} anzich\'e \cchar{cc}. Tuttavia l'uso di separatori verticali
+nelle tabelle non \`e considerata una buona pratica tipografica.}%
+.
+
+Le linee orizzontali debbono essere esplicitamente dichiarate tramite il
+comando ``\verb|\hline|'' ed il contenuto vero e proprio della tabella \`e
+strutturato come nella riga seguente:
+\begin{verbatim}
+a & b \\
+\end{verbatim}
+Il carattere \cchar{\&} serve da separatore tra celle contigue appartenenti
+alla stessa linea, mentre il doppio \emph{backslash} (``\verb|\\|'') funge da
+terminatore di linea.
+
+Vale la pena, trovandoci in argomento, notare che con poche righe in pi\`u:
+\begin{verbatim}
+\begin{table}[!htb]
+\begin{center}
+\begin{tabular}{cc}
+\hline
+Colonna 1 & Colonna 2 \\
+\hline
+\hline
+a & b \\
+c & d \\
+\hline
+\end{tabular}
+\caption{Questa \`e una tabella di esempio.}
+\end{center}
+\end{table}
+\end{verbatim}
+\`e possibile ottenere un risultato estremamente pi\`u appagante da un punto
+di vista estetico (cfr. tabella~\ref{tabella_esempio}).
+\begin{table}[htb!]
+\begin{center}
+\begin{tabular}{cc}
+\hline
+Colonna 1 & Colonna 2 \\
+\hline
+\hline
+a & b \\
+c & d \\
+\hline
+\end{tabular}
+\caption{Questa \`e una tabella di esempio.}
+\label{tabella_esempio}
+\end{center}
+\end{table}
+Esaminiamo le differenze una per una. La pi\`u evidente \`e che adesso la
+tabella \`e centrata. Questo si ottiene banalmente includendola all'interno dei
+comandi:
+\begin{verbatim}
+\begin{center}
+\end{center}
+\end{verbatim}
+I pi\`u attenti avranno anche notato che abbiamo introdotto un ulteriore nuovo
+ambiente attraverso le due linee:
+\begin{verbatim}
+\begin{table}[!htb]
+\end{table}
+\end{verbatim}
+Questo ha due (benefici) effetti distinti. Il primo \`e che diventa possibile
+aggiungere una didascalia (automaticamente numerata) alla tabella attraverso
+il comando:
+\begin{verbatim}
+\caption{}
+\end{verbatim}
+Il secondo (e pi\`u importante) \`e che la tabella diventa un oggetto
+\emph{flottante}, cio\`e la sua posizione all'interno del documento pronto
+per la stampa (dopo la compilazione) non \`e pi\`u fissata.
+L'ambiente \cchar{table} \`e in effetti il primo esempio che incontriamo di
+ambiente flottante; ne vedremo almeno un altro (\cchar{figure}) nel seguito.
+
+Molti, all'inizio, si trovano in imbarazzo di fronte agli oggetti flottanti
+ed hanno l'impressione di non riuscire a prendere il controllo sul
+posizionamento di figure e tabelle. Si tratta effettivamente di un argomento
+piuttosto complicato che non abbiamo il tempo di trattate approfonditamente
+qui---rimandiamo il lettore alle indicazioni bibliografiche.
+Ci limitiamo a notare che in generale l'inserimento di figure e tabelle in
+posizioni \emph{fisse} rispetto al corpo del testo \`e considerata una pessima
+pratica tipografica. In altre parole non \`e saggio pretendere di
+posizionare una figura \emph{esattamente} di seguito ad una determinata linea
+di testo; dopo l'impaginazione finale quella linea potrebbe essere tanto
+vicina al margine inferiore della pagina da non lasciare fisicamente
+abbastanza spazio. E di sicuro non \`e una cosa a cui si deve pensare
+\emph{durante} la stesura di un documento---\`e un lavoro da tipografo, non
+da scrittore.
+Il consiglio, qui, \`e di rilassarsi e di lasciare a \LaTeX\ il lavoro
+sporco; nella maggior parte dei casi sar\`a perfettamente in grado di
+inserire gli oggetti flottanti nel modo pi\`u \emph{naturale} possibile
+all'interno del testo. L'autore pu\`o aumentare la leggibilit\`a del
+documento, come vedremo, aggiungendo riferimenti incrociati.
+
+Adesso esaminiamo di nuovo la linea:
+\begin{verbatim}
+\begin{table}[!htb]
+\end{verbatim}
+e cerchiamo di capire il significato dell'opzione \cchar{!htb} che abbiamo
+passato al comando. Le tre lettere \cchar{h} (\emph{here}),
+\cchar{t} (\emph{top}) e \cchar{b} (\emph{bottom}),
+in ordine, dicono a \LaTeX\ dov'\`e che vorremmo il nostro oggetto
+flottante; in questo caso \LaTeX\ prover\`a ad inserirlo esattamente
+dove esso \`e definito nel corpo del testo (\emph{here}) e, se questo
+per qualche ragione non fosse possibile, lo inserir\`a all'inizio (\emph{top})
+o alla fine (\emph{bottom}) della prima pagina successiva disponibile.
+Il punto esclamativo (\cchar{!}), in un certo senso, rafforza l'opzione ed
+\emph{obbliga} \LaTeX\ a mettere per un attimo da parte il proprio spiccato
+senso estetico e ad assecondare la richiesta dell'autore, a meno che non
+manchi fisicamente lo spazio per farlo.
+L'opzione \cchar{!htb} dovrebbe essere sufficiente per la maggior parte
+delle applicazioni non troppo avanzate---per quello che pu\`o contare tutte
+le figure di queste dispense sono state inserite in questo modo.
+
+
+\subsection{\LaTeX\ e la matematica}
+
+Veniamo adesso ad uno dei motivi per cui \LaTeX\ ha riscosso tanto successo
+all'interno della comunit\`a scientifica: l'estensivo supporto che fornisce
+alla scrittura di simboli ed equazioni, che lo rende particolarmente indicato
+per la scrittura di articoli scientifici%
+\footnote{
+In effetti \`e probabilmente sensato, di passaggio, ricordare che l'autore
+originario di \TeX\, il \emph{motore tipografico} che sta alla base di \LaTeX\
+\`e proprio un matematico, Donald E. Knuth}%
+.
+
+\LaTeX\ offre numerosi ambienti per la matematica; ne citeremo qui solamente
+due: \cchar{math} ed \cchar{equation}. Il primo permette di inserire simboli
+matematici all'interno del testo e si apre e chiude essenzialmente con un
+simbolo \cchar{\$}. Ad esempio:
+\begin{verbatim}
+$\sigma_{x} = \sqrt{\sigma_{x}^{2}}$
+\end{verbatim}
+diviene, dopo la compilazione, $\sigma_{x} = \sqrt{\sigma_{x}^{2}}$.
+Notiamo, per inciso, il comando ``\verb|\sqrt{}|'' che permette di inserire
+radici quadrate di espressioni. Dovrebbe essere altres\`i chiaro
+come inserire lettere greche e caratteri in apice e pedice.
+
+L'ambiente equation permette di scrivere vere e proprie equazioni (numerate),
+separate dal corpo del testo%
+\footnote{
+Potr\`a apparire curioso, ma non \`e permesso (provare per credere) lasciare
+linee vuote all'interno dell'ambiente \emph{equation}.
+}%
+. Ad esempio:
+\begin{verbatim}
+\begin{equation}\label{osc_armonico}
+m \frac{d^{2}x}{dt^{2}} = m \ddot x = -k x
+\end{equation}
+\end{verbatim}
+diviene:
+\begin{equation}\label{osc_armonico}
+m \frac{d^{2}x}{dt^{2}} = m \ddot x = -k x
+\end{equation}
+Il lettore potr\`a essere incuriosito dal comando ``\verb|\label{}|'';
+sostanzialmente esso permette di mettere un'etichetta in corrispondenza di un
+oggetto%
+\footnote{
+In questo caso l'oggetto in questione \`e un'equazione, ma il tutto funziona
+altrettanto bene con tabelle, figure, titoli di sezioni e paragrafi etc.
+}%
+, o in altre parole di assegnargli un nome comprensibile di modo che in
+seguito, nel corpo del testo, ci si possa riferire ad esso in modo
+univoco con l'apposito comando ``\verb|\ref{}|''.
+Se, ad esempio, adesso scriviamo:
+\begin{verbatim}
+la (\ref{osc_armonico}) \`e l'equazione di moto di un oscillatore armonico.
+\end{verbatim}
+dopo la compilazione ci\`o che otteniamo \`e:
+la (\ref{osc_armonico}) \`e l'equazione di moto di un oscillatore armonico.
+I due comandi ``\verb|\label{}|'' e ``\verb|\ref{}|'' sono incredibilmente
+utili.
+Pensate a quanti riferimenti numerati ad ogni tipo di oggetto vi sono in queste
+dispense\ldots senza un meccanismo del genere tenere oggetti e riferimenti
+sincronizzati sarebbe stato letteralmente un inferno!
+
+Gli spazi all'interno degli ambienti matematici vengono ignorati.
+\LaTeX\ ha un suo algoritmo piuttosto sofisticato per determinare
+automaticamente le spaziature necessarie tra i vari oggetti in modalit\`a
+matematica.
+
+Chiudiamo il paragrafo con un'ultima equazione, che mostra un certo numero
+di comandi utili:
+\begin{verbatim}
+\begin{equation}
+\left( \int_{-\infty}^{\infty} e^{-x^{2}} dx \right)^{2} =
+\sum_{n=0}^{\infty}\frac{(-1)^{n}}{2n + 1} =
+\prod_{n=1}^{\infty} \left( \frac{n + 1}{n} \right)^{(-1)^{n-1}} =
+\pi
+\end{equation}
+\end{verbatim}
+che appare come:
+\begin{equation}
+\left( \int_{-\infty}^{\infty} e^{-x^{2}} dx \right)^{2} =
+\sum_{n=0}^{\infty}\frac{(-1)^{n}}{2n + 1} =
+\prod_{n=1}^{\infty} \left( \frac{n + 1}{n} \right)^{(-1)^{n-1}} =
+\pi
+\end{equation}
+Rimandiamo il lettore alla documentazione specifica per una trattazione
+esaustiva delle funzionalit\`a offerte da \LaTeX\ in modalit\`a matematica.
+
+
+\subsection{Inserire le figure}
+
+Eccoci all'ultimo argomento di questa breve rassegna sulle funzionalit\`a di
+base di \LaTeX: l'inserimento delle figure.
+% \begin{figure}[h!]
+% \begin{center}
+% \includegraphics[width=5.8cm]{./ps_LaTeX/figure/test.pdf}
+% \end{center}
+% \caption{Questa \`e una figura di esempio.}
+% \label{figura_di_esempio}
+% \end{figure}
+La prima cosa che dobbiamo fare \`e includere un pacchetto specifico, e
+questo si fa inserendo all'interno del preambolo il comando:
+\begin{verbatim}
+\usepackage[dvips]{graphicx}
+\end{verbatim}
+Fatto questo, grafici ed immagini in formato eps%
+\footnote{
+Il formato eps (\emph{Encapsulated PostScript}) \`e piuttosto usato,
+specialmente nella comunit\`a scientifica, per la creazioni di grafici,
+schemi sintetici ed oggetti di grafica vettoriale in generale (sostanzialmente
+tutto ci\`o che \`e costituito da linee, punti e lettere).
+Vedremo nel prossimo capitolo come creare grafici eps utilizzando il programma
+di analisi dati gnuplot.
+}
+possono essere inseriti con poche linee (il risultato della compilazione
+appare in figura~\ref{figura_di_esempio}):
+\begin{verbatim}
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=5.8cm]{./ps_LaTeX/figure/Test.eps}
+\end{center}
+\caption{Questa \`e una figura di esempio.}
+\label{figura_di_esempio}
+\end{figure}
+\end{verbatim}
+
+Sostanzialmente non vi \`e niente di nuovo se non l'ambiente (flottante)
+\cchar{figure}, per cui vale quanto detto a proposito di \cchar{table},
+ed il comando:
+\begin{verbatim}
+\includegraphics[width=8cm]{./ps_LaTeX/figure/Test.eps}
+\end{verbatim}
+cui \`e passato il nome del \emph{file} eps come argomento e la larghezza
+con cui l'immagine in esso contenuta deve apparire nel documento.
+Notiamo, per inciso, che ``\verb|\includegraphics|'' \`e il comando che
+richiede il pacchetto \cchar{graphicx}.
+
+Si possono ovviamente anche inserire figure in formato diverso dal
+postscript (ad esempio jpg, png etc.). L'unica differenza \`e che in questo
+caso bisogna specificare esplicitamente le dimensioni dell'immagine%
+\footnote{
+Tecnicamente questo \`e conseguenza del fatto che il formato eps, a differenza
+degli altri, contiene al suo interno la definizione della cosiddetta
+\emph{bounding box}.
+}
+tra le opzioni di ``\verb|\includegraphics|''.
+Se, per esempio, supponiamo di voler inserire una figura in formato jpg
+di $800\times 600$ pixel, dovremo scrivere qualcosa del tipo:
+\begin{verbatim}
+\includegraphics[width=8cm, bb=0 0 800 600]{./Figura.jpg}
+\end{verbatim}
+in cui il frammento \cchar{bb=0 0 800 600}
+fornisce appunto la dimensione della \emph{cornice} che racchiude l'immagine
+(cio\`e della \emph{bounding box}), nella forma delle coordinate (espresse in
+pixel) degli angoli in alto a sinistra (\cchar{0 0}) ed in basso a destra
+(\cchar{800 600}) della cornice stessa.
+.
+
+
+\subsection{Digressione: grafica vettoriale e rasterizzata}

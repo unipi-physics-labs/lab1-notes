@@ -1,0 +1,16 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/iotest.py}{https://github.com/.../iotest.py}},commandchars=\\\{\}]
+\PY{n}{file\PYZus{}path} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{data/iotest.txt}\PY{l+s+s1}{\PYZsq{}}
+
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{file\PYZus{}path}\PY{p}{)} \PY{k}{as} \PY{n}{input\PYZus{}file}\PY{p}{:}
+    \PY{k}{for} \PY{n}{ch} \PY{o+ow}{in} \PY{n}{input\PYZus{}file}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{ch}\PY{p}{,} \PY{n+nb}{ord}\PY{p}{(}\PY{n}{ch}\PY{p}{)}\PY{p}{,} \PY{n+nb}{bin}\PY{p}{(}\PY{n+nb}{ord}\PY{p}{(}\PY{n}{ch}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+
+[Output]
+C 67 0b1000011
+i 105 0b1101001
+a 97 0b1100001
+o 111 0b1101111
+! 33 0b100001
+
+ 10 0b1010
+\end{Verbatim}
