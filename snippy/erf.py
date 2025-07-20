@@ -1,9 +1,10 @@
 import numpy as np
+from scipy.special import erf
 
 def Phi(z):
     """ Gaussian cumulative function.
     """
-    return 0.5 + 0.5 * np.math.erf(z / np.sqrt(2.0))
+    return 0.5 + 0.5 * erf(z / np.sqrt(2.0))
 
 def integrate_gauss(x1, x2, mu=0.0, sigma=1.0):
     """Integrate a generic gaussian between x1 and x2.
