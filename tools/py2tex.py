@@ -40,7 +40,7 @@ STATNOTES_TEX = STATNOTES_ROOT / 'sniptex'
 _OUTPUT_LATEX_SUBSTITUTIONS = {
     '😀' : r'\smiley',
     '' : '',
-    '\\' : r'\textbackslash{}'
+    #'\\' : r'\textbackslash{}'
 }
 _NO_OUTPUT_SCRIPTS = []
 _ENCODING = 'utf-8'
