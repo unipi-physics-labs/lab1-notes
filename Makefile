@@ -1,17 +1,26 @@
 all: pdf
 
-armageddon: snippets figs pdf
+armageddon: snippets figs statnotes compnotes exercises
 
-pdf:
+latest: statnotes compnotes exercises
+
+statnotes:
 	pdflatex statnotes
 	bibtex statnotes
 	pdflatex statnotes
 	pdflatex statnotes
 
-fast:
-	pdflatex statnotes
+compnotes:
+	pdflatex compnotes
+	bibtex compnotes
+	pdflatex compnotes
+	pdflatex compnotes
 
-snippets:
+exercises:
+	pdflatex exercises
+	pdflatex exercises
+
+snips:
 	python tools/py2tex.py snippy
 
 figs:
@@ -23,10 +32,10 @@ sanitize:
 	python tools/sanitize.py misc/credits.tex
 	python tools/sanitize.py misc/prefazione.tex
 
-docs:
+doc:
 	cd docs; make html; cd -
 
-cleandocs:
+cleandoc:
 	cd docs; make clean; cd -
 
 flake:
@@ -40,9 +49,9 @@ lint:
 
 clean:
 	rm -f *.aux *.log *~ *.mtc* *.idx *.out *.toc *.maf *.fls *.fdb_latexmk *.ilg *.ind *.synctex*
+	rm -f *.bbl *.blg *.pdf
 	cd chapters; rm -f *~ *.aux *.log *.bbl *.blg; cd -
 	rm -f misc/*~ misc/*.aux
-	rm -f statnotes.bbl statnotes.blg
 
-cleanall: clean cleandocs
+cleanall: clean cleandoc
 	rm -f statnotes.pdf

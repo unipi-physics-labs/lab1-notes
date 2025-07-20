@@ -3,12 +3,14 @@
 \newcommand{\ckey}[1]{{\texttt<\hbox{#1}>}}
 \newcommand{\cchar}[1]{``{\texttt{\hbox{#1}}}''}
 \newcommand{\ccmd}[1]{{\texttt{\hbox{#1}}}}
+\newcommand{\byte}[1]{\framebox{\texttt{\hbox{#1}}}}
 
 % Python and python modules.
 \newcommand{\python}{\href{https://www.python.org/}{Python}}
 \newcommand{\pymodule}[1]{\code{#1}}
 \newcommand{\pyfunc}[1]{\code{#1()}}
 \newcommand{\pyclass}[1]{\code{#1}}
+\newcommand{\pybuiltin}[1]{\href{https://docs.python.org/3/library/functions.html\##1}{\pyfunc{#1}}}
 
 \newcommand{\numpy}{\href{https://numpy.org/}{\pymodule{numpy}}}
 \newcommand{\npmoduleurl}[1]{https://numpy.org/doc/stable/reference/#1}
@@ -26,8 +28,8 @@
 \newcommand{\matplotlib}{\href{https://matplotlib.org/}{\pymodule{matplotlib}}}
 
 % Operating systems.
-\newcommand{\windows}{Windows}
-\newcommand{\dos}{DOS}
+\newcommand{\windows}{Microsoft Windows}
+\newcommand{\dos}{Microsoft DOS}
 \newcommand{\linux}{GNU/Linux}
 \newcommand{\macos}{Mac~OS}
 \newcommand{\osx}{OS~X}

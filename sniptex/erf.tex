@@ -1,10 +1,11 @@
 \begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/erf.py}{https://github.com/.../erf.py}},commandchars=\\\{\}]
 \PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{from}\PY{+w}{ }\PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{special}\PY{+w}{ }\PY{k+kn}{import} \PY{n}{erf}
 
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{Phi}\PY{p}{(}\PY{n}{z}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Gaussian cumulative function.}
 \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
-    \PY{k}{return} \PY{l+m+mf}{0.5} \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{np}\PY{o}{.}\PY{n}{math}\PY{o}{.}\PY{n}{erf}\PY{p}{(}\PY{n}{z} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{l+m+mf}{0.5} \PY{o}{+} \PY{l+m+mf}{0.5} \PY{o}{*} \PY{n}{erf}\PY{p}{(}\PY{n}{z} \PY{o}{/} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{l+m+mf}{2.0}\PY{p}{)}\PY{p}{)}
 
 \PY{k}{def}\PY{+w}{ }\PY{n+nf}{integrate\PYZus{}gauss}\PY{p}{(}\PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{mu}\PY{o}{=}\PY{l+m+mf}{0.0}\PY{p}{,} \PY{n}{sigma}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{:}
 \PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Integrate a generic gaussian between x1 and x2.}
@@ -18,5 +19,5 @@
 
 [Output]
 0.6826894921370859
-0.1498822847945298
+0.14988228479452992
 \end{Verbatim}

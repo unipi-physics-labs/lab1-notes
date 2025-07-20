@@ -38,8 +38,15 @@ STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
 STATNOTES_PY = STATNOTES_ROOT / 'snippy'
 STATNOTES_TEX = STATNOTES_ROOT / 'sniptex'
 
-NO_OUTPUT_SCRIPTS = []
+# Here is a small set of substitutions to be applied to the script outputs
+# to handle some of the LaTeX edge cases.
+_OUTPUT_LATEX_SUBSTITUTIONS = {
+    '😀' : r'\smiley',
+    r'c:bc\def\ghi.txt' : r'c:bc\textbackslash{}def\textbackslash{}ghi.txt',
+    r'c:\abc\def\ghi.txt' : r'c:\textbackslash{}abc\textbackslash{}def\textbackslash{}ghi.txt'
+}
 
+_NO_OUTPUT_SCRIPTS = []
 _ENCODING = 'utf-8'
 
 
@@ -79,7 +86,7 @@ def pygmentize(snippet_path: str = STATNOTES_PY, random_seed: int = 1):
     snippet_tex = snippet_tex.split(r'\end{Verbatim}')[0]
 
     # If necessary, run the script to capture the output and append it to the tex.
-    if file_path.name not in NO_OUTPUT_SCRIPTS:
+    if file_path.name not in _NO_OUTPUT_SCRIPTS:
         # Note the logic is quite convoluted, here, as one of the things we want to
         # achieve is to ensure that the output is reproducible, when random numbers
         # are involved, and that is less than trivial to achieve, as spawning a
@@ -102,9 +109,17 @@ def pygmentize(snippet_path: str = STATNOTES_PY, random_seed: int = 1):
             if errors:
                 logger.error(errors)
             snippet_output = process.stdout.read().decode()
+
+            # Replace the bits that, for any reason, cannot be rendered in LaTeX
+            for key, value in _OUTPUT_LATEX_SUBSTITUTIONS.items():
+                if key in snippet_output:
+                    logger.debug(f'Replacing {key} with {value}...')
+                    snippet_output = snippet_output.replace(key, value)
+
         if len(snippet_output):
             logger.debug(f'Command output:\n{snippet_output}')
             snippet_tex = f'{snippet_tex}\n[Output]\n{snippet_output}'
+
 
     # Complete the information with the url to the snippet on github.
     url = f'{STATNOTES_GITHUB_URL}{str(file_path).replace(str(STATNOTES_ROOT), "")}'

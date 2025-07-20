@@ -1,5 +1,6 @@
 # Compiled pdf file
-statnotes.pdf
+*.pdf
+
 
 # LaTeX temporary files
 *.aux

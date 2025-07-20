@@ -1,0 +1,11 @@
+\begin{Verbatim}[label=\makebox{\href{https://github.com/unipi-physics-labs/statnotes/tree/main/snippy/integer_size.py}{https://github.com/.../integer\_size.py}},commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{sys}
+
+\PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{64}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{n}{sys}\PY{o}{.}\PY{n}{getsizeof}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{)}
+
+[Output]
+1 28
+4294967296 32
+18446744073709551616 36
+\end{Verbatim}
