@@ -53,5 +53,5 @@ clean:
 	cd chapters; rm -f *~ *.aux *.log *.bbl *.blg; cd -
 	rm -f misc/*~ misc/*.aux
 
-cleanall: clean cleandocs
+cleanall: clean cleandoc
 	rm -f statnotes.pdf
