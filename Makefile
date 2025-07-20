@@ -32,10 +32,10 @@ sanitize:
 	python tools/sanitize.py misc/credits.tex
 	python tools/sanitize.py misc/prefazione.tex
 
-docs:
+doc:
 	cd docs; make html; cd -
 
-cleandocs:
+cleandoc:
 	cd docs; make clean; cd -
 
 flake:

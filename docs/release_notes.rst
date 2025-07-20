@@ -24,7 +24,7 @@ Versione 6.0.1
 * Aggiunto il testo della licenza CC BY-SA 4.0.
 * Pull requests:
 
-  * https://github.com/unipi-physics-labs/statnotes/pull/7
+  * https://github.com/unipi-physics-labs/statnotes/pull/3
 
 
 Versione 5.2.0
