@@ -108,8 +108,9 @@ def pygmentize(snippet_path: str = STATNOTES_PY, random_seed: int = 1):
 
             # Replace the bits that, for any reason, cannot be rendered in LaTeX
             for key, value in _OUTPUT_LATEX_SUBSTITUTIONS.items():
-                logger.debug(f'Replacing {key} with {value}...')
-                snippet_output = snippet_output.replace(key, value)
+                if key in snippet_output:
+                    logger.debug(f'Replacing {key} with {value}...')
+                    snippet_output = snippet_output.replace(key, value)
 
         if len(snippet_output):
             logger.debug(f'Command output:\n{snippet_output}')
