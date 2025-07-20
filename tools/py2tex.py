@@ -37,11 +37,15 @@ STATNOTES_GITHUB_URL = 'https://github.com/unipi-physics-labs/statnotes/tree/mai
 STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
 STATNOTES_PY = STATNOTES_ROOT / 'snippy'
 STATNOTES_TEX = STATNOTES_ROOT / 'sniptex'
+
+# Here is a small set of substitutions to be applied to the script outputs
+# to handle some of the LaTeX edge cases.
 _OUTPUT_LATEX_SUBSTITUTIONS = {
     '😀' : r'\smiley',
-    '' : '',
-    #'\\' : r'\textbackslash{}'
+    r'c:bc\def\ghi.txt' : r'c:bc\textbackslash{}def\textbackslash{}ghi.txt',
+    r'c:\abc\def\ghi.txt' : r'c:\textbackslash{}abc\textbackslash{}def\textbackslash{}ghi.txt'
 }
+
 _NO_OUTPUT_SCRIPTS = []
 _ENCODING = 'utf-8'
 
