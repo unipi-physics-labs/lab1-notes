@@ -13,8 +13,8 @@ Release notes
   * https://github.com/unipi-physics-labs/statnotes/pull/7
 
 
-  Versione 6.0.1
-  --------------
+Versione 6.0.1
+--------------
 
 * Modifica della struttura delle cartelle.
 * Riscrittura completa dei tool in Python per il mantenimento.
