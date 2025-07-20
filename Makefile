@@ -14,6 +14,10 @@ compnotes:
 	pdflatex compnotes
 	pdflatex compnotes
 
+exercises:
+	pdflatex exercises
+	pdflatex exercises
+	
 snips:
 	python tools/py2tex.py snippy
 
