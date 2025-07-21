@@ -2,6 +2,8 @@ name: Compile and archive
 
 on:
   push:
+    branches:
+      - main
     tags:
       - '*'  # Trigger for any tag update
 
