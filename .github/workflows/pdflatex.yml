@@ -1,0 +1,41 @@
+name: Compile and archive
+
+on:
+  push:
+    tags:
+      - '*'  # Trigger for any tag update
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compile statnotes
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: statnotes.tex
+          texlive_version: 2022
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+      - name: Upload statnotes
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: statnotes.pdf
+          asset_name: statnotes-${{ github.ref_name }}.pdf
+          asset_content_type: application/pdf
