@@ -4,6 +4,9 @@ Release notes
 =============
 
 
+[Versioni di test per il debug del processo di release.]
+
+
 Versione 6.1.0
 --------------
 
