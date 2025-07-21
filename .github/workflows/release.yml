@@ -2,8 +2,6 @@ name: Compile and archive
 
 on:
   push:
-    branches:
-      - main
     tags:
       - '*'  # Trigger for any tag update
 
@@ -14,17 +12,6 @@ env:
   TEXLIVE_VERSION: 2022
 
 jobs:
-  pages:
-    runs-on: ubuntu-24.04
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    permissions:
-      pages: write
-      id-token: write
-    steps:
-    - id: deployment
-      uses: sphinx-notes/pages@v3
 
   build-and-release:
     runs-on: ubuntu-latest
