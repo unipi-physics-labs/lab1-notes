@@ -32,7 +32,7 @@ logger.remove()
 logger.add(sink=sys.stderr, colorize=True, format='>>> <level>{message}</level>')
 
 
-STATNOTES_GITHUB_URL = 'https://github.com/unipi-physics-labs/statnotes/tree/main'
+STATNOTES_GITHUB_URL = 'https://github.com/unipi-physics-labs/lab1-notes/tree/main'
 
 STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
 STATNOTES_PY = STATNOTES_ROOT / 'snippy'

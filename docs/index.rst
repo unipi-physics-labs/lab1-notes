@@ -1,10 +1,10 @@
-.. statnotes documentation master file, created by
+.. lab1-notes documentation master file, created by
    sphinx-quickstart on Wed Jul 16 15:10:16 2025.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-statnotes documentation
-=======================
+lab1-notes
+==========
 
 Se l'unica cosa che ti interessa è scaricare l'ultima versione di un documento in
 pdf, sei nel posto giusto.
@@ -15,7 +15,7 @@ effettuate, trovi tutto nei link qui sotto.
 
 In qualsiasi momento puoi segnalare errori, omissioni, suggerire miglioramenti o
 chiedere chiarimenti e integrazioni usando il nostro
-`issue tracker <https://github.com/unipi-physics-labs/statnotes/issues>`_!
+`issue tracker <https://github.com/unipi-physics-labs/lab1-notes/issues>`_!
 
 
 .. toctree::

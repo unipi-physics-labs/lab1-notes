@@ -6,10 +6,10 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'statnotes'
+project = 'lab1-notes'
 copyright = '2025, Luca Baldini'
 author = 'Luca Baldini'
-release = '5.2.0'
+release = 'N/A'
 language = 'it'
 
 # -- General configuration ---------------------------------------------------
