@@ -4,6 +4,10 @@ Release notes
 =============
 
 
+Versione 6.1.0
+--------------
+
+* Repositorio rinominato da `statnotes` a `lab1-notes`
 * Import iniziale delle dispense di computazione dal vecchio branch su bitbucket.
 * Piccoli cambiamenti alla struttura.
 * Makefile modificato per supportare la compilazione di tutte le componenti.
