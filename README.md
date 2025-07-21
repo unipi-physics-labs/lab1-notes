@@ -1,4 +1,4 @@
-# statnotes
+# lab1-notes
 
 Note e materiale didattico a supporto del corso di *Laboratorio con elementi di
 computazione*.
