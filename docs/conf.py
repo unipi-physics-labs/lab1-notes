@@ -15,12 +15,8 @@ with open('../version.tex') as version_file:
     release = version_file.read().strip()
 language = 'it'
 
-def _asset_url(name, label):
-    return f'https://github.com/unipi-physics-labs/lab1-notes/releases/download/{release}/{name}-{release}.pdf'
-
 rst_prolog = f"""
 .. |version| replace:: {release}
-.. |statnotes_url| replace:: {_asset_url('statnotes', 'Statistica')}
 """
 
 print(rst_prolog)

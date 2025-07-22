@@ -7,12 +7,8 @@ lab1-notes
 ==========
 
 Se l'unica cosa che ti interessa è scaricare l'ultima versione di un documento in
-pdf, sei nel posto giusto---ecco i link diretti:
-
-
-- |statnotes_url|
-- `Elementi di computazione <https://github.com/unipi-physics-labs/lab1-notes/releases/download/6.2.7/compnotes-6.2.7.pdf>`_
-- `Esercizi risolti <https://github.com/unipi-physics-labs/lab1-notes/releases/download/6.2.7/exercises-6.2.7.pdf>`_
+pdf, sei nel posto sbagliato---leggi il
+`README file <https://github.com/unipi-physics-labs/lab1-notes?tab=readme-ov-file#lab1-notes>`_.
 
 Se invece cerchi informazioni dettagliate sulla struttura del documento, istruzioni
 su come compilare il documento stesso, o la descrizione delle ultime modifiche
