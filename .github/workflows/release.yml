@@ -48,6 +48,12 @@ jobs:
           release_name: Release ${{ github.ref_name }}
           body: |
             Versione ${{ github.ref_name }} delle note.
+
+            ## Assets
+
+            - *statnotes-${{ github.ref_name }}.pdf* - Statistica ed analisi dati
+            - *compnotes-${{ github.ref_name }}.pdf* - Elementi di computazione
+            - *exercises-${{ github.ref_name }}.pdf* - Esercizi risolti
           draft: false
           prerelease: false
 

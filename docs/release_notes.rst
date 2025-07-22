@@ -4,6 +4,12 @@ Release notes
 =============
 
 
+Versione 6.3.0
+--------------
+
+* Primo rilascio completo del materiale a supporto del corso.
+
+
 [Versioni di test per il debug del processo di release.]
 
 
