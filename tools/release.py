@@ -35,6 +35,8 @@ logger.add(sink=sys.stderr, colorize=True, format='>>> <level>{message}</level>'
 
 STATNOTES_ROOT = pathlib.Path(__file__).resolve().parent.parent
 VERSION_FILE_PATH = STATNOTES_ROOT / 'version.tex'
+README_FILE_PATH = STATNOTES_ROOT / 'README.md'
+GITHUB_RELEASE_URL = 'https://github.com/unipi-physics-labs/lab1-notes/releases'
 
 INCREMENT_MODES = ('major', 'minor', 'patch')
 
@@ -102,7 +104,30 @@ def compile_latex():
     execute_shell_command(['make'])
 
 
-def release(mode: str):
+def _asset_url(name: str, version: str) -> str:
+    """ Return the URL for an asset.
+    """
+    return f'{GITHUB_RELEASE_URL}/download/{version}/{name}-{version}.pdf'
+
+def write_readme(version: str) -> None:
+    """ Write the README file.
+    """
+    readme_path = STATNOTES_ROOT / 'README.md'
+    logger.info(f'Writing README file to {readme_path}...')
+    with open(readme_path, 'w', encoding=_ENCODING) as readme_file:
+        readme_file.write('# lab1-notes\n\n')
+        readme_file.write('Note e materiale didattico a supporto del corso di ')
+        readme_file.write('*Laboratorio con elementi di computazione*.\n\n')
+        readme_file.write('L\'ultima versione del materiale è la')
+        readme_file.write(f' [v{version}]({GITHUB_RELEASE_URL}/tag/{version}).\n\n')
+        readme_file.write('Link diretti ai file pdf:\n\n')
+        readme_file.write(f'- [Statistica ed analisi dati]({_asset_url("statnotes", version)})\n')
+        readme_file.write(f'- [Elementi di comptazione]({_asset_url("compnotes", version)})\n')
+        readme_file.write(f'- [Esercizi risolti]({_asset_url("exercises", version)})\n\n')
+        readme_file.write('La pagina delle [release]({GITHUB_RELEASE_URL}) ')
+        readme_file.write('contiene lo storico delle versioni passate rilevanti.\
+
+def release(mode: str) -> None:
     """ Tag the package and create a release.
     """
     execute_shell_command(['git', 'pull'])
