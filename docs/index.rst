@@ -10,6 +10,9 @@ Se l'unica cosa che ti interessa è scaricare l'ultima versione di un documento 
 pdf, sei nel posto sbagliato---leggi il
 `README file <https://github.com/unipi-physics-labs/lab1-notes?tab=readme-ov-file#lab1-notes>`_.
 
+Se cerchi informazioni sull'installazione dell'ecosistema scientifico di
+Python, vai alla sezione :ref:`ecosystem`.
+
 Se invece cerchi informazioni dettagliate sulla struttura del documento, istruzioni
 su come compilare il documento stesso, o la descrizione delle ultime modifiche
 effettuate, trovi tutto nei link qui sotto.
