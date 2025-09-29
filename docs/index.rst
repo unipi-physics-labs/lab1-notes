@@ -23,5 +23,6 @@ chiedere chiarimenti e integrazioni usando il nostro
    :maxdepth: 2
    :caption: In dettaglio:
 
+   ecosystem
    compile
    release_notes
