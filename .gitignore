@@ -12,6 +12,7 @@
 *.bbl
 *.maf
 *.out
+*.xsim
 
 # compiled docs
 docs/_build

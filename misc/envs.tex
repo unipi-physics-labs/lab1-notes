@@ -7,7 +7,7 @@
 }}%
 {\end{list}}
 
-% 
+%
 \renewenvironment{itemize}
 {\begin{list}{$\blacktriangleright$}{%
 \setlength{\itemindent}{12pt}%
@@ -16,27 +16,6 @@
 }}
 {\end{list}}
 
-% Exercises.
-% \exercise{text}
-\newtheoremstyle{_exercise_}
-{9pt}
-{9pt}
-{\rmfamily}
-{}
-{\scshape}
-{.}
-{ }
-{$\blacktriangleright$ \thmname{#1} \thmnumber{#2}\thmnote{#3}}
-\theoremstyle{_exercise_}
-\newtheorem{_exercise_}{Esercizio}[chapter]
-
-\newcommand{\exercise}[1]
-{\begin{_exercise_} {\rmfamily #1} \end{_exercise_}}
-
-\newenvironment{exercises}
-{\clearpage
-\section{Esercizi}}
-{}
 
 \newcommand{\hint}[1]
 {\noindent \emph{Suggerimento: #1}}
@@ -47,7 +26,7 @@
 % Examples.
 % This used to be a \newcommand with the \begin{} and \end{} blocks of the
 % newtheorem embedded, but that had the drawback that no \verbatim blocks can be
-% used into command arguments. 
+% used into command arguments.
 %
 % First we define a \newtheorem...
 %
@@ -64,7 +43,7 @@
                        \else~(\thmnote{#3})\fi}
 \theoremstyle{example}
 \newtheorem{example}{Esempio}[chapter]
-%               
+%
 % ...then a new md environment...
 %
 \newmdenv[linecolor=lightgray,
@@ -73,7 +52,7 @@
           innertopmargin=0.5\baselineskip,
           innerbottommargin=0.4\baselineskip,
           innerleftmargin=0.5\baselineskip,
-          innerrightmargin=0.5\baselineskip,     
+          innerrightmargin=0.5\baselineskip,
           roundcorner=4pt,
           nobreak=false]{exampleframe}
 %

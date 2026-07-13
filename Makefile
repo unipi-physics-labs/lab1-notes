@@ -1,4 +1,4 @@
-all: pdf
+all: latest
 
 armageddon: snippets figs statnotes compnotes exercises
 
@@ -50,6 +50,7 @@ lint:
 clean:
 	rm -f *.aux *.log *~ *.mtc* *.idx *.out *.toc *.maf *.fls *.fdb_latexmk *.ilg *.ind *.synctex*
 	rm -f *.bbl *.blg *.pdf
+	rm -f *.xsim
 	cd chapters; rm -f *~ *.aux *.log *.bbl *.blg; cd -
 	rm -f misc/*~ misc/*.aux
 
