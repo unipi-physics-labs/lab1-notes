@@ -28,6 +28,10 @@ vendite totali.
 
 \begin{solution}
 
+\begin{center}
+    \input{figures/riaa.pgf}
+\end{center}
+
 Qualitativamente possiamo dire che, quando sull'asse delle $x$ ci spostiamo da
 $1$ a $100$ (ovvero di 2~dex), sull'asse delle $y$ la linea tratteggiata passa
 da poco più di $200$ a poco più di $20$ (che corrisponde ad una variazione
@@ -83,6 +87,10 @@ fornire una stima del numero totale di parole da cui è composto il romanzo?
 
 
 \begin{solution}
+
+\begin{center}
+    \input{figures/moby_dick.pgf}
+\end{center}
 
 Ragionando esattamente come nell'esempio precedente possiamo dire che
 quando ci spostiamo di $3$ decadi sulla $x$, ci spostiamo di $-3$ decadi sulla
@@ -144,7 +152,7 @@ figura~\ref{fig:protoni_ams}.
 \pgffigone{protoni_ams}{
 Spettro del flusso differenziale dei protoni nei raggi cosmici misurato
 dall'esperimento AMS-02 sulla \foreign{International Space Station} (ISS).
-I dati sono disponibili a~\url{https://tools.ssdc.asi.it/CosmicRays/}.}
+I dati sono liberamente disponibili a~\url{https://tools.ssdc.asi.it/CosmicRays/}.}
 
 Si stimino la normalizzazione e l'indice della legge di potenza.
 Sapendo che $1~\text{eV} = 1.602176634 \times 10^{-19}~\text{J}$, si trovi un
@@ -155,6 +163,10 @@ riferimento macroscopico per i valori sull'asse delle $x$.
 
 
 \begin{solution}
+
+\begin{center}
+    \input{figures/protoni_ams.pgf}
+\end{center}
 
 Ormai siamo esperti: prendendo come riferimento le $2$ decadi tra $10$ e $1000$
 sull'asse delle $x$ possiamo stimare che sulla $y$ ci muoviamo di circa $-5.5$~dex,
@@ -229,6 +241,10 @@ a~\url{https://github.com/karlrupp/microprocessor-trend-data}.}
 
 \begin{solution}
 
+\begin{center}
+    \input{figures/transistor.pgf}
+\end{center}
+
 Questo è il nostro primo esempio di legge esponenziale. Notando che il numero
 di transistor cresce di circa $7.5$~dex in 50~anni, possiamo stimare il tempo
 caratteristico $\tau$ del nostro esponenziale come
@@ -290,11 +306,7 @@ ragionevole.)
 Si osservi il profilo della densità atmosferica in funzione dell'altezza sul
 livello del mare illustrato in figura~\ref{fig:atmosfera_densita}. Si stimi
 la lunghezza di scala dell'esponenziale che meglio fitta i dati nei primi 100~km,
-rappresentato dalla linea tratteggiata. Si sviluppi un semplice modellino Fisico
-che spieghi quantitativamente perché la densità dovrebbe diminuire
-esponenzialmente con l'altezza, e si confronti il modello con i dati. A cosa
-potrebbe essere dovuta la brusca deviazione dal modello esponenziale al di sopra
-dei 120~km di altezza?
+rappresentato dalla linea tratteggiata.
 
 \pgffigone{atmosfera_densita}{
 Profilo della densità atmosferica in funzione dell'altezza calcolata secondo il
@@ -303,10 +315,20 @@ modello NRLMSISE-00
 geografiche di Pisa, il 1 gennaio 2021. L'inserto in alto a destra mostra
 semplicemente uno \foreign{zoom} dei primi 45~km.}
 
+Si sviluppi un semplice modellino Fisico
+che spieghi quantitativamente perché la densità dovrebbe diminuire
+esponenzialmente con l'altezza, e si confronti il modello con i dati. A cosa
+potrebbe essere dovuta la brusca deviazione dal modello esponenziale al di sopra
+dei 120~km di altezza?
+
 \end{exercise}
 
 
 \begin{solution}
+
+\begin{center}
+    \input{figures/atmosfera_densita.pgf}
+\end{center}
 
 Osservando la linea tratteggiata notiamo che essa corrisponde ad una diminuzione
 della densità pari a $13$~ordini di grandezza in $200$~km, ovverosia ad una
@@ -419,7 +441,8 @@ assumendo che l'andamento degli ultimi 100 anni prosegua? Come avremmo risposto
 alla stessa domanda prima del 1900?
 
 \pgffigone{consumo_energia}{
-Consumo annuo globale di energia (in Wh) dal 1800 al 2010. I dati sono disponibili a
+Consumo annuo globale di energia (in Wh) dal 1800 al 2010. I dati sono
+liberamente disponibili a
 \url{https://ourworldindata.org/energy-production-consumption}.}
 
 \end{exercise}
@@ -490,7 +513,7 @@ alla stessa domanda prima del 1970?
 
 \pgffigone{produzione_plastica}{
 Andamento della produzione annua globale di plastica dal 1950 al 2015.
-I dati sono disponibili a \url{ https://ourworldindata.org/plastic-pollution}.}
+I dati sono liberamente disponibili a \url{ https://ourworldindata.org/plastic-pollution}.}
 
 \end{exercise}
 
