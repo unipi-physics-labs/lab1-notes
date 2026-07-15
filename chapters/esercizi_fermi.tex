@@ -1,16 +1,5 @@
 \chapter{Esercizi a la Fermi}
 
-\begin{exercise}
-
-Si stimi la massa totale di acqua presente sul pianeta terra.
-
-\end{exercise}
-
-
-\begin{solution}
-\end{solution}
-
-
 
 \begin{exercise}
 
@@ -23,11 +12,9 @@ Si stimi il numero di respiri che un essere umano compie durante la sua vita.
 \end{solution}
 
 
-
 \begin{exercise}
 
-Si stimi la massa totale dell'aria presente in una stanza. E quella dell'atmosfera
-terrestre nel suo complesso?
+Si stimi la massa totale dell'aria presente in una stanza di dimensioni tipiche.
 
 \end{exercise}
 
@@ -36,12 +23,9 @@ terrestre nel suo complesso?
 \end{solution}
 
 
-
 \begin{exercise}
 
-Si stimi il numero totale di elettroni che passano fisicamente attraverso il cavo
-USB durante la ricarica completa di uno \foreign{smartphone}. (Qual \`e il destino
-ultimo di questi elettroni?)
+Si stimi la massa dell'atmosfera terrestre nel suo complesso.
 
 \end{exercise}
 
@@ -67,6 +51,119 @@ Si stimi il numero di molecole di aria che colpiscono il nostro corpo in un seco
 
 Si stimi il numero di palloncini di elio che sarebbero necessari per sollevare una
 persona.
+
+\end{exercise}
+
+
+\begin{solution}
+\end{solution}
+
+
+
+\begin{exercise}
+
+Si stimi la massa del pianeta terra.
+
+\end{exercise}
+
+
+\begin{solution}
+
+In prima approssimazione possiamo modellizzare la terra come una sfera di raggio
+$R \approx 6400$~km. Stimare la densit\`a media sulla base dei principi primi
+non \`e banale, perch\'e richiederebbe un modello dettagliato della struttura
+interna del pianeta, ma se siamo interessati semplicemente ad un ordine di grandezza
+\`e sufficiente ricordare che la densit\`a dei materiali solidi pi\`u comuni
+\`e dell'ordine di qualche g~cm$^{-3}$ ($2.7$~g~cm$^{-3}$ per l'alluminio e
+$11.3$~g~cm$^{-3}$ per il piombo, tanto per fare due esempi).
+Prenderemo come valore di riferimento $\ave{\rho} \approx 5$~g~cm$^{-3}$,
+o $5 \times 10^3$~kg~m$^{-3}$, col che la massa cercata si pu\`o stimare come
+\begin{align}
+  M = \frac{4}{3} \pi R^3 \ave{\rho} \approx 5.5 \times 10^{24}~\text{kg}.
+\end{align}
+
+Possiamo fornire una stima indipendente della massa della terra utilizzando la
+legge di gravitazione universale per esprimere l'accelerazione gravitazionale
+$g$ sulla superficie terrestre
+\begin{align}
+  F = mg = G \frac{M m}{R^2}
+  \quad \text{ovvero} \quad
+  {M} = \frac{g R^2}{G} \approx 6 \times 10^{24}~\text{kg}.
+\end{align}
+(In questo caso dobbiamo ricordare che l'accelerazione gravitazionale al livello
+del suolo \`e $g \approx 9.81$~m~s$^{-2}$, e che la costante di gravitazione
+universale vale $G \approx 6.67 \times 10^{-11}$~m$^3$~kg$^{-1}$~s$^{-2}$.)
+
+Per completezza, il pacchetto Python
+\href{https://docs.astropy.org/en/latest/constants/index.html}{astropy.constants}
+fornisce il valore $M_\oplus = 5.97216787 \times 10^{24}$~kg, i.e., entrambe
+le nostre stime sono accurate a meglio del 10\%.
+
+
+
+\end{solution}
+
+
+\begin{exercise}
+
+Si stimi la massa totale di acqua presente sul pianeta terra.
+
+\end{exercise}
+
+
+\begin{solution}
+
+Si tratta di un problema interessante, che non è difficile da risolvere, una volta
+che abbiamo ipotesi ragionevoli per le grandezze in gioco.
+
+L'acqua \`e presente sulla terra in una variet\`a di forme diverse: gli oceani, i ghiacciai,
+i laghi ed i fiumi, le falde acquifere sotterranee, l'umidità del suolo, il vapore acqueo
+nell'atmosfera, oltre ovviamente all'acqua presente nei tessuti viventi. Faremo l'ipotesi
+di lavoro che la maggior parte dell'acqua sia contenuta negli oceani, e che le altre
+componenti siano sottodominanti. A questo livello non abbiamo stime precise che ci possano
+confortare, ma una rapida occhiata ad un mappamondo ci pu\`o confortare nella nostra scelta.
+
+Modellizzeremo la terra come una sfera perfetta di raggio $R = 6400$~km, e assumeremo
+che gli oceani coprano una frazione $\mathcal{F} \approx \nicefrac{2}{3}$ della superficie
+terrestre (anche se non vi ricordiate questo numero dalla geografia che avete studiato alle
+scuole medie, date una seconda occhiata al mappamondo e non dimenticate che stiamo cercando
+un ordine di grandezza, per cui qualsiasi cosa tra $\nicefrac{1}{2}$ e $1$ va altrettanto
+bene).
+
+L'altro ingrediente fondamentale di cui abbiamo bisogno è la profondità media $\ave{h}$
+degli oceani, e qui ci viene in aiuto un'altra nozione diffusa di cultura generale:
+il punto pi\`u profondo della crosta terrestre \`e un abisso nella fossa delle Marianne,
+che raggiunge circa $11$~km di profondità. All'ordine zero possiamo allora dividere per
+due questo numero e assumere che la profondità media degli oceani sia $\ave{h} \approx 5$~km.
+
+Per stimare il volume totale $V$ d'acqua presente negli oceani, formalmente dovremmo
+calcolare il volume della calotta sferica di spessore $\ave{h}$ che ricopre la
+superficie della terra, ma siccome $\ave{h} \ll R$, non sbagliamo di molto se, pi\`u
+semplicemente, calcoliamo il prodotto della superficie terrestre per la profondit\`a
+media
+\begin{align*}
+  V \approx 4 \pi R^2 \ave{h} \mathcal{F}.
+\end{align*}
+(Se siete incerti su questo, cimentatevi con l'esercizio \ref{ex:volume-spherical-cap}.)
+
+A questo punto non ci resta che moltiplicare per la densità dell'acqua
+\begin{align*}
+  \rho \approx 1~\text{g/cm}^3 = 10^3~\text{kg/m}^3
+\end{align*}
+per ottenere la massa totale d'acqua cercata
+\begin{align*}
+  M = \rho V \approx 4 \pi R^2 \ave{h} \mathcal{F} \rho \approx 10^{21}~\text{kg}.
+\end{align*}
+
+\end{solution}
+
+
+
+\begin{exercise}
+
+Si stimi il numero totale di elettroni che passano fisicamente attraverso il cavo
+USB durante la ricarica completa di uno \foreign{smartphone}. (Qual \`e il destino
+ultimo di questi elettroni?)
 
 \end{exercise}
 
