@@ -20,3 +20,5 @@ docs/_build
 # emacs temporary files
 macro/*.pyc
 */__pycache__
+
+.vscode

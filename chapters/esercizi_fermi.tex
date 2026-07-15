@@ -1,9 +1,38 @@
-\chapter{Esercizi a la Fermi}
+\chapter{Problemi alla Fermi}
+
+Enrico Fermi era noto, tra le varie cose, per la sua innata capacit\'a di stimare
+rapidamente qualsiasi cosa entro un ordine di grandezza, sulla base di ragionamenti
+semplici, e senza bisogno di niente altro che carta e penna. Gli aneddoti in
+questo senso, apocrifi o meno, non si contano---egli stesso dice che, durante
+il test \foreign{Trinity} (che segna l'inizio dell'era nucleare), riuscì a stimare
+entro un fattore~2 la potenza dell'esplosione lasciando cadere dei pezzettini
+di carta al passaggio dell'onda d'urto, e misurandone lo spostamento orizzontale.
+
+Negli anni, l'espressione \emph{problema alla Fermi} \`e entrata ampiamente nel
+linguaggio comune per indicare un problema che richiede una stima rapida
+(e non necessariamente molto precisa) di una grandezza fisica, sulla base di
+ragionamenti il pi\`u semplici possibile. Un esempio classico \`e quello della
+stima del numeri di accordatori di pianoforte nella citt\`a di Chicago, che troverete
+trattato diffusamente in un numero sterminato di risorse facilmente disponibili.
+
+In questo capitolo troverete una piccola selezione di problemi alla Fermi con cui
+potete cimentarvi. Nessuno di questi richiede conoscenze di Fisica particolarmente
+avanzate, e lo scopo principale \`e quello di esercitare la capacit\`a di fare
+ipotesi ragionevoli sulle grandezze necessarie. Sforzatevi di risolverli senza
+fare ricerche dedicate, e senza utilizzare niente altro che carta e penna---anche
+la capacit\`a di moltiplicare e dividere numeri senza usare la calcolatrice
+(sfruttando le potenze di dieci ove necessario) \`e un'abilità che \`e utile da
+allenare.
+
+E, soprattutto,ricordate: se arrivate ad una stima entro un fattore 2--3 dalla
+risposta corretta, avete raggiunto il vostro obiettivo!
 
 
 \begin{exercise}
 
 Si stimi il numero di respiri che un essere umano compie durante la sua vita.
+(Suggerimento: ascoltate per un attimo il vostro respiro e provate a stimarne la
+frequenza senza l'ausilio di un cronometro. Il resto sono semplici moltiplicazioni.)
 
 \end{exercise}
 
@@ -15,11 +44,42 @@ Si stimi il numero di respiri che un essere umano compie durante la sua vita.
 \begin{exercise}
 
 Si stimi la massa totale dell'aria presente in una stanza di dimensioni tipiche.
+(Prima di svolgere l'esercizio, provate a rispondere in un secondo con il numero
+che vi pare pi\`u ragionevole, senza fare calcoli; scrivete il numero su un
+pezzo di carta e confrontatelo con la stima ottenuta svolgendo l'esercizio. Avete
+sbagliato per eccesso o per difetto?)
 
 \end{exercise}
 
 
 \begin{solution}
+
+La prima cosa che ci serve \`e una stima ragionevole della densit\`a atmosferica
+al livello del mare. \foreign{Spoiler alert}: la densit\`a tipica di un gas \`e
+dell'ordine di $10^{-3}$~g~cm$^{-3}$, o $1$~kg~m$^{-3}$. (Per essere precisi,
+la densit\`a dell'aria secca a $0^\circ$C e pressione atmosferica standard \`e
+di circa $1.292$~kg~m$^{-3}$, ma in questo caso una o due cifre significative
+sono pi\`u che sufficienti.)
+
+Se non vi ricordate (o non avete mai sentito) questo numero, ci possiamo arrivare
+richiamando alla memoria i rudimenti di chimica studiati alle scuole superiori:
+\emph{1 mole di gas ideale occupa un volume di circa $22.4$~litri a temperatura e
+pressione standard}. Se assumiamo che l'aria sia composta principalmente da azoto
+molecolare $N_2$ (in realt\`a si ha circa l'80\% di $N_2$ e il 20\% di $O_2$,
+oltre a tracce di altri gas), la massa di una mole di aria \`e circa $28$~g
+(il doppio della massa molare dell'azoto atomico il cui isotopo pi\`u comune
+ha numero di massa~14). Questi due numeri bastano per una stima della densit\`a
+dell'aria
+\begin{align}
+  \rho \approx \frac{28~\text{g}}{22.4 \times 10^3~\text{cm}^3}
+  \approx 1.25 \times 10^{-3}~\text{g/cm}^3
+\end{align}
+(Dovete ricordare che 1~litro equivale a 1~dm$^3$ = 1000~cm$^3$.) Non male---siamo
+entro il 5\% dal valore tabulato, e la discrepanza \`e dovuta principalmente
+all'aver trascurato il contriuto dell'ossigeno molecolare. Ma la nostra stima
+iniziale di $10^{-3}$~g~cm$^{-3}$ era pi\`u che adeguata.
+
+
 \end{solution}
 
 
