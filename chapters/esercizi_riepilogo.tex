@@ -1,1 +1,41 @@
 \chapter{Esercizi di riepilogo}
+
+
+\begin{exercise}
+
+Supponiamo di avere uno strumento di misura in cui un valore analogico, soggetto
+ad un rumore elettronico gaussiano con media nulla e deviazione standard $\sigma$
+nota precisamente a priori, viene convertito in un valore digitale tramite un
+convertitore analogico-digitale (ADC) a $12$ bit che, per definizione, mostra sul display
+un numero intero compreso tra $0$ e $2^{12}-1 = 4095$.
+
+Si discura l'errore di misura da assegnare alla lettura digitale dello strumento
+al variare di $\sigma$ (espressa in unit\`a di conteggi di ADC). In quali condizioni
+ha senso fare la media di misure ripetute per minimizzare l'errore di misura?
+
+
+% A digital balance displays measurements rounded to the nearest gram. A student therefore models a displayed value (m_0) as uniformly distributed over
+
+% [
+% [m_0-0.5\ \mathrm g,;m_0+0.5\ \mathrm g].
+% ]
+
+% The instrument, however, has internal Gaussian electronic noise with standard deviation (0.35\ \mathrm g), applied before rounding.
+
+% A reference object has true mass (m), and the displayed value is
+
+% [
+% D=\operatorname{round}(m+\epsilon),
+% \qquad
+% \epsilon\sim\mathcal N(0,0.35^2\ \mathrm g^2).
+% ]
+
+%     Derive (P(D=k\mid m)).
+%     Suppose (D=58\ \mathrm g). Assuming a locally uniform prior for (m), derive the posterior density of (m).
+%     Is the posterior uniform between (57.5) and (58.5\ \mathrm g)?
+%     Calculate or numerically estimate its posterior variance.
+%     Explain precisely when the conventional (1/\sqrt{12}\ \mathrm g) uncertainty is justified and when it is not.
+
+% Subtlety: a finite display resolution does not by itself imply a uniform conditional distribution for the true value.
+
+\end{exercise}
