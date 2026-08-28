@@ -120,10 +120,8 @@ def write_readme(version: str) -> None:
         readme_file.write('*Laboratorio con elementi di computazione*.\n\n')
         readme_file.write('L\'ultima versione del materiale è la')
         readme_file.write(f' [v{version}]({GITHUB_RELEASE_URL}/tag/{version}).\n\n')
-        readme_file.write('Link diretti ai file pdf:\n\n')
+        readme_file.write('Link diretti al file pdf:\n\n')
         readme_file.write(f'- [Statistica ed analisi dati]({_asset_url("statnotes", version)})\n')
-        readme_file.write(f'- [Elementi di comptazione]({_asset_url("compnotes", version)})\n')
-        readme_file.write(f'- [Esercizi risolti]({_asset_url("exercises", version)})\n\n')
         readme_file.write('La pagina delle [release]({GITHUB_RELEASE_URL}) ')
         readme_file.write('contiene lo storico delle versioni passate rilevanti.\
 
@@ -145,6 +143,7 @@ def release(mode: str) -> None:
     execute_shell_command(['git', 'push', '--tags'])
     execute_shell_command(['git', 'status'])
     logger.info(f'Release {version} completed successfully.')
+
 
 
 if __name__ == '__main__':

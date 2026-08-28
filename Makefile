@@ -1,24 +1,12 @@
-all: pdf
+all: statnotes
 
-armageddon: snippets figs statnotes compnotes exercises
-
-latest: statnotes compnotes exercises
+armageddon: snips figs statnotes
 
 statnotes:
 	pdflatex statnotes
 	bibtex statnotes
 	pdflatex statnotes
 	pdflatex statnotes
-
-compnotes:
-	pdflatex compnotes
-	bibtex compnotes
-	pdflatex compnotes
-	pdflatex compnotes
-
-exercises:
-	pdflatex exercises
-	pdflatex exercises
 
 snips:
 	python tools/py2tex.py snippy
