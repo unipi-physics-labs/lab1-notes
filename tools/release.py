@@ -80,7 +80,7 @@ def increment_version_file(mode: str) -> str:
     """
     logger.info(f"Bumping version file (mode = {mode})...")
     if mode not in INCREMENT_MODES:
-        raise RuntimeError(f"Invalid increment mode "{mode}"---valid modes are {INCREMENT_MODES}")
+        raise RuntimeError(f"Invalid increment mode {mode}---valid modes are {INCREMENT_MODES}")
     old_version = _read_version()
     major, minor, patch = (int(item) for item in old_version.split("."))
     if mode == "major":
