@@ -26,12 +26,6 @@ jobs:
           root_file: statnotes.tex
           texlive_version: ${{ env.TEXLIVE_VERSION }}
 
-      - name: Compile compnotes
-        uses: xu-cheng/latex-action@v4
-        with:
-          root_file: compnotes.tex
-          texlive_version: ${{ env.TEXLIVE_VERSION }}
-
       - name: Compile exercises
         uses: xu-cheng/latex-action@v4
         with:
@@ -52,7 +46,6 @@ jobs:
             ## Assets
 
             - *statnotes-${{ github.ref_name }}.pdf* - Statistica ed analisi dati
-            - *compnotes-${{ github.ref_name }}.pdf* - Elementi di computazione
             - *exercises-${{ github.ref_name }}.pdf* - Esercizi risolti
           draft: false
           prerelease: false
@@ -65,16 +58,6 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: statnotes.pdf
           asset_name: statnotes-${{ github.ref_name }}.pdf
-          asset_content_type: application/pdf
-
-      - name: Upload compnotes
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: compnotes.pdf
-          asset_name: compnotes-${{ github.ref_name }}.pdf
           asset_content_type: application/pdf
 
       - name: Upload exercises
