@@ -1,20 +1,14 @@
 all: pdf
 
-armageddon: snippets figs statnotes compnotes exercises
+armageddon: snippets figs statnotes exercises
 
-latest: statnotes compnotes exercises
+latest: statnotes exercises
 
 statnotes:
 	pdflatex statnotes
 	bibtex statnotes
 	pdflatex statnotes
 	pdflatex statnotes
-
-compnotes:
-	pdflatex compnotes
-	bibtex compnotes
-	pdflatex compnotes
-	pdflatex compnotes
 
 exercises:
 	pdflatex exercises
