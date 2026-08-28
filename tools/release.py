@@ -130,11 +130,7 @@ def release(mode: str) -> None:
     """
     execute_shell_command(["git", "pull"])
     version = increment_version_file(mode)
-
-    # compile_latex()
-    # Do stuff, e.g., copy pdf files around for archival purposes...
-    # If you create new stuff, do not forget to push it on the repository!
-
+    write_readme(version)
     msg = f"Prepare for tag {version}."
     execute_shell_command(["git", "commit", "-a", "-m", msg])
     execute_shell_command(["git", "push"])
